@@ -11,7 +11,8 @@ app-sidebar {
 }
 
 app-open-sidebar {
-  position: absolute;
+  position: fixed;
+  bottom: 25px;
 }
 
 app-channel {

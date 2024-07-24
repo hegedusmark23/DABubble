@@ -1,0 +1,24 @@
+.open-sidebar-button-container {
+    width: 60px;
+    height: 347px;
+    border-radius: 0px 30px 30px 0px;
+    box-shadow: 4px 4px 7px 0px #00000033;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rotated-text {
+    white-space: nowrap;
+    transform: rotate(-90deg);
+}
+
+.open-menu-text {
+    font-weight: 700px;
+    margin-right: 8px;
+}
+
+.rotated-icon {
+    transform: rotate(-90deg);
+}
