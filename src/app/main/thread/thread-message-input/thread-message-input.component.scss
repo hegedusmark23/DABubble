@@ -1,0 +1,56 @@
+.content {
+  background-color: white;
+  padding: 45px 45px 40px 45px;
+  width: calc(100% - 90px);
+  position: relative; /* Fügen Sie diese Zeile hinzu */
+}
+
+textarea {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #adb0d9;
+  border-bottom: 0px;
+  background: white;
+  padding: 20px;
+  height: 65px;
+  box-sizing: border-box; /* Sicherstellen, dass das Padding und der Border zur Breite beitragen */
+}
+
+.inputButtons {
+  width: calc(100% - 42px);
+  height: 40px;
+  background-color: white;
+  border: 1px solid #adb0d9;
+  border-top: none;
+  border-radius: 0 0 20px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.spacer {
+  background-color: #adb0d9;
+  width: 1px;
+  height: 40px;
+}
