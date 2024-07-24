@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./main/header/header.component";
 import { OpenSidebarComponent } from "./main/open-sidebar/open-sidebar.component";
 import { SidebarComponent } from "./main/sidebar/sidebar.component";
-import { ChannelComponent } from "./main/channel/channel.component";
+import { ChannelComponent } from "./main/channel/channel/channel.component";
 
 @Component({
   selector: 'app-root',
