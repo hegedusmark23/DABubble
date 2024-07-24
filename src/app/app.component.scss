@@ -1,25 +1,24 @@
 app-header {
   display: block;
   width: 100%;
-  height: 115px;
+  height: 80px;
   background-color: blue;
 }
 app-sidebar {
   display: block;
-  width: 366px;
-  margin-left: 10px;
+  width: 306px;
+  padding: 32px 30px;
+  background-color: red;
 }
 
 app-open-sidebar {
-  position: fixed;
-  bottom: 25px;
+  position: absolute;
 }
 
 app-channel {
   display: block;
   background-color: green;
   width: 100%;
-  margin: 10px;
 }
 
 .content {
