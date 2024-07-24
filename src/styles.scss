@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Nunito'; 
+    src: url('../../DABubble/src/assets/font/Nunito-Bold.ttf');
+    font-weight: 700; 
+  }
+
+  @font-face {
+    font-family: 'Nunito';
+    src: url('../../DABubble/src/assets/font/Nunito-Regular.ttf'); 
+    font-weight: 400; 
+  }
+  
+  *{
+    font-family: 'Nunito'; 
+  }
+
+.fs-18{
+    font-size: 18px;
+}
+
+.fs-24{
+    font-size: 24px;
+}
