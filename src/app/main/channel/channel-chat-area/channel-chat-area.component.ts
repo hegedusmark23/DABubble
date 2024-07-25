@@ -14,7 +14,7 @@ export class ChannelChatAreaComponent {
   openThread(thread: any) {
     this.threadService.openThread(thread);
   }
-  mouseover() {
-    document.getElementById('hover')?.classList.toggle('d-none');
+  mouseover(i: string) {
+    document.getElementById('hover' + i)?.classList.toggle('d-none');
   }
 }
