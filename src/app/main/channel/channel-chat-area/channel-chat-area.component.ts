@@ -11,6 +11,11 @@ import { ThreadService } from '../../../services/thread.service';
 export class ChannelChatAreaComponent {
   constructor(private threadService: ThreadService) {}
 
+  scrollToBottom() {
+    const container = document.getElementById('messageContainer');
+    container!.scrollTop = container!.scrollHeight;
+  }
+
   openThread(thread: any) {
     this.threadService.openThread(thread);
   }

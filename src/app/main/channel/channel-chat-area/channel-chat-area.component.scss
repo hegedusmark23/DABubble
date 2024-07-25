@@ -1,10 +1,15 @@
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: calc(100% - 310px);
+  overflow: auto;
+}
+
 .content {
   display: flex;
   flex-direction: column;
-  justify-content: end;
-  background-color: white;
-  height: calc(100% - 335px);
-  overflow: auto;
+  min-height: 100%;
 }
 
 .date {
@@ -35,21 +40,12 @@
   justify-content: flex-start;
   gap: 16px;
   padding: 10px 146px 10px 45px;
+  width: max-content;
   span {
     background-color: #eceefe;
     padding: 15px;
     border-radius: 0px 30px 30px 30px;
-  }
-  div {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    div {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-    }
+    width: max-content;
   }
   img {
     width: 70px;
@@ -67,28 +63,17 @@
 .messageSend {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 16px;
   padding: 10px 45px 10px 146px;
-
   span {
     background-color: #797ef3;
     padding: 15px;
     border-radius: 30px 0px 30px 30px;
     color: white;
+    width: max-content;
   }
-  div {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 8px;
 
-    div {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-    }
-  }
   img {
     width: 70px;
     border-radius: 100%;
@@ -100,17 +85,27 @@
   margin-top: 32px;
 }
 
-.hover {
+.hoverResive {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row !important;
   height: 46px;
   padding: 3px 15px 3px 20px;
   gap: 5px;
   border-radius: 25px 25px 0px 25px;
   border: 1px solid #adb0d9;
   background-color: white;
+  margin-right: 45px;
+  margin-top: 20px;
 
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
   p {
     height: 24px;
     width: 24px;
@@ -125,13 +120,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: row !important;
   height: 46px;
   padding: 3px 15px 3px 20px;
   gap: 5px;
   border-radius: 25px 25px 0px 25px;
   border: 1px solid #adb0d9;
   background-color: white;
+  margin-left: 45px;
+  margin-top: 20px;
 
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
   p {
     height: 24px;
     width: 24px;
@@ -150,12 +155,37 @@
 }
 
 .messageInfo {
-  // width: calc(100% - 200px);
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  div {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
 }
 
 .messageUserName {
   display: flex;
   align-items: end;
   height: 54px;
+}
+
+.messageSendContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  &:hover {
+    background-color: #f0f1fe;
+  }
+}
+
+.messageResiveContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  &:hover {
+    background-color: #f0f1fe;
+  }
 }
