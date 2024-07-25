@@ -7,11 +7,23 @@
     <div class="menu">
         <div class="channels-container">
             <div class="channels-title-container">
-                <div class="">
-                    <img src="../../../assets/img/sidebar/Property 1=Default.png">
+                <div class="channels-title" (mouseover)="hoverChannelTitle()" (mouseout)="hoverEndChannelTitle()" 
+                 (click)="activeteChannelTitle()">
+                    @if(!hoveredChannelTitle && !activetedChannelTitle){
+                        <img src="../../../assets/img/sidebar/Property 1=Default.png">
+                    }
+                    @if(hoveredChannelTitle && !activetedChannelTitle){
+                        <img src="../../../assets/img/sidebar/Property 1=Hover dropdown.png">
+                    }
+                    @if(activetedChannelTitle && hoveredChannelTitle){
+                        <img src="../../../assets/img/sidebar/Property 1=Hover wrap.png">
+                    }
+                    @if(activetedChannelTitle && !hoveredChannelTitle){
+                        <img src="../../../assets/img/sidebar/Property 1=Default 2.png">
+                    }
+                    
                 </div>
-                <div>
-                    <img class="add-channel-button" src="../../../assets/img/sidebar/19. add.png">
+                <div class="add-channel-button" (click)="addChannel()">
                 </div>
             </div>
             <div class="channel-list">

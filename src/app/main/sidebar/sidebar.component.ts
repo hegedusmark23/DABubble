@@ -9,4 +9,27 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
 
+  hoveredChannelTitle = false; 
+  activetedChannelTitle = false; 
+
+  hoverChannelTitle(){
+    this.hoveredChannelTitle = true;
+  }
+
+  hoverEndChannelTitle(){
+    this.hoveredChannelTitle = false;
+  }
+
+  activeteChannelTitle(){
+    if(!this.activetedChannelTitle){
+      this.activetedChannelTitle = true;
+    }else{
+      this.activetedChannelTitle = false;
+    }
+  }
+
+  addChannel(){
+    alert('Add channel popup on!');
+  }
+
 }

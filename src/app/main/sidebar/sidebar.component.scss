@@ -13,7 +13,7 @@
     height: 60px;
     width: 306px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-top: 30px;
 }
@@ -33,17 +33,21 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
-    width: 100%;
 }
 
 .channels-title {
-    font-weight: 700;
-    position: absolute;
-    left: 79px;
+   cursor: pointer;
 }
 
 .add-channel-button {
     cursor: pointer;
+    background-image: url('../../../assets/img/sidebar/19. add.png');
+    height: 32px;
+    width: 32px;
+    object-fit: cover;
+    &:hover {
+        background-image: url('../../../assets/img/sidebar/Property\ 1=Hover.png');
+    }
 }
 
 .channel-list {
