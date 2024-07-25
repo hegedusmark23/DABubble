@@ -23,26 +23,39 @@
     font-weight: 700;
 }
 
+.edit-button {
+    cursor: pointer;
+}
+
 .channels-title-container{
     width: 306px;
-    display: flex;
-    justify-content: space-around;
+    position: relative;
     align-items: center;
     margin-top: 30px;
+    width: 100%;
 }
 
 .channels-title {
     font-weight: 700;
+    position: absolute;
+    left: 79px;
+}
+
+.add-channel-button {
+    position: absolute;
+    right: 0;
 }
 
 .channel-list {
     margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .channel {
-    width: 206px;
+    width: 306px;
     height: 33px;
-    padding: 4px 20px 4px 20px;
     gap: 10px;
     border-radius: 20px;
     background-color: #ECEEFE;
@@ -51,7 +64,18 @@
     align-items: center;
 }
 
+.workspace-icon {
+    position: absolute;
+    left: 45px;
+}
+
 .raute {
     height: 24px;
     width: 24px;
+}
+
+.channel-title {
+    font-weight: 700;
+    color: rgba(83, 90, 241, 1);
+
 }
