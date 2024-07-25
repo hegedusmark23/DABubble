@@ -4,10 +4,12 @@
     border-radius: 30px;
     background-color: white;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
 
-header {
+.header {
     height: 60px;
     width: 306px;
     display: flex;
