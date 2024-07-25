@@ -22,3 +22,36 @@
     font-size: 24px;
     font-weight: 700;
 }
+
+.channels-title-container{
+    width: 306px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.channels-title {
+    font-weight: 700;
+}
+
+.channel-list {
+    margin-top: 30px;
+}
+
+.channel {
+    width: 206px;
+    height: 33px;
+    padding: 4px 20px 4px 20px;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #ECEEFE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.raute {
+    height: 24px;
+    width: 24px;
+}
