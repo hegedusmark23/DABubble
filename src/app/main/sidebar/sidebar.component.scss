@@ -29,7 +29,8 @@
 
 .channels-title-container{
     width: 306px;
-    position: relative;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     margin-top: 30px;
     width: 100%;
@@ -42,8 +43,7 @@
 }
 
 .add-channel-button {
-    position: absolute;
-    right: 0;
+    cursor: pointer;
 }
 
 .channel-list {
@@ -62,11 +62,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.workspace-icon {
-    position: absolute;
-    left: 45px;
 }
 
 .raute {
