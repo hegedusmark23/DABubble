@@ -18,12 +18,12 @@ app-open-sidebar {
 
 app-channel {
   display: block;
-  background-color: green;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .content {
   display: flex;
   flex-direction: row;
-  height: calc(100vh - 80px);
+  height: calc(100vh - 115px);
 }

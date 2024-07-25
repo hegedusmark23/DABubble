@@ -1,14 +1,25 @@
 .content {
   height: 100%;
+  width: 100%;
 }
+
+.contentThreadOpen {
+  width: 65% !important;
+}
+
 .contentContainer {
   display: flex;
   flex-direction: row;
   height: 100%;
-  gap: 10px;
+  margin-right: 20px;
 }
 
 app-thread {
   display: block;
   height: 100%;
+  margin-left: 20px;
+}
+
+.thread {
+  width: 35%;
 }

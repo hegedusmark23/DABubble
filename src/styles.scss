@@ -1,34 +1,43 @@
 @font-face {
-    font-family: 'Nunito';
-    src: url('../../DABubble/src/assets/font/Nunito-Bold.ttf');
-    font-weight: 700;
+  font-family: "Nunito";
+  src: url("../../DABubble/src/assets/font/Nunito-Bold.ttf");
+  font-weight: 700;
 }
 
 @font-face {
-    font-family: 'Nunito';
-    src: url('../../DABubble/src/assets/font/Nunito-Regular.ttf');
-    font-weight: 400;
+  font-family: "Nunito";
+  src: url("../../DABubble/src/assets/font/Nunito-Regular.ttf");
+  font-weight: 400;
 }
 
 * {
-    font-family: 'Nunito';
-    margin: 0;
+  font-family: "Nunito";
+  margin: 0;
 }
 
-body{
-    background-color: #ECEEFE;
-    margin: 0;
+body {
+  background-color: #eceefe;
+  margin: 0;
 }
 
 .fs-18 {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .fs-20 {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .fs-24 {
-    font-size: 24px;
+  font-size: 24px;
 }
 
+.d-none {
+  display: none !important;
+}
+
+.cursor-pointer {
+  &:hover {
+    cursor: pointer;
+  }
+}

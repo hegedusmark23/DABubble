@@ -1,11 +1,17 @@
 <div class="content">
+  <button (click)="openThread('test')"></button>
   <div class="date">
     <span class="spacer"></span>
     <p class="fs-18">Dienstag. 14.Januar</p>
     <span class="spacer"></span>
   </div>
 
-  <div class="messageResive">
+  <div
+    class="messageResive"
+    (mouseenter)="mouseover()"
+    (mouseleave)="mouseover()"
+  >
+    <div id="hover" class="d-none">hover</div>
     <div><img src="./../../../../assets/img/profile-imgs/male2.png" /></div>
     <div>
       <div>
@@ -42,6 +48,8 @@
         <p>Letzte Antwort 14:56</p>
       </div>
     </div>
-    <div><img src="./../../../../assets/img/profile-imgs/male2.png" /></div>
+    <div class="profileImg">
+      <img src="./../../../../assets/img/profile-imgs/male2.png" />
+    </div>
   </div>
 </div>
