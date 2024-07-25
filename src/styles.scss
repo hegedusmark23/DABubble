@@ -22,18 +22,37 @@ body {
 
 .fs-18 {
   font-size: 18px;
+  font-weight: 400;
 }
 
 .fs-20 {
   font-size: 20px;
+  font-weight: 400;
 }
 
 .fs-24 {
   font-size: 24px;
 }
 
+.fs-46 {
+  font-size: 46px;
+  color: #444DF2;
+}
+
 .d-none {
   display: none !important;
+}
+
+.purp-link{
+  text-decoration: none;
+  color: #797EF3;
+  border: 1px solid transparent;
+  padding: 10px;
+  &:hover{
+    color: #464bdf;
+    border: 1px solid #797EF3;
+    border-radius: 50px;
+  }
 }
 
 .cursor-pointer {
