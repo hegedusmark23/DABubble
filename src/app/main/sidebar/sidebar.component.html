@@ -26,10 +26,10 @@
                 <div class="add-channel-button" (click)="addChannel()">
                 </div>
             </div>
-            <div class="channel-list">
-                <div class="channel">
-                    <img src="../../../assets/img/sidebar/tag.png">
-                    <span class="channel-title fs-18">Entwicklerteam</span>
+            <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
+                <div class="channel" (click)="channelActive(i)">
+                    <div class="raute"></div>
+                    <span class="channel-title fs-18">{{ channel }}</span>
                 </div>
             </div>
         </div>
