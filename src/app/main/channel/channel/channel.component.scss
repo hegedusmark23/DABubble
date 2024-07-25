@@ -1,10 +1,12 @@
-.content {
+.contentThreadClosed {
   height: 100%;
   width: 100%;
+  transition: width 0.3s;
 }
 
 .contentThreadOpen {
   width: 65% !important;
+  transition: width 0.3s;
 }
 
 .contentContainer {
@@ -21,5 +23,14 @@ app-thread {
 }
 
 .thread {
+  width: 0px;
+  transition: width 0.3s;
+}
+
+.slide-in-right {
   width: 35%;
+}
+
+.slide-out-right {
+  width: 0px;
 }

@@ -21,10 +21,14 @@ import { ThreadService } from '../../../services/thread.service';
 })
 export class ChannelComponent {
   currentThread: any;
+  ThreadAnimation: any;
 
   constructor(private threadService: ThreadService) {
     this.threadService.currentThread$.subscribe((thread) => {
       this.currentThread = thread;
+    });
+    this.threadService.ThreadAnimation$.subscribe((thread) => {
+      this.ThreadAnimation = thread;
     });
   }
 }
