@@ -169,7 +169,21 @@
 }
 
 .users-title {
+    background-image: url('../../../assets/img/sidebar/userlist-closed.png');
+    width: 250px;
+    height: 45px;
+    cursor: pointer;
+    &:hover {
+        background-image: url('../../../assets/img/sidebar/userlist-closed-active.png');
+    }
+}
+
+.users-title-active {
     background-image: url('../../../assets/img/sidebar/userlist.png');
     width: 250px;
     height: 45px;
+    cursor: pointer;
+    &:hover {
+        background-image: url('../../../assets/img/sidebar/userlist-hover.png');
+    }
 }

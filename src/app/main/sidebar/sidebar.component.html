@@ -44,8 +44,8 @@
         </div>
 
         <div class="users-container">
-            <div class="users-title-container">
-                <div class="users-title"></div>
+            <div class="users-title-container" (click)="openUsersList()">
+                <div [ngClass]="{'users-title': !usersTitleActive, 'users-title-active': usersTitleActive}"></div>
             </div>
             <div class="add-channel-button" (click)="addMessage()">
             </div>

@@ -13,6 +13,7 @@ export class SidebarComponent {
   activetedChannelTitle = false; 
   AllChannels = ['Allgemein', 'Entwicklerteam', 'Office-team'];
   activeChannelIndex: number | null = null; 
+  usersTitleActive = false;
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
@@ -36,5 +37,9 @@ export class SidebarComponent {
 
   addMessage() {
     alert('Add new message');
+  }
+
+  openUsersList() {
+    this.usersTitleActive = !this.usersTitleActive;
   }
 }
