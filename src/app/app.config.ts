@@ -18,7 +18,6 @@ export const appConfig: ApplicationConfig = {
         projectId: 'dabubble-3c5b0',
         appId: '1:904297976039:web:5a55b686aa74fb7763d242',
         storageBucket: 'dabubble-3c5b0.appspot.com',
-        locationId: 'europe-west',
         apiKey: 'AIzaSyC9dPnMg7uyONz8kydSLvm_zg6iLfp4NmM',
         authDomain: 'dabubble-3c5b0.firebaseapp.com',
         messagingSenderId: '904297976039',
