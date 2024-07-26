@@ -1,6 +1,15 @@
-<div class="open-sidebar-button-container">
-    <div class="rotated-text">
-        <span class="fs-20 open-menu-text">Open Menu</span>
-        <img class="rotated-icon" src="../../../assets/img/sidebar/Group 2.png">
+@if(sidebarOpen){
+    <div class="open-sidebar-button-container" (click)="openSidebarMenu()">
+        <div class="rotated-text">
+            <span class="fs-20 open-menu-text">Workspace-Menü öffen</span>
+            <div class="rotated-icon"></div>
+        </div>
+    </div>
+}@else{
+<div class="open-sidebar-button-container-opened" (click)="openSidebarMenu()">
+    <div class="rotated-text-opened">
+        <span class="fs-20 open-menu-text-opened">Workspace-Menü schließen</span>
+        <div class="rotated-icon-opened"></div>
     </div>
 </div>
+}

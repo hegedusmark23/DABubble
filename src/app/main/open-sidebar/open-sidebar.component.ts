@@ -9,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class OpenSidebarComponent {
 
+  sidebarOpen = false;
+
+  openSidebarMenu(){
+    this.sidebarOpen = !this.sidebarOpen;
+    alert(this.sidebarOpen);
+
+  }
+
 }
