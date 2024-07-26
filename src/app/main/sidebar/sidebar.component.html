@@ -7,28 +7,12 @@
     <div class="menu">
         <div class="channels-container">
             <div class="channels-title-container">
-                <div class="channels-title" (mouseover)="hoverChannelTitle()" (mouseout)="hoverEndChannelTitle()"
-                    (click)="activeteChannelTitle()" [ngClass]="{'channels-title-active': activetedChannelTitle}">
-                    <!--
-                 @if(!hoveredChannelTitle && !activetedChannelTitle){
-                        <img src="../../../assets/img/sidebar/Property 1=Default.png">
-                    }
-                    @if(hoveredChannelTitle && !activetedChannelTitle){
-                        <img src="../../../assets/img/sidebar/Property 1=Hover dropdown.png">
-                    }
-                    @if(activetedChannelTitle && hoveredChannelTitle){
-                        <img src="../../../assets/img/sidebar/Property 1=Hover wrap.png">
-                    }
-                    @if(activetedChannelTitle && !hoveredChannelTitle){
-                        <img src="../../../assets/img/sidebar/Property 1=Default 2.png">
-                    }
-                 -->
-
-
+                <div (click)="activeteChannelTitle()"
+                    [ngClass]="{'channels-title': !activetedChannelTitle, 'channels-title-active': activetedChannelTitle}">
                 </div>
                 <div class="add-channel-button" (click)="addChannel()">
                 </div>
-            </div>
+            </div>@if(activetedChannelTitle){
             <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
                 <div class="channel" (click)="channelActive(i)"
                     [ngClass]="{'channel-active': activeChannelIndex === i}">
@@ -37,6 +21,7 @@
                         class="channel-title fs-18">{{ channel }}</span>
                 </div>
             </div>
+            }
             <div class="add-new-channel" (click)="addChannel()">
                 <div class="add-new-channel-button"></div>
                 <span class="fs-18 add-channel-text">Channel hinzufügen</span>

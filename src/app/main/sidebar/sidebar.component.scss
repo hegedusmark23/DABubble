@@ -45,19 +45,22 @@
 
 .channels-title {
    cursor: pointer;
-   background-image: url("../../../assets/img/sidebar/Property 1=Default.png");
+   background-image: url("../../../assets/img/sidebar/Property\ 1=Default\ 2.png");
    width: 176px;
    height: 40px;
    &:hover {
-    background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ dropdown.png");
-   }
-   &:active {
     background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ wrap.png");
    }
 }
 
 .channels-title-active {
-    background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ wrap.png");
+    width: 176px;
+    height: 40px;
+    cursor: pointer;
+    background-image: url("../../../assets/img/sidebar/Property\ 1=Default.png");
+    &:hover {
+        background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ dropdown.png");
+    }
 }
 
 .add-channel-button {
