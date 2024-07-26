@@ -8,8 +8,9 @@
         <div class="channels-container">
             <div class="channels-title-container">
                 <div class="channels-title" (mouseover)="hoverChannelTitle()" (mouseout)="hoverEndChannelTitle()" 
-                 (click)="activeteChannelTitle()">
-                    @if(!hoveredChannelTitle && !activetedChannelTitle){
+                 (click)="activeteChannelTitle()" [ngClass]="{'channels-title-active': activetedChannelTitle}">
+                 <!--
+                 @if(!hoveredChannelTitle && !activetedChannelTitle){
                         <img src="../../../assets/img/sidebar/Property 1=Default.png">
                     }
                     @if(hoveredChannelTitle && !activetedChannelTitle){
@@ -21,6 +22,8 @@
                     @if(activetedChannelTitle && !hoveredChannelTitle){
                         <img src="../../../assets/img/sidebar/Property 1=Default 2.png">
                     }
+                 -->
+                    
                     
                 </div>
                 <div class="add-channel-button" (click)="addChannel()">

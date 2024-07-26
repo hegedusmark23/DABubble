@@ -38,6 +38,19 @@
 
 .channels-title {
    cursor: pointer;
+   background-image: url("../../../assets/img/sidebar/Property 1=Default.png");
+   width: 176px;
+   height: 40px;
+   &:hover {
+    background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ dropdown.png");
+   }
+   &:active {
+    background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ wrap.png");
+   }
+}
+
+.channels-title-active {
+    background-image: url("../../../assets/img/sidebar/Property\ 1=Default\ 2.png");
 }
 
 .add-channel-button {
@@ -88,6 +101,9 @@
 .channel-active {
     background-color: #ECEEFE;
     cursor: pointer;
+    .raute {
+        background-image: url('../../../assets/img/sidebar/tag_click.png');
+    }
 }
 
 .raute {
