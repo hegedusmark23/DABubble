@@ -34,6 +34,7 @@ export class SidebarComponent {
 
   channelActive(i: number) {
     this.activeChannelIndex = i; 
+    alert(this.AllChannels[i] + ' open');
   }
 
   addMessage() {
@@ -42,5 +43,9 @@ export class SidebarComponent {
 
   openUsersList() {
     this.usersTitleActive = !this.usersTitleActive;
+  }
+
+  addNewMessage() {
+    alert('Add new message window open');
   }
 }

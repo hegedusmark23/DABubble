@@ -34,6 +34,21 @@
     cursor: pointer;
 }
 
+.add-new-message {
+    background-image: url('../../../assets/img/sidebar/edit_square.png');
+    height: 40px;
+    width: 40px;
+    background-position: center right;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transform: translateX(-8px);
+    &:hover {
+        background-image: url('../../../assets/img/sidebar/edit_button_hover.png');
+        background-size: cover;
+        transform: translateX(0px);
+    }
+}
+
 .channels-title-container{
     width: 306px;
     display: flex;
