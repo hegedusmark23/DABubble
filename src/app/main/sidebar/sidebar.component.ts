@@ -12,6 +12,7 @@ export class SidebarComponent {
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
   AllChannels = ['Allgemein', 'Entwicklerteam', 'Office-team'];
+  AllUsers = ['Joost', 'Mark', 'Gabor'];
   activeChannelIndex: number | null = null; 
   usersTitleActive = false;
 

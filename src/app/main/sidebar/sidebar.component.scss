@@ -9,6 +9,13 @@
     flex-direction: column;
 }
 
+.menu {
+    overflow: hidden;
+    /*&:hover {
+        overflow: visible;
+    }*/
+}
+
 .header {
     height: 60px;
     width: 306px;
@@ -166,6 +173,7 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .users-title {
@@ -186,4 +194,33 @@
     &:hover {
         background-image: url('../../../assets/img/sidebar/userlist-hover.png');
     }
+}
+
+.user-list {
+    display: flex;
+    justify-content: flex-start;
+    width: 306px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.profil-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    margin-left: 50px;
+}
+
+.online-icon {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 35px;
+    left: 87px;
+}
+
+.user-name {
+    position: absolute;
+    left: 130px;
+    top: 10px;
 }
