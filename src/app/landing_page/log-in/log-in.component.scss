@@ -1,4 +1,4 @@
-section{
+section {
     max-width: 1920px;
     margin: 0 auto;
     position: relative;
@@ -9,20 +9,20 @@ section{
     align-items: center;
 }
 
-.logo{
+.logo {
     position: absolute;
     top: 50px;
     left: 30px;
 }
 
-.legal-section{
+.legal-section {
     display: flex;
     position: absolute;
     bottom: 50px;
     gap: 16px;
 }
 
-.sign-in-section{
+.sign-in-section {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -31,7 +31,7 @@ section{
     align-items: end;
 }
 
-.login-section{
+.login-section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,7 +44,7 @@ section{
     gap: 30px;
 }
 
-.formfield{
+.formfield {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -52,7 +52,7 @@ section{
     gap: 30px;
 }
 
-.input-design{
+.input-design {
     border-radius: 100px;
     background-color: #ECEEFE;
     width: 500px;
@@ -63,12 +63,16 @@ section{
     font-size: 18px;
     font-family: Nunito;
 
-    &:hover{
+    &:hover {
         outline: 1px solid black;
+    }
+
+    &:focus {
+        outline: 1px solid #444DF2;
     }
 }
 
-.grey-line{
+.grey-line {
     background-color: #ADB0D9;
     height: 1px;
     width: 210px;
@@ -80,7 +84,13 @@ section{
     top: 22px
 }
 
-.separator{
+.input-icon-lock {
+    position: absolute;
+    left: 25px;
+    top: 19px
+}
+
+.separator {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -88,7 +98,7 @@ section{
     gap: 10px;
 }
 
-.login-google-btn{
+.login-google-btn {
     align-items: center;
     justify-content: center;
     display: flex;
@@ -99,9 +109,54 @@ section{
     gap: 10px;
     border: 1px solid transparent;
     color: #444DF2;
+    transition-duration: 0.2s;
 
-    &:hover{
+    &:hover {
         border: 1px solid #444DF2;
         font-weight: 700;
+    }
+}
+
+.btn-container {
+    display: flex;
+    gap: 30px;
+}
+
+.password-link {
+    text-decoration: none;
+    color: #797ef3;
+    border: 1px solid transparent;
+    padding: 8px;
+    transition-duration: 0.2s;
+
+    &:hover {
+        font-weight: 700;
+        color: #464bdf;
+        background-color: #ECEEFE;
+        border-radius: 50px;
+    }
+}
+
+.animation-wrapper-global {
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    z-index: 998;
+    background: linear-gradient(1.46deg, #313AE6 1.22%, #797EF3 98.76%);
+    animation: backgroundAnimation;
+    animation-delay: 2500ms;
+    animation-timing-function: ease-out;
+    animation-duration: 500ms;
+    -webkit-animation-fill-mode: forwards;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        z-index: -1;
     }
 }
