@@ -1,19 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { ThreadService } from '../../../services/thread.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-channel-chat-area',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent {
+export class ChannelChatAreaComponent implements AfterViewInit {
+  @ViewChild('messageContainer') private messageContainer:
+    | ElementRef
+    | undefined;
+  containerClasses: { [key: string]: boolean } = {};
+
   constructor(private threadService: ThreadService) {}
 
+  ngAfterViewInit() {
+    this.scrollToBottom();
+  }
+
   scrollToBottom() {
-    const container = document.getElementById('messageContainer');
-    container!.scrollTop = container!.scrollHeight;
+    if (this.messageContainer) {
+      const hasScrollbar =
+        this.messageContainer.nativeElement.scrollHeight >
+        this.messageContainer.nativeElement.clientHeight;
+      if (hasScrollbar) {
+        console.log('Der messageContainer hat einen Scrollbalken.');
+        this.containerClasses = {
+          'overflow-auto': true,
+          'justify-content-end': false,
+        };
+      } else {
+        console.log('Der messageContainer hat keinen Scrollbalken.');
+        this.containerClasses = {
+          'overflow-auto': false,
+          'justify-content-end': true,
+        };
+      }
+    }
   }
 
   openThread(thread: any) {

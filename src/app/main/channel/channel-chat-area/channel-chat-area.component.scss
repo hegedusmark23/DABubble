@@ -3,13 +3,19 @@
   flex-direction: column;
   background-color: white;
   height: calc(100% - 310px);
+}
+
+.overflow-auto {
   overflow: auto;
+}
+
+.justify-content-end {
+  justify-content: end !important;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
 }
 
 .date {
