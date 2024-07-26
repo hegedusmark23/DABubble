@@ -50,11 +50,14 @@
             <div class="add-channel-button" (click)="addMessage()">
             </div>
         </div>
-        <div class="user-list" *ngFor="let user of AllUsers; let i = index">  
+        @if(usersTitleActive){
+        <div class="user-list" *ngFor="let user of AllUsers; let i = index">
             <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
             <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
             <span class="fs-18 user-name">{{ user }}</span>
         </div>
+        }
+
 
 
     </div>
