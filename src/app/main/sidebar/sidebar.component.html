@@ -2,14 +2,14 @@
     <div class="header">
         <img src="../../../assets/img/sidebar/Workspace logo.png">
         <span class="title">Devspace</span>
-        <img class="edit-button"  src="../../../assets/img/sidebar/edit_square.png">
+        <img class="edit-button" src="../../../assets/img/sidebar/edit_square.png">
     </div>
     <div class="menu">
         <div class="channels-container">
             <div class="channels-title-container">
-                <div class="channels-title" (mouseover)="hoverChannelTitle()" (mouseout)="hoverEndChannelTitle()" 
-                 (click)="activeteChannelTitle()" [ngClass]="{'channels-title-active': activetedChannelTitle}">
-                 <!--
+                <div class="channels-title" (mouseover)="hoverChannelTitle()" (mouseout)="hoverEndChannelTitle()"
+                    (click)="activeteChannelTitle()" [ngClass]="{'channels-title-active': activetedChannelTitle}">
+                    <!--
                  @if(!hoveredChannelTitle && !activetedChannelTitle){
                         <img src="../../../assets/img/sidebar/Property 1=Default.png">
                     }
@@ -23,22 +23,34 @@
                         <img src="../../../assets/img/sidebar/Property 1=Default 2.png">
                     }
                  -->
-                    
-                    
+
+
                 </div>
                 <div class="add-channel-button" (click)="addChannel()">
                 </div>
             </div>
             <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
-                <div class="channel" (click)="channelActive(i)" [ngClass]="{'channel-active': activeChannelIndex === i}">
+                <div class="channel" (click)="channelActive(i)"
+                    [ngClass]="{'channel-active': activeChannelIndex === i}">
                     <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
-                    <span class="channel-title fs-18" 
-                    [ngClass]="{'channel-title-active': activeChannelIndex === i}" class="channel-title fs-18">{{ channel }}</span>
+                    <span class="channel-title fs-18" [ngClass]="{'channel-title-active': activeChannelIndex === i}"
+                        class="channel-title fs-18">{{ channel }}</span>
                 </div>
             </div>
+            <div class="add-new-channel" (click)="addChannel()">
+                <div class="add-new-channel-button"></div>
+                <span class="fs-18 add-channel-text">Channel hinzufügen</span>
+            </div>
         </div>
-        <div class="users-container">
 
+        <div class="users-container">
+            <div class="users-title-container">
+                <div class="users-title"></div>
+            </div>
+            <div class="add-channel-button" (click)="addMessage()">
+            </div>
         </div>
+
+
     </div>
 </div>

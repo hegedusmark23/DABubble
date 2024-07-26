@@ -50,12 +50,13 @@
 }
 
 .channels-title-active {
-    background-image: url("../../../assets/img/sidebar/Property\ 1=Default\ 2.png");
+    background-image: url("../../../assets/img/sidebar/Property\ 1=Hover\ wrap.png");
 }
 
 .add-channel-button {
     cursor: pointer;
     background-image: url('../../../assets/img/sidebar/19. add.png');
+    background-repeat: no-repeat;
     height: 32px;
     width: 32px;
     object-fit: cover;
@@ -121,4 +122,46 @@
 .channel-title-active {
     font-weight: 700;
     color: rgba(83, 90, 241, 1);
+}
+
+.add-channel-text {
+    margin-left: 10px;
+}
+
+.add-new-channel {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 28px;
+    cursor: pointer;
+    &:hover {
+        span {
+            color: rgba(83, 90, 241, 1);
+        }
+        .add-new-channel-button {
+            background-image: url('../../../assets/img/sidebar/add-circle-hover.png');
+        }
+    }
+}
+
+.add-new-channel-button {
+    background-image: url('../../../assets/img/sidebar/add_circle.png');
+    height: 24px;
+    width: 24px;
+    margin-left: -10px;
+}
+
+.users-container {
+    width: 306px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.users-title {
+    background-image: url('../../../assets/img/sidebar/userlist.png');
+    width: 250px;
+    height: 45px;
 }

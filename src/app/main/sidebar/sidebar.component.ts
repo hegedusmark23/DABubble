@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
-  AllChannels = ['Entwicklerteam', 'Office-team'];
+  AllChannels = ['Allgemein', 'Entwicklerteam', 'Office-team'];
   activeChannelIndex: number | null = null; 
 
   hoverChannelTitle() {
@@ -32,5 +32,9 @@ export class SidebarComponent {
 
   channelActive(i: number) {
     this.activeChannelIndex = i; 
+  }
+
+  addMessage() {
+    alert('Add new message');
   }
 }
