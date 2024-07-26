@@ -143,6 +143,14 @@
             background-image: url('../../../assets/img/sidebar/add-circle-hover.png');
         }
     }
+    &:active {
+        span {
+            color: black;
+        }
+        .add-new-channel-button {
+            background-image: url('../../../assets/img/sidebar/add_circle-active.png');
+        }
+    }
 }
 
 .add-new-channel-button {
