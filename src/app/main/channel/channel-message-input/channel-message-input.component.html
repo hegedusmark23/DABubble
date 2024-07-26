@@ -1,5 +1,9 @@
 <div class="content">
-  <textarea placeholder="Nachricht an #Entwicklerteam" type="text"></textarea>
+  <textarea
+    placeholder="Nachricht an #Entwicklerteam"
+    type="text"
+    [(ngModel)]="message.message"
+  ></textarea>
   <div class="inputButtons">
     <div>
       <div>
@@ -102,7 +106,7 @@
       </div>
     </div>
 
-    <div>
+    <div (click)="this.saveMessage()" class="cursor-pointer">
       <svg
         width="40"
         height="40"
