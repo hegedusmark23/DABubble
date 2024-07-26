@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-open-sidebar',
@@ -9,12 +10,10 @@ import { Component } from '@angular/core';
 })
 export class OpenSidebarComponent {
 
-  sidebarOpen = false;
+  hideOrShowSidebar = inject(SidebarService);
 
   openSidebarMenu(){
-    this.sidebarOpen = !this.sidebarOpen;
-    alert(this.sidebarOpen);
-
+    this.hideOrShowSidebar.sidebarOpen = !this.hideOrShowSidebar.sidebarOpen;
   }
 
 }

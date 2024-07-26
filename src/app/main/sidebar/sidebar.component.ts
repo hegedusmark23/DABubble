@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,6 +17,8 @@ export class SidebarComponent {
   activeChannelIndex: number | null = null;
   activeUserIndex: number | null = null; 
   usersTitleActive = false;
+
+  hideOrShowSidebar = inject(SidebarService);
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
