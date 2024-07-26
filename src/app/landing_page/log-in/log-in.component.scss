@@ -7,12 +7,16 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .logo {
     position: absolute;
-    top: 50px;
-    left: 30px;
+    animation: logoSlideOriginal;
+    animation-delay: 2500ms;
+    animation-timing-function: ease-in-out;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
 }
 
 .legal-section {
@@ -45,6 +49,7 @@ section {
 }
 
 .formfield {
+    z-index: 997;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -147,7 +152,39 @@ section {
     animation-delay: 2500ms;
     animation-timing-function: ease-out;
     animation-duration: 500ms;
-    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.animation-wrapper-local {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    animation: backgroundAnimation;
+}
+
+.animated-logo {
+    height: auto;
+    width: auto;
+    animation: logoAnimation;
+    animation-delay: 500ms;
+    animation-timing-function: ease-out;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    height: auto;
+    max-width: 100%;
+}
+
+.logo-wrapper {
+    z-index: 999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: logoSlide;
+    animation-delay: 2500ms;
+    animation-timing-function: ease-in-out;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
 }
 
 @keyframes backgroundAnimation {
@@ -158,5 +195,57 @@ section {
     100% {
         opacity: 0;
         z-index: -1;
+    }
+}
+
+@keyframes logoAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        content: url("../../../assets/img/landing-page/animation-step2.png");
+        transform: translateX(-5%)
+    }
+
+    100% {
+        content: url("../../../assets/img/landing-page/animation-step3.png");
+        transform: translateX(0);
+    }
+}
+
+@keyframes logoSlide {
+    0% {
+        opacity: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        top: 50px;
+        left: 30px;
+        transform: translate(0, 0);
+        z-index: 1;
+        height: 70px;
+        width: 243px;
+        opacity: 0;
+    }
+}
+
+@keyframes logoSlideOriginal {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        top: 50px;
+        left: 30px;
+        transform: translate(0, 0);
+        z-index: 1;
+        height: 70px;
+        width: 243px;
     }
 }
