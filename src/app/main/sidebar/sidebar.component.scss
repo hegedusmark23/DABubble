@@ -85,8 +85,24 @@
     }
 }
 
+.channel-active {
+    background-color: #ECEEFE;
+    cursor: pointer;
+}
+
 .raute {
     height: 24px;
     width: 24px;
     background-image: url('../../../assets/img/sidebar/tag.png');
+}
+
+.raute-active {
+    height: 24px;
+    width: 24px;
+    background-image: url('../../../assets/img/sidebar/tag_click.png');
+}
+
+.channel-title-active {
+    font-weight: 700;
+    color: rgba(83, 90, 241, 1);
 }

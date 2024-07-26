@@ -6,38 +6,31 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss'
+  styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
-  activeChannel = false;
-  AllChannels = ['Entwicklerteam' , 'Office-team'];
+  AllChannels = ['Entwicklerteam', 'Office-team'];
+  activeChannelIndex: number | null = null; 
 
-  hoverChannelTitle(){
+  hoverChannelTitle() {
     this.hoveredChannelTitle = true;
   }
 
-  hoverEndChannelTitle(){
+  hoverEndChannelTitle() {
     this.hoveredChannelTitle = false;
   }
 
-  activeteChannelTitle(){
-    if(!this.activetedChannelTitle){
-      this.activetedChannelTitle = true;
-    }else{
-      this.activetedChannelTitle = false;
-    }
+  activeteChannelTitle() {
+    this.activetedChannelTitle = !this.activetedChannelTitle;
   }
 
-  addChannel(){
+  addChannel() {
     alert('Add channel popup on!');
   }
 
   channelActive(i: number) {
-    alert(`Channel ausgewählt: ${this.AllChannels[i]}`);
-    this.activeChannel = true;
+    this.activeChannelIndex = i; 
   }
-
 }

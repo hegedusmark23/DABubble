@@ -27,9 +27,10 @@
                 </div>
             </div>
             <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
-                <div class="channel" (click)="channelActive(i)">
-                    <div class="raute"></div>
-                    <span class="channel-title fs-18">{{ channel }}</span>
+                <div class="channel" (click)="channelActive(i)" [ngClass]="{'channel-active': activeChannelIndex === i}">
+                    <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
+                    <span class="channel-title fs-18" 
+                    [ngClass]="{'channel-title-active': activeChannelIndex === i}" class="channel-title fs-18">{{ channel }}</span>
                 </div>
             </div>
         </div>
