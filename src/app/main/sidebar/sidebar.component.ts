@@ -12,8 +12,9 @@ export class SidebarComponent {
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
   AllChannels = ['Allgemein', 'Entwicklerteam', 'Office-team'];
-  AllUsers = ['Joost', 'Mark', 'Gabor'];
-  activeChannelIndex: number | null = null; 
+  AllUsers = ['Du', 'Joost', 'Mark', 'Gabor'];
+  activeChannelIndex: number | null = null;
+  activeUserIndex: number | null = null; 
   usersTitleActive = false;
 
   hoverChannelTitle() {
@@ -35,6 +36,11 @@ export class SidebarComponent {
   channelActive(i: number) {
     this.activeChannelIndex = i; 
     alert(this.AllChannels[i] + ' open');
+  }
+
+  userActive(i: number) {
+    this.activeUserIndex = i;
+    alert(this.AllUsers[i] + ' open');
   }
 
   addMessage() {
