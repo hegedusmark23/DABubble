@@ -1,6 +1,17 @@
 .search-field-container {
-    width: 789px;
+    width: 489px;
     height: 70px;
+    padding: 0px 50px;
     border-radius: 42px;
     background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: -140px;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-size: 18px;
 }
