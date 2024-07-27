@@ -1,52 +1,48 @@
-@if(!hideOrShowSidebar.sidebarOpen){
-    <div class="sidebar-container">
-        <div class="header">
-            <img src="../../../assets/img/sidebar/Workspace logo.png">
-            <span class="title">Devspace</span>
-            <div class="add-new-message" (click)="addNewMessage()">
-            </div>
-        </div>
-        <div class="menu">
-            <div class="channels-container">
-                <div class="channels-title-container">
-                    <div (click)="activeteChannelTitle()"
-                        [ngClass]="{'channels-title': !activetedChannelTitle, 'channels-title-active': activetedChannelTitle}">
-                    </div>
-                    <div class="add-channel-button" (click)="addChannel()">
-                    </div>
-                </div>@if(activetedChannelTitle){
-                <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
-                    <div class="channel" (click)="channelActive(i)"
-                        [ngClass]="{'channel-active': activeChannelIndex === i}">
-                        <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
-                        <span class="channel-title fs-18" [ngClass]="{'channel-title-active': activeChannelIndex === i}"
-                            class="channel-title fs-18">{{ channel }}</span>
-                    </div>
-                </div>
-                }
-                <div class="add-new-channel" (click)="addChannel()">
-                    <div class="add-new-channel-button"></div>
-                    <span class="fs-18 add-channel-text">Channel hinzufügen</span>
-                </div>
-            </div>
-    
-            <div class="users-container">
-                <div class="users-title-container" (click)="openUsersList()">
-                    <div [ngClass]="{'users-title': !usersTitleActive, 'users-title-active': usersTitleActive}"></div>
-                </div>
-                <div class="add-channel-button" (click)="addMessage()">
-                </div>
-            </div>
-            @if(usersTitleActive){
-            <div class="user-list" *ngFor="let user of AllUsers; let i = index" (click)="userActive(i)">
-                <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
-                <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
-                <span class="fs-18 user-name">{{ user }}</span>
-            </div>
-            }
-    
-    
-    
+<div class="sidebar-container"
+    [ngClass]="{'sidebar-container-open': !hideOrShowSidebar.sidebarOpen, 'sidebar-container-close': hideOrShowSidebar.sidebarOpen}">
+    <div class="header">
+        <img src="../../../assets/img/sidebar/Workspace logo.png">
+        <span class="title">Devspace</span>
+        <div class="add-new-message" (click)="addNewMessage()">
         </div>
     </div>
-}
+    <div class="menu">
+        <div class="channels-container">
+            <div class="channels-title-container">
+                <div (click)="activeteChannelTitle()"
+                    [ngClass]="{'channels-title': !activetedChannelTitle, 'channels-title-active': activetedChannelTitle}">
+                </div>
+                <div class="add-channel-button" (click)="addChannel()">
+                </div>
+            </div>@if(activetedChannelTitle){
+            <div class="channel-list" *ngFor="let channel of AllChannels; let i = index">
+                <div class="channel" (click)="channelActive(i)"
+                    [ngClass]="{'channel-active': activeChannelIndex === i}">
+                    <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
+                    <span class="channel-title fs-18" [ngClass]="{'channel-title-active': activeChannelIndex === i}"
+                        class="channel-title fs-18">{{ channel }}</span>
+                </div>
+            </div>
+            }
+            <div class="add-new-channel" (click)="addChannel()">
+                <div class="add-new-channel-button"></div>
+                <span class="fs-18 add-channel-text">Channel hinzufügen</span>
+            </div>
+        </div>
+
+        <div class="users-container">
+            <div class="users-title-container" (click)="openUsersList()">
+                <div [ngClass]="{'users-title': !usersTitleActive, 'users-title-active': usersTitleActive}"></div>
+            </div>
+            <div class="add-channel-button" (click)="addMessage()">
+            </div>
+        </div>
+        @if(usersTitleActive){
+        <div class="user-list" *ngFor="let user of AllUsers; let i = index" (click)="userActive(i)">
+            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+            <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
+            <span class="fs-18 user-name">{{ user }}</span>
+        </div>
+        }
+    </div>
+</div>
