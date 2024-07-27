@@ -19,13 +19,13 @@ export class ChannelMessageInputComponent implements OnInit {
   day: any;
   hour: any;
   minute: any;
+  user: any;
 
   ngOnInit(): void {}
   constructor(private firestore: Firestore) {}
 
   async saveMessage() {
     this.updateDateTime();
-
     setTimeout(() => {}, 100);
 
     await addDoc(
@@ -38,7 +38,7 @@ export class ChannelMessageInputComponent implements OnInit {
       .then((docRef) => {
         console.log('document written with ID : ', docRef?.id);
       });
-      
+
     this.message.message = '';
   }
 
@@ -52,6 +52,7 @@ export class ChannelMessageInputComponent implements OnInit {
       day: this.message.day,
       hour: this.message.hour,
       minute: this.message.minute,
+      user: this.message.user,
     };
   }
 
@@ -63,5 +64,6 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.day = now.getDate();
     this.message.hour = now.getHours();
     this.message.minute = now.getMinutes();
+    this.message.user = 'test User';
   }
 }

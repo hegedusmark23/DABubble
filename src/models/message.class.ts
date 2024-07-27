@@ -7,6 +7,7 @@ export class Message {
   day: number;
   hour: number;
   minute: number;
+  user: any;
 
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';
@@ -17,5 +18,6 @@ export class Message {
     this.day = obj ? obj.day : '';
     this.hour = obj ? obj.hour : '';
     this.minute = obj ? obj.minute : '';
+    this.user = obj ? obj.user : '';
   }
 }

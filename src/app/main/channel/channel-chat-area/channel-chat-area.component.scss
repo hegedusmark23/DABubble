@@ -3,6 +3,7 @@
   flex-direction: column;
   background-color: white;
   height: calc(100% - 310px);
+  overflow: auto;
 }
 
 .overflow-auto {
@@ -92,7 +93,7 @@
 }
 
 .hoverResive {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: row !important;
@@ -123,7 +124,7 @@
 }
 
 .hoverSend {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-direction: row !important;
@@ -184,6 +185,9 @@
   justify-content: space-between;
   &:hover {
     background-color: #f0f1fe;
+    .hoverSend {
+      display: flex !important;
+    }
   }
 }
 
@@ -192,6 +196,9 @@
   display: flex;
   justify-content: space-between;
   &:hover {
+    .hoverResive {
+      display: flex !important;
+    }
     background-color: #f0f1fe;
     span {
       background-color: white;
