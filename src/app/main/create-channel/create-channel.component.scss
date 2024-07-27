@@ -83,6 +83,15 @@ input {
 
 img {
     position: absolute;
-    top: 60px;
+    top: 64px;
     left: 20px;
+}
+
+.input-field {
+    width: 100%; 
+    padding: 0px 50px;
+    box-sizing: border-box;
+    &:focus {
+        border-color: none;
+    }
 }
