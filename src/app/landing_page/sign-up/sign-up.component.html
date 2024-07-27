@@ -1,1 +1,54 @@
-<p>sign-up works!</p>
+<section>
+    <img class="logo" src="../../../assets/img/landing-page/DABubble-logo.png" alt="daBubble-logo">
+
+    <div class="signUp-section-p1">
+
+        <a href=""><img class="arrow-back cursor-pointer" [src]="imgSrcArrow"
+                (mouseover)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back-hover.png'"
+                (mouseout)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back.png'" alt="arrow-back"></a>
+
+        <h1 class="fs-46">Konto erstellen</h1>
+
+        <p style="max-width: 486px; text-align: center;" class="fs-20">Mit deinem Namen und deiner E-Mail-Adresse hast
+            du dein neues DABubble-Konto.</p>
+
+        <form class="formfield" action="" #contactForm="ngForm">
+            <div style="position: relative;">
+                <img class="input-icon" src="../../../assets/img/landing-page/person.png" alt="person">
+                <input required class="input-design" placeholder="Name und Nachname" type="text">
+                <span class="d-none">Bitte schreiben Sie einen Namen.</span>
+            </div>
+
+            <div style="position: relative;">
+                <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="mail">
+                <input required class="input-design" placeholder="beispielname@email.com" type="email"
+                    pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                <span class="d-none">*Diese E-Mail-Adresse ist leider ungültig</span>
+            </div>
+
+            <div style="position: relative;">
+                <img class="input-icon-lock" src="../../../assets/img/landing-page/lock.png" alt="lock">
+                <input required class="input-design" placeholder="Passwort" type="password">
+                <span class="d-none">Falsches Passwort. Bitte noch einmal versuchen</span>
+            </div>
+
+            <div class="privacyPolicy-container">
+                <img style="cursor: pointer;" (click)="toggleCheck()" [src]="imgSrcCheck" alt="checkbox-unchecked"
+                    (mouseover)="mouseOver()"
+                    (mouseout)="mouseOut()">
+                <p class="fs-18">Ich stimme der<a class="fs-18 password-link" href="privacy">Datenschutzerklärung</a>zu.
+                </p>
+            </div>
+
+            <span class="btn-container">
+                <button 
+                [ngClass]="{'blue-btn': contactForm.valid && isClicked, 'disabled-btn fs-18': !contactForm.valid || !isClicked}">Weiter</button>
+            </span>
+        </form>
+    </div>
+
+    <div class="legal-section">
+        <a class="fs-18 purp-link" href="impressum">Impressum</a>
+        <a class="fs-18 purp-link" href="privacy">Datenschutz</a>
+    </div>
+</section>
