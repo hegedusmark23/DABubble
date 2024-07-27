@@ -13,4 +13,12 @@ export class CreateChannelComponent {
 
   hideOrShowSidebar = inject(SidebarService);
 
+  closeDialog(){
+    this.hideOrShowSidebar.createChannelDialogActive = false;
+  }
+
+  notCloseDialog(e : any){
+    e.stopPropagation(e);
+  }
+
 }

@@ -23,13 +23,59 @@
     background-color: white;
     border-radius: 30px;
     gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .dialog-title-container {
-    width: 100%;
+    width: 792px;
     margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dialog-title {
     font-weight: 700;
+}
+
+.close-button {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-image: url('../../../assets/img/create-channel/close_button.png');
+    &:hover {
+        background-image: url('../../../assets/img/create-channel/close_button_hover.png');
+    }
+}
+
+.description {
+    width: 792px;
+    span {
+        font-weight: 400;
+    }
+}
+
+.channel-name-container {
+    width: 792px;
+    height: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    span {
+        font-weight: 700;
+    }
+}
+
+input {
+    width: 792px;
+    height: 60px;
+    border-radius: 40px;
+    border: 1px solid rgba(173, 176, 217, 1);
+    padding: 18px, 20px, 18px, 20px;
+    font-size: 18px;
+    gap: 20px;
 }

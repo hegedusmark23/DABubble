@@ -1,8 +1,18 @@
-<div class="create-channel-container"
+<div class="create-channel-container" (click)="closeDialog()"
 [ngClass]="{'display-flex': hideOrShowSidebar.createChannelDialogActive, 'display-none': !hideOrShowSidebar.createChannelDialogActive }">
-    <div class="create-channel-dialog">
+    <div class="create-channel-dialog" (click)="notCloseDialog($event)">
         <div class="dialog-title-container">
             <span class="fs-24 dialog-title">Channel erstellen</span>
+            <div class="close-button" (click)="closeDialog()"></div>
+        </div>
+        <div class="description">
+            <span class="fs-18">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein 
+                 #marketing zum Beispiel.</span>
+        </div>
+        <div class="channel-name-container">
+            <span class="fs-18">Channel-Name</span>
+            <input type="text">
+            <img src="../../../assets/img/create-channel/tag.png">
         </div>
     </div>
 </div>
