@@ -52,6 +52,7 @@ export class ChannelMessageInputComponent implements OnInit {
       day: this.message.day,
       hour: this.message.hour,
       minute: this.message.minute,
+      seconds: this.message.seconds,
       user: this.message.user,
     };
   }
@@ -64,6 +65,7 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.day = now.getDate();
     this.message.hour = now.getHours();
     this.message.minute = now.getMinutes();
-    this.message.user = 'test User';
+    this.message.seconds = now.getSeconds();
+    this.message.user = 'send';
   }
 }
