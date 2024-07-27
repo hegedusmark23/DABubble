@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { Firestore, collection, setDoc, doc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-create-channel',
@@ -17,6 +18,9 @@ export class CreateChannelComponent {
     name  : '',
     description : ''
   }
+  loading = false;
+
+  constructor(private firestore: Firestore) {}
 
   closeDialog(){
     this.hideOrShowSidebar.createChannelDialogActive = false;
@@ -26,10 +30,28 @@ export class CreateChannelComponent {
     e.stopPropagation(e);
   }
 
-  saveChannel(){
-    //alert(this.newChannel.name);
-    //alert(this.newChannel.description);
-    this.closeDialog();
+  async saveChannel(){
+    this.loading = true;
+    const channelRef = doc(collection(this.firestore, 'Channels'), this.newChannel.name);
+    await setDoc(
+      channelRef,
+      this.toJSON()
+    )
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(() => {
+        this.loading = false;
+        this.newChannel.name = '',
+        this.newChannel.description = ''
+        this.closeDialog();
+      });
   }
 
+  toJSON() {
+    return {
+      name : this.newChannel.name,
+      description : this.newChannel.description
+    };
+  }
 }
