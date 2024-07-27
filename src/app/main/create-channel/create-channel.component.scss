@@ -1,0 +1,35 @@
+.create-channel-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+}
+
+.display-flex {
+    display: flex;
+}
+
+.display-none {
+    display: none;
+}
+
+.create-channel-dialog {
+    width: 872px;
+    height: 539px;
+    background-color: white;
+    border-radius: 30px;
+    gap: 20px;
+}
+
+.dialog-title-container {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.dialog-title {
+    font-weight: 700;
+}

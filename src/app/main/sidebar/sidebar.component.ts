@@ -33,7 +33,7 @@ export class SidebarComponent {
   }
 
   addChannel() {
-    alert('Add channel popup on!');
+    this.hideOrShowSidebar.createChannelDialogActive = true;
   }
 
   channelActive(i: number) {
