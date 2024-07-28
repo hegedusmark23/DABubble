@@ -11,14 +11,11 @@ import { Router } from '@angular/router';
 })
 export class LogInComponent {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private router: Router) {
+
   }
 
-  googleSignIn(){
-    this.authService.signInWithGoogle().then((res: any) => {
-      this.router.navigateByUrl('home')
-    }).catch((error:any) =>{
-      console.error(error);
-    });
+  googleSignIn() {
+
   }
 }

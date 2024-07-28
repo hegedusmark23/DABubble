@@ -1,16 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
-  
+  authService = inject(AuthService);
+  router = inject(Router);
+  fb = inject(FormBuilder);
+
+
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
   imgSrcCheck: string = '../../../assets/img/landing-page/checkbox-unchecked.png';
   imgSrcUnchecked: string = '../../../assets/img/landing-page/checkbox-unchecked.png';
@@ -21,8 +27,21 @@ export class SignUpComponent {
   isHoveringOver: boolean = false;
   public submitted:boolean = false;
 
+  form = this.fb.nonNullable.group({
+    name: ['', Validators.required],
+    email: ['', Validators.required],
+    password: ['', Validators.required],
+  })
+
   constructor() {
     this.updateImageSrc();
+  }
+
+  onSubmit(): void {
+    const rawForm = this.form.getRawValue();
+    this.authService.register(rawForm.email, rawForm.name, rawForm.password).subscribe(() => {
+      this.router.navigateByUrl('/')
+    })
   }
 
   mouseOver(){

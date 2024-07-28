@@ -1,23 +1,27 @@
-import { Injectable } from '@angular/core';
-import { GoogleAuthProvider } from '@angular/fire/auth';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { inject, Injectable } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  firebaseAuth = inject(Auth)
 
-  constructor(private afs: AngularFireAuth) { }
+  constructor() { }
 
-  signInWithGoogle(){
-    return this.afs.signInWithPopup(new GoogleAuthProvider());
+  signInWithGoogle() {
   }
 
-  registerWithEmailAndPassword(user : {email: string, password: string}){
-    return this.afs.createUserWithEmailAndPassword(user.email, user.password);
+  register(email: string, name: string, password: string): Observable<void> {
+    const promise = createUserWithEmailAndPassword(this.firebaseAuth,
+    email,
+    password,
+  ).then(response => updateProfile(response.user, {displayName: name}));
+
+  return from(promise);
   }
 
-  signInWithEmailAndPassword(user : {email: string, password: string}){
-    return this.afs.signInWithEmailAndPassword(user.email, user.password);
+  signInWithEmailAndPassword(user: { email: string, password: string }) {
   }
 }
