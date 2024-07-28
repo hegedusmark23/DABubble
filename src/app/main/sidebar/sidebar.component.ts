@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,16 +10,24 @@ import { SidebarService } from '../../services/sidebar.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent  implements OnInit{
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
-  AllChannels = ['Allgemein', 'Entwicklerteam', 'Office-team'];
   AllUsers = ['Du', 'Joost', 'Mark', 'Gabor'];
   activeChannelIndex: number | null = null;
   activeUserIndex: number | null = null; 
   usersTitleActive = false;
 
   hideOrShowSidebar = inject(SidebarService);
+
+  ngOnInit(): void {
+    this.hideOrShowSidebar.fetchChannels();
+  }
+
+  constructor(private firestore: Firestore) {
+  }
+
+  
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
@@ -38,7 +47,7 @@ export class SidebarComponent {
 
   channelActive(i: number) {
     this.activeChannelIndex = i; 
-    alert(this.AllChannels[i] + ' open');
+    alert(this.hideOrShowSidebar.AllChannels[i] + ' open');
   }
 
   userActive(i: number) {

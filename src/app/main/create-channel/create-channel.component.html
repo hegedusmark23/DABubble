@@ -11,12 +11,14 @@
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Channel-Name</span>
-            <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading">
+            <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
+            id="channelDescription" name="channelDescription">
             <img src="../../../assets/img/create-channel/tag.png">
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
-            <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading">
+            <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading"
+            id="channelMessages" name="channelMessages">
             <img src="../../../assets/img/create-channel/tag.png">
         </div>
         <div class="button-container">

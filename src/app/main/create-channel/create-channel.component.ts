@@ -44,6 +44,7 @@ export class CreateChannelComponent {
         this.loading = false;
         this.newChannel.name = '',
         this.newChannel.description = ''
+        this.hideOrShowSidebar.fetchChannels();
         this.closeDialog();
       });
   }
