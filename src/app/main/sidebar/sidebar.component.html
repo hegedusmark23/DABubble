@@ -36,8 +36,6 @@
             <div class="users-title-container" (click)="openUsersList()">
                 <div [ngClass]="{'users-title': !usersTitleActive, 'users-title-active': usersTitleActive}"></div>
             </div>
-            <div class="add-channel-button" (click)="addMessage()">
-            </div>
         </div>
         @if(usersTitleActive){
         <div class="scroll-container-users">
