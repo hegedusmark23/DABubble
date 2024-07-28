@@ -8,7 +8,8 @@ export class SidebarService {
 
   sidebarOpen = false;
   createChannelDialogActive = false;
-  AllChannels: string[] = [];
+  AllChannels : string[] = [];
+  AllUsers : string[] = [];
 
   constructor(private firestore: Firestore) { }
 
@@ -18,6 +19,15 @@ export class SidebarService {
     const querySnapshot = await getDocs(channelsCollection);
     querySnapshot.forEach((doc) => {
       this.AllChannels.push(doc.id);
+    });
+  }
+
+  async fetchUsers() {
+    this.AllUsers = [];
+    const channelsCollection = collection(this.firestore, 'Users');
+    const querySnapshot = await getDocs(channelsCollection);
+    querySnapshot.forEach((doc) => {
+      this.AllUsers.push(doc.id);
     });
   }
 }

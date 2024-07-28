@@ -126,6 +126,11 @@
     overflow: auto;
 }
 
+.scroll-container-users {
+    max-height: 150px;
+    overflow: auto;
+}
+
 .channel-list {
     margin-top: 15px;
     display: flex;

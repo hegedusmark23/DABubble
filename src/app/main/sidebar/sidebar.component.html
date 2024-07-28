@@ -15,24 +15,23 @@
                 <div class="add-channel-button" (click)="addChannel()">
                 </div>
             </div>@if(activetedChannelTitle){
-                <div class="scroll-container">
-                    <div class="channel-list" *ngFor="let channel of hideOrShowSidebar.AllChannels; let i = index">
-                        <div class="channel" (click)="channelActive(i)"
-                            [ngClass]="{'channel-active': activeChannelIndex === i}">
-                            <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
-                            <span class="channel-title fs-18" [ngClass]="{'channel-title-active': activeChannelIndex === i}"
-                                class="channel-title fs-18">{{ channel }}</span>
-                        </div>
+            <div class="scroll-container">
+                <div class="channel-list" *ngFor="let channel of hideOrShowSidebar.AllChannels; let i = index">
+                    <div class="channel" (click)="channelActive(i)"
+                        [ngClass]="{'channel-active': activeChannelIndex === i}">
+                        <div class="raute" [ngClass]="{'raute-active': activeChannelIndex === i}"></div>
+                        <span class="channel-title fs-18" [ngClass]="{'channel-title-active': activeChannelIndex === i}"
+                            class="channel-title fs-18">{{ channel }}</span>
                     </div>
                 </div>
-            
+            </div>
+
             }
             <div class="add-new-channel" (click)="addChannel()">
                 <div class="add-new-channel-button"></div>
                 <span class="fs-18 add-channel-text">Channel hinzufügen</span>
             </div>
         </div>
-
         <div class="users-container">
             <div class="users-title-container" (click)="openUsersList()">
                 <div [ngClass]="{'users-title': !usersTitleActive, 'users-title-active': usersTitleActive}"></div>
@@ -41,10 +40,13 @@
             </div>
         </div>
         @if(usersTitleActive){
-        <div class="user-list" *ngFor="let user of AllUsers; let i = index" (click)="userActive(i)">
-            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
-            <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
-            <span class="fs-18 user-name">{{ user }}</span>
+        <div class="scroll-container-users">
+            <div class="user-list" *ngFor="let user of hideOrShowSidebar.AllUsers; let i = index"
+                (click)="userActive(i)">
+                <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+                <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
+                <span class="fs-18 user-name">{{ user }}</span>
+            </div>
         </div>
         }
     </div>

@@ -13,7 +13,6 @@ import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 export class SidebarComponent  implements OnInit{
   hoveredChannelTitle = false; 
   activetedChannelTitle = false; 
-  AllUsers = ['Du', 'Joost', 'Mark', 'Gabor'];
   activeChannelIndex: number | null = null;
   activeUserIndex: number | null = null; 
   usersTitleActive = false;
@@ -22,6 +21,7 @@ export class SidebarComponent  implements OnInit{
 
   ngOnInit(): void {
     this.hideOrShowSidebar.fetchChannels();
+    this.hideOrShowSidebar.fetchUsers();
   }
 
   constructor(private firestore: Firestore) {
@@ -52,7 +52,7 @@ export class SidebarComponent  implements OnInit{
 
   userActive(i: number) {
     this.activeUserIndex = i;
-    alert(this.AllUsers[i] + ' open');
+    alert(this.hideOrShowSidebar.AllUsers[i] + ' open');
   }
 
   addMessage() {
