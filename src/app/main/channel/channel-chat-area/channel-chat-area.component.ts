@@ -34,7 +34,6 @@ export class ChannelChatAreaComponent implements AfterViewInit {
   allMessages: Message[] = [];
   allDates: any = [];
   dateCounter = 0;
-  private hasRendered = false;
   scrolled = true;
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
@@ -60,10 +59,12 @@ export class ChannelChatAreaComponent implements AfterViewInit {
   }
 
   openThread(thread: any) {
-    console.log('test');
-
-    this.threadService.openThread(thread);
+    this.threadService.closeThread();
+    setTimeout(() => {
+      this.threadService.openThread(thread);
+    }, 300);
   }
+
   subMessages() {
     const q = query(
       collection(this.firestore, 'Channels', 'Entwicklerteam', 'messages'),
@@ -93,6 +94,7 @@ export class ChannelChatAreaComponent implements AfterViewInit {
       user: obj.user || '',
     };
   }
+
   sortMessages(): void {
     this.allMessagesSorted = [];
     this.allMessagesSorted = [...this.allMessages].sort((a, b) => {
@@ -117,9 +119,7 @@ export class ChannelChatAreaComponent implements AfterViewInit {
   }
 
   scrollToBottom(): void {
-    console.log('test0');
     if (typeof window !== 'undefined') {
-      console.log('test1');
       // Browser-spezifischer Code hier
       const container = document.getElementById('messageContainer');
       if (container) {
@@ -130,7 +130,6 @@ export class ChannelChatAreaComponent implements AfterViewInit {
 
   dateLoaded(message: any) {
     if (this.dateCounter === this.allMessages.length) {
-      console.log(this.dateCounter, this.allMessages.length);
       this.dateCounter = 0;
       this.allDates = [];
     }
@@ -146,7 +145,6 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     if (Array.isArray(this.allDates) && this.allDates.includes(date)) {
       return false;
     } else {
-      console.log('test');
       this.allDates.push(date);
       return true;
     }

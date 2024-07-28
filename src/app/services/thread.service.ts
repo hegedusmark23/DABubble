@@ -22,6 +22,6 @@ export class ThreadService {
     let element = document.getElementById('slideIn');
     element?.classList.remove('slide-in-right');
     element?.classList.add('slide-out-right');
-      this.threadSubject.next(null);
+    this.threadSubject.next(null);
   }
 }

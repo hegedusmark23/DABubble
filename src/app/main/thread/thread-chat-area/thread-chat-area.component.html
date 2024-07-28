@@ -1,57 +1,64 @@
-<div class="content">
-  <div class="messageResive">
-    <div><img src="./../../../../assets/img/profile-imgs/male2.png" /></div>
-    <div>
-      <div>
-        <p>Noah Braun</p>
-        <p>14:25 Uhr</p>
-      </div>
-      <span>Welche Version ist aktuell von Angular?</span>
-      <div>
-        <a>2 Antworten</a>
-        <p>Letzte Antwort 14:56</p>
-      </div>
+<div
+  class="contentContainer"
+  id="messageContainer"
+  #messageContainer
+  [ngClass]="containerClasses"
+>
+  <div class="content" #myDiv>
+    <!-- <div class="date">
+      <span class="spacer"></span>
+      <p class="fs-18">Dienstag. 14.Januar</p>
+      <span class="spacer"></span>
     </div>
-  </div>
 
-  <div class="answeresSpacer">
-    <p>2 Antworten</p>
-    <div class="spacer"></div>
-  </div>
+    <div class="date">
+      <span class="spacer"></span>
+      <p class="fs-18">Today</p>
+      <span class="spacer"></span>
+    </div> -->
 
-  <div class="messageResive">
-    <div><img src="./../../../../assets/img/profile-imgs/female1.png" /></div>
-    <div>
-      <div>
-        <p>Noah Braun</p>
-        <p>14:25 Uhr</p>
-      </div>
-      <span
-        >Ich habe die gleiche Frage. Ich habe gegoogelt und es scheint, dass die
-        aktuelle Version Angular 13 ist. Vielleicht weiß Frederik, ob es wahr
-        ist.</span
-      >
-      <div>
-        <a>2 Antworten</a>
-        <p>Letzte Antwort 14:56</p>
-      </div>
-    </div>
-  </div>
+    <div *ngFor="let message of allMessagesSorted" #messageList ng>
+      <div *ngIf="message.user === 'resive'">
+        <div class="messageResiveContainer">
+          <div class="messageResive">
+            <div>
+              <img src="./../../../../assets/img/profile-imgs/male2.png" />
+            </div>
+            <div class="messageInfo">
+              <div class="messageTitle">
+                <div class="messageUserName">
+                  <p>{{ message.user }}</p>
+                  <p>{{ message.hour }}:{{ message.minute }} Uhr</p>
+                </div>
 
-  <div class="messageSend">
-    <div>
-      <div>
-        <p>14:25 Uhr</p>
-        <p>Noah Braun</p>
+                <div></div>
+              </div>
+              <span>{{ message.message }}</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <span>Ja das ist es.</span>
-      <div>
-        <a>2 Antworten</a>
-        <p>Letzte Antwort 14:56</p>
+
+      <div *ngIf="message.user !== 'resive'">
+        <div class="messageSendContainer">
+          <div></div>
+          <div class="messageSend">
+            <div class="messageInfo">
+              <div class="messageTitle">
+                <div></div>
+                <div class="messageUserName">
+                  <p>{{ message.user }}</p>
+                  <p>{{ getFormattedTime(message.hour, message.minute) }}</p>
+                </div>
+              </div>
+              <span>{{ message.message }}</span>
+            </div>
+            <div class="profileImg">
+              <img src="./../../../../assets/img/profile-imgs/male2.png" />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="profileImg">
-      <img src="./../../../../assets/img/profile-imgs/male2.png" />
     </div>
   </div>
 </div>
