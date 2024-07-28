@@ -12,7 +12,6 @@ img {
 
 .user-account {
     right: 35px;
-    background-color: aqua;
     height: 70px;
     position: absolute;
     display: flex;
@@ -20,6 +19,14 @@ img {
     align-items: center;
     gap:50px;
     cursor: pointer;
+    &:hover {
+        .arrow {
+            background-image: url('../../../assets/img/header/expand_more.png');
+        }
+        span {
+            color: rgba(121, 126, 243, 1);
+        }
+    }
 }
 
 .profil {
@@ -37,6 +44,7 @@ img {
 .online-icon {
     width: 14px;
     height: 14px;
+    transform: translateY(50px) translateX(57px);
 }
 
 .arrow {

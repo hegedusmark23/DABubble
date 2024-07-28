@@ -10,4 +10,8 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 })
 export class HeaderComponent {
 
+  openDialog(){
+    alert('Edit Profil/Logout');
+  }
+
 }
