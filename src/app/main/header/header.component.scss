@@ -11,20 +11,27 @@ img {
 }
 
 .user-account {
-    position: absolute;
     right: 35px;
     background-color: aqua;
-    width: 342px;
     height: 70px;
+    position: absolute;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    gap:50px;
+    cursor: pointer;
+}
+
+.profil {
+    transform: translateY(-35px) translateX(-68px);
 }
 
 .profil-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 42px;
+    position: absolute;
+    right: 0;
 }
 
 .online-icon {
@@ -36,5 +43,9 @@ img {
     background-image: url("../../../assets/img/header/keyboard_arrow_down.png");
     width: 30px;
     height: 30px;
-    position: absolute;
+}
+
+span {
+    font-weight: 700;
+    font-size: 32px;
 }
