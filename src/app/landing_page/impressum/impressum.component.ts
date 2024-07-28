@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-impressum',
@@ -8,5 +9,12 @@ import { Component } from '@angular/core';
   styleUrl: './impressum.component.scss'
 })
 export class ImpressumComponent {
+  imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
 
+  constructor(private _location: Location){
+  }
+
+  goBack() {
+    this._location.back();
+  }
 }
