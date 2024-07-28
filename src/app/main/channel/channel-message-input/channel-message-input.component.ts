@@ -53,6 +53,7 @@ export class ChannelMessageInputComponent implements OnInit {
       hour: this.message.hour,
       minute: this.message.minute,
       seconds: this.message.seconds,
+      milliseconds: this.message.milliseconds,
       user: this.message.user,
     };
   }
@@ -66,6 +67,7 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.hour = now.getHours();
     this.message.minute = now.getMinutes();
     this.message.seconds = now.getSeconds();
+    this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
     this.message.user = 'send';
   }
 }

@@ -8,6 +8,7 @@ export class Message {
   hour: number;
   minute: number;
   seconds: number;
+  milliseconds: number;
   user: any;
 
   constructor(obj?: any) {
@@ -20,6 +21,7 @@ export class Message {
     this.hour = obj ? obj.hour : '';
     this.minute = obj ? obj.minute : '';
     this.seconds = obj ? obj.seconds : '';
+    this.milliseconds = obj ? obj.milliseconds : '';
     this.user = obj ? obj.user : '';
   }
 }

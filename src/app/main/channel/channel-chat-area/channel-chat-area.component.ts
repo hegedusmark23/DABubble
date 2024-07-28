@@ -32,6 +32,8 @@ import { ThreadService } from '../../../services/thread.service';
 export class ChannelChatAreaComponent implements AfterViewInit {
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
+  allDates: any = [];
+  dateCounter = 0;
   private hasRendered = false;
   scrolled = true;
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
@@ -43,7 +45,8 @@ export class ChannelChatAreaComponent implements AfterViewInit {
 
   constructor(
     private threadService: ThreadService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngAfterViewInit(): void {
@@ -55,26 +58,6 @@ export class ChannelChatAreaComponent implements AfterViewInit {
       }
     });
   }
-
-  // scrollToBottom() {
-  //   // if (this.messageContainer) {
-  //   //   const hasScrollbar =
-  //   //     this.messageContainer.nativeElement.scrollHeight >
-  //   //     this.messageContainer.nativeElement.clientHeight;
-  //   //   if (hasScrollbar) {
-  //   //     this.containerClasses = {
-  //   //       'overflow-auto': true,
-  //   //       'justify-content-end': false,
-  //   //     };
-  //   //   } else {
-  //   //     this.containerClasses = {
-  //   //       'overflow-auto': false,
-  //   //       'justify-content-end': true,
-  //   //     };
-  //   //   }
-  //   //   console.log('test');
-  //   // }
-  // }
 
   openThread(thread: any) {
     console.log('test');
@@ -106,6 +89,7 @@ export class ChannelChatAreaComponent implements AfterViewInit {
       hour: obj.hour || '',
       minute: obj.minute || '',
       seconds: obj.seconds || '',
+      milliseconds: obj.milliseconds || '',
       user: obj.user || '',
     };
   }
@@ -142,5 +126,60 @@ export class ChannelChatAreaComponent implements AfterViewInit {
         container.scrollTop = container.scrollHeight;
       }
     }
+  }
+
+  dateLoaded(message: any) {
+    if (this.dateCounter === this.allMessages.length) {
+      console.log(this.dateCounter, this.allMessages.length);
+      this.dateCounter = 0;
+      this.allDates = [];
+    }
+    let date =
+      message.day.toString().padStart(2, '0') +
+      '.' +
+      message.month.toString().padStart(2, '0') +
+      '.' +
+      message.year.toString();
+
+    this.dateCounter++;
+
+    if (Array.isArray(this.allDates) && this.allDates.includes(date)) {
+      return false;
+    } else {
+      console.log('test');
+      this.allDates.push(date);
+      return true;
+    }
+  }
+
+  getMonthName(monthNumber: number): string {
+    const months: string[] = [
+      'Januar',
+      'Februar',
+      'März',
+      'April',
+      'Mai',
+      'Juni',
+      'Juli',
+      'August',
+      'September',
+      'Oktober',
+      'November',
+      'Dezember',
+    ];
+
+    if (monthNumber < 1 || monthNumber > 12) {
+      throw new Error(
+        'Ungültige Monatszahl. Bitte geben Sie eine Zahl zwischen 1 und 12 ein.'
+      );
+    }
+
+    return months[monthNumber - 1];
+  }
+
+  getFormattedTime(hour: any, minute: any): any {
+    const hours = hour.toString().padStart(2, '0');
+    const minutes = minute.toString().padStart(2, '0');
+    return `${hours}:${minutes} Uhr`;
   }
 }
