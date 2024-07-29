@@ -1,6 +1,12 @@
 <div class="profil-options-popup-container" (click)="closeDialog()"
 [ngClass]="{'display-flex': hideOrShowPopUp.popUpOpen , 'display-none': !hideOrShowPopUp.popUpOpen }">
     <div class="dialog" (click)="notCloseDialog($event)">
+        <div>
+            <span>Profil</span>
+        </div>
+        <div>
+            <span>Log out</span>
+        </div>
     </div>
 </div>
 
