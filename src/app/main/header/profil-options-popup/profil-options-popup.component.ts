@@ -21,4 +21,12 @@ export class ProfilOptionsPopupComponent {
     e.stopPropagation(e);
   }
 
+  openProfil(){
+    alert('Profil edit window open');
+  }
+
+  logOut(){
+    alert('Logout profil');
+  }
+
 }
