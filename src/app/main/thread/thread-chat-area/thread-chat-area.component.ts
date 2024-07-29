@@ -22,6 +22,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
+import { ChannelSelectionService } from '../../../services/channel-selection.service';
 @Component({
   selector: 'app-thread-chat-area',
   standalone: true,
@@ -34,6 +35,7 @@ export class ThreadChatAreaComponent {
 
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
+  currentChannel: any;
 
   scrolled = true;
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
@@ -46,7 +48,7 @@ export class ThreadChatAreaComponent {
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
-    private cdRef: ChangeDetectorRef
+    private channelSelectionService: ChannelSelectionService
   ) {}
 
   ngAfterViewInit(): void {
@@ -60,12 +62,11 @@ export class ThreadChatAreaComponent {
   }
 
   subMessages() {
-    console.log(this.threadId);
     const q = query(
       collection(
         this.firestore,
         'Channels',
-        'Entwicklerteam',
+        this.currentChannel,
         'messages',
         this.threadId,
         'thread'
@@ -134,5 +135,17 @@ export class ThreadChatAreaComponent {
     const hours = hour.toString().padStart(2, '0');
     const minutes = minute.toString().padStart(2, '0');
     return `${hours}:${minutes} Uhr`;
+  }
+
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+      this.onChannelChange(channel);
+    });
+  }
+
+  onChannelChange(channel: string): void {
+    // Deine Logik hier
+    this.subMessages(); // Ensure messages are fetched on channel change
   }
 }

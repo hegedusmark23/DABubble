@@ -34,7 +34,6 @@ export class ThreadComponent implements OnInit {
   constructor(private firestore: Firestore) {}
   ngOnInit(): void {
     this.threadId = this.thread.id;
-    console.log(this.thread);
   }
 
   subMessages() {
@@ -54,12 +53,7 @@ export class ThreadComponent implements OnInit {
       list.forEach((element) => {
         this.allMessages.push(this.setNoteObject(element.data(), element.id));
       });
-      this.test();
     });
-  }
-
-  test() {
-    console.log(this.allMessages);
   }
 
   setNoteObject(obj: any, id: string): Message {

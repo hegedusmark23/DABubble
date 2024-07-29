@@ -39,9 +39,7 @@ export class ChannelMessageInputComponent implements OnInit {
       .catch((err) => {
         console.error(err);
       })
-      .then((docRef) => {
-        console.log('document written with ID : ', docRef?.id);
-      });
+      .then((docRef) => {});
 
     this.message.message = '';
   }
@@ -78,11 +76,6 @@ export class ChannelMessageInputComponent implements OnInit {
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannel = channel;
-      this.onChannelChange(channel);
     });
-  }
-
-  onChannelChange(channel: string): void {
-    console.log('Kanal geändert:', channel);
   }
 }

@@ -61,7 +61,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   openThread(thread: any) {
-    console.log();
     if (this.threadService.isThreadOpen()) {
       this.threadService.closeThread();
       setTimeout(() => {
@@ -197,7 +196,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   onChannelChange(channel: string): void {
     // Deine Logik hier
-    console.log('Kanal geändert:', channel);
     this.subMessages(); // Ensure messages are fetched on channel change
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
+import { ChannelSelectionService } from '../../../services/channel-selection.service';
 
 @Component({
   selector: 'app-thread-message-input',
@@ -11,10 +12,15 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './thread-message-input.component.html',
   styleUrl: './thread-message-input.component.scss',
 })
-export class ThreadMessageInputComponent {
+export class ThreadMessageInputComponent implements OnInit {
   @Input() threadId: any;
   message = new Message();
-  constructor(private firestore: Firestore) {}
+  currentChannel: any;
+
+  constructor(
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService
+  ) {}
 
   async saveMessage() {
     this.updateDateTime();
@@ -24,7 +30,7 @@ export class ThreadMessageInputComponent {
       collection(
         this.firestore,
         'Channels',
-        'Entwicklerteam',
+        this.currentChannel,
         'messages',
         this.threadId,
         'thread'
@@ -35,7 +41,6 @@ export class ThreadMessageInputComponent {
         console.error(err);
       })
       .then((docRef) => {
-        console.log('document written with ID : ', docRef?.id);
       });
 
     this.message.message = '';
@@ -68,5 +73,16 @@ export class ThreadMessageInputComponent {
     this.message.seconds = now.getSeconds();
     this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
     this.message.user = 'send';
+  }
+
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+      this.onChannelChange(channel);
+    });
+  }
+
+  onChannelChange(channel: string): void {
+    // Deine Logik hier
   }
 }
