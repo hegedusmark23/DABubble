@@ -4,7 +4,7 @@
     <app-profil-options-popup></app-profil-options-popup>
     <div class="user-account" (click)="openDialog()">
         <div>
-            <span>Gabor</span>
+            <span>{{authService.currentUserSignal()?.name}}</span>
         </div>
         <div class="profil">
             <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">

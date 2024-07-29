@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./main/header/header.component";
 import { OpenSidebarComponent } from "./main/open-sidebar/open-sidebar.component";
@@ -7,6 +7,7 @@ import { ChannelComponent } from "./main/channel/channel/channel.component";
 import { LogInComponent } from "./landing_page/log-in/log-in.component";
 import { CreateChannelComponent } from './main/create-channel/create-channel.component';
 import { SignUpComponent } from "./landing_page/sign-up/sign-up.component";
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,24 @@ import { SignUpComponent } from "./landing_page/sign-up/sign-up.component";
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'DABubble';
+
+  authService = inject(AuthService);
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      if (user) {
+        this.authService.currentUserSignal.set({
+          email: user.email!,
+          name: user.displayName!,
+        });
+      } else {
+        this.authService.currentUserSignal.set(null);
+      };
+      console.log(this.authService.currentUserSignal());
+    });
+
+  }
+  
 }
