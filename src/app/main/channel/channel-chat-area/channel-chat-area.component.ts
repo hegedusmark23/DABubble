@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
+import { ChannelSelectionService } from '../../../services/channel-selection.service';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -29,7 +30,7 @@ import { ThreadService } from '../../../services/thread.service';
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent implements AfterViewInit {
+export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
   allDates: any = [];
@@ -41,33 +42,39 @@ export class ChannelChatAreaComponent implements AfterViewInit {
   @ViewChildren('messageList') messageLoaded!: QueryList<any>;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
+  currentChannel = 'Entwicklerteam';
 
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
-    private cdRef: ChangeDetectorRef
+    private channelSelectionService: ChannelSelectionService
   ) {}
 
   ngAfterViewInit(): void {
-    this.subMessages();
     this.messageLoaded.changes.subscribe((t) => {
       if (this.scrolled) {
         this.scrolled = false;
         this.scrollToBottom();
       }
     });
+    this.subMessages(); // Move subMessages to ngAfterViewInit to ensure View is initialized
   }
 
   openThread(thread: any) {
-    this.threadService.closeThread();
-    setTimeout(() => {
+    console.log();
+    if (this.threadService.isThreadOpen()) {
+      this.threadService.closeThread();
+      setTimeout(() => {
+        this.threadService.openThread(thread);
+      }, 300);
+    } else {
       this.threadService.openThread(thread);
-    }, 300);
+    }
   }
 
   subMessages() {
     const q = query(
-      collection(this.firestore, 'Channels', 'Entwicklerteam', 'messages'),
+      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
       limit(1000)
     );
     onSnapshot(q, (list) => {
@@ -179,5 +186,18 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     const hours = hour.toString().padStart(2, '0');
     const minutes = minute.toString().padStart(2, '0');
     return `${hours}:${minutes} Uhr`;
+  }
+
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+      this.onChannelChange(channel);
+    });
+  }
+
+  onChannelChange(channel: string): void {
+    // Deine Logik hier
+    console.log('Kanal geändert:', channel);
+    this.subMessages(); // Ensure messages are fetched on channel change
   }
 }

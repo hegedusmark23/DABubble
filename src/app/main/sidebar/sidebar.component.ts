@@ -2,19 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
+import { ChannelSelectionService } from '../../services/channel-selection.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent  implements OnInit{
-  hoveredChannelTitle = false; 
-  activetedChannelTitle = false; 
+export class SidebarComponent implements OnInit {
+  hoveredChannelTitle = false;
+  activetedChannelTitle = false;
   activeChannelIndex: number | null = null;
-  activeUserIndex: number | null = null; 
+  activeUserIndex: number | null = null;
   usersTitleActive = false;
 
   hideOrShowSidebar = inject(SidebarService);
@@ -24,10 +25,10 @@ export class SidebarComponent  implements OnInit{
     this.hideOrShowSidebar.fetchUsers();
   }
 
-  constructor(private firestore: Firestore) {
-  }
-
-  
+  constructor(
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService
+  ) {}
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
@@ -46,8 +47,11 @@ export class SidebarComponent  implements OnInit{
   }
 
   channelActive(i: number) {
-    this.activeChannelIndex = i; 
-    alert(this.hideOrShowSidebar.AllChannels[i] + ' open');
+    this.activeChannelIndex = i;
+    this.channelSelectionService.setSelectedChannel(
+      this.hideOrShowSidebar.AllChannels[i]
+    );
+    // alert(this.hideOrShowSidebar.AllChannels[i] + ' open');
   }
 
   userActive(i: number) {

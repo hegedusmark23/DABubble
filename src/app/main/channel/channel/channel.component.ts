@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChannelHeaderComponent } from '../channel-header/channel-header.component';
 import { ChannelChatAreaComponent } from '../channel-chat-area/channel-chat-area.component';
 import { ChannelMessageInputComponent } from '../channel-message-input/channel-message-input.component';
 import { ThreadComponent } from '../../thread/thread/thread.component';
 import { CommonModule } from '@angular/common';
 import { ThreadService } from '../../../services/thread.service';
+import { ChannelSelectionService } from '../../../services/channel-selection.service';
 
 @Component({
   selector: 'app-channel',
@@ -21,6 +22,7 @@ import { ThreadService } from '../../../services/thread.service';
 })
 export class ChannelComponent {
   currentThread: any;
+  currentChannel: any;
   ThreadAnimation: any;
 
   constructor(private threadService: ThreadService) {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
+import { ChannelSelectionService } from '../../../services/channel-selection.service';
 
 @Component({
   selector: 'app-channel-message-input',
@@ -20,16 +21,19 @@ export class ChannelMessageInputComponent implements OnInit {
   hour: any;
   minute: any;
   user: any;
+  currentChannel: any;
 
-  ngOnInit(): void {}
-  constructor(private firestore: Firestore) {}
+  constructor(
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService
+  ) {}
 
   async saveMessage() {
     this.updateDateTime();
     setTimeout(() => {}, 100);
 
     await addDoc(
-      collection(this.firestore, 'Channels', 'Entwicklerteam', 'messages'),
+      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
       this.toJSON()
     )
       .catch((err) => {
@@ -69,5 +73,16 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.seconds = now.getSeconds();
     this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
     this.message.user = 'send';
+  }
+
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+      this.onChannelChange(channel);
+    });
+  }
+
+  onChannelChange(channel: string): void {
+    console.log('Kanal geändert:', channel);
   }
 }

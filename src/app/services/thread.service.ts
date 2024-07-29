@@ -24,4 +24,8 @@ export class ThreadService {
     element?.classList.add('slide-out-right');
     this.threadSubject.next(null);
   }
+
+  isThreadOpen(): boolean {
+    return this.threadSubject.getValue() !== null;
+  }
 }
