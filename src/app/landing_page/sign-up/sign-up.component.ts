@@ -27,6 +27,8 @@ export class SignUpComponent {
   isHoveringOver: boolean = false;
   public submitted:boolean = false;
 
+  errorMessage: string | null = null;
+  
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
@@ -39,9 +41,14 @@ export class SignUpComponent {
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
-    this.authService.register(rawForm.email, rawForm.name, rawForm.password).subscribe(() => {
-      this.router.navigateByUrl('/')
-    })
+    this.authService.register(rawForm.email, rawForm.name, rawForm.password).subscribe({
+      next:() => {
+      this.router.navigateByUrl('/');
+    },
+    error: (err) => {
+      this.errorMessage = err.code;
+    }
+  });
   }
 
   mouseOver(){
