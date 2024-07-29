@@ -1,0 +1,31 @@
+.display-flex {
+    display: flex;
+}
+
+.display-none {
+    display: none;
+}
+
+.profil-options-popup-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    z-index: 3;
+}
+
+.dialog {
+    width: 872px;
+    height: 539px;
+    background-color: white;
+    border-radius: 30px;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

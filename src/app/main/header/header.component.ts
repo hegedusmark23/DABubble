@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SearchFieldComponent } from './search-field/search-field.component';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +11,10 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 })
 export class HeaderComponent {
 
+  hideOrShowPopUp = inject(SidebarService);
+
   openDialog(){
-    alert('Edit Profil/Logout');
+   this.hideOrShowPopUp.popUpOpen = true;
   }
 
 }

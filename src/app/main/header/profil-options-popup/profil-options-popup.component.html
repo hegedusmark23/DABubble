@@ -1,1 +1,6 @@
-<p>profil-options-popup works!</p>
+<div class="profil-options-popup-container" (click)="closeDialog()"
+[ngClass]="{'display-flex': hideOrShowPopUp.popUpOpen , 'display-none': !hideOrShowPopUp.popUpOpen }">
+    <div class="dialog" (click)="notCloseDialog($event)">
+    </div>
+</div>
+

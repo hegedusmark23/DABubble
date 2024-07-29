@@ -10,6 +10,7 @@ export class SidebarService {
   createChannelDialogActive = false;
   AllChannels : string[] = [];
   AllUsers : string[] = [];
+  popUpOpen = false;
 
   constructor(private firestore: Firestore) { }
 
