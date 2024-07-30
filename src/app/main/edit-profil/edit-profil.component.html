@@ -1,4 +1,31 @@
-<div class="edit-profil-container" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilOpen, 
+<div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilOpen, 
 'display-none': !hideOrShowPopUp.editProfilOpen }">
-    <div class="dialog"></div>
+    <div class="dialog" (click)="notCloseDialog($event)">
+        <div class="header">
+            <span class="header-title fs-24">Profil</span>
+            <div class="close-button" (click)="closeDialog()"></div>
+        </div>
+        <div>
+            <img src="../../../assets/img/sidebar/">
+        </div>
+        <div>
+            <span class="user-name"></span>
+            <span>Bearbeiten</span>
+        </div>
+        <div>
+            <span>Active</span>
+            <img src="">
+        </div>
+        <div>
+            <img src="">
+            <span>E-Mail-Adresse</span>
+        </div>
+        <div>
+            <span>useremail-at-irgendwas.de</span>
+        </div>
+        <div>
+            <img src="">
+            <span>Nachricht</span>
+        </div>
+    </div>
 </div>

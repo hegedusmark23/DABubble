@@ -13,4 +13,13 @@ export class EditProfilComponent {
 
   hideOrShowPopUp = inject(SidebarService);
 
+  closeDialog(){
+    alert('close');
+    this.hideOrShowPopUp.editProfilOpen = false;
+  }
+
+  notCloseDialog(e : any){
+    e.stopPropagation(e);
+  }
+
 }
