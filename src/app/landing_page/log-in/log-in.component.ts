@@ -26,6 +26,10 @@ export class LogInComponent {
 
   }
 
+  guestLogin(){
+    this.router.navigateByUrl('/home');
+  }
+
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
     this.authService.logIn(rawForm.email, rawForm.password).subscribe({
