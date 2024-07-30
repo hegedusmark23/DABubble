@@ -2,10 +2,28 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
     left: 0;
     top: 0;
-    background-color: red;
-    z-index: 3;
+    z-index: 5;
+}
+
+.dialog {
+    width: 500px;
+    height: 500px;
+    padding: 45px 40px 45px 40px;
+    gap: 38px;
+    border-radius: 30px 0px 30px 30px;
+    background-color: white;
+    position: absolute;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top : 100px;
+    right: 40px;
 }
 
 .display-flex {
