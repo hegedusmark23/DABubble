@@ -23,7 +23,6 @@ export class AuthService {
     email,
     password,
   ).then(response => updateProfile(response.user, {displayName: name}));
-
   return from(promise);
   }
 
@@ -35,6 +34,5 @@ export class AuthService {
   logOut(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     return from(promise);
-    
   }
 }

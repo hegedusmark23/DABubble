@@ -3,6 +3,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
+import { getStorage, ref } from "firebase/storage";
 
 @Component({
   selector: 'app-sign-up',
@@ -23,20 +25,39 @@ export class SignUpComponent {
   imgSrcChecked: string = '../../../assets/img/landing-page/checkbox-checked.png';
   imgSrcUncheckedHover: string = '../../../assets/img/landing-page/checkbox-unchecked-hover.png';
   imgSrcCheckedHover: string = '../../../assets/img/landing-page/checkbox-checked-hover.png';
+
+  profileImgsSrc: string[]  = [
+    '../../../assets/img/profile-imgs/female1.png',
+    '../../../assets/img/profile-imgs/female2.png',
+    '../../../assets/img/profile-imgs/male1.png',
+    '../../../assets/img/profile-imgs/male2.png',
+    '../../../assets/img/profile-imgs/male3.png',
+    '../../../assets/img/profile-imgs/male4.png',
+  ]
+  stepTwo: boolean = false;
   isClicked: boolean = false;
   isHoveringOver: boolean = false;
   public submitted:boolean = false;
 
   errorMessage: string | null = null;
-  
+
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
     password: ['', Validators.required],
   })
+  
 
-  constructor() {
+  constructor(private _location: Location) {
     this.updateImageSrc();
+  }
+
+  goBack() {
+    this._location.back();
+  }
+
+  toggleStep(){
+    this.stepTwo = !this.stepTwo
   }
 
   onSubmit(): void {

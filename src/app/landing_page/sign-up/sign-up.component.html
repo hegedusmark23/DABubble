@@ -1,74 +1,120 @@
 <section>
     <img class="logo" src="../../../assets/img/landing-page/DABubble-logo.png" alt="daBubble-logo">
 
-    <div class="signUp-section-p1">
-
-        <a href=""><img class="arrow-back cursor-pointer" [src]="imgSrcArrow"
-                (mouseover)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back-hover.png'"
-                (mouseout)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back.png'" alt="arrow-back"></a>
-
-        <h1 class="fs-46">Konto erstellen</h1>
-
-        <p style="max-width: 486px; text-align: center;" class="fs-20">Mit deinem Namen und deiner E-Mail-Adresse hast
-            du dein neues DABubble-Konto.</p>
+    <div class="signUp-section">
 
         <form [formGroup]="form" class="formfield" action="" (ngSubmit)="onSubmit()">
-            <div class="input-container" style="position: relative;">
-                <img class="input-icon" src="../../../assets/img/landing-page/person.png" alt="person">
-                <input formControlName="name" required class="input-design" placeholder="Name und Nachname" type="text">
-                <span *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)"
-                    class="error-message">
-                    Bitte schreiben Sie einen Namen.
-                </span>
-            </div>
 
-            <div class="input-container" style="position: relative;">
-                <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="mail">
-                <input formControlName="email" required class="input-design" placeholder="beispielname@email.com"
-                    type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                <span *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)"
-                    class="error-message">
-                    *Diese E-Mail-Adresse ist leider ungültig.
-                </span>
-            </div>
+            <div *ngIf="!stepTwo" class="form-container">
+                <a (click)="goBack()"><img class="arrow-back cursor-pointer" [src]="imgSrcArrow"
+                        (mouseover)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back-hover.png'"
+                        (mouseout)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back.png'"
+                        alt="arrow-back"></a>
 
-            <div class="input-container" style="position: relative;">
-                <img class="input-icon-lock" src="../../../assets/img/landing-page/lock.png" alt="lock">
-                <input formControlName="password" minlength="6" required class="input-design" placeholder="Passwort"
-                    type="password">
-                <span
-                    *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
-                    class="error-message">
-                    Das Passwort muss mindestens 6 Zeichen lang sein.
-                </span>
-            </div>
+                <h1 class="fs-46">Konto erstellen</h1>
 
-            <div class="input-container">
-                <div class="privacyPolicy-container">
-                    <img style="cursor: pointer;" (click)="toggleCheck()" [src]="imgSrcCheck" alt="checkbox-unchecked"
-                        (mouseover)="mouseOver()" (mouseout)="mouseOut()">
-                    <p class="fs-18">Ich stimme der<a class="fs-18 password-link"
-                            href="privacy">Datenschutzerklärung</a>zu.</p>
+                <p style="max-width: 486px; text-align: center;" class="fs-20">Mit deinem Namen und deiner
+                    E-Mail-Adresse
+                    hast
+                    du dein neues DABubble-Konto.</p>
+
+
+                <div class="input-container" style="position: relative;">
+                    <img class="input-icon" src="../../../assets/img/landing-page/person.png" alt="person">
+                    <input formControlName="name" required class="input-design" placeholder="Name und Nachname"
+                        type="text">
+                    <span *ngIf="form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)"
+                        class="error-message">
+                        Bitte schreiben Sie einen Namen.
+                    </span>
                 </div>
 
-                <span
-                    *ngIf="!isClicked"
-                    class="error-message">
-                    Bitte akzeptieren Sie die Datenschutzrichtlinie.
+                <div class="input-container" style="position: relative;">
+                    <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="mail">
+                    <input formControlName="email" required class="input-design" placeholder="beispielname@email.com"
+                        type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                    <span *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)"
+                        class="error-message">
+                        *Diese E-Mail-Adresse ist leider ungültig.
+                    </span>
+                </div>
+
+                <div class="input-container" style="position: relative;">
+                    <img class="input-icon-lock" src="../../../assets/img/landing-page/lock.png" alt="lock">
+                    <input formControlName="password" minlength="6" required class="input-design" placeholder="Passwort"
+                        type="password">
+                    <span
+                        *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
+                        class="error-message">
+                        Das Passwort muss mindestens 6 Zeichen lang sein.
+                    </span>
+                </div>
+
+                <div class="input-container">
+                    <div class="privacyPolicy-container">
+                        <img style="cursor: pointer;" (click)="toggleCheck()" [src]="imgSrcCheck"
+                            alt="checkbox-unchecked" (mouseover)="mouseOver()" (mouseout)="mouseOut()">
+                        <p class="fs-18">Ich stimme der<a class="fs-18 password-link"
+                                href="privacy">Datenschutzerklärung</a>zu.</p>
+                    </div>
+
+                    <span *ngIf="!isClicked" class="error-message">
+                        Bitte akzeptieren Sie die Datenschutzrichtlinie.
+                    </span>
+                </div>
+
+                <span class="btn-container">
+                    <button
+                        [ngClass]="{'blue-btn': form.valid && isClicked, 'disabled-btn fs-18': !form.valid || !isClicked}"
+                        (click)="toggleStep()">Weiter</button>
                 </span>
             </div>
 
-            <span class="btn-container">
-                <button
-                    [ngClass]="{'blue-btn': form.valid && isClicked, 'disabled-btn fs-18': !form.valid || !isClicked}"
-                    type="submit">Weiter</button>
-            </span>
+            <div *ngIf="stepTwo" class="form-container">
+                <a (click)="toggleStep()"><img style="left: 10px !important;" class="arrow-back cursor-pointer"
+                        [src]="imgSrcArrow"
+                        (mouseover)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back-hover.png'"
+                        (mouseout)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back.png'"
+                        alt="arrow-back"></a>
+
+                <h1 class="fs-46">Wähle deinen Avatar</h1>
+
+                <img src="../../../assets/img/landing-page/profile.png" alt="profile">
+
+                <h2 class="fs-32">{{form.controls.name.value}}</h2>
+
+                <div>
+                    <p class="fs-20">Aus der Liste wählen</p>
+                    <div class="image-container">
+                        @for (profileImg of profileImgsSrc; track $index) {
+                        <img class="default-profile-imgs cursor-pointer" src="{{profileImg}}" alt="profile">
+                        }
+                    </div>
+                </div>
+
+                <div class="uploader-container">
+                    <p class="fs-20">Eigenes Bild verwenden</p>
+                    <input type="file" class="">
+
+                    <label for="file-upload" class="white-btn fs-18 cursor-pointer">
+                        Datei hochladen
+                    </label>
+                    <input id="file-upload" type="file" />
+                    
+                </div>
+
+                <div class="btn-container">
+                    <button class="blue-btn fs-18 cursor-pointer" type="submit">Weiter</button>
+                </div>
+            </div>
+
         </form>
+
+
+
     </div>
 
-    <div class="signUp-section-p2">
 
-    </div>
 
     <div class="legal-section">
         <a class="fs-18 purp-link" href="impressum">Impressum</a>
