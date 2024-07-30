@@ -26,6 +26,8 @@ export class ProfilOptionsPopupComponent {
 
   openProfil(){
     alert('Profil edit window open');
+    this.hideOrShowPopUp.editProfilOpen = true;
+    this.hideOrShowPopUp.popUpOpen = false;
   }
 
   logOut() {

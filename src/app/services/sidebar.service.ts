@@ -11,6 +11,7 @@ export class SidebarService {
   AllChannels : string[] = [];
   AllUsers : string[] = [];
   popUpOpen = false;
+  editProfilOpen = false;
 
   constructor(private firestore: Firestore) { }
 
