@@ -4,6 +4,7 @@ import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
+import { FileUploadeService } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'app-channel-message-input',
@@ -22,26 +23,26 @@ export class ChannelMessageInputComponent implements OnInit {
   minute: any;
   user: any;
   currentChannel: any;
+  selectedFile: File | null = null;
 
   constructor(
     private firestore: Firestore,
-    private channelSelectionService: ChannelSelectionService
+    private channelSelectionService: ChannelSelectionService,
+    private fileUploadeService: FileUploadeService
   ) {}
 
   async saveMessage() {
-    this.updateDateTime();
-    setTimeout(() => {}, 100);
-
-    await addDoc(
-      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
-      this.toJSON()
-    )
-      .catch((err) => {
-        console.error(err);
-      })
-      .then((docRef) => {});
-
-    this.message.message = '';
+    // this.updateDateTime();
+    // setTimeout(() => {}, 100);
+    // await addDoc(
+    //   collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
+    //   this.toJSON()
+    // )
+    //   .catch((err) => {
+    //     console.error(err);
+    //   })
+    //   .then((docRef) => {});
+    // this.message.message = '';
   }
 
   toJSON() {
@@ -77,5 +78,29 @@ export class ChannelMessageInputComponent implements OnInit {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannel = channel;
     });
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
+  async saveFile() {
+    this.updateDateTime();
+    console.log('test');
+
+    if (this.selectedFile) {
+      const imageUrl = await this.fileUploadeService.uploadFile(
+        this.selectedFile
+      );
+      console.log(imageUrl);
+      this.selectedFile = null;
+      console.log(this.selectedFile);
+
+      return imageUrl;
+    } else {
+      console.error('No file selected');
+
+      return;
+    }
   }
 }
