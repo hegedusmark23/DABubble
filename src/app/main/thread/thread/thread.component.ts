@@ -69,6 +69,8 @@ export class ThreadComponent implements OnInit {
       seconds: obj.seconds || '',
       milliseconds: obj.milliseconds || '',
       user: obj.user || '',
+      fileUrl: obj.fileUrl || '',
+      fileName: obj.fileName || '',
     };
   }
 }

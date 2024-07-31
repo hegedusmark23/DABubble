@@ -54,7 +54,7 @@
     border-radius: 0px 30px 30px 30px;
     width: max-content;
   }
-  img {
+  .profilePicture {
     width: 70px;
     border-radius: 100%;
     margin-top: 32px;
@@ -81,7 +81,7 @@
     width: max-content;
   }
 
-  img {
+  .profilePicture {
     width: 70px;
     border-radius: 100%;
   }
@@ -208,4 +208,8 @@
       background-color: white;
     }
   }
+}
+
+.picture {
+  height: 300px;
 }

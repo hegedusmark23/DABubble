@@ -23,9 +23,13 @@ export class ChannelMessageInputComponent implements OnInit {
   minute: any;
   user: any;
   currentChannel: any;
+  selectedFileCache: File | null = null;
+  selectectUrlCache: any;
+  selectetFileNameCache: any;
   selectedFile: File | null = null;
   selectectUrl: any;
   selectetFileName: any;
+
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
@@ -33,6 +37,13 @@ export class ChannelMessageInputComponent implements OnInit {
   ) {}
 
   async saveMessage() {
+    this.selectedFile = this.selectedFileCache;
+    if (this.selectedFile) {
+      await this.saveFile();
+      this.deleteFile();
+      this.addIMG();
+    }
+
     this.updateDateTime();
     setTimeout(() => {}, 100);
     await addDoc(
@@ -59,6 +70,8 @@ export class ChannelMessageInputComponent implements OnInit {
       seconds: this.message.seconds,
       milliseconds: this.message.milliseconds,
       user: this.message.user,
+      fileUrl: this.message.fileUrl,
+      fileName: this.message.fileName,
     };
   }
 
@@ -75,6 +88,11 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.user = 'send';
   }
 
+  addIMG() {
+    this.message.fileUrl = this.selectectUrl;
+    this.message.fileName = this.selectedFile?.name;
+  }
+
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannel = channel;
@@ -82,15 +100,14 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    if (this.selectectUrl) {
+    if (this.selectectUrlCache) {
       this.deleteFile();
     }
-    this.selectedFile = event.target.files[0];
-    this.saveFile();
+    this.selectedFileCache = event.target.files[0];
+    this.saveFileToCache();
   }
 
   async saveFile() {
-    this.updateDateTime();
     console.log(this.selectedFile);
 
     if (this.selectedFile) {
@@ -99,18 +116,28 @@ export class ChannelMessageInputComponent implements OnInit {
       );
       console.log(imageUrl);
       this.selectetFileName = this.selectedFile;
-      this.selectedFile = null;
       this.selectectUrl = imageUrl;
-      return imageUrl;
     } else {
       console.error('No file selected');
-      return;
+    }
+  }
+
+  async saveFileToCache() {
+    if (this.selectedFileCache) {
+      const imageUrl = await this.fileUploadeService.uploadFileToCache(
+        this.selectedFileCache
+      );
+      this.selectetFileNameCache = this.selectedFileCache;
+      this.selectectUrlCache = imageUrl;
+    } else {
+      console.error('No file selected');
     }
   }
 
   deleteFile() {
-    this.selectectUrl = null;
-    let name = this.selectetFileName.name;
-    this.fileUploadeService.deleteFile(name!);
+    this.selectectUrlCache = null;
+    let name = this.selectetFileNameCache.name;
+    console.log(this.selectetFileNameCache.name);
+    this.fileUploadeService.deleteCachedFile(name!);
   }
 }

@@ -10,6 +10,8 @@ export class Message {
   seconds: number;
   milliseconds: number;
   user: any;
+  fileUrl: any;
+  fileName: any;
 
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';
@@ -23,5 +25,7 @@ export class Message {
     this.seconds = obj ? obj.seconds : '';
     this.milliseconds = obj ? obj.milliseconds : '';
     this.user = obj ? obj.user : '';
+    this.fileUrl = obj ? obj.fileUrl : '';
+    this.fileName = obj ? obj.fileName : '';
   }
 }

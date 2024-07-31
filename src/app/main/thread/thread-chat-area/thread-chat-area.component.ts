@@ -95,6 +95,8 @@ export class ThreadChatAreaComponent {
       seconds: obj.seconds || '',
       milliseconds: obj.milliseconds || '',
       user: obj.user || '',
+      fileUrl: obj.fileUrl || '',
+      fileName: obj.fileName || '',
     };
   }
 
