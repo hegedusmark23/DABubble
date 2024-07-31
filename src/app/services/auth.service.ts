@@ -12,17 +12,16 @@ export class AuthService {
   user$ = user(this.firebaseAuth)
   currentUserSignal = signal<UserInterFace | null | undefined>(undefined);
   
-
-  constructor() { }
+  constructor() {}
 
   signInWithGoogle() {
   }
 
-  register(email: string, name: string, password: string): Observable<void> {
+  register(email: string, name: string, password: string, imgUrl: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.firebaseAuth,
     email,
-    password,
-  ).then(response => updateProfile(response.user, {displayName: name}));
+    password
+  ).then(response => updateProfile(response.user, {displayName: name, photoURL: imgUrl}));
   return from(promise);
   }
 

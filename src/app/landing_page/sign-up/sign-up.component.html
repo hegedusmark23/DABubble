@@ -87,7 +87,7 @@
                     <p class="fs-20">Aus der Liste wählen</p>
                     <div class="image-container">
                         @for (profileImg of profileImgsSrc; track $index) {
-                        <img class="default-profile-imgs cursor-pointer" src="{{profileImg}}" alt="profile">
+                        <img (click)="chooseAvatar(profileImg)" class="default-profile-imgs cursor-pointer" src="{{profileImg}}" alt="profile">
                         }
                     </div>
                 </div>

@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
         this.authService.currentUserSignal.set({
           email: user.email!,
           name: user.displayName!,
+          imgUrl: user.photoURL
         });
       } else {
         this.authService.currentUserSignal.set(null);

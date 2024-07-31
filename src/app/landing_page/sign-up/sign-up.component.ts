@@ -38,7 +38,7 @@ export class SignUpComponent {
   isClicked: boolean = false;
   isHoveringOver: boolean = false;
   public submitted:boolean = false;
-
+  imgUrl: string  = '../../../assets/img/profile-imgs/female1.png';
   errorMessage: string | null = null;
 
   form = this.fb.nonNullable.group({
@@ -62,7 +62,7 @@ export class SignUpComponent {
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
-    this.authService.register(rawForm.email, rawForm.name, rawForm.password).subscribe({
+    this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
       next:() => {
       this.router.navigateByUrl('/');
     },
@@ -70,6 +70,11 @@ export class SignUpComponent {
       this.errorMessage = err.code;
     }
   });
+  }
+
+  chooseAvatar(profileImg: string){
+    this.imgUrl = profileImg;
+    console.log(this.imgUrl);
   }
 
   mouseOver(){
