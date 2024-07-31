@@ -123,3 +123,19 @@
     color: rgba(104, 104, 104, 1);
 }
 
+.email-container {
+    width: 100%;
+    height: 70px;
+    background-color: red;
+}
+
+.email-adress-title {
+    font-weight: 700 !important;
+}
+
+.email-title-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+

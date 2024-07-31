@@ -13,6 +13,7 @@ export class EditProfilComponent {
 
   hideOrShowPopUp = inject(SidebarService);
   userOnline = false;
+  userEmail = 'user@irgenwas.com';
 
   closeDialog(){
     alert('close');
