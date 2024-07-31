@@ -67,7 +67,9 @@
     height: 86px;
     background-color: aqua;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 }
 
 .user-name {
@@ -77,5 +79,16 @@
 .edit {
     font-weight: 600;
     color: rgba(83, 90, 241, 1);
+    cursor: pointer;
+    &:hover {
+        font-weight: bolder;
+    }
+}
 
+.name-edit {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 38px;
+    align-items: flex-end;
 }
