@@ -26,8 +26,14 @@
           <div class="messageResive">
             <div>
               <img
+                *ngIf="!authService.currentUserSignal()"
                 class="profilePicture"
-                src="./../../../../assets/img/profile-imgs/male2.png"
+                src="./../../../../assets/img/profile-imgs/male1.png"
+              />
+              <img
+                *ngIf="authService.currentUserSignal()"
+                class="profilePicture"
+                src="{{ authService.currentUserSignal()?.imgUrl }}"
               />
             </div>
             <div class="messageInfo">
@@ -367,8 +373,14 @@
             </div>
             <div class="profileImg">
               <img
+                *ngIf="!authService.currentUserSignal()"
                 class="profilePicture"
-                src="./../../../../assets/img/profile-imgs/male2.png"
+                src="./../../../../assets/img/profile-imgs/male1.png"
+              />
+              <img
+                *ngIf="authService.currentUserSignal()"
+                class="profilePicture"
+                src="{{ authService.currentUserSignal()?.imgUrl }}"
               />
             </div>
           </div>

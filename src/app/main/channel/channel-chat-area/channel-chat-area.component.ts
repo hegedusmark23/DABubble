@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  inject,
   OnInit,
   QueryList,
   ViewChild,
@@ -22,6 +23,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -31,6 +33,8 @@ import { ChannelSelectionService } from '../../../services/channel-selection.ser
   styleUrl: './channel-chat-area.component.scss',
 })
 export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
+  authService = inject(AuthService);
+
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
   allDates: any = [];
