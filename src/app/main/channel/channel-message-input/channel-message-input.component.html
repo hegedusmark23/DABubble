@@ -74,7 +74,11 @@
           </defs>
         </svg>
 
-        <input type="file" (change)="onFileSelected($event)" />
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png"
+          (change)="onFileSelected($event)"
+        />
       </label>
       <div class="spacer"></div>
       <div>

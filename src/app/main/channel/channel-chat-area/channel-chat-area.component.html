@@ -42,7 +42,11 @@
               <span *ngIf="message.message.length > 0">{{
                 message.message
               }}</span>
-              <img class="picture" src="{{ message.fileUrl }}" />
+              <img
+                *ngIf="message.fileUrl.length > 0"
+                class="picture"
+                src="{{ message.fileUrl }}"
+              />
               <div>
                 <a>2 Antworten</a>
                 <p>Letzte Antwort 14:56</p>
@@ -351,7 +355,11 @@
               <span *ngIf="message.message.length > 0">{{
                 message.message
               }}</span>
-              <img class="picture" src="{{ message.fileUrl }}" />
+              <img
+                *ngIf="message.fileUrl.length > 0"
+                class="picture"
+                src="{{ message.fileUrl }}"
+              />
               <div>
                 <a>2 Antworten</a>
                 <p>Letzte Antwort 14:56</p>

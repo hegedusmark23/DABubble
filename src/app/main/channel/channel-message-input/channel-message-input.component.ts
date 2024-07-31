@@ -38,7 +38,7 @@ export class ChannelMessageInputComponent implements OnInit {
 
   async saveMessage() {
     this.selectedFile = this.selectedFileCache;
-    if (this.selectedFile) {
+    if (this.selectedFile && this.selectectUrlCache) {
       await this.saveFile();
       this.deleteFile();
       this.addIMG();
