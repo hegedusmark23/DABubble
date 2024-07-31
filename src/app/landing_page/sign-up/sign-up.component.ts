@@ -67,11 +67,9 @@ export class SignUpComponent {
     this.stepTwo = !this.stepTwo
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const rawForm = this.form.getRawValue();
-    if (this.selectedFile) {
-      this.saveFile();
-    }
+    await this.saveFile();
     this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
       next:() => {
       this.router.navigateByUrl('/');
@@ -91,26 +89,23 @@ export class SignUpComponent {
       this.deleteCachedFile(this.selectetFileNameCache.name);
     }
     this.selectedFileCache = event.target.files[0];
-    this.selectedFile = this.selectedFileCache;
     this.saveFileToCache();
   }
 
   async saveFile() {
+    console.log(this.selectedFile);
+    this.selectedFile = this.selectedFileCache;
     if (this.selectedFile) {
-      try {
-        const imageUrl = await this.uploadFile(this.selectedFile);
-        console.log(imageUrl);
-        this.selectetFileName = this.selectedFile;
-        this.selectectUrl = imageUrl;
-        this.imgUrl = imageUrl; // Set the imageUrl to this.imgUrl
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        throw error; // Rethrow the error to be caught in onSubmit
-      }
+      const imageUrl = await this.uploadFile(
+        this.selectedFile
+      );
+      console.log(imageUrl);
+      this.selectetFileName = this.selectedFile;
+      this.selectectUrl = imageUrl;
     } else {
       console.error('No file selected');
-      throw new Error('No file selected'); // Throw an error to be caught in onSubmit
     }
+    this.deleteCachedFile(this.selectedFileCache!.name)
   }
 
   async saveFileToCache() {

@@ -176,7 +176,8 @@ input[type="file"] {
   }
 
   .avatar{
-    height: auto;
+    height: 168px;
     width: 168px;
     border-radius: 50%;
+    object-fit: cover;
   }
