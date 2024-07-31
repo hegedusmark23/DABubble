@@ -37,7 +37,7 @@ section {
     gap: 30px;
 }
 
-.form-container{
+.form-container {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -107,64 +107,66 @@ section {
     }
 }
 
-.privacyPolicy-container{
+.privacyPolicy-container {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content:  baseline;
+    justify-content: baseline;
     align-items: center;
     gap: 10px;
 }
 
-.arrow-back{
+.arrow-back {
     position: absolute;
     top: 93px;
     left: 40px;
     padding: 10px;
     transition-duration: 0.2s;
+
     &:hover {
         background-color: #ECEEFE;
         border-radius: 50px;
     }
 }
 
-.disabled-btn{
+.disabled-btn {
     padding: 12px 25px 12px 25px;
     background-color: gray;
     color: white;
     border-radius: 25px;
     border-width: 0;
-  }
+}
 
-  .error-message {
+.error-message {
     color: red;
     font-size: 14px;
     padding-top: 5px;
 }
 
-.input-container{
+.input-container {
     display: flex;
     flex-direction: column;
     width: 100%;
-    justify-content:  baseline;
+    justify-content: baseline;
 }
 
-.default-profile-imgs{
+.default-profile-imgs {
     width: 64px;
     height: auto;
     border-radius: 50%;
     padding: 5px;
-    &:hover{
+
+    &:hover {
         background-color: lightgray;
     }
 }
 
-.image-container{
+.image-container {
     display: flex;
     gap: 5px;
 }
 
-.uploader-container{
+.uploader-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -173,11 +175,25 @@ section {
 
 input[type="file"] {
     display: none;
-  }
+}
 
-  .avatar{
+.avatar {
     height: 168px;
     width: 168px;
     border-radius: 50%;
     object-fit: cover;
-  }
+}
+
+.message-container{
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+}
+
+.sign-up-message{
+    position: absolute;
+    padding: 50px;
+    border-radius: 30px 30px 0px 30px;
+    background-color: #444DF2;
+    box-shadow: 0px 6px 10px 0px #00000033;
+}
