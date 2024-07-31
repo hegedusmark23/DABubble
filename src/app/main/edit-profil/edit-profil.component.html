@@ -14,11 +14,12 @@
                 <span class="edit fs-18">Bearbeiten</span>
             </div>
             <div class="online">
-                <div class="online-icon"></div>
                 @if(!userOnline){
-                    <span class="fs-20">Abwesend</span>
-                }@else {
+                    <div class="online-icon"></div>
                     <span class="fs-20">Aktiv</span>
+                }@else {
+                    <div class="offline-icon"></div>
+                    <span class="fs-20">Abwesend</span>
                 }
             </div>
         </div>
