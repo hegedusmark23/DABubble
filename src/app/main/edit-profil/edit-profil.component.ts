@@ -16,12 +16,19 @@ export class EditProfilComponent {
   userEmail = 'user@irgenwas.com';
 
   closeDialog(){
-    alert('close');
     this.hideOrShowPopUp.editProfilOpen = false;
   }
 
   notCloseDialog(e : any){
     e.stopPropagation(e);
+  }
+
+  editUser(){
+    alert('Edit user');
+  }
+
+  sendMessage(){
+    alert('Message send');
   }
 
 }
