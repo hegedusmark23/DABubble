@@ -24,7 +24,8 @@ export class ChannelMessageInputComponent implements OnInit {
   user: any;
   currentChannel: any;
   selectedFile: File | null = null;
-
+  selectectUrl: any;
+  selectetFileName: any;
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
@@ -32,17 +33,17 @@ export class ChannelMessageInputComponent implements OnInit {
   ) {}
 
   async saveMessage() {
-    // this.updateDateTime();
-    // setTimeout(() => {}, 100);
-    // await addDoc(
-    //   collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
-    //   this.toJSON()
-    // )
-    //   .catch((err) => {
-    //     console.error(err);
-    //   })
-    //   .then((docRef) => {});
-    // this.message.message = '';
+    this.updateDateTime();
+    setTimeout(() => {}, 100);
+    await addDoc(
+      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
+      this.toJSON()
+    )
+      .catch((err) => {
+        console.error(err);
+      })
+      .then((docRef) => {});
+    this.message.message = '';
   }
 
   toJSON() {
@@ -81,26 +82,35 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
+    if (this.selectectUrl) {
+      this.deleteFile();
+    }
     this.selectedFile = event.target.files[0];
+    this.saveFile();
   }
 
   async saveFile() {
     this.updateDateTime();
-    console.log('test');
+    console.log(this.selectedFile);
 
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
         this.selectedFile
       );
       console.log(imageUrl);
+      this.selectetFileName = this.selectedFile;
       this.selectedFile = null;
-      console.log(this.selectedFile);
-
+      this.selectectUrl = imageUrl;
       return imageUrl;
     } else {
       console.error('No file selected');
-
       return;
     }
+  }
+
+  deleteFile() {
+    this.selectectUrl = null;
+    let name = this.selectetFileName.name;
+    this.fileUploadeService.deleteFile(name!);
   }
 }

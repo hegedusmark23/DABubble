@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
 import {
+  deleteObject,
   getDownloadURL,
   getStorage,
   ref,
@@ -33,5 +34,18 @@ export class FileUploadeService {
         }
       );
     });
+  }
+
+  async deleteFile(fileUrl: string): Promise<void> {
+    const storage = getStorage();
+    const fileRef = ref(storage, `images/${fileUrl}`);
+
+    return deleteObject(fileRef)
+      .then(() => {
+        console.log('File deleted successfully');
+      })
+      .catch((error) => {
+        console.error('Error deleting file:', error);
+      });
   }
 }

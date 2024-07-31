@@ -82,3 +82,33 @@ textarea {
   cursor: pointer;
   z-index: 1;
 }
+
+.uploadedImgContainer {
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid #adb0d9;
+  background-color: white;
+  position: absolute;
+  height: 80px;
+  z-index: 3;
+  transform: translateY(-80px) translatex(+45px);
+  button {
+    border: 1px solid #adb0d9;
+    border-radius: 100%;
+    background-color: white;
+    position: absolute;
+    transform: translateY(-12px) translatex(-12px);
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    svg {
+      width: 16px;
+      height: 16px;
+      padding: 3px;
+    }
+  }
+}
+.uploadedImg {
+  border-radius: 8px;
+  height: 80px;
+}
