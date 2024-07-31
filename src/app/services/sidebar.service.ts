@@ -12,6 +12,7 @@ export class SidebarService {
   AllUsers : string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
+  editProfilContactformOpen = false;
 
   constructor(private firestore: Firestore) { }
 

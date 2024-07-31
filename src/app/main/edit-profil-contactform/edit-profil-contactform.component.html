@@ -1,13 +1,7 @@
-<div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilOpen, 
-'display-none': !hideOrShowPopUp.editProfilOpen }">
+<div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilContactformOpen, 
+'display-none': !hideOrShowPopUp.editProfilContactformOpen }">
     <div class="dialog" (click)="notCloseDialog($event)">
-        <div class="header">
-            <span class="header-title fs-24">Profil</span>
-            <div class="close-button" (click)="closeDialog()"></div>
-        </div>
-        <div>
-            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
-        </div>
+        
         
     </div>
 </div>

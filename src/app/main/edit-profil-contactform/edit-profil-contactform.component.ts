@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-edit-profil-contactform',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './edit-profil-contactform.component.html',
   styleUrl: './edit-profil-contactform.component.scss'
 })
@@ -16,7 +17,7 @@ export class EditProfilContactformComponent {
   userEmail = 'user@irgenwas.com';
 
   closeDialog(){
-    this.hideOrShowPopUp.editProfilOpen = false;
+    this.hideOrShowPopUp.editProfilContactformOpen = false;
   }
 
   notCloseDialog(e : any){

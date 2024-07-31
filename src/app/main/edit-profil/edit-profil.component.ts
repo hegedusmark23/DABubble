@@ -24,6 +24,7 @@ export class EditProfilComponent {
   }
 
   editUser(){
+    this.hideOrShowPopUp.editProfilContactformOpen = true;
     alert('Edit user');
   }
 
