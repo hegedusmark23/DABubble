@@ -1,7 +1,32 @@
 <div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilContactformOpen, 
 'display-none': !hideOrShowPopUp.editProfilContactformOpen }">
     <div class="dialog" (click)="notCloseDialog($event)">
-        
-        
+        <div class="header">
+            <span class="header-title fs-24">Dein Profil bearbeiten</span>
+            <div class="close-button" (click)="closeDialog()"></div>
+        </div>
+        <div>
+            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+        </div>
+        <div class="input-container">
+            <div class="input-name-container">
+                <div class="input-header">
+                    <img src="../../../assets/img/header/account_circle.png">
+                    <span class="fs-20">Vollständiger Name</span>
+                </div>
+                <input>
+            </div>
+            <div class="input-email-container">
+                <div class="input-header">
+                    <img src="../../../assets/img/header/mail (1).png">
+                    <span class="fs-20">E-Mail-Adresse</span>
+                </div>
+                <input>
+            </div>
+            <div class="buttons-container">
+                <button class="cancel"><span class="fs-18" (click)="canel()">Abbrechen</span></button>
+                <button class="save"><span class="fs-18" (click)="save()">Speichern</span></button>
+            </div>
+        </div>
     </div>
 </div>

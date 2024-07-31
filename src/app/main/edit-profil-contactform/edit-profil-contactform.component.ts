@@ -24,4 +24,12 @@ export class EditProfilContactformComponent {
     e.stopPropagation(e);
   }
 
+  canel(){
+    alert('cancel');
+  }
+
+  save(){
+    alert('save user');
+  }
+
 }
