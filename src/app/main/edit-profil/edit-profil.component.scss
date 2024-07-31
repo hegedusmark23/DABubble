@@ -10,7 +10,7 @@
 }
 
 .dialog {
-    width: 500px;
+    width: 400px;
     //height: 500px;
     padding: 45px 40px 45px 40px;
     gap: 45px;
@@ -76,11 +76,10 @@
 }
 
 .edit {
-    font-weight: 700 !important;
     color: rgba(83, 90, 241, 1);
     cursor: pointer;
     &:hover {
-        font-weight: bolder !important;
+        font-weight: 700;
     }
 }
 

@@ -32,6 +32,7 @@ export class ProfilOptionsPopupComponent {
     this.authService.logOut().subscribe(() => {
       this.router.navigate(['/']);
     });
+    this.hideOrShowPopUp.popUpOpen = false;
   }
 
 }
