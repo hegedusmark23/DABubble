@@ -17,7 +17,7 @@ export class FileUploadeService {
 
   uploadFile(file: File): Promise<string> {
     const storage = getStorage();
-    const storageRef = ref(storage, `images/${file.name}`);
+    const storageRef = ref(storage, `messangeImages/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise<string>((resolve, reject) => {
@@ -38,7 +38,7 @@ export class FileUploadeService {
 
   uploadFileToCache(file: File): Promise<string> {
     const storage = getStorage();
-    const storageRef = ref(storage, `cache/${file.name}`);
+    const storageRef = ref(storage, `messangeCache/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise<string>((resolve, reject) => {
@@ -59,7 +59,7 @@ export class FileUploadeService {
 
   async deleteFile(fileUrl: string): Promise<void> {
     const storage = getStorage();
-    const fileRef = ref(storage, `images/${fileUrl}`);
+    const fileRef = ref(storage, `messangeImages/${fileUrl}`);
 
     return deleteObject(fileRef)
       .then(() => {
@@ -72,7 +72,7 @@ export class FileUploadeService {
 
   async deleteCachedFile(fileUrl: string): Promise<void> {
     const storage = getStorage();
-    const fileRef = ref(storage, `cache/${fileUrl}`);
+    const fileRef = ref(storage, `messangeCache/${fileUrl}`);
 
     return deleteObject(fileRef)
       .then(() => {
