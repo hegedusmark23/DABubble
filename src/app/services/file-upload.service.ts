@@ -7,17 +7,16 @@ import {
   ref,
   uploadBytesResumable,
 } from 'firebase/storage';
-import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileUploadeService {
-  constructor(private firestore: Firestore) {}
+  constructor() {}
 
-  uploadFile(file: File): Promise<string> {
+  uploadFile(file: File, source: any): Promise<string> {
     const storage = getStorage();
-    const storageRef = ref(storage, `messangeImages/${file.name}`);
+    const storageRef = ref(storage, `${source}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise<string>((resolve, reject) => {
@@ -36,45 +35,11 @@ export class FileUploadeService {
     });
   }
 
-  uploadFileToCache(file: File): Promise<string> {
+  async deleteFile(fileUrl: string, source: any): Promise<void> {
     const storage = getStorage();
-    const storageRef = ref(storage, `messangeCache/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    const fileRef = ref(storage, `${source}/${fileUrl}`);
 
-    return new Promise<string>((resolve, reject) => {
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {},
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
-  }
-
-  async deleteFile(fileUrl: string): Promise<void> {
-    const storage = getStorage();
-    const fileRef = ref(storage, `messangeImages/${fileUrl}`);
-
-    return deleteObject(fileRef)
-      .then(() => {
-        console.log('File deleted successfully');
-      })
-      .catch((error) => {
-        console.error('Error deleting file:', error);
-      });
-  }
-
-  async deleteCachedFile(fileUrl: string): Promise<void> {
-    const storage = getStorage();
-    const fileRef = ref(storage, `messangeCache/${fileUrl}`);
-
-    return deleteObject(fileRef)
+    deleteObject(fileRef)
       .then(() => {
         console.log('File deleted successfully');
       })

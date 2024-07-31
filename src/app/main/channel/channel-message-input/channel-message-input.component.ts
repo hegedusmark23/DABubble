@@ -22,10 +22,10 @@ export class ChannelMessageInputComponent implements OnInit {
   hour: any;
   minute: any;
   user: any;
+
   currentChannel: any;
   selectedFileCache: File | null = null;
   selectectUrlCache: any;
-  selectetFileNameCache: any;
   selectedFile: File | null = null;
   selectectUrl: any;
   selectetFileName: any;
@@ -112,22 +112,22 @@ export class ChannelMessageInputComponent implements OnInit {
 
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
-        this.selectedFile
+        this.selectedFile,
+        'messangeImages'
       );
       console.log(imageUrl);
       this.selectetFileName = this.selectedFile;
       this.selectectUrl = imageUrl;
-    } else {
-      console.error('No file selected');
     }
   }
 
   async saveFileToCache() {
     if (this.selectedFileCache) {
-      const imageUrl = await this.fileUploadeService.uploadFileToCache(
-        this.selectedFileCache
+      const imageUrl = await this.fileUploadeService.uploadFile(
+        this.selectedFileCache,
+        'messangeCache'
       );
-      this.selectetFileNameCache = this.selectedFileCache;
+      this.selectedFileCache;
       this.selectectUrlCache = imageUrl;
     } else {
       console.error('No file selected');
@@ -136,8 +136,8 @@ export class ChannelMessageInputComponent implements OnInit {
 
   deleteFile() {
     this.selectectUrlCache = null;
-    let name = this.selectetFileNameCache.name;
-    console.log(this.selectetFileNameCache.name);
-    this.fileUploadeService.deleteCachedFile(name!);
+    let name = this.selectedFileCache!.name;
+    console.log(this.selectedFileCache!.name);
+    this.fileUploadeService.deleteFile(name!, 'messangeCache');
   }
 }
