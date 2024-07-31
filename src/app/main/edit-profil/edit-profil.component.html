@@ -13,9 +13,13 @@
                 <span class="user-name fs-32">Gast</span>
                 <span class="edit fs-18">Bearbeiten</span>
             </div>
-            <div>
-                <span>Active</span>
-                <img src="">
+            <div class="online">
+                <div class="online-icon"></div>
+                @if(!userOnline){
+                    <span class="fs-20">Abwesend</span>
+                }@else {
+                    <span class="fs-20">Aktiv</span>
+                }
             </div>
         </div>
         <div>

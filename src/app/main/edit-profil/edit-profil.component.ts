@@ -12,6 +12,7 @@ import { SidebarService } from '../../services/sidebar.service';
 export class EditProfilComponent {
 
   hideOrShowPopUp = inject(SidebarService);
+  userOnline = false;
 
   closeDialog(){
     alert('close');
