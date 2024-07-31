@@ -11,7 +11,12 @@
               }
         </div>
         <div class="profil">
-            <img class="profil-image" src="{{authService.currentUserSignal()?.imgUrl}}">
+            @if (authService.currentUserSignal() == null) {
+                <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+            } @else {
+                <img class="profil-image" src="{{authService.currentUserSignal()?.imgUrl}}">
+            }
+            
             <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
         </div>
         <div class="arrow">

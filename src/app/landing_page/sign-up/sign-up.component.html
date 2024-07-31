@@ -78,8 +78,11 @@
                         alt="arrow-back"></a>
 
                 <h1 class="fs-46">Wähle deinen Avatar</h1>
-
-                <img src="../../../assets/img/landing-page/profile.png" alt="profile">
+                @if (imgUrl == '') {
+                    <img src="../../../assets/img/landing-page/profile.png" alt="profile">
+                } @else {
+                    <img class="avatar" src="{{imgUrl}}" alt="profile">
+                }
 
                 <h2 class="fs-32">{{form.controls.name.value}}</h2>
 
@@ -99,7 +102,7 @@
                     <label for="file-upload" class="white-btn fs-18 cursor-pointer">
                         Datei hochladen
                     </label>
-                    <input id="file-upload" type="file" />
+                    <input (change)="onFileSelected($event)" id="file-upload" type="file" />
                     
                 </div>
 

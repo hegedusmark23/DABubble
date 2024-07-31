@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { getStorage, ref } from "firebase/storage";
+import { deleteObject, getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-sign-up',
@@ -38,8 +39,14 @@ export class SignUpComponent {
   isClicked: boolean = false;
   isHoveringOver: boolean = false;
   public submitted:boolean = false;
-  imgUrl: string  = '../../../assets/img/profile-imgs/female1.png';
+  imgUrl: string  = '';
   errorMessage: string | null = null;
+  selectedFileCache: File | null = null;
+  selectectUrlCache: any;
+  selectetFileNameCache: any;
+  selectedFile: File | null = null;
+  selectectUrl: any;
+  selectetFileName: any;
 
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
@@ -62,6 +69,9 @@ export class SignUpComponent {
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
+    if (this.selectedFile) {
+      this.saveFile();
+    }
     this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
       next:() => {
       this.router.navigateByUrl('/');
@@ -74,7 +84,103 @@ export class SignUpComponent {
 
   chooseAvatar(profileImg: string){
     this.imgUrl = profileImg;
-    console.log(this.imgUrl);
+  }
+
+  onFileSelected(event: any) {
+    if (this.selectectUrlCache) {
+      this.deleteCachedFile(this.selectetFileNameCache.name);
+    }
+    this.selectedFileCache = event.target.files[0];
+    this.selectedFile = this.selectedFileCache;
+    this.saveFileToCache();
+  }
+
+  async saveFile() {
+    if (this.selectedFile) {
+      try {
+        const imageUrl = await this.uploadFile(this.selectedFile);
+        console.log(imageUrl);
+        this.selectetFileName = this.selectedFile;
+        this.selectectUrl = imageUrl;
+        this.imgUrl = imageUrl; // Set the imageUrl to this.imgUrl
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        throw error; // Rethrow the error to be caught in onSubmit
+      }
+    } else {
+      console.error('No file selected');
+      throw new Error('No file selected'); // Throw an error to be caught in onSubmit
+    }
+  }
+
+  async saveFileToCache() {
+    if (this.selectedFileCache) {
+      const imageUrl = await this.uploadFileToCache(
+        this.selectedFileCache
+      );
+      this.selectetFileNameCache = this.selectedFileCache;
+      this.selectectUrlCache = imageUrl;
+    } else {
+      console.error('No file selected');
+    }
+  }
+
+  uploadFile(file: File): Promise<string> {
+    const storage = getStorage();
+    const storageRef = ref(storage, `profileImages/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise<string>((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
+            resolve(downloadURL);
+            this.imgUrl = downloadURL;
+          });
+        }
+      );
+    });
+  }
+
+  uploadFileToCache(file: File): Promise<string> {
+    const storage = getStorage();
+    const storageRef = ref(storage, `profileCache/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise<string>((resolve, reject) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {},
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
+            resolve(downloadURL);
+            this.imgUrl = downloadURL;
+          });
+        }
+      );
+    });
+  }
+
+  async deleteCachedFile(fileUrl: string): Promise<void> {
+    const storage = getStorage();
+    const fileRef = ref(storage, `profileCache/${fileUrl}`);
+
+    return deleteObject(fileRef)
+      .then(() => {
+        console.log('File deleted successfully');
+        this.selectectUrlCache = null;
+      })
+      .catch((error) => {
+        console.error('Error deleting file:', error);
+      });
   }
 
   mouseOver(){

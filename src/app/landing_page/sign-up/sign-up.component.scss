@@ -174,3 +174,9 @@ section {
 input[type="file"] {
     display: none;
   }
+
+  .avatar{
+    height: auto;
+    width: 168px;
+    border-radius: 50%;
+  }
