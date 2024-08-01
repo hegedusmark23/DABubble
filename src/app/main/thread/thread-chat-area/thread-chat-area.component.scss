@@ -55,8 +55,10 @@
     border-radius: 0px 30px 30px 30px;
     width: max-content;
   }
-  img {
+  .profilePicture {
     width: 70px;
+    height: 70px;
+    object-fit: cover;
     border-radius: 100%;
     margin-top: 32px;
   }
@@ -73,7 +75,7 @@
   flex-direction: row;
   justify-content: space-between;
   gap: 16px;
-  padding: 10px 45px 10px 146px;
+  padding: 10px 45px 10px 45px;
   span {
     background-color: #797ef3;
     padding: 15px;
@@ -82,8 +84,10 @@
     width: max-content;
   }
 
-  img {
+  .profilePicture {
     width: 70px;
+    height: 70px;
+    object-fit: cover;
     border-radius: 100%;
   }
 
@@ -95,6 +99,68 @@
 .profileImg {
   justify-content: flex-start !important;
   margin-top: 32px;
+}
+
+.hoverResive {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row !important;
+  height: 46px;
+  padding: 3px 15px 3px 20px;
+  gap: 5px;
+  border-radius: 25px 25px 0px 25px;
+  border: 1px solid #adb0d9;
+  background-color: white;
+  margin-right: 45px;
+  margin-top: 20px;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
+  p {
+    height: 24px;
+    width: 24px;
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}
+
+.hoverSend {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row !important;
+  height: 46px;
+  padding: 3px 15px 3px 20px;
+  gap: 5px;
+  border-radius: 25px 25px 0px 25px;
+  border: 1px solid #adb0d9;
+  background-color: white;
+  margin-left: 45px;
+  margin-top: 20px;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
+  p {
+    height: 24px;
+    width: 24px;
+    svg {
+      height: 24px;
+      width: 24px;
+    }
+  }
 }
 
 .messageTitle {
@@ -126,11 +192,29 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  &:hover {
+    background-color: #f0f1fe;
+    .hoverSend {
+      display: flex !important;
+    }
+  }
 }
 
 .messageResiveContainer {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: #f0f1fe;
+  &:hover {
+    .hoverResive {
+      display: flex !important;
+    }
+    background-color: #f0f1fe;
+    span {
+      background-color: white;
+    }
+  }
+}
+
+.picture {
+  height: 100px;
 }
