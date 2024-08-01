@@ -5,8 +5,8 @@
   [ngClass]="containerClasses"
 >
   <div class="content" #myDiv>
-    <div *ngFor="let message of allMessagesSorted" #messageList ng>
-      <div *ngIf="dateLoaded(message)" class="date">
+    <div *ngFor="let message of allMessagesSortedDate" #messageList ng>
+      <div *ngIf="message.date" class="date">
         <span class="spacer"></span>
         <p class="fs-18">
           {{

@@ -1,5 +1,6 @@
 export class Message {
   id?: string;
+  date?: boolean;
   message: string;
   weekday: string;
   year: number;
@@ -15,6 +16,7 @@ export class Message {
 
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';
+    this.date = obj ? obj.date : '';
     this.message = obj ? obj.message : '';
     this.weekday = obj ? obj.weekday : '';
     this.year = obj ? obj.year : '';

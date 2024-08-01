@@ -33,14 +33,16 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent implements AfterViewInit {
+export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
 
+  allMessagesSortedDate: any = [];
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
   allDates: any = [];
   dateCounter = 0;
   scrolled = true;
+  date = false;
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
 
@@ -53,7 +55,10 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     private threadService: ThreadService,
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
+    private cd: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
@@ -92,6 +97,7 @@ export class ChannelChatAreaComponent implements AfterViewInit {
         this.allMessages.push(this.setNoteObject(element.data(), element.id));
       });
       this.sortMessages();
+      this.dateLoaded();
     });
   }
 
@@ -146,26 +152,29 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     }
   }
 
-  dateLoaded(message: any) {
-    if (this.dateCounter === this.allMessages.length) {
-      this.dateCounter = 0;
-      this.allDates = [];
-    }
-    let date =
-      message.day.toString().padStart(2, '0') +
-      '.' +
-      message.month.toString().padStart(2, '0') +
-      '.' +
-      message.year.toString();
+  dateLoaded() {
+    this.allMessagesSortedDate = [];
+    this.allDates = [];
 
-    this.dateCounter++;
+    for (let i = 0; i < this.allMessagesSorted.length; i++) {
+      const element = this.allMessagesSorted[i];
+      let date =
+        element.day.toString().padStart(2, '0') +
+        '.' +
+        element.month.toString().padStart(2, '0') +
+        '.' +
+        element.year.toString();
 
-    if (Array.isArray(this.allDates) && this.allDates.includes(date)) {
-      return false;
-    } else {
-      this.allDates.push(date);
-      return true;
+      this.dateCounter++;
+
+      if (Array.isArray(this.allDates) && this.allDates.includes(date)) {
+        element.date = false;
+      } else {
+        this.allDates.push(date);
+        element.date = true;
+      }
     }
+    this.allMessagesSortedDate = this.allMessagesSorted;
   }
 
   getMonthName(monthNumber: number): string {
