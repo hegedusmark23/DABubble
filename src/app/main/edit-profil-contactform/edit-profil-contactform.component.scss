@@ -12,7 +12,7 @@
 .dialog {
     width: 400px;
     //height: 500px;
-    padding: 45px 40px 45px 40px;
+    padding: 40px 40px 50px 40px;
     gap: 45px;
     border-radius: 30px;
     background-color: white;
@@ -89,7 +89,7 @@ input {
 
 .input-field {
     width: 100%; 
-    padding: 0px 50px;
+    padding: 0px 30px;
     box-sizing: border-box;
     &:focus {
         border-color: none;
@@ -101,7 +101,7 @@ input {
     display: flex;
     justify-content: center;
     gap : 10px;
-    margin-top: 10px;
+    margin-top: 40px;
 }
 
 button {
@@ -123,6 +123,11 @@ button {
     span {
         font-weight: 700;
     }
+    &:hover {
+        color: white;
+        background-color: #444DF2;
+        border: none;
+    }
 }
 
 .save {
@@ -132,5 +137,8 @@ button {
     ; 
     span {
         font-weight: 700;
+    }
+    &:hover {
+        background-color: #797EF3;
     }
 }
