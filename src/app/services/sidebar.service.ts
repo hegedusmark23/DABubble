@@ -13,6 +13,7 @@ export class SidebarService {
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
+  userProfilOpen = false;
 
   constructor(private firestore: Firestore) { }
 

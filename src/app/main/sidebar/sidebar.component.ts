@@ -56,6 +56,7 @@ export class SidebarComponent implements OnInit {
 
   userActive(i: number) {
     this.activeUserIndex = i;
+    this.hideOrShowSidebar.userProfilOpen = true;
     alert(this.hideOrShowSidebar.AllUsers[i] + ' open');
   }
 
