@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -32,7 +33,7 @@ import { AuthService } from '../../../services/auth.service';
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
+export class ChannelChatAreaComponent implements AfterViewInit {
   authService = inject(AuthService);
 
   allMessagesSorted: Message[] = [];
@@ -51,10 +52,15 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
-    private channelSelectionService: ChannelSelectionService
+    private channelSelectionService: ChannelSelectionService,
   ) {}
 
   ngAfterViewInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+      this.onChannelChange(channel);
+    });
+
     this.messageLoaded.changes.subscribe((t) => {
       if (this.scrolled) {
         this.scrolled = false;
@@ -193,15 +199,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     return `${hours}:${minutes} Uhr`;
   }
 
-  ngOnInit(): void {
-    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannel = channel;
-      this.onChannelChange(channel);
-    });
-  }
-
   onChannelChange(channel: string): void {
-    // Deine Logik hier
-    this.subMessages(); // Ensure messages are fetched on channel change
+    setTimeout(() => {
+      this.subMessages(); // Ensure messages are fetched on channel change
+    }, 10);
   }
 }

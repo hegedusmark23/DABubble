@@ -1,5 +1,5 @@
-<div *ngIf="selectectUrlCache" class="uploadedImgContainer">
-  <img class="uploadedImg" src="{{ selectectUrlCache }}" />
+<div *ngIf="FileUrl" class="uploadedImgContainer">
+  <img class="uploadedImg" src="{{ FileUrl }}" />
   <button class="cursor-pointer" (click)="deleteFile()">
     <svg
       xmlns="http://www.w3.org/2000/svg"

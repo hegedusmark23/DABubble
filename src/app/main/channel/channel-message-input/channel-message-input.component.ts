@@ -24,11 +24,9 @@ export class ChannelMessageInputComponent implements OnInit {
   user: any;
 
   currentChannel: any;
-  selectedFileCache: File | null = null;
-  selectectUrlCache: any;
+
   selectedFile: File | null = null;
-  selectectUrl: any;
-  selectetFileName: any;
+  FileUrl: any;
 
   constructor(
     private firestore: Firestore,
@@ -36,27 +34,74 @@ export class ChannelMessageInputComponent implements OnInit {
     private fileUploadeService: FileUploadeService
   ) {}
 
-  async saveMessage() {
-    this.selectedFile = this.selectedFileCache;
-    if (this.selectedFile && this.selectectUrlCache) {
-      await this.saveFile();
+  //speichert wercher channel gerade ausgewählt ist
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.currentChannel = channel;
+    });
+  }
+
+  //speichert die bilder in den cache
+  async saveFileToCache() {
+    if (this.selectedFile) {
+      const imageUrl = await this.fileUploadeService.uploadFile(
+        this.selectedFile,
+        'messangeCache'
+      );
+      this.FileUrl = imageUrl;
+    } else {
+      console.error('No file selected');
+    }
+  }
+
+  //löscht die bilder aus den cache
+  deleteFile() {
+    let name = this.selectedFile!.name;
+    this.fileUploadeService.deleteFile(name!, 'messangeCache');
+    this.FileUrl = null;
+    this.selectedFile = null;
+  }
+
+  //läd die bilder in den cache wenn sie ausgewählt wurde
+  onFileSelected(event: any) {
+    if (this.FileUrl) {
       this.deleteFile();
+    }
+    this.selectedFile = event.target.files[0];
+    this.saveFileToCache();
+  }
+
+  //erstannt eine nachricht
+  async saveMessage() {
+    if (this.selectedFile) {
+      await this.saveFile();
       this.addIMG();
+      this.deleteFile();
     }
 
     this.updateDateTime();
-    setTimeout(() => {}, 100);
     await addDoc(
       collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
       this.toJSON()
-    )
-      .catch((err) => {
-        console.error(err);
-      })
-      .then((docRef) => {});
+    ).catch((err) => {
+      console.error(err);
+    });
     this.message.message = '';
   }
 
+  //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
+  async saveFile() {
+    if (this.selectedFile) {
+      const imageUrl = await this.fileUploadeService.uploadFile(
+        this.selectedFile,
+        'messangeImages'
+      );
+      console.log(imageUrl);
+      this.FileUrl = imageUrl;
+    }
+  }
+
+  //gibt die vorhandenen informationen als JSON zurück
   toJSON() {
     return {
       id: this.message.id,
@@ -75,6 +120,7 @@ export class ChannelMessageInputComponent implements OnInit {
     };
   }
 
+  //erstellt die daten der aktuellen zeit
   updateDateTime(): void {
     const now = new Date();
     this.message.weekday = now.toLocaleDateString('de-DE', { weekday: 'long' });
@@ -85,59 +131,12 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.minute = now.getMinutes();
     this.message.seconds = now.getSeconds();
     this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
-    this.message.user = 'send';
   }
 
+  //fügt die restlichen variablen ins model
   addIMG() {
-    this.message.fileUrl = this.selectectUrl;
+    this.message.fileUrl = this.FileUrl;
     this.message.fileName = this.selectedFile?.name;
-  }
-
-  ngOnInit(): void {
-    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannel = channel;
-    });
-  }
-
-  onFileSelected(event: any) {
-    if (this.selectectUrlCache) {
-      this.deleteFile();
-    }
-    this.selectedFileCache = event.target.files[0];
-    this.saveFileToCache();
-  }
-
-  async saveFile() {
-    console.log(this.selectedFile);
-
-    if (this.selectedFile) {
-      const imageUrl = await this.fileUploadeService.uploadFile(
-        this.selectedFile,
-        'messangeImages'
-      );
-      console.log(imageUrl);
-      this.selectetFileName = this.selectedFile;
-      this.selectectUrl = imageUrl;
-    }
-  }
-
-  async saveFileToCache() {
-    if (this.selectedFileCache) {
-      const imageUrl = await this.fileUploadeService.uploadFile(
-        this.selectedFileCache,
-        'messangeCache'
-      );
-      this.selectedFileCache;
-      this.selectectUrlCache = imageUrl;
-    } else {
-      console.error('No file selected');
-    }
-  }
-
-  deleteFile() {
-    this.selectectUrlCache = null;
-    let name = this.selectedFileCache!.name;
-    console.log(this.selectedFileCache!.name);
-    this.fileUploadeService.deleteFile(name!, 'messangeCache');
+    this.message.user = 'send';
   }
 }
