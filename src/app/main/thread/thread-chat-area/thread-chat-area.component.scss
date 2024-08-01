@@ -216,5 +216,7 @@
 }
 
 .picture {
+  max-width: 200px;
   height: 100px;
+  object-fit: cover;
 }
