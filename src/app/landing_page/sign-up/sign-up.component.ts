@@ -47,7 +47,7 @@ export class SignUpComponent {
   selectedFile: File | null = null;
   selectectUrl: any;
   selectetFileName: any;
-
+  registerSuccesful: boolean = false
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     email: ['', Validators.required],
@@ -69,10 +69,16 @@ export class SignUpComponent {
 
   async onSubmit(): Promise<void> {
     const rawForm = this.form.getRawValue();
-    await this.saveFile();
+    if (this.selectedFile) {
+      await this.saveFile();
+    }
     this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
       next:() => {
-      this.router.navigateByUrl('/');
+      this.registerSuccesful = true;
+      setTimeout(() => {
+        this.registerSuccesful = false;
+        this.router.navigateByUrl('/');
+      }, 500);
     },
     error: (err) => {
       this.errorMessage = err.code;

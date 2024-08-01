@@ -20,25 +20,34 @@ export class LogInComponent {
     email: ['', Validators.required],
     password: ['', Validators.required],
   })
-  
-  
-  constructor() {
 
+  constructor() {
   }
 
-  guestLogin(){
+  googleSignIn() {
+    this.authService.signInWithGoogle().subscribe({
+      next: () => {
+        this.router.navigateByUrl('/home');
+      },
+      error: (err) => {
+        this.errorMessage = err.message;
+      }
+    });
+  }
+
+  guestLogin() {
     this.router.navigateByUrl('/home');
   }
 
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
     this.authService.logIn(rawForm.email, rawForm.password).subscribe({
-      next:() => {
-      this.router.navigateByUrl('/home');
-    },
-    error: (err) => {
-      this.errorMessage = err.code;
-    }
-  });
+      next: () => {
+        this.router.navigateByUrl('/home');
+      },
+      error: (err) => {
+        this.errorMessage = err.code;
+      }
+    });
   }
 }

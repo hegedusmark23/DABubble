@@ -117,10 +117,11 @@
         <a class="fs-18 purp-link" href="privacy">Datenschutz</a>
     </div>
 
-    <div class="message-container d-none">
-        <div class="sign-up-message">
+    <div class="message-container" [ngClass]="{'bg-white': registerSuccesful}">
+        <div class="sign-up-message" [ngClass]="{'animation-class': registerSuccesful}">
             <p class="fs-36">Konto erfolgreich erstellt!</p>
         </div>
     </div>
+    
 </section>
 
