@@ -48,7 +48,7 @@ export class ThreadMessageInputComponent implements OnInit {
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
         this.selectedFile,
-        'messangeCache'
+        'threadCache'
       );
       this.FileUrl = imageUrl;
     } else {
@@ -59,7 +59,7 @@ export class ThreadMessageInputComponent implements OnInit {
   //löscht die bilder aus den cache
   deleteFile() {
     let name = this.selectedFile!.name;
-    this.fileUploadeService.deleteFile(name!, 'messangeCache');
+    this.fileUploadeService.deleteFile(name!, 'threadCache');
     this.FileUrl = null;
     this.selectedFile = null;
   }
@@ -103,7 +103,7 @@ export class ThreadMessageInputComponent implements OnInit {
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
         this.selectedFile,
-        'messangeImages'
+        'threadImages'
       );
       console.log(imageUrl);
       this.FileUrl = imageUrl;
