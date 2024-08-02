@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-profil',
@@ -12,6 +13,7 @@ import { SidebarService } from '../../services/sidebar.service';
 export class UserProfilComponent {
 
   hideOrShowSidebar = inject(SidebarService);
+  authService = inject(AuthService);
   userOnline = true;
   userEmail = 'udgfuid gi@uhegi.eoig'
 

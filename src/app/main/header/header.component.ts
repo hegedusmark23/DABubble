@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  authService = inject(AuthService)
+  authService = inject(AuthService);
   hideOrShowPopUp = inject(SidebarService);
 
   openDialog(){
