@@ -1,9 +1,4 @@
-<div class="create-channel-container" (click)="closeDialog()"
-[ngClass]="{'display-flex': , 'display-none': ! }">
-    <div class="create-channel-dialog" (click)="notCloseDialog($event)">
-        
-    </div>
-    <div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowSidebar.userProfilOpen, 
+<div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowSidebar.userProfilOpen, 
 'display-none': !hideOrShowSidebar.userProfilOpen }">
     <div class="dialog" (click)="notCloseDialog($event)">
         <div class="header">
@@ -20,11 +15,11 @@
             </div>
             <div class="online">
                 @if(!userOnline){
-                    <div class="online-icon"></div>
-                    <span class="fs-20">Aktiv</span>
+                <div class="online-icon"></div>
+                <span class="fs-20">Aktiv</span>
                 }@else {
-                    <div class="offline-icon"></div>
-                    <span class="fs-20">Abwesend</span>
+                <div class="offline-icon"></div>
+                <span class="fs-20">Abwesend</span>
                 }
             </div>
         </div>
@@ -38,13 +33,12 @@
             </div>
         </div>
 
-        
+
         <div class="send-message-button" (click)="sendMessage()">
             <img src="../../../assets/img/header/mode_comment.png">
             <span class="fs-18 message">Nachricht</span>
         </div>
-        
-    
+
+
     </div>
-</div>
 </div>

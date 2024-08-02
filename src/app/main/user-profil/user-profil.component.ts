@@ -12,6 +12,8 @@ import { SidebarService } from '../../services/sidebar.service';
 export class UserProfilComponent {
 
   hideOrShowSidebar = inject(SidebarService);
+  userOnline = true;
+  userEmail = 'udgfuid gi@uhegi.eoig'
 
   closeDialog(){
     this.hideOrShowSidebar.userProfilOpen = false;
@@ -19,6 +21,14 @@ export class UserProfilComponent {
 
   notCloseDialog(e : any){
     e.stopPropagation(e);
+  }
+
+  editUser(){
+
+  }
+
+  sendMessage(){
+
   }
 
 }
