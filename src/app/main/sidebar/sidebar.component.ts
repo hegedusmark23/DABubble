@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,6 +20,7 @@ export class SidebarComponent implements OnInit {
   usersTitleActive = true;
 
   hideOrShowSidebar = inject(SidebarService);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
     this.hideOrShowSidebar.fetchChannels();
