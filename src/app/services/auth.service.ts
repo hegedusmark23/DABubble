@@ -7,7 +7,8 @@ import {
   user,
   GoogleAuthProvider,
   getAuth,
-  signInWithPopup
+  signInWithPopup,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
@@ -77,5 +78,9 @@ export class AuthService {
   logOut(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     return from(promise);
+  }
+
+  passwordReset(email:string): Promise<void>{
+    return sendPasswordResetEmail(this.firebaseAuth, email);
   }
 }
