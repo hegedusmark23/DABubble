@@ -28,7 +28,7 @@ export class UserProfilComponent {
   }
 
   sendMessage(){
-
+    alert('Nachricht an : ' +  this.hideOrShowSidebar.activeUser );
   }
 
 }

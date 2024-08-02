@@ -10,6 +10,7 @@ export class SidebarService {
   createChannelDialogActive = false;
   AllChannels : string[] = [];
   AllUsers : string[] = [];
+  AllEmails : string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
