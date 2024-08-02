@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { getStorage, ref } from "firebase/storage";
 import { deleteObject, getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
+import { SaveNewUserService } from '../../services/save-new-user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,7 +19,7 @@ export class SignUpComponent {
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
-
+  saveUser = inject(SaveNewUserService);
 
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
   imgSrcCheck: string = '../../../assets/img/landing-page/checkbox-unchecked.png';
@@ -75,6 +76,7 @@ export class SignUpComponent {
     this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
       next:() => {
       this.registerSuccesful = true;
+      this.saveUser.saveUser(rawForm.email, rawForm.name, this.imgUrl);
       setTimeout(() => {
         this.registerSuccesful = false;
         this.router.navigateByUrl('/');
