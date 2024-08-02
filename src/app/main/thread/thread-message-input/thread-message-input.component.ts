@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { FileUploadeService } from '../../../services/file-upload.service';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-thread-message-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './thread-message-input.component.html',
   styleUrl: './thread-message-input.component.scss',
 })
@@ -29,6 +30,9 @@ export class ThreadMessageInputComponent implements OnInit {
 
   selectedFile: File | null = null;
   FileUrl: any;
+  emojiSelector: any = false;
+
+  @ViewChild('messageTextarea') messageTextarea: any;
 
   constructor(
     private firestore: Firestore,
@@ -142,10 +146,38 @@ export class ThreadMessageInputComponent implements OnInit {
     this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
   }
 
+  insertEmoji(emoji: any) {
+    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+
+    // Aktuelle Position des Cursors
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+
+    // Wert des Textarea-Felds aktualisieren
+    this.message.message =
+      textarea.value.substring(0, startPos) +
+      emoji +
+      textarea.value.substring(endPos, textarea.value.length);
+
+    // Cursor-Position nach dem Einfügen des Textes setzen
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = startPos + emoji.length;
+    }, 0);
+  }
+
   //fügt die restlichen variablen ins model
   addIMG() {
     this.message.fileUrl = this.FileUrl;
     this.message.fileName = this.selectedFile?.name;
     this.message.user = 'send';
+  }
+
+  addEmoji($event: any) {
+    let element = $event;
+    this.insertEmoji(element['emoji'].native);
+  }
+
+  openEmojiSelector() {
+    this.emojiSelector = !this.emojiSelector;
   }
 }

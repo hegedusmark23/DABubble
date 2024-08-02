@@ -33,6 +33,7 @@
     placeholder="Nachricht an #Entwicklerteam"
     type="text"
     [(ngModel)]="message.message"
+    #messageTextarea
   ></textarea>
   <div class="inputButtons">
     <div>
@@ -81,7 +82,7 @@
         />
       </label>
       <div class="spacer"></div>
-      <div>
+      <div (click)="openEmojiSelector()" class="cursor-pointer">
         <svg
           width="24"
           height="24"
@@ -184,3 +185,12 @@
     </div>
   </div>
 </div>
+
+<emoji-mart
+  *ngIf="this.emojiSelector"
+  title="Pick your emoji…"
+  emoji="point_up"
+  (emojiClick)="addEmoji($event)"
+  set="twitter"
+  [darkMode]="false"
+></emoji-mart>
