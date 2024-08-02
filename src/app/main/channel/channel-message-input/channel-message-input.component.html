@@ -33,6 +33,7 @@
     placeholder="Nachricht an #Entwicklerteam"
     type="text"
     [(ngModel)]="message.message"
+    #messageTextarea
   ></textarea>
   <div class="inputButtons">
     <div>
@@ -184,3 +185,23 @@
     </div>
   </div>
 </div>
+
+<emoji-mart
+  title="Pick your emoji…"
+  emoji="point_up"
+  (emojiClick)="addEmoji($event)"
+  set="twitter"
+  [darkMode]="false"
+></emoji-mart>
+
+<!-- <emoji-mart set="google"></emoji-mart>
+<emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart>
+<emoji-mart
+  [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
+></emoji-mart>
+<emoji-mart
+  [i18n]="{
+    search: 'Recherche',
+    categories: { search: 'Résultats de recherche', recent: 'Récents' }
+  }"
+></emoji-mart> -->

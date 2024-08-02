@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { FileUploadeService } from '../../../services/file-upload.service';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-channel-message-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './channel-message-input.component.html',
   styleUrl: './channel-message-input.component.scss',
 })
@@ -27,6 +28,8 @@ export class ChannelMessageInputComponent implements OnInit {
 
   selectedFile: File | null = null;
   FileUrl: any;
+
+  @ViewChild('messageTextarea') messageTextarea: any;
 
   constructor(
     private firestore: Firestore,
@@ -138,5 +141,30 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.fileUrl = this.FileUrl;
     this.message.fileName = this.selectedFile?.name;
     this.message.user = 'send';
+  }
+
+  insertEmoji(emoji: any) {
+    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+
+    // Aktuelle Position des Cursors
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+
+    // Wert des Textarea-Felds aktualisieren
+    this.message.message =
+      textarea.value.substring(0, startPos) +
+      emoji +
+      textarea.value.substring(endPos, textarea.value.length);
+
+    // Cursor-Position nach dem Einfügen des Textes setzen
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = startPos + emoji.length;
+    }, 0);
+  }
+
+  addEmoji($event: any) {
+    let element = $event;
+    console.log(element['emoji'].native);
+    this.insertEmoji(element['emoji'].native);
   }
 }
