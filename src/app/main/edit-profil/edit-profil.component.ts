@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-edit-profil',
@@ -12,6 +13,7 @@ import { SidebarService } from '../../services/sidebar.service';
 export class EditProfilComponent {
 
   hideOrShowPopUp = inject(SidebarService);
+  authService = inject(AuthService);
   userOnline = false;
   userEmail = 'user@irgenwas.com';
 
