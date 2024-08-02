@@ -13,4 +13,12 @@ export class UserProfilComponent {
 
   hideOrShowSidebar = inject(SidebarService);
 
+  closeDialog(){
+    this.hideOrShowSidebar.userProfilOpen = false;
+  }
+
+  notCloseDialog(e : any){
+    e.stopPropagation(e);
+  }
+
 }
