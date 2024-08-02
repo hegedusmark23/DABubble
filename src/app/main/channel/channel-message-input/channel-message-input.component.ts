@@ -28,6 +28,7 @@ export class ChannelMessageInputComponent implements OnInit {
 
   selectedFile: File | null = null;
   FileUrl: any;
+  emojiSelector: any = false;
 
   @ViewChild('messageTextarea') messageTextarea: any;
 
@@ -164,7 +165,10 @@ export class ChannelMessageInputComponent implements OnInit {
 
   addEmoji($event: any) {
     let element = $event;
-    console.log(element['emoji'].native);
     this.insertEmoji(element['emoji'].native);
+  }
+
+  openEmojiSelector() {
+    this.emojiSelector = !this.emojiSelector;
   }
 }

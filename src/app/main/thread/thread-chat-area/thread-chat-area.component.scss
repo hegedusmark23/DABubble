@@ -48,12 +48,13 @@
   justify-content: flex-start;
   gap: 16px;
   padding: 10px 146px 10px 45px;
-  width: max-content;
   span {
     background-color: #eceefe;
     padding: 15px;
     border-radius: 0px 30px 30px 30px;
-    width: max-content;
+    text-wrap: wrap;
+    word-break: break-all; /* Ermöglicht das Aufbrechen von Wörtern */
+    overflow-wrap: break-word; /* Unterstützt das Aufbrechen von Wörtern in älteren Browsern */
   }
   .profilePicture {
     width: 70px;
@@ -81,7 +82,9 @@
     padding: 15px;
     border-radius: 30px 0px 30px 30px;
     color: white;
-    width: max-content;
+    text-wrap: wrap;
+    word-break: break-all; /* Ermöglicht das Aufbrechen von Wörtern */
+    overflow-wrap: break-word; /* Unterstützt das Aufbrechen von Wörtern in älteren Browsern */
   }
 
   .profilePicture {
