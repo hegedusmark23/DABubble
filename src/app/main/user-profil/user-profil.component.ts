@@ -23,10 +23,6 @@ export class UserProfilComponent {
     e.stopPropagation(e);
   }
 
-  editUser(){
-
-  }
-
   sendMessage(){
     alert('Nachricht an : ' +  this.hideOrShowSidebar.activeUser );
   }
