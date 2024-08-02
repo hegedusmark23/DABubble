@@ -26,6 +26,7 @@ export class EditProfilContactformComponent {
 
   canel(){
     alert('cancel');
+    this.closeDialog();
   }
 
   save(){
