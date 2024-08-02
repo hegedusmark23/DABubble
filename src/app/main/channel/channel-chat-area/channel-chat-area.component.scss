@@ -195,6 +195,9 @@
     .hoverSend {
       display: flex !important;
     }
+    .messageSend {
+      padding: 10px 45px 10px 45px;
+    }
   }
 }
 
@@ -209,6 +212,9 @@
     background-color: #f0f1fe;
     span {
       background-color: white;
+    }
+    .messageResive {
+      padding: 10px 45px 10px 45px;
     }
   }
 }
