@@ -13,10 +13,10 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
 })
 export class SidebarComponent implements OnInit {
   hoveredChannelTitle = false;
-  activetedChannelTitle = false;
+  activetedChannelTitle = true;
   activeChannelIndex: number | null = null;
   activeUserIndex: number | null = null;
-  usersTitleActive = false;
+  usersTitleActive = true;
 
   hideOrShowSidebar = inject(SidebarService);
 
@@ -57,7 +57,7 @@ export class SidebarComponent implements OnInit {
   userActive(i: number) {
     this.activeUserIndex = i;
     this.hideOrShowSidebar.userProfilOpen = true;
-    alert(this.hideOrShowSidebar.AllUsers[i] + ' open');
+    this.hideOrShowSidebar.activeUser = this.hideOrShowSidebar.AllUsers[i];
   }
 
   addMessage() {
