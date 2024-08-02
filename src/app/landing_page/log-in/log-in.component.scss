@@ -187,6 +187,19 @@ section {
     animation-fill-mode: forwards;
 }
 
+.error-message {
+    color: red;
+    font-size: 14px;
+    padding-top: 5px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: baseline;
+}
+
 @keyframes backgroundAnimation {
     0% {
         opacity: 1;

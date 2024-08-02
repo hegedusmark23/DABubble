@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -21,8 +21,8 @@ export class ResetPasswordComponent {
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]]
   });
-  
-  constructor(private _location: Location){
+
+  constructor(private _location: Location) {
   }
 
   onSubmit() {
@@ -31,10 +31,10 @@ export class ResetPasswordComponent {
       this.authService.passwordReset(email!)
         .then(() => {
           this.emailSent = true;
-      setTimeout(() => {
-        this.emailSent = false;
-        this.router.navigateByUrl('/');
-      }, 500);
+          setTimeout(() => {
+            this.emailSent = false;
+            this.router.navigateByUrl('/');
+          }, 500);
         })
         .catch(error => {
           console.error('Error sending password reset email:', error);

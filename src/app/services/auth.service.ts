@@ -6,11 +6,12 @@ import {
   updateProfile,
   user,
   GoogleAuthProvider,
-  getAuth,
   signInWithPopup,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  confirmPasswordReset,
+  verifyPasswordResetCode
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { catchError, from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
 
 @Injectable({
@@ -66,13 +67,15 @@ export class AuthService {
       .catch(error => {
         console.error('Error updating profile:', error);
       });
-  
+
     return from(promise);
   }
 
   logIn(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(this.firebaseAuth, email, password).then(() => { });
-    return from(promise);
+    return from(
+      signInWithEmailAndPassword(this.firebaseAuth, email, password).then(() => {
+      })
+    )
   }
 
   logOut(): Observable<void> {
@@ -80,7 +83,28 @@ export class AuthService {
     return from(promise);
   }
 
-  passwordReset(email:string): Promise<void>{
+  passwordReset(email: string): Promise<void> {
     return sendPasswordResetEmail(this.firebaseAuth, email);
   }
+
+  changePassword(actionCode: string, newPassword: string): Promise<void> {
+    return verifyPasswordResetCode(this.firebaseAuth, actionCode)
+      .then((email) => {
+        console.log('Password reset code verified for email:', email);
+        return confirmPasswordReset(this.firebaseAuth, actionCode, newPassword)
+          .then(() => {
+            console.log('Password reset confirmed and updated for email:', email);
+            return this.logIn(email, newPassword).toPromise();
+          })
+          .catch((error) => {
+            console.error('Error during password confirmation:', error);
+            throw new Error('Failed to reset password. The code might have expired or the password is too weak.');
+          });
+      })
+      .catch((error) => {
+        console.error('Error verifying password reset code:', error);
+        throw new Error('Invalid or expired password reset code.');
+      });
+  }
+
 }

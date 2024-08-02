@@ -17,20 +17,31 @@
     <div class="login-section">
         <h1 class="fs-46">Anmeldung</h1>
 
-        <p style="max-width: 486px; text-align: center;" class="fs-20">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
+        <p style="max-width: 486px; text-align: center;" class="fs-20">Wir empfehlen dir, die E-Mail-Adresse zu nutzen,
+            die du bei der Arbeit verwendest.</p>
 
         <form [formGroup]="form" class="formfield" (ngSubmit)="onSubmit()">
-            <div style="position: relative;">
+            <div class="input-container" style="position: relative;">
                 <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="">
                 <input formControlName="email" class="input-design" placeholder="beispielname@email.com" type="text">
-                <span class="d-none">*Diese E-Mail-Adresse ist leider ungültig</span>
+                <span *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)"
+                    class="error-message">
+                    *Diese E-Mail-Adresse ist leider ungültig.
+                </span>
             </div>
 
-            <div style="position: relative;">
+            <div class="input-container" style="position: relative;">
                 <img class="input-icon-lock" src="../../../assets/img/landing-page/lock.png" alt="">
                 <input formControlName="password" class="input-design" placeholder="Passwort" type="password">
-                <span class="d-none">Falsches Passwort. Bitte noch einmal versuchen</span>
+                <span *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
+                    class="error-message">
+                    Falsches Passwort. Bitte noch einmal versuchen
+                </span>
             </div>
+
+            <div *ngIf="errorMessage" class="error-message">
+                {{ errorMessage }}
+              </div>
 
             <a class="fs-18 password-link" href="reset-password">Passwort vergessen?</a>
 
@@ -40,7 +51,8 @@
                 <div class="grey-line"></div>
             </div>
 
-            <button type="button" (click)="googleSignIn()" class="login-google-btn cursor-pointer fs-18"><img src="../../../assets/img/landing-page/Google.png" alt="">Anmelden mit Google</button>
+            <button type="button" (click)="googleSignIn()" class="login-google-btn cursor-pointer fs-18"><img
+                    src="../../../assets/img/landing-page/Google.png" alt="">Anmelden mit Google</button>
 
             <span class="btn-container">
                 <button type="submit" class="blue-btn fs-18 cursor-pointer">Anmelden</button>
