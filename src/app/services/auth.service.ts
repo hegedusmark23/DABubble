@@ -13,6 +13,7 @@ import {
 } from '@angular/fire/auth';
 import { catchError, from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
+import { SaveNewUserService } from './save-new-user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class AuthService {
   user$ = user(this.firebaseAuth)
   currentUserSignal = signal<UserInterFace | null | undefined>(undefined);
   provider = new GoogleAuthProvider();
+  saveUser = inject(SaveNewUserService);
 
   signInWithGoogle(): Observable<void> {
     return from(
@@ -42,6 +44,7 @@ export class AuthService {
             imgUrl
           });
           console.log("User signed in with Google:", name, email);
+          this.saveUser.saveUser(email, name, imgUrl);
         })
         .catch((error) => {
           const errorCode = error.code;

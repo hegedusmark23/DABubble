@@ -41,7 +41,7 @@
         <div class="scroll-container-users">
             <div class="user-list" *ngFor="let user of hideOrShowSidebar.AllUsers; let i = index"
                 (click)="userActive(i)">
-                <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+                <img class="profil-image" src={{this.hideOrShowSidebar.AllImages[i]}}>
                 <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
                 <span class="fs-18 user-name">{{ user }}</span>
             </div>

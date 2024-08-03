@@ -11,6 +11,7 @@ export class SidebarService {
   AllChannels : string[] = [];
   AllUsers : string[] = [];
   AllEmails : string[] = [];
+  AllImages : string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
@@ -30,10 +31,13 @@ export class SidebarService {
 
   async fetchUsers() {
     this.AllUsers = [];
-    const channelsCollection = collection(this.firestore, 'Users');
-    const querySnapshot = await getDocs(channelsCollection);
+    const usersCollection = collection(this.firestore, 'Users');
+    const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach((doc) => {
+      const userData = doc.data();
       this.AllUsers.push(doc.id);
+      this.AllEmails.push(userData['email']);
+      this.AllImages.push(userData['image']);
     });
   }
 }
