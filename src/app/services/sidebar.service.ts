@@ -37,7 +37,7 @@ export class SidebarService {
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach((doc) => {
       const userData = doc.data();
-      this.AllUsers.push(doc.id);
+      this.AllUsers.push(userData['name']);
       this.AllEmails.push(userData['email']);
       this.AllImages.push(userData['image']);
     });
