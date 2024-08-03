@@ -28,12 +28,13 @@ export class AppComponent implements OnInit {
         this.authService.currentUserSignal.set({
           email: user.email!,
           name: user.displayName!,
-          imgUrl: user.photoURL
+          imgUrl: user.photoURL,
+          uId: user.uid
         });
       } else {
         this.authService.currentUserSignal.set(null);
       };
-      //console.log(this.authService.currentUserSignal());
+      console.log(this.authService.currentUserSignal());
     });
 
   }

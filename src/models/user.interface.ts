@@ -2,5 +2,6 @@
 export interface UserInterFace {
     email:string,
     name:string,
-    imgUrl: any
+    imgUrl: any,
+    uId: string
 }

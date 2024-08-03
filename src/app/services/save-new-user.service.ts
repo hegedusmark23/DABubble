@@ -8,33 +8,32 @@ export class SaveNewUserService {
 
   constructor(private firestore: Firestore) { }
 
-
+  userId: string = '';
   userName: string = ''; 
   userMail: string = '';
   userImage: string = ''; 
 
-  async saveUser(email: any, name: any, url: any){
-    this.userName = name;
-    this.userMail = email;
-    this.userImage = url;
-    const userRef = doc(collection(this.firestore, 'Users'), this.userName);
+  async saveUser(uId: string, email: string, name: string, url: string) {
+    const userRef = doc(collection(this.firestore, 'Users'), uId);
     await setDoc(
       userRef,
-      this.toJSON()
+      this.toJSON(uId, email, name, url)
     )
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(() => {
-        
-      });
+    .catch((err) => {
+      console.error(err);
+    })
+    .then(() => {
+      console.log('User saved with ID:', uId);
+    });
   }
 
-  toJSON() {
+  toJSON(uId: string, email: string, name: string, image: string) {
     return {
-      name : this.userName,
-      email: this.userMail,
-      image: this.userImage
+      uid: uId,
+      name: name,
+      email: email,
+      image: image
     };
   }
 }
+

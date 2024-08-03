@@ -74,18 +74,18 @@ export class SignUpComponent {
       await this.saveFile();
     }
     this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
-      next:() => {
-      this.registerSuccesful = true;
-      this.saveUser.saveUser(rawForm.email, rawForm.name, this.imgUrl);
-      setTimeout(() => {
-        this.registerSuccesful = false;
-        this.router.navigateByUrl('/');
-      }, 500);
-    },
-    error: (err) => {
-      this.errorMessage = err.code;
-    }
-  });
+      next: (userId) => { 
+        this.registerSuccesful = true;
+        this.saveUser.saveUser(userId, rawForm.email, rawForm.name, this.imgUrl);
+        setTimeout(() => {
+          this.registerSuccesful = false;
+          this.router.navigateByUrl('/');
+        }, 500);
+      },
+      error: (err) => {
+        this.errorMessage = err.code;
+      }
+    });
   }
 
   chooseAvatar(profileImg: string){
@@ -175,7 +175,6 @@ export class SignUpComponent {
   async deleteCachedFile(fileUrl: string): Promise<void> {
     const storage = getStorage();
     const fileRef = ref(storage, `profileCache/${fileUrl}`);
-
     return deleteObject(fileRef)
       .then(() => {
         console.log('File deleted successfully');
