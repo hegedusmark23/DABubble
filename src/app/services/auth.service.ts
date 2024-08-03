@@ -10,7 +10,8 @@ import {
   signInWithPopup,
   sendPasswordResetEmail,
   confirmPasswordReset,
-  verifyPasswordResetCode
+  verifyPasswordResetCode,
+  updateEmail
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
@@ -20,7 +21,6 @@ import { SaveNewUserService } from './save-new-user.service';
   providedIn: 'root'
 })
 export class AuthService {
-
   firebaseAuth = inject(Auth);
   user$ = user(this.firebaseAuth);
   currentUserSignal = signal<UserInterFace | null | undefined>(undefined);
@@ -129,4 +129,29 @@ export class AuthService {
       throw new Error('Invalid or expired password reset code.');
     });
   }
+  
+  async updateUserData(email: string, name: string): Promise<void> {
+    const currentUser = this.firebaseAuth.currentUser;
+    if (!currentUser) {
+      throw new Error('No user is currently signed in.');
+    } try {
+      if (currentUser.email !== email) {
+        await updateEmail(currentUser, email);
+      } if (currentUser.displayName !== name) {
+        await updateProfile(currentUser, { displayName: name });
+      }
+      this.currentUserSignal.set({
+        email,
+        name,
+        imgUrl: currentUser.photoURL ?? '',
+        uId: currentUser.uid
+      });
+      //console.log('User profile updated successfully.');
+    } catch (error) {
+      console.error('Error updating user profile:', error);
+      throw error;
+    }
+  }
+
 }
+

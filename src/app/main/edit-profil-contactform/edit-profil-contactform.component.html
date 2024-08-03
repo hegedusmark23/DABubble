@@ -1,28 +1,39 @@
 <div class="edit-profil-container" (click)="closeDialog()" [ngClass]="{'display-flex': hideOrShowPopUp.editProfilContactformOpen, 
 'display-none': !hideOrShowPopUp.editProfilContactformOpen }">
     <div class="dialog" (click)="notCloseDialog($event)">
+
         <div class="header">
             <span class="header-title fs-24">Dein Profil bearbeiten</span>
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
+
         <div>
-            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+            <img class="profil-image" [src]="authService.currentUserSignal()?.imgUrl">
         </div>
-        <div class="input-container">
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="input-container">
             <div class="channel-name-container">
                 <span class="fs-18">Vollständiger Name</span>
-                <input type="text" class="input-field"
-                id="channelDescription" name="channelDescription">
+                <input value="{{authService.currentUserSignal()?.name}}" formControlName="name" type="text"
+                    class="input-field" id="name" name="name">
             </div>
+
             <div class="channel-name-container">
                 <span class="fs-18">E-Mail-Adresse</span>
-                <input type="text" class="input-field"
-                id="channelMessages" name="channelMessages">
+                <input value="{{authService.currentUserSignal()?.email}}" formControlName="email" type="text"
+                    class="input-field" id="email" name="email">
             </div>
+
+            <div class="message-container">
+                <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+            </div>
+
             <div class="buttons-container">
-                <button class="cancel"><span class="fs-18" (click)="canel()">Abbrechen</span></button>
-                <button class="save"><span class="fs-18" (click)="save()">Speichern</span></button>
+                <button type="button" class="cancel" (click)="cancel()"><span class="fs-18">Abbrechen</span></button>
+                <button type="submit" class="save"><span class="fs-18">Speichern</span></button>
             </div>
-        </div>
+
+        </form>
     </div>
 </div>

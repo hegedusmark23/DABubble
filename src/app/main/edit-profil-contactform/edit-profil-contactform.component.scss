@@ -60,6 +60,7 @@
     width: 200px;
     height: 200px;
     border-radius: 500px;
+    object-fit: cover;
 }
 
 .channel-name-container {
@@ -141,4 +142,21 @@ button {
     &:hover {
         background-color: #797EF3;
     }
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+}
+
+.success-message {
+    color: #92C83E;
+    font-size: 14px;
+}
+
+.message-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
