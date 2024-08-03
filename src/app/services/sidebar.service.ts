@@ -17,6 +17,8 @@ export class SidebarService {
   editProfilContactformOpen = false;
   userProfilOpen = false;
   activeUser = '';
+  activeImage = '';
+  activeEmail = '';
 
   constructor(private firestore: Firestore) { }
 

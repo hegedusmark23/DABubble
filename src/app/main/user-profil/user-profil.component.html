@@ -6,7 +6,7 @@
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
         <div>
-            <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+            <img class="profil-image" src={{this.hideOrShowSidebar.activeImage}}>
         </div>
         <div class="name-container">
             <div class="name-edit">
@@ -28,7 +28,7 @@
                 <span class="fs-20 email-adress-title">E-Mail-Adresse</span>
             </div>
             <div class="email-adress-container">
-                <span class="fs-18">{{ userEmail }}</span>
+                <span class="fs-18">{{ this.hideOrShowSidebar.activeEmail }}</span>
             </div>
         </div>
 
