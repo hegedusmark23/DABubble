@@ -39,6 +39,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   allMessagesSortedDate: any = [];
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
+  allUser: any = [];
   allDates: any = [];
   dateCounter = 0;
   scrolled = true;
@@ -61,6 +62,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
+    this.subUser();
+    this.subMessages(); // Move subMessages to ngAfterViewInit to ensure View is initialized
+
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannel = channel;
       this.onChannelChange(channel);
@@ -72,7 +76,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         this.scrollToBottom();
       }
     });
-    this.subMessages(); // Move subMessages to ngAfterViewInit to ensure View is initialized
   }
 
   openThread(thread: any) {
@@ -101,9 +104,29 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     });
   }
 
+  subUser() {
+    const q = query(collection(this.firestore, 'Users'), limit(1000));
+    onSnapshot(q, (list) => {
+      this.allUser = [];
+      list.forEach((element) => {
+        this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
+      });
+    });
+  }
+
+  setNoteObjectUser(obj: any, id: string) {
+    return {
+      email: obj.email || '',
+      image: obj.image || '',
+      name: obj.name || '',
+      uid: obj.uid || '',
+    };
+  }
+
   setNoteObject(obj: any, id: string): Message {
     return {
       id: id,
+      uid: obj.uid || '',
       message: obj.message || '',
       weekday: obj.weekday || '',
       year: obj.year || '',
@@ -212,5 +235,22 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     setTimeout(() => {
       this.subMessages(); // Ensure messages are fetched on channel change
     }, 10);
+  }
+
+  getUsername(uid: any) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      const element = this.allUser[i];
+      if (element.uid === uid) {
+        return element.name;
+      }
+    }
+  }
+  getProfileImg(uid: any) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      const element = this.allUser[i];
+      if (element.uid === uid) {
+        return element.image;
+      }
+    }
   }
 }

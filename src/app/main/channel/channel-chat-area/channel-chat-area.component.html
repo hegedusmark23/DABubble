@@ -21,25 +21,19 @@
         <span class="spacer"></span>
       </div>
 
-      <div *ngIf="message.user === 'resive'">
+      <div *ngIf="message.uid !== authService.currentUserSignal()?.uId">
         <div class="messageResiveContainer">
           <div class="messageResive">
             <div>
               <img
-                *ngIf="!authService.currentUserSignal()"
                 class="profilePicture"
-                src="./../../../../assets/img/profile-imgs/male1.png"
-              />
-              <img
-                *ngIf="authService.currentUserSignal()"
-                class="profilePicture"
-                src="{{ authService.currentUserSignal()?.imgUrl }}"
+                src="{{ getProfileImg(message.uid) }}"
               />
             </div>
             <div class="messageInfo">
               <div class="messageTitle">
                 <div class="messageUserName">
-                  <p>{{ message.user }}</p>
+                  <p>{{ getUsername(message.uid) }}</p>
                   <p>{{ message.hour }}:{{ message.minute }} Uhr</p>
                 </div>
 
@@ -204,7 +198,7 @@
         </div>
       </div>
 
-      <div *ngIf="message.user !== 'resive'">
+      <div *ngIf="message.uid == authService.currentUserSignal()?.uId">
         <div class="messageSendContainer">
           <div id="hover1" class="hoverSend d-none">
             <div class="hoverContent">
@@ -354,7 +348,7 @@
               <div class="messageTitle">
                 <div></div>
                 <div class="messageUserName">
-                  <p>{{ message.user }}</p>
+                  <p>{{ getUsername(message.uid) }}</p>
                   <p>{{ getFormattedTime(message.hour, message.minute) }}</p>
                 </div>
               </div>
@@ -373,14 +367,8 @@
             </div>
             <div class="profileImg">
               <img
-                *ngIf="!authService.currentUserSignal()"
                 class="profilePicture"
-                src="./../../../../assets/img/profile-imgs/male1.png"
-              />
-              <img
-                *ngIf="authService.currentUserSignal()"
-                class="profilePicture"
-                src="{{ authService.currentUserSignal()?.imgUrl }}"
+                src="{{ getProfileImg(message.uid) }}"
               />
             </div>
           </div>

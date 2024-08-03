@@ -59,6 +59,7 @@ export class ThreadComponent implements OnInit {
   setNoteObject(obj: any, id: string): Message {
     return {
       id: id,
+      uid: obj.message || '',
       message: obj.message || '',
       weekday: obj.weekday || '',
       year: obj.year || '',

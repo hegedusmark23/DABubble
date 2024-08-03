@@ -6,7 +6,7 @@
 >
   <div class="content" #myDiv>
     <div *ngFor="let message of allMessagesSorted" #messageList ng>
-      <div *ngIf="message.user === 'resive'">
+      <div *ngIf="message.uid !== authService.currentUserSignal()?.uId">
         <div class="messageResiveContainer">
           <div class="messageResive">
             <div>
@@ -24,7 +24,7 @@
             <div class="messageInfo">
               <div class="messageTitle">
                 <div class="messageUserName">
-                  <p>{{ message.user }}</p>
+                  <p>{{ message.uid }}</p>
                   <p>{{ message.hour }}:{{ message.minute }} Uhr</p>
                 </div>
 
@@ -189,7 +189,7 @@
         </div>
       </div>
 
-      <div *ngIf="message.user !== 'resive'">
+      <div *ngIf="message.uid == authService.currentUserSignal()?.uId">
         <div class="messageSendContainer">
           <div id="hover1" class="hoverSend d-none">
             <div class="hoverContent">
@@ -228,7 +228,7 @@
               <div class="messageTitle">
                 <div></div>
                 <div class="messageUserName">
-                  <p>{{ message.user }}</p>
+                  <p>{{ message.uid }}</p>
                   <p>{{ getFormattedTime(message.hour, message.minute) }}</p>
                 </div>
               </div>

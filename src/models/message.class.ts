@@ -1,5 +1,6 @@
 export class Message {
   id?: string;
+  uid: any;
   date?: boolean;
   message: string;
   weekday: string;
@@ -16,6 +17,7 @@ export class Message {
 
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';
+    this.uid = obj ? obj.uid : '';
     this.date = obj ? obj.date : '';
     this.message = obj ? obj.message : '';
     this.weekday = obj ? obj.weekday : '';

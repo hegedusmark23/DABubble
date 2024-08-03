@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { FileUploadeService } from '../../../services/file-upload.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-channel-message-input',
@@ -29,6 +30,7 @@ export class ChannelMessageInputComponent implements OnInit {
   selectedFile: File | null = null;
   FileUrl: any;
   emojiSelector: any = false;
+  authService = inject(AuthService);
 
   @ViewChild('messageTextarea') messageTextarea: any;
 
@@ -109,6 +111,7 @@ export class ChannelMessageInputComponent implements OnInit {
   toJSON() {
     return {
       id: this.message.id,
+      uid: this.message.uid,
       message: this.message.message,
       weekday: this.message.weekday,
       year: this.message.year,
@@ -118,7 +121,6 @@ export class ChannelMessageInputComponent implements OnInit {
       minute: this.message.minute,
       seconds: this.message.seconds,
       milliseconds: this.message.milliseconds,
-      user: this.message.user,
       fileUrl: this.message.fileUrl,
       fileName: this.message.fileName,
     };
@@ -135,13 +137,13 @@ export class ChannelMessageInputComponent implements OnInit {
     this.message.minute = now.getMinutes();
     this.message.seconds = now.getSeconds();
     this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
+    this.message.uid = this.authService.currentUserSignal()?.uId;
   }
 
   //fügt die restlichen variablen ins model
   addIMG() {
     this.message.fileUrl = this.FileUrl;
     this.message.fileName = this.selectedFile?.name;
-    this.message.user = 'send';
   }
 
   insertEmoji(emoji: any) {
