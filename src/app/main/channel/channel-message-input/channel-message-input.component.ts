@@ -129,7 +129,6 @@ export class ChannelMessageInputComponent implements OnInit {
       rocket: this.message.rocket,
       nerdFace: this.message.nerdFace,
       noted: this.message.noted,
-      panda: this.message.panda,
       shushingFace: this.message.shushingFace,
     };
   }

@@ -15,14 +15,15 @@ export class Message {
   fileUrl: any;
   fileName: any;
   threadCount?: any;
+  checkMark: any;
+  handshake: any;
   thumbsUp: any;
   thumbsDown: any;
   rocket: any;
   nerdFace: any;
   noted: any;
-  panda: any;
   shushingFace: any;
-  
+
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';
     this.uid = obj ? obj.uid : '';
@@ -40,12 +41,13 @@ export class Message {
     this.fileUrl = obj ? obj.fileUrl : '';
     this.fileName = obj ? obj.fileName : '';
     this.threadCount = obj ? obj.threadCount : '';
+    this.checkMark = obj ? obj.checkMark : '';
+    this.handshake = obj ? obj.handshake : '';
     this.thumbsUp = obj ? obj.thumbsUp : '';
     this.thumbsDown = obj ? obj.thumbsDown : '';
     this.rocket = obj ? obj.rocket : '';
     this.nerdFace = obj ? obj.nerdFace : '';
     this.noted = obj ? obj.noted : '';
-    this.panda = obj ? obj.panda : '';
     this.shushingFace = obj ? obj.shushingFace : '';
   }
 }

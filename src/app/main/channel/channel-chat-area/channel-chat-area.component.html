@@ -78,6 +78,23 @@
               </div>
               <div class="reactionContainer">
                 <div
+                  *ngIf="splitWords(message.checkMark) > 0"
+                  class="reaction"
+                  (click)="addReaction('checkMark', message)"
+                >
+                  <div>{{ splitWords(message.checkMark) }}</div>
+                  <img src="./../../../../assets/reactions/check-mark.png" />
+                </div>
+
+                <div
+                  *ngIf="splitWords(message.handshake) > 0"
+                  class="reaction"
+                  (click)="addReaction('handshake', message)"
+                >
+                  <div>{{ splitWords(message.handshake) }}</div>
+                  <img src="./../../../../assets/reactions/handshake.png" />
+                </div>
+                <div
                   *ngIf="splitWords(message.thumbsUp) > 0"
                   class="reaction"
                   (click)="addReaction('thumbsUp', message)"
@@ -123,15 +140,6 @@
                 </div>
 
                 <div
-                  *ngIf="splitWords(message.panda) > 0"
-                  class="reaction"
-                  (click)="addReaction('panda', message)"
-                >
-                  <div>{{ splitWords(message.panda) }}</div>
-                  <img src="./../../../../assets/reactions/panda.png" />
-                </div>
-
-                <div
                   *ngIf="splitWords(message.shushingFace) > 0"
                   class="reaction"
                   (click)="addReaction('shushingFace', message)"
@@ -142,12 +150,12 @@
               </div>
             </div>
           </div>
-          <div id="hover0" class="hoverResive d-none">
+          <div class="hoverResive d-none">
             <div *ngIf="!emojiselectior" class="hoverContent">
-              <p>
+              <p (click)="addReaction('checkMark', message)">
                 <img src="./../../../../assets/reactions/check-mark.png" />
               </p>
-              <p>
+              <p (click)="addReaction('handshake', message)">
                 <img src="./../../../../assets/reactions/handshake.png" />
               </p>
               <p (click)="openEmojiSelection()" class="cursor-pointer">
@@ -220,9 +228,6 @@
               </p>
               <p (click)="addReaction('noted', message)">
                 <img src="./../../../../assets/reactions/noted.png" />
-              </p>
-              <p (click)="addReaction('panda', message)">
-                <img src="./../../../../assets/reactions/panda.png" />
               </p>
               <p (click)="addReaction('shushingFace', message)">
                 <img src="./../../../../assets/reactions/shushing-face.png" />
@@ -265,12 +270,12 @@
         *ngIf="message.uid == authService.currentUserSignal()?.uId"
       >
         <div class="messageSendContainer">
-          <div id="hover0" class="hoverSend d-none">
+          <div class="hoverSend d-none">
             <div *ngIf="!emojiselectior" class="hoverContent">
-              <p>
+              <p (click)="addReaction('checkMark', message)">
                 <img src="./../../../../assets/reactions/check-mark.png" />
               </p>
-              <p>
+              <p (click)="addReaction('handshake', message)">
                 <img src="./../../../../assets/reactions/handshake.png" />
               </p>
               <p (click)="openEmojiSelection()" class="cursor-pointer">
@@ -343,9 +348,6 @@
               </p>
               <p (click)="addReaction('noted', message)">
                 <img src="./../../../../assets/reactions/noted.png" />
-              </p>
-              <p (click)="addReaction('panda', message)">
-                <img src="./../../../../assets/reactions/panda.png" />
               </p>
               <p (click)="addReaction('shushingFace', message)">
                 <img src="./../../../../assets/reactions/shushing-face.png" />
@@ -414,7 +416,25 @@
                 </a>
                 <p class="smallGray">Letzte Antwort 14:56</p>
               </div>
+
               <div class="reactionContainer">
+                <div
+                  *ngIf="splitWords(message.checkMark) > 0"
+                  class="reaction"
+                  (click)="addReaction('checkMark', message)"
+                >
+                  <div>{{ splitWords(message.checkMark) }}</div>
+                  <img src="./../../../../assets/reactions/check-mark.png" />
+                </div>
+
+                <div
+                  *ngIf="splitWords(message.handshake) > 0"
+                  class="reaction"
+                  (click)="addReaction('handshake', message)"
+                >
+                  <div>{{ splitWords(message.handshake) }}</div>
+                  <img src="./../../../../assets/reactions/handshake.png" />
+                </div>
                 <div
                   *ngIf="splitWords(message.thumbsUp) > 0"
                   class="reaction"
@@ -458,15 +478,6 @@
                 >
                   <div>{{ splitWords(message.noted) }}</div>
                   <img src="./../../../../assets/reactions/noted.png" />
-                </div>
-
-                <div
-                  *ngIf="splitWords(message.panda) > 0"
-                  class="reaction"
-                  (click)="addReaction('panda', message)"
-                >
-                  <div>{{ splitWords(message.panda) }}</div>
-                  <img src="./../../../../assets/reactions/panda.png" />
                 </div>
 
                 <div

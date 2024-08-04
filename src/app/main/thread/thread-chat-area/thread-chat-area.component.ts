@@ -112,12 +112,13 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       fileUrl: obj.fileUrl || '',
       fileName: obj.fileName || '',
       threadCount: obj.threadCount || '',
+      checkMark: obj.checkMark || '',
+      handshake: obj.handshake || '',
       thumbsUp: obj.thumbsUp || '',
       thumbsDown: obj.thumbsDown || '',
       rocket: obj.rocket || '',
       nerdFace: obj.nerdFace || '',
       noted: obj.noted || '',
-      panda: obj.panda || '',
       shushingFace: obj.shushingFace || '',
     };
   }
