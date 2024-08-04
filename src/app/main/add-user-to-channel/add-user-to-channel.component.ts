@@ -33,4 +33,12 @@ export class AddUserToChannelComponent {
     e.stopPropagation(e);
   }
 
+  createChannel(){
+    if(this.addAllUsers){
+      alert('Added channel with all users');
+    }else{
+      alert('Added channel with selected users');
+    }
+  }
+
 }
