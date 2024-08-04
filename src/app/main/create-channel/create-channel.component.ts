@@ -36,6 +36,7 @@ export class CreateChannelComponent {
 
   async saveChannel(){
     this.hideOrShowSidebar.addUserToChanelOpen = true;
+    this.hideOrShowSidebar.createChannelDialogActive = false;
     /* 
     this.loading = true;
     const channelRef = doc(collection(this.firestore, 'Channels'), this.newChannel.name);
