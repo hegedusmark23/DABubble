@@ -16,6 +16,7 @@ export class SidebarService {
   editProfilOpen = false;
   editProfilContactformOpen = false;
   userProfilOpen = false;
+  addUserToChanelOpen = false;
   activeUser = '';
   activeImage = '';
   activeEmail = '';

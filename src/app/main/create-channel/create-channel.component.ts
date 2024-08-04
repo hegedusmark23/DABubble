@@ -30,7 +30,13 @@ export class CreateChannelComponent {
     e.stopPropagation(e);
   }
 
+  /* 
+
+  */
+
   async saveChannel(){
+    this.hideOrShowSidebar.addUserToChanelOpen = true;
+    /* 
     this.loading = true;
     const channelRef = doc(collection(this.firestore, 'Channels'), this.newChannel.name);
     await setDoc(
@@ -54,5 +60,6 @@ export class CreateChannelComponent {
       name : this.newChannel.name,
       description : this.newChannel.description
     };
+    */
   }
 }
