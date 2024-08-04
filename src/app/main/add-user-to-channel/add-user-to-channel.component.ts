@@ -12,6 +12,18 @@ import { CommonModule } from '@angular/common';
 export class AddUserToChannelComponent {
 
   hideOrShowSidebar = inject(SidebarService);
+  addAllUsers = true;
+  addSelectedUsers = false;
+
+  addSelectedUser(){
+    this.addAllUsers = false;
+    this.addSelectedUsers = true;
+  }
+
+  addAllUser(){
+    this.addAllUsers = true;
+    this.addSelectedUsers = false;
+  }
 
   closeDialog(){
     this.hideOrShowSidebar.addUserToChanelOpen = false;

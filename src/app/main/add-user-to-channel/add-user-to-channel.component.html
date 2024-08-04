@@ -1,5 +1,5 @@
 <div class="add-user-to-channel-container" (click)="closeDialog()"
-[ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
+    [ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
     <div class="add-user-to-channel-dialog" (click)="notCloseDialog($event)">
         <div class="dialog-title-container">
             <span class="fs-24 dialog-title">Leute hinzufügen</span>
@@ -7,11 +7,20 @@
         </div>
         <div class="select-user-group-container">
             <div class="select-user-group">
+                @if(this.addAllUsers){
                 <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
+                }@else {
+                    <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button" (click)="addAllUser()">
+                }
                 <span>Alle Mitglieder von DevSpace hinzufügen</span>
             </div>
             <div class="select-user-group">
-                <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
+                @if(this.addAllUsers){
+                    <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button" (click)="addSelectedUser()">
+                }@else {
+                    <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
+                }
+
                 <span>Bestimmte Leute hinzufügen</span>
             </div>
         </div>
@@ -20,4 +29,3 @@
         </div>
     </div>
 </div>
-
