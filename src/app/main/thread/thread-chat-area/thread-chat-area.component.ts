@@ -14,14 +14,11 @@ import {
 import {
   Firestore,
   collection,
-  deleteDoc,
-  doc,
   limit,
   onSnapshot,
   query,
 } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
@@ -36,6 +33,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
   @Input() threadId: any;
+
   authService = inject(AuthService);
 
   allMessagesSortedDate: any = [];
@@ -77,17 +75,6 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
     this.subMessages(); // Move subMessages to ngAfterViewInit to ensure View is initialized
   }
 
-  openThread(thread: any) {
-    if (this.threadService.isThreadOpen()) {
-      this.threadService.closeThread();
-      setTimeout(() => {
-        this.threadService.openThread(thread);
-      }, 300);
-    } else {
-      this.threadService.openThread(thread);
-    }
-  }
-
   subMessages() {
     const q = query(
       collection(
@@ -108,7 +95,6 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       this.sortMessages();
     });
   }
-
   setNoteObject(obj: any, id: string): Message {
     return {
       id: id,
@@ -125,6 +111,14 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       user: obj.user || '',
       fileUrl: obj.fileUrl || '',
       fileName: obj.fileName || '',
+      threadCount: obj.threadCount || '',
+      thumbsUp: obj.thumbsUp || '',
+      thumbsDown: obj.thumbsDown || '',
+      rocket: obj.rocket || '',
+      nerdFace: obj.nerdFace || '',
+      noted: obj.noted || '',
+      panda: obj.panda || '',
+      shushingFace: obj.shushingFace || '',
     };
   }
 

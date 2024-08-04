@@ -223,3 +223,74 @@
 .picture {
   height: 300px;
 }
+
+.hoverContent,
+.emojiSelectior {
+  img {
+    width: 24px;
+  }
+}
+
+.emojiSelectior {
+  p {
+    cursor: pointer;
+  }
+}
+
+.noMessagesContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  div {
+    padding-left: 45px;
+    padding-right: 45px;
+    span {
+      color: #535af1;
+    }
+  }
+}
+.noMessagesTitle {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.answers {
+  display: flex;
+  align-items: center;
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.smallGray {
+  color: #686868;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.middlePurple {
+  color: #535af1;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.reaction {
+  border-radius: 20px;
+  border: 1px solid #adb0d9;
+  width: fit-content;
+  padding: 5px 10px;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  gap: 10px !important;
+  cursor: pointer;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}

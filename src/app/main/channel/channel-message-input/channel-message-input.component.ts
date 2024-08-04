@@ -123,6 +123,14 @@ export class ChannelMessageInputComponent implements OnInit {
       milliseconds: this.message.milliseconds,
       fileUrl: this.message.fileUrl,
       fileName: this.message.fileName,
+      threadCount: this.message.threadCount,
+      thumbsUp: this.message.thumbsUp,
+      thumbsDown: this.message.thumbsDown,
+      rocket: this.message.rocket,
+      nerdFace: this.message.nerdFace,
+      noted: this.message.noted,
+      panda: this.message.panda,
+      shushingFace: this.message.shushingFace,
     };
   }
 

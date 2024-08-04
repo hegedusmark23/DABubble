@@ -35,43 +35,4 @@ export class ThreadComponent implements OnInit {
   ngOnInit(): void {
     this.threadId = this.thread.id;
   }
-
-  subMessages() {
-    const q = query(
-      collection(
-        this.firestore,
-        'Channels',
-        'Entwicklerteam',
-        'messages',
-        this.thread.id,
-        'thread'
-      ),
-      limit(1000)
-    );
-    onSnapshot(q, (list) => {
-      this.allMessages = [];
-      list.forEach((element) => {
-        this.allMessages.push(this.setNoteObject(element.data(), element.id));
-      });
-    });
-  }
-
-  setNoteObject(obj: any, id: string): Message {
-    return {
-      id: id,
-      uid: obj.message || '',
-      message: obj.message || '',
-      weekday: obj.weekday || '',
-      year: obj.year || '',
-      month: obj.month || '',
-      day: obj.day || '',
-      hour: obj.hour || '',
-      minute: obj.minute || '',
-      seconds: obj.seconds || '',
-      milliseconds: obj.milliseconds || '',
-      user: obj.user || '',
-      fileUrl: obj.fileUrl || '',
-      fileName: obj.fileName || '',
-    };
-  }
 }

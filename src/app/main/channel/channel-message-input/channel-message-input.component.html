@@ -34,6 +34,7 @@
     type="text"
     [(ngModel)]="message.message"
     #messageTextarea
+    (keydown.enter)="saveMessage()"
   ></textarea>
   <div class="inputButtons">
     <div>

@@ -1,6 +1,15 @@
 import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  Firestore,
+  limit,
+  onSnapshot,
+  query,
+  updateDoc,
+} from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
@@ -17,6 +26,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class ThreadMessageInputComponent implements OnInit {
   @Input() threadId: any;
+  allMessages: Message[] = [];
 
   message = new Message();
   weekday: any;
@@ -46,6 +56,7 @@ export class ThreadMessageInputComponent implements OnInit {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannel = channel;
     });
+    this.subMessages();
   }
 
   //speichert die bilder in den cache
@@ -101,6 +112,7 @@ export class ThreadMessageInputComponent implements OnInit {
       console.error(err);
     });
     this.message.message = '';
+    this.updateMessageVariable();
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
@@ -180,5 +192,73 @@ export class ThreadMessageInputComponent implements OnInit {
 
   openEmojiSelector() {
     this.emojiSelector = !this.emojiSelector;
+  }
+
+  async updateMessageVariable() {
+    let value = this.allMessages.length;
+    const messageRef = doc(
+      this.firestore,
+      'Channels',
+      this.currentChannel,
+      'messages',
+      this.threadId
+    );
+
+    try {
+      await updateDoc(messageRef, {
+        threadCount: value,
+      });
+      console.log('Document successfully updated!');
+    } catch (err) {
+      console.error('Error updating document: ', err);
+    }
+  }
+
+  subMessages() {
+    const q = query(
+      collection(
+        this.firestore,
+        'Channels',
+        this.currentChannel,
+        'messages',
+        this.threadId,
+        'thread'
+      ),
+      limit(1000)
+    );
+    onSnapshot(q, (list) => {
+      this.allMessages = [];
+      list.forEach((element) => {
+        this.allMessages.push(this.setNoteObject(element.data(), element.id));
+      });
+      console.log(this.allMessages);
+    });
+  }
+
+  setNoteObject(obj: any, id: string): Message {
+    return {
+      id: id,
+      uid: obj.uid || '',
+      message: obj.message || '',
+      weekday: obj.weekday || '',
+      year: obj.year || '',
+      month: obj.month || '',
+      day: obj.day || '',
+      hour: obj.hour || '',
+      minute: obj.minute || '',
+      seconds: obj.seconds || '',
+      milliseconds: obj.milliseconds || '',
+      user: obj.user || '',
+      fileUrl: obj.fileUrl || '',
+      fileName: obj.fileName || '',
+      threadCount: obj.threadCount || '',
+      thumbsUp: obj.thumbsUp || '',
+      thumbsDown: obj.thumbsDown || '',
+      rocket: obj.rocket || '',
+      nerdFace: obj.nerdFace || '',
+      noted: obj.noted || '',
+      panda: obj.panda || '',
+      shushingFace: obj.shushingFace || '',
+    };
   }
 }

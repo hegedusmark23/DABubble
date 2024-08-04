@@ -12,12 +12,18 @@ import {
 } from '@angular/core';
 import {
   Firestore,
+  addDoc,
   collection,
   deleteDoc,
+  deleteField,
   doc,
+  getDoc,
+  getDocs,
   limit,
   onSnapshot,
   query,
+  setDoc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
@@ -44,6 +50,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   dateCounter = 0;
   scrolled = true;
   date = false;
+  emojiselectior = false;
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
 
@@ -139,6 +146,14 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       user: obj.user || '',
       fileUrl: obj.fileUrl || '',
       fileName: obj.fileName || '',
+      threadCount: obj.threadCount || '',
+      thumbsUp: obj.thumbsUp || '',
+      thumbsDown: obj.thumbsDown || '',
+      rocket: obj.rocket || '',
+      nerdFace: obj.nerdFace || '',
+      noted: obj.noted || '',
+      panda: obj.panda || '',
+      shushingFace: obj.shushingFace || '',
     };
   }
 
@@ -251,6 +266,82 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       if (element.uid === uid) {
         return element.image;
       }
+    }
+  }
+
+  openEmojiSelection() {
+    this.emojiselectior = !this.emojiselectior;
+  }
+
+  closeEmojiSelector() {
+    this.emojiselectior = false;
+  }
+
+  getThreadCount(message: any) {
+    return 'test';
+  }
+
+  addReaction(reaction: any, message: any) {
+    this.updateMessageVariable(
+      message.id,
+      this.authService.currentUserSignal()?.uId,
+      reaction
+    );
+  }
+
+  async updateMessageVariable(
+    messageId: any,
+    newValue: any,
+    variableName: any
+  ) {
+    const messageRef = doc(
+      this.firestore,
+      'Channels',
+      this.currentChannel,
+      'messages',
+      messageId
+    );
+
+    try {
+      // Get the current value of the variable
+      const messageSnapshot = await getDoc(messageRef);
+      if (messageSnapshot.exists()) {
+        const currentData = messageSnapshot.data();
+        let currentValue = currentData[variableName] || '';
+
+        // Convert currentValue to an array of values
+        let valuesArray = currentValue.split(' ').filter((value: any) => value);
+
+        if (valuesArray.includes(newValue)) {
+          // Remove the newValue if it exists
+          valuesArray = valuesArray.filter((value: any) => value !== newValue);
+        } else {
+          // Append the new value with a space if it doesn't exist
+          valuesArray.push(newValue);
+        }
+
+        // Join the array back to a string
+        const updatedValue = valuesArray.join(' ');
+
+        // Update the document with the new value
+        await updateDoc(messageRef, {
+          [variableName]: updatedValue,
+        });
+        console.log('Document successfully updated!');
+      } else {
+        console.log('No such document!');
+      }
+    } catch (err) {
+      console.error('Error updating document: ', err);
+    }
+  }
+
+  splitWords(input: string) {
+    if (input) {
+      let words = input.trim().split(/\s+/).length;
+      return words;
+    } else {
+      return 0;
     }
   }
 }
