@@ -7,7 +7,7 @@
         </div>
         <div class="select-user-group-container">
             <div>
-                @if(this.addAllUsers){
+                @if(this.hideOrShowSidebar.addAllUsersToChannel){
                 <div class="select-user-group">
                     <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
                     <span>Alle Mitglieder von DevSpace hinzufügen</span>
@@ -20,7 +20,7 @@
                 }
             </div>
             <div class="select-user-group">
-                @if(this.addAllUsers){
+                @if(this.hideOrShowSidebar.addAllUsersToChannel){
                     <div (click)="addSelectedUser()" class="select-user-group">
                         <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
                         <span>Bestimmte Leute hinzufügen</span>

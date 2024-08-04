@@ -12,17 +12,16 @@ import { CommonModule } from '@angular/common';
 export class AddUserToChannelComponent {
 
   hideOrShowSidebar = inject(SidebarService);
-  addAllUsers = true;
-  addSelectedUsers = false;
+  
 
   addSelectedUser(){
-    this.addAllUsers = false;
-    this.addSelectedUsers = true;
+    this.hideOrShowSidebar.addAllUsersToChannel = false;
+    this.hideOrShowSidebar.addSelectedUsersToChannel = true;
   }
 
   addAllUser(){
-    this.addAllUsers = true;
-    this.addSelectedUsers = false;
+    this.hideOrShowSidebar.addAllUsersToChannel = true;
+    this.hideOrShowSidebar.addSelectedUsersToChannel = false;
   }
 
   closeDialog(){
@@ -34,7 +33,7 @@ export class AddUserToChannelComponent {
   }
 
   createChannel(){
-    if(this.addAllUsers){
+    if(this.hideOrShowSidebar.addAllUsersToChannel){
       alert('Added channel with all users');
     }else{
       alert('Added channel with selected users');
