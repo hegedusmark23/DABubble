@@ -17,7 +17,6 @@
                     hast
                     du dein neues DABubble-Konto.</p>
 
-
                 <div class="input-container" style="position: relative;">
                     <img class="input-icon" src="../../../assets/img/landing-page/person.png" alt="person">
                     <input formControlName="name" required class="input-design" placeholder="Name und Nachname"
@@ -31,9 +30,12 @@
                 <div class="input-container" style="position: relative;">
                     <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="mail">
                     <input formControlName="email" required class="input-design" placeholder="beispielname@email.com"
-                        type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                    <span *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)"
-                        class="error-message">
+                        type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                    <span *ngIf="
+                        form.get('email')?.invalid &&
+                        (form.get('email')?.dirty || form.get('email')?.touched) &&
+                        !errorMessage
+                      " class="error-message">
                         *Diese E-Mail-Adresse ist leider ungültig.
                     </span>
                 </div>
@@ -65,7 +67,7 @@
                 <span class="btn-container">
                     <button
                         [ngClass]="{'blue-btn': form.valid && isClicked, 'disabled-btn fs-18': !form.valid || !isClicked}"
-                        (click)="toggleStep()">Weiter</button>
+                        (click)="toggleStep()" [disabled]="!isClicked || !form.valid">Weiter</button>
                 </span>
             </div>
 
@@ -78,9 +80,9 @@
 
                 <h1 class="fs-46">Wähle deinen Avatar</h1>
                 @if (imgUrl == '') {
-                    <img src="../../../assets/img/landing-page/profile.png" alt="profile">
+                <img src="../../../assets/img/landing-page/profile.png" alt="profile">
                 } @else {
-                    <img class="avatar" src="{{imgUrl}}" alt="profile">
+                <img class="avatar" src="{{imgUrl}}" alt="profile">
                 }
 
                 <h2 class="fs-32">{{form.controls.name.value}}</h2>
@@ -89,7 +91,8 @@
                     <p class="fs-20">Aus der Liste wählen</p>
                     <div class="image-container">
                         @for (profileImg of profileImgsSrc; track $index) {
-                        <img (click)="chooseAvatar(profileImg)" class="default-profile-imgs cursor-pointer" src="{{profileImg}}" alt="profile">
+                        <img (click)="chooseAvatar(profileImg)" class="default-profile-imgs cursor-pointer"
+                            src="{{profileImg}}" alt="profile">
                         }
                     </div>
                 </div>
@@ -104,6 +107,10 @@
                     <input (change)="onFileSelected($event)" id="file-upload" type="file" />
                 </div>
 
+                <span *ngIf="errorMessage === 'auth/email-already-in-use'" class="error-message">
+                    *Diese E-Mail-Adresse wird bereits verwendet. Bitte verwenden Sie eine andere E-Mail.
+                </span>
+                
                 <div class="btn-container">
                     <button class="blue-btn fs-18 cursor-pointer" type="submit">Weiter</button>
                 </div>
@@ -122,6 +129,5 @@
             <p class="fs-36">Konto erfolgreich erstellt!</p>
         </div>
     </div>
-    
-</section>
 
+</section>

@@ -55,7 +55,6 @@ export class SignUpComponent {
     password: ['', Validators.required],
   })
   
-
   constructor(private _location: Location) {
     this.updateImageSrc();
   }
@@ -72,20 +71,21 @@ export class SignUpComponent {
     const rawForm = this.form.getRawValue();
     if (this.selectedFile) {
       await this.saveFile();
+    } if (this.isClicked) {
+      this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
+        next: (userId) => { 
+          this.registerSuccesful = true;
+          this.saveUser.saveUser(userId, rawForm.email, rawForm.name, this.imgUrl);
+          setTimeout(() => {
+            this.registerSuccesful = false;
+            this.router.navigateByUrl('/');
+          }, 500);
+        },
+        error: (err) => {
+          this.errorMessage = err.code;
+        }
+      });
     }
-    this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
-      next: (userId) => { 
-        this.registerSuccesful = true;
-        this.saveUser.saveUser(userId, rawForm.email, rawForm.name, this.imgUrl);
-        setTimeout(() => {
-          this.registerSuccesful = false;
-          this.router.navigateByUrl('/');
-        }, 500);
-      },
-      error: (err) => {
-        this.errorMessage = err.code;
-      }
-    });
   }
 
   chooseAvatar(profileImg: string){
@@ -132,7 +132,6 @@ export class SignUpComponent {
     const storage = getStorage();
     const storageRef = ref(storage, `profileImages/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     return new Promise<string>((resolve, reject) => {
       uploadTask.on(
         'state_changed',
@@ -154,7 +153,6 @@ export class SignUpComponent {
     const storage = getStorage();
     const storageRef = ref(storage, `profileCache/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     return new Promise<string>((resolve, reject) => {
       uploadTask.on(
         'state_changed',
@@ -213,4 +211,5 @@ export class SignUpComponent {
       this.imgSrcCheck = this.imgSrcUnchecked;
     }
   }
+  
 }
