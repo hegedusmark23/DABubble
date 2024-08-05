@@ -1,7 +1,7 @@
 <div class="add-user-to-channel-container" (click)="closeDialog()"
     [ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
     <div class="add-user-to-channel-dialog" (click)="notCloseDialog($event)">
-        <div class="dialog-title-container">
+        <div class="dialog-title-container-addUser">
             <span class="fs-24 dialog-title">Leute hinzufügen</span>
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
@@ -15,7 +15,7 @@
                 }@else {
                 <div (click)="addAllUser()" class="select-user-group">
                     <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
-                    <span>Alle Mitglieder von DevSpace hinzufügen</span>
+                    <span>Alle Mitglieder von DevSpace? hinzufügen</span>
                 </div>
                 }
             </div>
@@ -33,7 +33,7 @@
                     }
             </div>
         </div>
-        <div class="button-container">
+        <div class="button-container-addUser">
             <button type="submit" class="save" (click)="createChannel()"><span class="fs-18">Erstellen</span></button>
         </div>
     </div>
