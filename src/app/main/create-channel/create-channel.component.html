@@ -1,25 +1,25 @@
 <div class="create-channel-container" (click)="closeDialog()"
-[ngClass]="{'display-flex': hideOrShowSidebar.createChannelDialogActive, 'display-none': !hideOrShowSidebar.createChannelDialogActive }">
+    [ngClass]="{'display-flex': hideOrShowSidebar.createChannelDialogActive, 'display-none': !hideOrShowSidebar.createChannelDialogActive }">
     <div class="create-channel-dialog" (click)="notCloseDialog($event)">
         <div class="dialog-title-container">
             <span class="fs-24 dialog-title">Channel erstellen</span>
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
         <div class="description">
-            <span class="fs-18">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein 
-                 #marketing zum Beispiel.</span>
+            <span class="fs-18">Channels dienen deinem Team zur Kommunikation. Am besten sollten sie themenbezogen sein
+                #marketing zum Beispiel.</span>
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Channel-Name</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
-            id="channelDescription" name="channelDescription">
+                id="channelDescription" name="channelDescription">
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading"
-            id="channelMessages" name="channelMessages">
-            <img src="../../../assets/img/create-channel/tag.png"  class="tag-icon">
+                id="channelMessages" name="channelMessages">
+            <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="button-container">
             <button class="fs-18 add" (click)="createChannel()" [disabled]="loading">Erstellen</button>
@@ -49,22 +49,21 @@
             </div>
             <div class="select-user-group">
                 @if(this.hideOrShowSidebar.addAllUsersToChannel){
-                    <div (click)="addSelectedUser()" class="select-user-group">
-                        <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
-                        <span>Bestimmte Leute hinzufügen</span>
-                    </div>
-                    }@else {
-                    <div class="select-user-group">
-                        <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
-                        <span>Bestimmte Leute hinzufügen</span>
-                    </div>
-                    }
+                <div (click)="addSelectedUser()" class="select-user-group">
+                    <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
+                    <span>Bestimmte Leute hinzufügen</span>
+                </div>
+                }@else {
+                <div class="select-user-group">
+                    <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
+                    <span>Bestimmte Leute hinzufügen</span>
+                </div>
+                }
             </div>
         </div>
         <div>
             @if(!this.hideOrShowSidebar.addAllUsersToChannel){
-                <input type="text" class="input-field-add-user-to-channel"
-            id="" name="">
+            <input type="text" class="input-field-add-user-to-channel" id="" name="">
             }
         </div>
         <div class="button-container-addUser">
