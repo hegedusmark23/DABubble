@@ -13,16 +13,56 @@
             <span class="fs-18">Channel-Name</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
             id="channelDescription" name="channelDescription">
-            <img src="../../../assets/img/create-channel/tag.png">
+            <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading"
             id="channelMessages" name="channelMessages">
-            <img src="../../../assets/img/create-channel/tag.png">
+            <img src="../../../assets/img/create-channel/tag.png"  class="tag-icon">
         </div>
         <div class="button-container">
-            <button class="fs-18" (click)="saveChannel()" [disabled]="loading">Erstellen</button>
+            <button class="fs-18 add" (click)="saveChannel()" [disabled]="loading">Erstellen</button>
+        </div>
+    </div>
+</div>
+<div class="add-user-to-channel-container" (click)="closeDialogAddUser()"
+    [ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
+    <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">
+        <div class="dialog-title-container-addUser">
+            <span class="fs-24 dialog-title">Leute hinzufügen</span>
+            <div class="close-button" (click)="closeDialogAddUser()"></div>
+        </div>
+        <div class="select-user-group-container">
+            <div>
+                @if(this.hideOrShowSidebar.addAllUsersToChannel){
+                <div class="select-user-group">
+                    <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
+                    <span>Alle Mitglieder von DevSpace? hinzufügen</span>
+                </div>
+                }@else {
+                <div (click)="addAllUser()" class="select-user-group">
+                    <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
+                    <span>Alle Mitglieder von DevSpace? hinzufügen</span>
+                </div>
+                }
+            </div>
+            <div class="select-user-group">
+                @if(this.hideOrShowSidebar.addAllUsersToChannel){
+                    <div (click)="addSelectedUser()" class="select-user-group">
+                        <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
+                        <span>Bestimmte Leute hinzufügen</span>
+                    </div>
+                    }@else {
+                    <div class="select-user-group">
+                        <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
+                        <span>Bestimmte Leute hinzufügen</span>
+                    </div>
+                    }
+            </div>
+        </div>
+        <div class="button-container-addUser">
+            <button type="submit" class="save" (click)="createChannel()"><span class="fs-18">Erstellen</span></button>
         </div>
     </div>
 </div>
