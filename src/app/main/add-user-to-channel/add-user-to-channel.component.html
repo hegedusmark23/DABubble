@@ -1,9 +1,9 @@
-<div class="add-user-to-channel-container" (click)="closeDialog()"
+<div class="add-user-to-channel-container" (click)="closeDialogAddUser()"
     [ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
-    <div class="add-user-to-channel-dialog" (click)="notCloseDialog($event)">
+    <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">
         <div class="dialog-title-container-addUser">
             <span class="fs-24 dialog-title">Leute hinzufügen</span>
-            <div class="close-button" (click)="closeDialog()"></div>
+            <div class="close-button" (click)="closeDialogAddUser()"></div>
         </div>
         <div class="select-user-group-container">
             <div>

@@ -24,11 +24,11 @@ export class AddUserToChannelComponent {
     this.hideOrShowSidebar.addSelectedUsersToChannel = false;
   }
 
-  closeDialog(){
+  closeDialogAddUser(){
     this.hideOrShowSidebar.addUserToChanelOpen = false;
   }
 
-  notCloseDialog(e : any){
+  notCloseDialogAddUser(e : any){
     e.stopPropagation(e);
   }
 
