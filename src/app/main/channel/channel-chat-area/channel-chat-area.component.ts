@@ -345,4 +345,17 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       return 0;
     }
   }
+
+  isItToday(message: any) {
+    const now = new Date();
+    if (
+      message.year == now.getFullYear() &&
+      message.month == now.getMonth() + 1 &&
+      message.day == now.getDate()
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
