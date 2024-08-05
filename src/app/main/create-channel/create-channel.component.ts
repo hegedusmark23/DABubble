@@ -49,21 +49,11 @@ export class CreateChannelComponent {
   }
 
   createChannel(){
-    if(this.hideOrShowSidebar.addAllUsersToChannel){
-      alert('Added channel with all users');
-    }else{
-      alert('Added channel with selected users');
-    }
-  }
-
-  /* 
-
-  */
-
-  async saveChannel(){
     this.hideOrShowSidebar.addUserToChanelOpen = true;
     this.hideOrShowSidebar.createChannelDialogActive = false;
-    /* 
+  }
+
+  async saveChannel(){
     this.loading = true;
     const channelRef = doc(collection(this.firestore, 'Channels'), this.newChannel.name);
     await setDoc(
@@ -78,7 +68,7 @@ export class CreateChannelComponent {
         this.newChannel.name = '',
         this.newChannel.description = ''
         this.hideOrShowSidebar.fetchChannels();
-        this.closeDialog();
+        this.closeDialogAddUser();
       });
   }
 
@@ -87,6 +77,5 @@ export class CreateChannelComponent {
       name : this.newChannel.name,
       description : this.newChannel.description
     };
-    */
   }
 }
