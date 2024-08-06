@@ -233,18 +233,27 @@ input {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .profil-image {
-    height: 32px;
-    width: 32px;
-    border-radius: 32px;
+    height: 48px;
+    width: 48px;
+    border-radius: 48px;
+}
+
+.online-icon {
+    transform: translateX(-15px) translateY(17px);
 }
 
 .user {
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 4px 16px;
+    border-radius: 32px;
+    &:hover {
+        background-color: #ECEEFE;
+    }
 }
