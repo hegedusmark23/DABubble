@@ -39,7 +39,8 @@ export class UserProfilComponent {
     this.channelSelectionService.closeChannel();
 
     this.directMessageSelectionService.setSelectedChannel(
-      this.hideOrShowSidebar.activeUser
+      this.hideOrShowSidebar.activeUid
     );
+    this.hideOrShowSidebar.userProfilOpen = false;
   }
 }
