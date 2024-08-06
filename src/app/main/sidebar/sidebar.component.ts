@@ -64,6 +64,7 @@ export class SidebarComponent implements OnInit {
     this.hideOrShowSidebar.activeUser = this.hideOrShowSidebar.AllUsers[i];
     this.hideOrShowSidebar.activeEmail = this.hideOrShowSidebar.AllEmails[i];
     this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
+    this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
   }
 
   addMessage() {

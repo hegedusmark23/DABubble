@@ -23,6 +23,7 @@ export class SidebarService {
   activeUser = '';
   activeImage = '';
   activeEmail = '';
+  activeUid = '';
 
   constructor(private firestore: Firestore) { }
 
