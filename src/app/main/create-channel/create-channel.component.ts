@@ -20,8 +20,8 @@ export class CreateChannelComponent {
   }
   loading = false;
   activeUserIndex: number | null = null;
-  selectedUsers : [] = [];
-  selectedImages : [] = [];
+  selectedUsers: any[] = [];
+  selectedImages: any[] = [];
 
   constructor(private firestore: Firestore) {}
 
@@ -89,5 +89,6 @@ export class CreateChannelComponent {
 
   selectUser(i: number){
     alert('selected user:' + this.hideOrShowSidebar.AllUsers[i]);
+    this.selectedUsers.push(this.hideOrShowSidebar.AllUsers[i]);
   }
 }
