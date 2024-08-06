@@ -49,6 +49,8 @@ export class SidebarComponent implements OnInit {
   }
 
   channelActive(i: number) {
+    this.channelSelectionService.openChannel();
+
     this.activeChannelIndex = i;
     this.channelSelectionService.setSelectedChannel(
       this.hideOrShowSidebar.AllChannels[i]

@@ -1,9 +1,22 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DirectMessageSelectionService {
+  private selectedUser = new BehaviorSubject<any>(null); // Initialer Wert kann auch null sein
 
-  constructor() { }
+  constructor() {}
+
+  // Getter für selectedChannel als Observable
+  getSelectedChannel() {
+    return this.selectedUser.asObservable();
+  }
+
+  // Setter für selectedChannel
+  setSelectedChannel(channel: any): void {
+    this.selectedUser.next(channel);
+    console.log(this.selectedUser);
+  }
 }
