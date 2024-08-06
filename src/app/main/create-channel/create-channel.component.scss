@@ -221,6 +221,9 @@ input {
 }
 
 .userList {
+    position: absolute;
+    left: calc(50vw - 320px);
+    top: calc( 50vh + 50px);
     width: 200px;
     border-radius: 0px 25px 25px 25px;
     border: 1px solid rgba(173, 176, 217, 1);
