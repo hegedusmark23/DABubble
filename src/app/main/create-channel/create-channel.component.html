@@ -69,5 +69,10 @@
         <div class="button-container-addUser">
             <button type="submit" class="save" (click)="saveChannel()"><span class="fs-18">Erstellen</span></button>
         </div>
+        <div class="userList">
+            <div *ngFor="let user of hideOrShowSidebar.AllUsers; let i = index">
+                <span>{{ user }}</span>
+            </div>
+        </div>
     </div>
 </div>
