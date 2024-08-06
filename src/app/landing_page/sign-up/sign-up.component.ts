@@ -73,19 +73,22 @@ export class SignUpComponent {
       await this.saveFile();
     } if (this.isClicked) {
       this.authService.register(rawForm.email, rawForm.name, rawForm.password, this.imgUrl).subscribe({
-        next: (userId) => { 
+        next: (userId) => {
           this.registerSuccesful = true;
           this.saveUser.saveUser(userId, rawForm.email, rawForm.name, this.imgUrl);
           setTimeout(() => {
             this.registerSuccesful = false;
             this.router.navigateByUrl('/');
           }, 500);
-        },
-        error: (err) => {
-          this.errorMessage = err.code;
+        }, error: (err) => {
+          if (err.code === 'auth/email-already-in-use') {
+            this.errorMessage = 'This email address is already registered. Please use a different email.';
+          } else {
+            this.errorMessage = err.code;
+          }
         }
       });
-    }
+    };
   }
 
   chooseAvatar(profileImg: string){

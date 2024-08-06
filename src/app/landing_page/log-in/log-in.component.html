@@ -35,7 +35,7 @@
                 <input formControlName="password" class="input-design" placeholder="Passwort" type="password">
                 <span *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
                     class="error-message">
-                    Falsches Passwort. Bitte noch einmal versuchen
+                    Passwort is erforderlich.
                 </span>
             </div>
 
@@ -55,7 +55,7 @@
                     src="../../../assets/img/landing-page/Google.png" alt="">Anmelden mit Google</button>
 
             <span class="btn-container">
-                <button type="submit" class="blue-btn fs-18 cursor-pointer">Anmelden</button>
+                <button [disabled]="!form.valid" [ngClass]="{'blue-btn': form.valid, 'disabled-btn fs-18': !form.valid}" type="submit" class="blue-btn fs-18 cursor-pointer">Anmelden</button>
                 <button (click)="guestLogin()" class="white-btn fs-18 cursor-pointer">Gäste-Login</button>
             </span>
         </form>

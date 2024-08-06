@@ -160,3 +160,25 @@ button {
     align-items: center;
     justify-content: center;
 }
+
+.disabled-btn {
+    padding: 12px 25px 12px 25px;
+    background-color: gray;
+    color: white;
+    border-radius: 25px;
+    border-width: 0;
+    cursor: auto;
+}
+
+.disabled-input{
+    width: calc(100% - 24px);
+    border: none;
+    background-color: #22222242;
+    outline: none;
+    height: 26px;
+    border-radius: 25px;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 400;
+}

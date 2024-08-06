@@ -6,7 +6,12 @@
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
         <div>
-            <img class="profil-image" src="{{authService.currentUserSignal()?.imgUrl}}">
+            @if (authService.currentUserSignal() == null ) {
+                <img class="profil-image" src="../../../assets/img/landing-page/profile.png">
+            } @else {
+                <img class="profil-image" src="{{authService.currentUserSignal()?.imgUrl}}">
+            }
+            
         </div>
         <div class="name-container">
             <div class="name-edit">

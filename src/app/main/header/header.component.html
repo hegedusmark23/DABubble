@@ -12,7 +12,7 @@
         </div>
         <div class="profil">
             @if (authService.currentUserSignal() == null) {
-                <img class="profil-image" src="../../../assets/img/profile-imgs/male1.png">
+                <img class="profil-image" src="../../../assets/img/landing-page/profile.png">
             } @else {
                 <img class="profil-image" src="{{authService.currentUserSignal()?.imgUrl}}">
             }

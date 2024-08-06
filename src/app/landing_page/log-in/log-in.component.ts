@@ -9,17 +9,17 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'] // Corrected to `styleUrls`
+  styleUrls: ['./log-in.component.scss'] 
 })
 export class LogInComponent {
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
-  errorMessage: string | null = null; // Error message to display
+  errorMessage: string | null = null; 
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required]],
   });
 
   constructor() {}

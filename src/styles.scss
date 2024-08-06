@@ -128,3 +128,14 @@ body {
     color: white;
   }
 }
+
+.disabled-btn {
+  padding: 12px 25px 12px 25px;
+  background-color: gray;
+  color: white;
+  border-radius: 25px;
+  border-width: 0;
+  &:hover {
+    cursor: unset;
+  }
+}
