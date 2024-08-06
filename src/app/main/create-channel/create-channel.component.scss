@@ -224,14 +224,16 @@ input {
     position: absolute;
     left: calc(50vw - 320px);
     top: calc( 50vh + 50px);
-    width: 200px;
+    max-height: 250px;
+    overflow-y: auto;
     border-radius: 0px 25px 25px 25px;
     border: 1px solid rgba(173, 176, 217, 1);
+    padding: 8px;
     background-color: white;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -242,7 +244,7 @@ input {
 }
 
 .user {
+    cursor: pointer;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
 }
