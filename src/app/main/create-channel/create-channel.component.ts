@@ -19,6 +19,7 @@ export class CreateChannelComponent {
     description : ''
   }
   loading = false;
+  activeUserIndex: number | null = null;
 
   constructor(private firestore: Firestore) {}
 
@@ -77,5 +78,10 @@ export class CreateChannelComponent {
       name : this.newChannel.name,
       description : this.newChannel.description
     };
+  }
+
+  userActive(i: number){
+    this.activeUserIndex = i;
+    alert(this.activeUserIndex);
   }
 }
