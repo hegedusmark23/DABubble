@@ -63,7 +63,15 @@
         </div>
         <div>
             @if(!this.hideOrShowSidebar.addAllUsersToChannel){
-            <input type="text" class="input-field-add-user-to-channel" id="name" name="name">
+                <div class="input-hidden">
+                    <div *ngFor="let selectedUser of hideOrShowSidebar.selectedUsers; let i = index">
+                        <span>{{ selectedUser }}</span>
+                        <img src="../../../assets/img/create-channel/close_button.png" (click)="deleteUser(i)">
+                    </div>
+                    <div>
+                        <input type="text" class="input-field-add-user-to-channel" id="name" name="name">
+                    </div>
+                </div>
             }
         </div>
         <div class="button-container-addUser">
