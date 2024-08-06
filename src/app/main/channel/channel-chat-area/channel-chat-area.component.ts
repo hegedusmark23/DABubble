@@ -31,11 +31,12 @@ import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { AuthService } from '../../../services/auth.service';
+import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 
 @Component({
   selector: 'app-channel-chat-area',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PickerComponent],
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
@@ -51,10 +52,15 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   scrolled = true;
   date = false;
   emojiselectior = false;
+  emojiSelector = false;
+  openEditMessage: any = '';
+  editedMessage: any;
+
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
 
   @ViewChildren('messageList') messageLoaded!: QueryList<any>;
+  @ViewChild('messageTextarea') messageTextarea: any;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
   currentChannel = 'Entwicklerteam';
@@ -357,5 +363,67 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     } else {
       return true;
     }
+  }
+
+  editMessage(message: any) {
+    this.editedMessage = message.message;
+    if (this.openEditMessage == message.id) {
+      this.openEditMessage = false;
+      this.emojiSelector = false;
+    } else {
+      this.openEditMessage = message.id;
+      this.emojiSelector = false;
+    }
+  }
+
+  openEmojiSelector() {
+    this.emojiSelector = !this.emojiSelector;
+  }
+
+  insertEmoji(emoji: any) {
+    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+
+    // Aktuelle Position des Cursors
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+
+    // Wert des Textarea-Felds aktualisieren
+    this.editedMessage =
+      textarea.value.substring(0, startPos) +
+      emoji +
+      textarea.value.substring(endPos, textarea.value.length);
+
+    // Cursor-Position nach dem Einfügen des Textes setzen
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = startPos + emoji.length;
+    }, 0);
+  }
+
+  addEmoji($event: any) {
+    let element = $event;
+    this.insertEmoji(element['emoji'].native);
+  }
+
+  saveEdit(message: any) {
+    this.updateMessage(message.id);
+    this.openEditMessage = '';
+  }
+
+  async updateMessage(messageId: any) {
+    const messageRef = doc(
+      this.firestore,
+      'Channels',
+      this.currentChannel,
+      'messages',
+      messageId
+    );
+    await updateDoc(messageRef, {
+      message: this.editedMessage,
+    });
+  }
+
+  onMessageInput(event: Event) {
+    const textarea = event.target as HTMLTextAreaElement;
+    this.editedMessage = textarea.value;
   }
 }
