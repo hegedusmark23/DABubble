@@ -259,12 +259,26 @@ input {
 
 .input-hidden {
     display: flex;
-    justify-content: flex-start;
+    flex-wrap: wrap;
     width: 100%;
-    height: 60px;
+    max-width: 650px;
+    min-height: 60px;
     border-radius: 40px;
     border: 1px solid rgba(173, 176, 217, 1);
     padding: 18px, 20px, 18px, 20px;
     font-size: 18px;
     gap: 20px;
+}
+
+.selected-user {
+    min-width: 100px;
+    max-height: 80%;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    background-color: #ECEEFE;
 }
