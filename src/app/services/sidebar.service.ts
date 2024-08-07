@@ -13,6 +13,8 @@ export class SidebarService {
   AllEmails : string[] = [];
   AllImages : string[] = [];
   AllUids : string[] = [];
+  userList : string[] = [];
+  imageList : string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
@@ -48,6 +50,8 @@ export class SidebarService {
       this.AllEmails.push(userData['email']);
       this.AllImages.push(userData['image']);
       this.AllUids.push(userData['uid']);
+      this.userList = this.AllUsers;
+      this.imageList = this.AllImages;
     });
   }
 }

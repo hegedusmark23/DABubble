@@ -66,7 +66,8 @@
                 <div class="input-hidden">
                     <div *ngFor="let selectedUser of hideOrShowSidebar.selectedUsers; let i = index" class="selected-user">
                         <span>{{ selectedUser }}</span>
-                        <img src="../../../assets/img/create-channel/close_button.png" (click)="deleteUser(i)">
+                        <img src="../../../assets/img/create-channel/close_button.png" (click)="deleteUser(i)" 
+                        class="delete-user-button">
                     </div>
                     <div>
                         <input type="text" class="input-field-add-user-to-channel" id="name" name="name">
@@ -79,8 +80,8 @@
         </div>
         @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
             <div class="userList" (click)="notCloseDialog($event)">
-                <div *ngFor="let user of hideOrShowSidebar.AllUsers; let i = index" class="user" (click)="selectUser(i)">
-                    <img class="profil-image" src={{this.hideOrShowSidebar.AllImages[i]}}>
+                <div *ngFor="let user of this.hideOrShowSidebar.userList; let i = index" class="user" (click)="selectUser(i)">
+                    <img class="profil-image" src={{this.hideOrShowSidebar.imageList[i]}}>
                     <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
                     <span>{{ user }}</span>
                 </div>
