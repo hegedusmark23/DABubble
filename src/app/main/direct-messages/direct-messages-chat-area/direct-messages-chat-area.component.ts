@@ -93,19 +93,26 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   subMessages() {
-    const q = query(
-      collection(this.firestore, 'direcmessages', this.user, this.messageUser),
-      limit(1000)
-    );
-    onSnapshot(q, (list) => {
-      this.allMessages = [];
-      list.forEach((element) => {
-        this.allMessages.push(this.setNoteObject(element.data(), element.id));
+    if (this.user && this.messageUser) {
+      const q = query(
+        collection(
+          this.firestore,
+          'direcmessages',
+          this.user,
+          this.messageUser
+        ),
+        limit(1000)
+      );
+      onSnapshot(q, (list) => {
+        this.allMessages = [];
+        list.forEach((element) => {
+          this.allMessages.push(this.setNoteObject(element.data(), element.id));
+        });
+        this.sortMessages();
+        this.dateLoaded();
+        console.log(this.allMessagesSortedDate);
       });
-      this.sortMessages();
-      this.dateLoaded();
-      console.log(this.allMessagesSortedDate);
-    });
+    }
   }
 
   setUser() {
@@ -113,12 +120,12 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       .getSelectedChannel()
       .subscribe((value) => {
         this.messageUser = value;
+        this.subMessages();
       });
   }
 
   setOpenUser() {
-    // this.openUser = this.authService.currentUserSignal()!.uId;
-    this.user = '7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2';
+    this.user = this.authService.currentUserSignal()!.uId;
   }
 
   subUser() {
