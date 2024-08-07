@@ -87,11 +87,13 @@ export class CreateChannelComponent {
 
   selectUser(i: number){
     this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[i]);
+    this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[i]);
     console.log(this.hideOrShowSidebar.selectedUsers);
   }
 
   deleteUser(i: number){
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
+    this.hideOrShowSidebar.selectedImages.splice(i, 1);
     console.log(this.hideOrShowSidebar.selectedUsers);
   }
 

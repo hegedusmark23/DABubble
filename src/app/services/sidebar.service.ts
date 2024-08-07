@@ -42,6 +42,8 @@ export class SidebarService {
 
   async fetchUsers() {
     this.AllUsers = [];
+    this.userList = [];
+    this.imageList = [];
     const usersCollection = collection(this.firestore, 'Users');
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach((doc) => {
