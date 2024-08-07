@@ -315,9 +315,9 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   ) {
     const messageRef = doc(
       this.firestore,
-      'Channels',
-      this.currentChannel,
-      'messages',
+      'direcmessages',
+      this.user,
+      this.messageUser,
       messageId
     );
 
@@ -424,9 +424,9 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   async updateMessage(messageId: any) {
     const messageRef = doc(
       this.firestore,
-      'Channels',
-      this.currentChannel,
-      'messages',
+      'direcmessages',
+      this.user,
+      this.messageUser,
       messageId
     );
     await updateDoc(messageRef, {
