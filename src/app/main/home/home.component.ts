@@ -39,8 +39,5 @@ export class HomeComponent {
   selectedUserSubscription: any = false;
   selectedUser: any;
 
-  constructor(
-    private directMessageSelectionService: DirectMessageSelectionService,
-    public channelSelectionService: ChannelSelectionService
-  ) {}
+  constructor(public channelSelectionService: ChannelSelectionService) {}
 }

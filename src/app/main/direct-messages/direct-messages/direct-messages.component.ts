@@ -1,10 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DirectMessageSelectionService } from '../../../services/direct-message-selection.service';
+import { DirectMessagesHeaderComponent } from '../direct-messages-header/direct-messages-header.component';
+import { DirectMessagesChatAreaComponent } from '../direct-messages-chat-area/direct-messages-chat-area.component';
+import { DirectMessagesMessageInputComponent } from '../direct-messages-message-input/direct-messages-message-input.component';
 
 @Component({
   selector: 'app-direct-messages',
   standalone: true,
-  imports: [],
+  imports: [
+    DirectMessagesHeaderComponent,
+    DirectMessagesChatAreaComponent,
+    DirectMessagesMessageInputComponent,
+  ],
   templateUrl: './direct-messages.component.html',
   styleUrl: './direct-messages.component.scss',
 })
@@ -22,7 +29,6 @@ export class DirectMessagesComponent implements OnInit {
       .getSelectedChannel()
       .subscribe((value) => {
         this.user = value;
-        console.log(this.user);
       });
   }
 }
