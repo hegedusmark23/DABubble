@@ -127,6 +127,20 @@ input {
     cursor: pointer;
 }
 
+.add-disabled {
+    width: 125px;
+    height: 49px;
+    padding: 12px 25px 12px 25px;
+    gap: 10px;
+    border-radius: 25px;
+    border: none;
+    background-color: #686868;
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    right: 40px;
+}
+
 .add-user-to-channel-container {
     width: 100vw;
     height: 100vh;

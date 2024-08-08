@@ -22,7 +22,8 @@
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="button-container">
-            <button class="fs-18 add" (click)="createChannel()" [disabled]="loading">Erstellen</button>
+            <button class="fs-18 add-disabled" *ngIf="!isInputValid()">Erstellen</button>
+            <button class="fs-18 add" *ngIf="isInputValid()" (click)="createChannel()" [disabled]="loading">Erstellen</button>
         </div>
     </div>
 </div>

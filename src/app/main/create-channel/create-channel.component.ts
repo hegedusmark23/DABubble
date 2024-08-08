@@ -24,6 +24,10 @@ export class CreateChannelComponent {
 
   constructor(private firestore: Firestore) {}
 
+  isInputValid(): boolean {
+    return this.newChannel.name.length >= 3;
+  }
+
   closeDialog() {
     this.hideOrShowSidebar.createChannelDialogActive = false;
   }
