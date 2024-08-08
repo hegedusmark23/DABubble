@@ -70,7 +70,11 @@ export class CreateChannelComponent {
         this.loading = false;
         this.newChannel.name = '',
         this.newChannel.description = '',
-        this.newChannel.users = []
+        this.newChannel.users = [];
+        this.hideOrShowSidebar.selectedUsers = [];
+        this.hideOrShowSidebar.selectedImages = [];
+        this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers;  //
+        this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages;  //
         this.hideOrShowSidebar.fetchChannels();
         this.closeDialogAddUser();
       });
