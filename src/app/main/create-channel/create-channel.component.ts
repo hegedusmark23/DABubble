@@ -16,7 +16,9 @@ export class CreateChannelComponent {
   hideOrShowSidebar = inject(SidebarService);
   newChannel = {
     name  : '',
-    description : ''
+    description : '',
+    users : [],
+    images : []
   }
   loading = false;
   activeUserIndex: number | null = null;
@@ -67,7 +69,8 @@ export class CreateChannelComponent {
       .then(() => {
         this.loading = false;
         this.newChannel.name = '',
-        this.newChannel.description = ''
+        this.newChannel.description = '',
+        this.newChannel.users = []
         this.hideOrShowSidebar.fetchChannels();
         this.closeDialogAddUser();
       });
@@ -76,7 +79,9 @@ export class CreateChannelComponent {
   toJSON() {
     return {
       name : this.newChannel.name,
-      description : this.newChannel.description
+      description : this.newChannel.description,
+      users : this.hideOrShowSidebar.selectedUsers,
+      images : this.hideOrShowSidebar.selectedImages
     };
   }
 
