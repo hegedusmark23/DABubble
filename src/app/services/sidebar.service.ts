@@ -52,8 +52,10 @@ export class SidebarService {
       this.AllEmails.push(userData['email']);
       this.AllImages.push(userData['image']);
       this.AllUids.push(userData['uid']);
-      this.userList = this.AllUsers;
-      this.imageList = this.AllImages;
+      this.userList.push(userData['name']);
+      this.imageList.push(userData['image']);
+      //this.userList = this.AllUsers;
+      //this.imageList = this.AllImages;
     });
   }
 }
