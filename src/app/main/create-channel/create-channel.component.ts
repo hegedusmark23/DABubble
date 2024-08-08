@@ -72,10 +72,11 @@ export class CreateChannelComponent {
           (this.newChannel.users = []);
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
+        this.hideOrShowSidebar.userList = [];
+        this.hideOrShowSidebar.imageList = [];
         this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
         this.hideOrShowSidebar.fetchChannels();
-        this.hideOrShowSidebar.fetchUsers();
         this.closeDialogAddUser();
       });
   }
