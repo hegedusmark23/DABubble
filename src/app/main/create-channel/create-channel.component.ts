@@ -77,6 +77,7 @@ export class CreateChannelComponent {
         this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
         this.hideOrShowSidebar.fetchChannels();
+        this.hideOrShowSidebar.fetchUsers();
         this.closeDialogAddUser();
       });
   }
