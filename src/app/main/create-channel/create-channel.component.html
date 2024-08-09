@@ -77,20 +77,20 @@
                         <input type="text" class="input-field-add-user-to-channel" id="name" name="name" 
                         (input)="onSearch($event)">
                     </div>
+                    @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
+                        <div class="userList" (click)="notCloseDialog($event)">
+                            <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
+                                <img class="profil-image" [src]="filteredImageList[i]">
+                                <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
+                                <span>{{ user }}</span>
+                              </div>
+                        </div>
+                    }
                 </div>
             }
         </div>
         <div class="button-container-addUser">
             <button type="submit" class="save" (click)="saveChannel()"><span class="fs-18">Erstellen</span></button>
         </div>
-        @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
-            <div class="userList" (click)="notCloseDialog($event)">
-                <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
-                    <img class="profil-image" [src]="filteredImageList[i]">
-                    <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
-                    <span>{{ user }}</span>
-                  </div>
-            </div>
-        }
     </div>
 </div>

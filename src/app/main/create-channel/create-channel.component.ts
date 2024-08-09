@@ -140,8 +140,8 @@ export class CreateChannelComponent {
         this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
         this.filteredUserList.splice(i, 1);
         this.filteredImageList.splice(i, 1);
-        //this.filteredUserList = [];
-        //this.filteredImageList = [];
+        this.filteredUserList = [];
+        this.filteredImageList = [];
     }
 }
 
