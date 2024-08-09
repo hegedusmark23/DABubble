@@ -249,6 +249,7 @@ input {
     flex-direction: column;
     gap: 12px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    z-index: 20;
 }
 
 .profil-image {
@@ -288,7 +289,7 @@ input {
 
 .selected-user {
     min-width: 100px;
-    max-height: 80%;
+    height: 60px;
     margin-left: 8px;
     margin-right: 8px;
     border-radius: 32px;
@@ -304,7 +305,7 @@ input {
 }
 
 .selected-img {
-    height: 24px;
-    width: 24px;
-    border-radius: 48px;
+    height: 36px;
+    width: 36px;
+    border-radius: 72px;
 }
