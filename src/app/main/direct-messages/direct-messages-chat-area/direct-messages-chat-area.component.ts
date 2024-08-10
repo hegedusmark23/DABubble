@@ -110,7 +110,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
         });
         this.sortMessages();
         this.dateLoaded();
-        console.log(this.allMessagesSortedDate);
       });
     }
   }
@@ -422,11 +421,22 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   async updateMessage(messageId: any) {
-    const messageRef = doc(
+    let messageRef = doc(
       this.firestore,
       'direcmessages',
       this.user,
       this.messageUser,
+      messageId
+    );
+    await updateDoc(messageRef, {
+      message: this.editedMessage,
+    });
+
+    messageRef = doc(
+      this.firestore,
+      'direcmessages',
+      this.messageUser,
+      this.user,
       messageId
     );
     await updateDoc(messageRef, {

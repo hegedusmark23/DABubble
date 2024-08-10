@@ -1,6 +1,12 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  doc,
+  Firestore,
+  setDoc,
+} from '@angular/fire/firestore';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
@@ -95,24 +101,35 @@ export class DirectMessagesMessageInputComponent implements OnInit {
       this.deleteFile();
     }
 
-    console.log(this.user, this.openUser);
 
     this.updateDateTime();
     this.message.communicationType = 'send';
-    await addDoc(
-      collection(this.firestore, 'direcmessages', this.user, this.openUser),
-      this.toJSON()
-    ).catch((err) => {
+
+    // Generiere die Dokument-ID
+    const messageRef = doc(
+      collection(this.firestore, 'direcmessages', this.user, this.openUser)
+    );
+    const messageId = messageRef.id;
+
+    // Speichere die Nachricht mit der generierten ID für den Sender
+    await setDoc(messageRef, this.toJSON()).catch((err) => {
       console.error(err);
     });
 
     this.message.communicationType = 'resive';
-    await addDoc(
-      collection(this.firestore, 'direcmessages', this.openUser, this.user),
-      this.toJSON()
-    ).catch((err) => {
+
+    // Speichere die Nachricht mit der gleichen ID für den Empfänger
+    const recipientRef = doc(
+      this.firestore,
+      'direcmessages',
+      this.openUser,
+      this.user,
+      messageId
+    );
+    await setDoc(recipientRef, this.toJSON()).catch((err) => {
       console.error(err);
     });
+
     this.message.message = '';
     this.message.communicationType = '';
   }
@@ -124,7 +141,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         this.selectedFile,
         'messangeImages'
       );
-      console.log(imageUrl);
       this.FileUrl = imageUrl;
     }
   }

@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './channel-header.component.html',
-  styleUrl: './channel-header.component.scss'
+  styleUrl: './channel-header.component.scss',
 })
-export class ChannelHeaderComponent {
-
-}
+export class ChannelHeaderComponent {}

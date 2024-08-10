@@ -102,7 +102,6 @@ export class ChannelMessageInputComponent implements OnInit {
         this.selectedFile,
         'messangeImages'
       );
-      console.log(imageUrl);
       this.FileUrl = imageUrl;
     }
   }

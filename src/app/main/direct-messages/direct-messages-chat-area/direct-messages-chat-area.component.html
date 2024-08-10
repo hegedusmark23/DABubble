@@ -6,10 +6,17 @@
 >
   <div class="noMessagesContainer" *ngIf="allMessagesSortedDate.length < 1">
     <div>
-      <p class="noMessagesTitle"># {{ this.currentChannel }}</p>
+      <p class="noMessagesTitle">
+        <img
+          class="noMessagesUserImg"
+          src="{{ getProfileImg(this.messageUser) }}"
+        />
+        {{ this.getUsername(this.messageUser) }}
+      </p>
       <p>
-        Du hast diesen Channel heute erstellt. Das ist der Anfang der Channels
-        <span># direct message </span>
+        Diese Unterhaltung findet nur zwischen
+        <span> &#64;{{ this.getUsername(this.messageUser) }} </span>und dir
+        statt.
       </p>
     </div>
   </div>
@@ -239,7 +246,10 @@
 
       <div
         (mouseleave)="closeEmojiSelector()"
-        *ngIf="message.communicationType == 'send'"
+        *ngIf="
+          message.communicationType == 'send' &&
+          this.openEditMessage !== message.id
+        "
       >
         <div class="messageSendContainer">
           <div class="messagecontentContainerSend">
