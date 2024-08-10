@@ -20,3 +20,10 @@ input {
 img {
     cursor: pointer;
 }
+
+.result-container{
+    position: absolute;
+    z-index: 999;
+    background-color: white;
+    border-radius: 30px;
+}

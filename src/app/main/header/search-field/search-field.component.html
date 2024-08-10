@@ -1,4 +1,28 @@
+
 <div class="search-field-container">
     <input type="text" placeholder="Code learning durchsuchen" (input)="onSearch($event)">
     <img src="../../../../assets/img/header/search.png">
+</div>
+
+<div class="result-container">
+    <h2>Channels</h2>
+    <ul>
+        <li *ngFor="let channel of channels">
+            {{ channel.name }}
+        </li>
+    </ul>
+
+    <h2>Users</h2>
+    <ul>
+        <li *ngFor="let user of users">
+            {{ user.name }}
+        </li>
+    </ul>
+
+    <h2>Messages</h2>
+    <ul>
+        <li *ngFor="let message of messages">
+            {{ message.message }}
+        </li>
+    </ul>
 </div>

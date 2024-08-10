@@ -12,18 +12,17 @@
         <div class="channel-name-container">
             <span class="fs-18">Channel-Name</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
-                id="channelDescription" name="channelDescription"  placeholder="Bitte geben Sie mindestens 3 Zeichen ein">
+                id="channelDescription" name="channelDescription">
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading"
-                id="channelMessages" name="channelMessages" placeholder="Bitte geben Sie eine Beschreibung an">
+                id="channelMessages" name="channelMessages">
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="button-container">
-            <button class="fs-18 add-disabled" *ngIf="!isInputValid()">Erstellen</button>
-            <button class="fs-18 add" *ngIf="isInputValid()" (click)="createChannel()" [disabled]="loading">Erstellen</button>
+            <button class="fs-18 add" (click)="createChannel()" [disabled]="loading">Erstellen</button>
         </div>
     </div>
 </div>
@@ -39,12 +38,12 @@
                 @if(this.hideOrShowSidebar.addAllUsersToChannel){
                 <div class="select-user-group">
                     <img src="../../../assets/img/sidebar/radio_button_checked.png" class="radio-button">
-                    <span>Alle Mitglieder von DevSpace hinzufügen</span>
+                    <span>Alle Mitglieder von DevSpace? hinzufügen</span>
                 </div>
                 }@else {
                 <div (click)="addAllUser()" class="select-user-group">
                     <img src="../../../assets/img/sidebar/radio_button_unchecked.png" class="radio-button">
-                    <span>Alle Mitglieder von DevSpace hinzufügen</span>
+                    <span>Alle Mitglieder von DevSpace? hinzufügen</span>
                 </div>
                 }
             </div>
@@ -74,8 +73,7 @@
                         class="delete-user-button">
                     </div>
                     <div>
-                        <input type="text" class="input-field-add-user-to-channel" id="name" name="name" placeholder="Name"
-                        (input)="onSearch($event)">
+                        <input type="text" class="input-field-add-user-to-channel" id="name" name="name">
                     </div>
                 </div>
             }
@@ -85,11 +83,11 @@
         </div>
         @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
             <div class="userList" (click)="notCloseDialog($event)">
-                <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
-                    <img class="profil-image" [src]="filteredImageList[i]">
+                <div *ngFor="let user of this.hideOrShowSidebar.userList; let i = index" class="user" (click)="selectUser(i)">
+                    <img class="profil-image" src={{this.hideOrShowSidebar.imageList[i]}}>
                     <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
                     <span>{{ user }}</span>
-                  </div>
+                </div>
             </div>
         }
     </div>

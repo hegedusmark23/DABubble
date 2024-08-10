@@ -21,34 +21,8 @@ export class CreateChannelComponent {
   };
   loading = false;
   activeUserIndex: number | null = null;
-  filteredUserList: string[] = this.hideOrShowSidebar.userList;
-  filteredImageList: string[] = this.hideOrShowSidebar.imageList;
 
   constructor(private firestore: Firestore) {}
-
-  isInputValid(): boolean {
-    return this.newChannel.name.length >= 3;
-  }
-
-  onSearch(event: any) {
-    const searchTerm = event.target.value.toLowerCase();
-    
-    if (searchTerm) {
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-
-        this.hideOrShowSidebar.userList.forEach((user, index) => {
-            if (user.toLowerCase().includes(searchTerm)) {
-                this.filteredUserList.push(user);
-                this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
-            }
-        });
-    } else {
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-    }
-}
-
 
   closeDialog() {
     this.hideOrShowSidebar.createChannelDialogActive = false;
@@ -132,26 +106,26 @@ export class CreateChannelComponent {
   }
 
   selectUser(i: number) {
-    const indexInMainList = this.hideOrShowSidebar.userList.indexOf(this.filteredUserList[i]);
-    if (indexInMainList !== -1) {
-        this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
-        this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
-        this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
-        this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
-        this.filteredUserList.splice(i, 1);
-        this.filteredImageList.splice(i, 1);
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-    }
-}
+    this.hideOrShowSidebar.selectedUsers.push(
+      this.hideOrShowSidebar.userList[i]
+    );
+    this.hideOrShowSidebar.selectedImages.push(
+      this.hideOrShowSidebar.imageList[i]
+    );
+    this.hideOrShowSidebar.userList.splice(i, 1);
+    this.hideOrShowSidebar.imageList.splice(i, 1);
+    console.log(this.hideOrShowSidebar.selectedUsers);
+  }
 
-deleteUser(i: number) {
-    this.hideOrShowSidebar.userList.push(this.hideOrShowSidebar.selectedUsers[i]);
-    this.hideOrShowSidebar.imageList.push(this.hideOrShowSidebar.selectedImages[i]);
+  deleteUser(i: number) {
+    this.hideOrShowSidebar.userList.push(
+      this.hideOrShowSidebar.selectedUsers[i]
+    );
+    this.hideOrShowSidebar.imageList.push(
+      this.hideOrShowSidebar.selectedImages[i]
+    );
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
-    this.filteredUserList = this.hideOrShowSidebar.userList.slice();
-    this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
-}
-
+    console.log(this.hideOrShowSidebar.selectedUsers);
+  }
 }
