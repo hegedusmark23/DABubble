@@ -3,6 +3,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, setDoc, doc } from '@angular/fire/firestore';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -13,11 +14,14 @@ import { Firestore, collection, setDoc, doc } from '@angular/fire/firestore';
 })
 export class CreateChannelComponent {
   hideOrShowSidebar = inject(SidebarService);
+  authService = inject(AuthService);
+
   newChannel = {
     name: '',
     description: '',
     users: [],
     images: [],
+    channelCreator: ''
   };
   loading = false;
   activeUserIndex: number | null = null;
@@ -94,9 +98,10 @@ export class CreateChannelComponent {
       })
       .then(() => {
         this.loading = false;
-        (this.newChannel.name = ''),
-          (this.newChannel.description = ''),
-          (this.newChannel.users = []);
+        this.newChannel.name = '',
+        this.newChannel.description = '',
+        this.newChannel.channelCreator = '';
+        this.newChannel.users = [];
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.userList = [];
@@ -116,6 +121,7 @@ export class CreateChannelComponent {
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.userList,
         images: this.hideOrShowSidebar.imageList,
+        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
     } else {
       return {
@@ -123,6 +129,7 @@ export class CreateChannelComponent {
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.selectedUsers,
         images: this.hideOrShowSidebar.selectedImages,
+        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
     }
   }
