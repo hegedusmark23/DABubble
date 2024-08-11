@@ -23,6 +23,7 @@ export class CreateChannelComponent {
   activeUserIndex: number | null = null;
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
+  searchTerm: string = '';
 
   constructor(private firestore: Firestore) {}
 
@@ -31,14 +32,14 @@ export class CreateChannelComponent {
   }
 
   onSearch(event: any) {
-    const searchTerm = event.target.value.toLowerCase();
+    this.searchTerm = event.target.value.toLowerCase();
     
-    if (searchTerm) {
+    if (this.searchTerm) {
         this.filteredUserList = [];
         this.filteredImageList = [];
 
         this.hideOrShowSidebar.userList.forEach((user, index) => {
-            if (user.toLowerCase().includes(searchTerm)) {
+            if (user.toLowerCase().includes(this.searchTerm)) {
                 this.filteredUserList.push(user);
                 this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
             }
@@ -142,6 +143,7 @@ export class CreateChannelComponent {
         this.filteredImageList.splice(i, 1);
         this.filteredUserList = [];
         this.filteredImageList = [];
+        this.searchTerm = '';
     }
 }
 
