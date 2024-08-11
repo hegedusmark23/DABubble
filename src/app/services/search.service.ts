@@ -15,31 +15,55 @@ export class SearchService {
       where('name', '<=', searchTerm + '\uf8ff')
     );
     const querySnapshot = await getDocs(q);
-    console.log('Channels found:', querySnapshot.docs.map(doc => doc.data())); // Debugging
+    //console.log('Channels found:', querySnapshot.docs.map(doc => doc.data())); // Debugging
     return querySnapshot.docs.map(doc => doc.data());
   }
   
-  async searchChannelMessages(channelID: string, searchTerm: string) {
-    const messagesRef = collection(this.firestore, `Channels/${channelID}/messages`);
-    const q = query(
-      messagesRef,
-      where('message', '>=', searchTerm),
-      where('message', '<=', searchTerm + '\uf8ff')
-    );
-    const querySnapshot = await getDocs(q);
-    console.log('Messages found:', querySnapshot.docs.map(doc => doc.data())); // Debugging
-    return querySnapshot.docs.map(doc => doc.data());
+  async searchAllChannelMessages(searchTerm: string) {
+    const normalizedTerm = searchTerm.toLowerCase();
+    const channelsRef = collection(this.firestore, 'Channels');
+    
+    // Get all channels
+    const channelsSnapshot = await getDocs(channelsRef);
+    const messages: any[] = [];
+  
+    for (const channelDoc of channelsSnapshot.docs) {
+      const channelId = channelDoc.id;
+      const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
+      
+      // Get all messages in the current channel
+      const messagesSnapshot = await getDocs(messagesRef);
+      
+      // Filter messages in the current channel
+      const filteredMessages = messagesSnapshot.docs
+        .map(doc => doc.data())
+        .filter(message => 
+          message['message'] && message['message'].toLowerCase().includes(normalizedTerm)
+        );
+  
+      messages.push(...filteredMessages);
+    }
+  
+    //console.log('All matching messages found:', messages); // Debugging
+    return messages;
   }
   
   async searchUsers(searchTerm: string) {
+    const normalizedTerm = searchTerm.toLowerCase();
     const usersRef = collection(this.firestore, 'Users');
-    const q = query(
-      usersRef,
-      where('name', '>=', searchTerm),
-      where('name', '<=', searchTerm + '\uf8ff')
-    );
+    
+    // This will get all users, so we will filter in the application
+    const q = query(usersRef);
     const querySnapshot = await getDocs(q);
-    console.log('Users found:', querySnapshot.docs.map(doc => doc.data())); // Debugging
-    return querySnapshot.docs.map(doc => doc.data());
+  
+    // Filter results client-side due to lack of case-insensitive queries in Firestore
+    const users = querySnapshot.docs
+      .map(doc => doc.data())
+      .filter(user => 
+        user['name'] && user['name'].toLowerCase().includes(normalizedTerm)
+      );
+  
+    //console.log('Users found:', users); // Debugging
+    return users;
   }
 }
