@@ -76,10 +76,14 @@ input {
     width: 792px;
     height: 60px;
     border-radius: 40px;
-    border: 1px solid rgba(173, 176, 217, 1);
+    outline: 1px solid rgba(173, 176, 217, 1);
+    border: none;
     padding: 18px, 20px, 18px, 20px;
     font-size: 18px;
     gap: 20px;
+    &:focus {
+        outline: 2px solid #535AF1;
+    }
 }
 
 .tag-icon {
@@ -98,11 +102,14 @@ input {
 }
 
 .input-field-add-user-to-channel {
-    width: 100%; 
+    width: 150px; 
     padding: 0px 40px;
     box-sizing: border-box;
     border: none;
     outline: none;
+    &:hover {
+        outline: 2px solid #535AF1;
+    }
 }
 
 .button-container {
@@ -125,6 +132,20 @@ input {
     position: absolute;
     right: 40px;
     cursor: pointer;
+}
+
+.add-disabled {
+    width: 125px;
+    height: 49px;
+    padding: 12px 25px 12px 25px;
+    gap: 10px;
+    border-radius: 25px;
+    border: none;
+    background-color: #686868;
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    right: 40px;
 }
 
 .add-user-to-channel-container {
@@ -155,7 +176,6 @@ input {
     border-radius: 30px;
     background-color: white;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
-    position: relative;
 }
 
 .dialog-title-container-addUser {
@@ -222,8 +242,8 @@ input {
 
 .userList {
     position: absolute;
-    left: 50px;
-    bottom: -145px;
+    left: 20px;
+    top: 50px;
     max-height: 250px;
     overflow-y: auto;
     border-radius: 0px 25px 25px 25px;
@@ -235,6 +255,7 @@ input {
     flex-direction: column;
     gap: 12px;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+    z-index: 20;
 }
 
 .profil-image {
@@ -269,11 +290,12 @@ input {
     padding: 18px, 20px, 18px, 20px;
     font-size: 18px;
     gap: 20px;
+    position: relative;
 }
 
 .selected-user {
     min-width: 100px;
-    max-height: 80%;
+    height: 60px;
     margin-left: 8px;
     margin-right: 8px;
     border-radius: 32px;
@@ -289,7 +311,7 @@ input {
 }
 
 .selected-img {
-    height: 24px;
-    width: 24px;
-    border-radius: 48px;
+    height: 36px;
+    width: 36px;
+    border-radius: 72px;
 }
