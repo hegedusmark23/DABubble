@@ -1,29 +1,48 @@
 <div class="search-field-container">
-    <input  type="text" placeholder="Code learning durchsuchen" (input)="onSearch($event)">
+    <input type="text" placeholder="Code learning durchsuchen" (input)="onSearch($event)">
     <img src="../../../../assets/img/header/search.png">
-    
-    <div [ngClass]="{'result-container': isSearching, 'closed-result-container': !isSearching}">
-        <h2>Channels</h2>
-        <ul>
-            <li *ngFor="let channel of channels">
-                <span [innerHTML]="highlight(channel.name)"></span>
-            </li>
-        </ul>
 
-        <h2>Users</h2>
+    <div [ngClass]="{'result-container': isSearching, 'closed-result-container': !isSearching}">
+        @if (channels.length > 0 || users.length > 0 || messages.length > 0;){
+
+        @if(channels.length > 0){
+        <div>
+            <h2>Kanale:</h2>
+            <ul>
+                <li *ngFor="let channel of channels">
+                    <span [innerHTML]="highlight(channel.name)"></span>
+                </li>
+            </ul>
+        </div>
+        }
+
+        @if (users.length > 0) {
+        <h2>Benutzer:</h2>
         <ul>
             <li *ngFor="let user of users">
-                <span [innerHTML]="highlight(user.name)"></span>
-                <img style="height: 20px; border-radius: 100%;" src="{{user.image}}" alt="">
+                <div class="result-user-container">
+                    <img class="search-result-avatar" src="{{user.image}}" alt="">
+                    <span [innerHTML]="highlight(user.name)"></span>   
+                </div>
+                
             </li>
-            
         </ul>
+        }
 
-        <h2>Messages</h2>
+        @if (messages.length > 0) {
+        <h2>Nachrichten:</h2>
         <ul>
             <li *ngFor="let message of messages">
                 <span [innerHTML]="highlight(message.message)"></span>
             </li>
         </ul>
+        }
+
+        } @else {
+        <h2>Es gibt keine Übereinstimmung.</h2>
+        }
+
+        
     </div>
+
 </div>

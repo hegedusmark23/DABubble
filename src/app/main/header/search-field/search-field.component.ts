@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SearchService } from '../../../services/search.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search-field',
@@ -18,15 +19,15 @@ export class SearchFieldComponent {
   isSearching: boolean = false;
   searchTerm: string = '';
   
-  constructor(private searchService: SearchService) { }
+  constructor(private searchService: SearchService, private sanitizer: DomSanitizer) { }
 
   async onSearch(event: Event) {
-    const searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
-
-    if (searchTerm) {
-      this.channels = await this.searchService.searchChannels(searchTerm);
-      this.users = await this.searchService.searchUsers(searchTerm);
-      this.messages = await this.searchService.searchAllChannelMessages(searchTerm);
+    this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  
+    if (this.searchTerm) {
+      this.channels = await this.searchService.searchChannels(this.searchTerm);
+      this.users = await this.searchService.searchUsers(this.searchTerm);
+      this.messages = await this.searchService.searchAllChannelMessages(this.searchTerm);
       this.isSearching = true;
     } else {
       this.channels = [];
@@ -34,13 +35,13 @@ export class SearchFieldComponent {
       this.messages = [];
       this.isSearching = false;
     }
-    console.log(this.isSearching)
   }
 
-  highlight(text: string): string {
+  highlight(text: string): SafeHtml {
     if (!this.searchTerm) return text;
     const regex = new RegExp(`(${this.searchTerm})`, 'gi');
-    return text.replace(regex, `<span class="highlight">$1</span>`);
+    const highlightedText = text.replace(regex, `<span class="highlight">$1</span>`);
+    return this.sanitizer.bypassSecurityTrustHtml(highlightedText);
   }
 
 }
