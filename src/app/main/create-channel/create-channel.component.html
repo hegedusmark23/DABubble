@@ -70,8 +70,7 @@
                             <img src="{{hideOrShowSidebar.selectedImages[i]}}" class="selected-img">
                         </div>
                         <span>{{ selectedUser }}</span>
-                        <img src="../../../assets/img/create-channel/close_button.png" (click)="deleteUser(i)" 
-                        class="delete-user-button">
+                        <div (click)="deleteUser(i)" class="close-button"></div>
                     </div>
                     <div>
                         <input type="text" class="input-field-add-user-to-channel" id="name" name="name" placeholder="Name eingeben"

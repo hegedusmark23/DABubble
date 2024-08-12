@@ -310,10 +310,15 @@ input {
 
 .delete-user-button {
     cursor: pointer;
+    background-image: url('../../../assets/img/create-channel/close_button.png');
+    height: 24px;
+    width: 24px;
+
 }
 
 .selected-img {
     height: 36px;
     width: 36px;
     border-radius: 72px;
+    margin-right: 10px;
 }
