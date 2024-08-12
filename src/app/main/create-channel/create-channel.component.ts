@@ -92,9 +92,9 @@ export class CreateChannelComponent {
     this.hideOrShowSidebar.createChannelDialogActive = false;
   }
 
-  generateId(length: number = 28): string {
+  generateId(): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < characters.length; i++) {
+    for (let i = 0; i < 28; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         this.result += characters[randomIndex];
     }
