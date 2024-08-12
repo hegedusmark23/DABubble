@@ -94,7 +94,7 @@ export class CreateChannelComponent {
 
   generateId(length: number = 28): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i < characters.length; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         this.result += characters[randomIndex];
     }
