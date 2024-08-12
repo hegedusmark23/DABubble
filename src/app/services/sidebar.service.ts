@@ -36,7 +36,8 @@ export class SidebarService {
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
     querySnapshot.forEach((doc) => {
-      this.AllChannels.push(doc.id);
+      const channelData = doc.data();
+      this.AllChannels.push(channelData['name']);
     });
   }
 

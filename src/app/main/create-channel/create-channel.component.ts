@@ -28,6 +28,7 @@ export class CreateChannelComponent {
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
   searchTerm: string = '';
+  result = '';
 
   constructor(private firestore: Firestore) {}
 
@@ -86,11 +87,20 @@ export class CreateChannelComponent {
     this.hideOrShowSidebar.createChannelDialogActive = false;
   }
 
+  generateId(length: number = 28): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        this.result += characters[randomIndex];
+    }
+    return this.result;
+}
+
   async saveChannel() {
     this.loading = true;
     const channelRef = doc(
       collection(this.firestore, 'Channels'),
-      this.newChannel.name
+      this.generateId()
     );
     await setDoc(channelRef, this.toJSON())
       .catch((err) => {
