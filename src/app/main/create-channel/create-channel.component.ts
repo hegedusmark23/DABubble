@@ -20,6 +20,7 @@ export class CreateChannelComponent {
     name: '',
     description: '',
     users: [],
+    uids: [],
     images: [],
     channelCreator: ''
   };
@@ -27,6 +28,7 @@ export class CreateChannelComponent {
   activeUserIndex: number | null = null;
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
+  filteredUidList: string[] = this.hideOrShowSidebar.uidList;
   searchTerm: string = '';
   result = '';
 
@@ -42,16 +44,19 @@ export class CreateChannelComponent {
     if (this.searchTerm) {
         this.filteredUserList = [];
         this.filteredImageList = [];
+        this.filteredUidList = [];
 
         this.hideOrShowSidebar.userList.forEach((user, index) => {
             if (user.toLowerCase().includes(this.searchTerm)) {
                 this.filteredUserList.push(user);
                 this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
+                this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
             }
         });
     } else {
         this.filteredUserList = [];
         this.filteredImageList = [];
+        this.filteredUidList = [];
     }
 }
 
@@ -114,10 +119,13 @@ export class CreateChannelComponent {
         this.newChannel.users = [];
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
+        this.hideOrShowSidebar.selectedUids = [];
         this.hideOrShowSidebar.userList = [];
         this.hideOrShowSidebar.imageList = [];
+        this.hideOrShowSidebar.uidList = [];
         this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
+        this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
         this.hideOrShowSidebar.fetchChannels();
         this.hideOrShowSidebar.fetchUsers();
         this.closeDialogAddUser();
@@ -130,6 +138,7 @@ export class CreateChannelComponent {
         name: this.newChannel.name,
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.userList,
+        uids: this.hideOrShowSidebar.uidList,
         images: this.hideOrShowSidebar.imageList,
         channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
@@ -138,6 +147,7 @@ export class CreateChannelComponent {
         name: this.newChannel.name,
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.selectedUsers,
+        uids: this.hideOrShowSidebar.selectedUids,
         images: this.hideOrShowSidebar.selectedImages,
         channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
@@ -154,12 +164,16 @@ export class CreateChannelComponent {
     if (indexInMainList !== -1) {
         this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
         this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
+        this.hideOrShowSidebar.selectedUids.push(this.hideOrShowSidebar.uidList[indexInMainList]);
         this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
         this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
+        this.hideOrShowSidebar.uidList.splice(indexInMainList, 1);
         this.filteredUserList.splice(i, 1);
         this.filteredImageList.splice(i, 1);
+        this.filteredUidList.splice(i, 1);
         this.filteredUserList = [];
         this.filteredImageList = [];
+        this.filteredUidList = [];
         this.searchTerm = '';
     }
 }
@@ -167,10 +181,13 @@ export class CreateChannelComponent {
 deleteUser(i: number) {
     this.hideOrShowSidebar.userList.push(this.hideOrShowSidebar.selectedUsers[i]);
     this.hideOrShowSidebar.imageList.push(this.hideOrShowSidebar.selectedImages[i]);
+    this.hideOrShowSidebar.uidList.push(this.hideOrShowSidebar.selectedUids[i]);
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
+    this.hideOrShowSidebar.selectedUids.splice(i, 1);
     this.filteredUserList = this.hideOrShowSidebar.userList.slice();
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
+    this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
 }
 
 }

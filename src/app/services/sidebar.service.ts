@@ -15,6 +15,7 @@ export class SidebarService {
   AllUids : string[] = [];
   userList : string[] = [];
   imageList : string[] = [];
+  uidList : string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
@@ -24,6 +25,7 @@ export class SidebarService {
   addSelectedUsersToChannel = false;
   selectedUsers: any[] = [];
   selectedImages: any[] = [];
+  selectedUids: any[] = [];
   activeUser = '';
   activeImage = '';
   activeEmail = '';
@@ -45,6 +47,7 @@ export class SidebarService {
     this.AllUsers = [];
     this.userList = [];
     this.imageList = [];
+    this.uidList = [];
     const usersCollection = collection(this.firestore, 'Users');
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach((doc) => {
@@ -55,6 +58,7 @@ export class SidebarService {
       this.AllUids.push(userData['uid']);
       this.userList.push(userData['name']);
       this.imageList.push(userData['image']);
+      this.uidList.push(userData['uid']);
       //this.userList = this.AllUsers;
       //this.imageList = this.AllImages;
     });
