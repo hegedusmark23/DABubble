@@ -4,6 +4,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
 import { AuthService } from '../../services/auth.service';
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,7 +30,8 @@ export class SidebarComponent implements OnInit {
 
   constructor(
     private firestore: Firestore,
-    private channelSelectionService: ChannelSelectionService
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService
   ) {}
 
   hoverChannelTitle() {
@@ -49,6 +51,7 @@ export class SidebarComponent implements OnInit {
   }
 
   channelActive(i: number) {
+    this.threadService.closeThread();
     this.channelSelectionService.openChannel();
 
     this.activeChannelIndex = i;

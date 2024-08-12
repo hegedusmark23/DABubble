@@ -10,10 +10,10 @@ import { UserProfilComponent } from '../user-profil/user-profil.component';
 import { AddUserToChannelComponent } from '../add-user-to-channel/add-user-to-channel.component';
 import { DirectMessagesComponent } from '../direct-messages/direct-messages/direct-messages.component';
 import { CommonModule } from '@angular/common';
-import { OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { DirectMessageSelectionService } from '../../services/direct-message-selection.service';
+import { EditChannelComponent } from '../edit-channel/edit-channel.component';
+import { OnInit } from '@angular/core';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { EditChannelService } from '../../services/edit-channel.service'; // Importiere den EditChannelService
 
 @Component({
   selector: 'app-home',
@@ -30,14 +30,18 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
     AddUserToChannelComponent,
     DirectMessagesComponent,
     CommonModule,
+    EditChannelComponent,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
-  channelSelector: any = false;
-  selectedUserSubscription: any = false;
-  selectedUser: any;
+export class HomeComponent implements OnInit {
+  constructor(
+    public channelSelectionService: ChannelSelectionService,
+    public editChannelService: EditChannelService // Füge den Service hier hinzu
+  ) {}
 
-  constructor(public channelSelectionService: ChannelSelectionService) {}
+  ngOnInit() {
+    // Initialisierungen oder Subscriptions falls notwendig
+  }
 }

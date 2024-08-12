@@ -2,10 +2,9 @@
 
 <div class="content">
   <app-sidebar></app-sidebar>
-  <app-channel *ngIf="this.channelSelectionService.isChannelOpen()">
-  </app-channel>
+  <app-channel *ngIf="channelSelectionService.isChannelOpen()"></app-channel>
   <app-direct-messages
-    *ngIf="!this.channelSelectionService.isChannelOpen()"
+    *ngIf="!channelSelectionService.isChannelOpen()"
   ></app-direct-messages>
   <app-create-channel></app-create-channel>
   <app-open-sidebar></app-open-sidebar>
@@ -13,4 +12,7 @@
   <app-edit-profil-contactform></app-edit-profil-contactform>
   <app-user-profil></app-user-profil>
   <app-add-user-to-channel></app-add-user-to-channel>
+  <app-edit-channel
+    *ngIf="editChannelService.isEditChannel()"
+  ></app-edit-channel>
 </div>
