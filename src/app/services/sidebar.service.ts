@@ -33,6 +33,7 @@ export class SidebarService {
   activeImage = '';
   activeEmail = '';
   activeUid = '';
+  currentChannelNumber: number | any;
 
   constructor(private firestore: Firestore) { }
 

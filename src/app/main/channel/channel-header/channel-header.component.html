@@ -1,16 +1,14 @@
 <div class="header">
   <div>
     <p (click)="editChannelService.setEditChannel(true, this.currentChannel)">
-      # Emtwicklerteam
+      {{ this.currentChannel }}
     </p>
   </div>
   <div class="channelUserContainer">
-    <div class="channelUser">
-      <img src="./../../../assets/img/profile-imgs/female1.png" />
-      <img src="./../../../assets/img/profile-imgs/female2.png" />
-      <img src="./../../../assets/img/profile-imgs/male2.png" />
+    <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index">
+      <img src="{{userImage}}" />
     </div>
-    <div>3</div>
+    <div></div>
     <div>
       <svg
         width="40"
