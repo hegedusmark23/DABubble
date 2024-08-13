@@ -58,7 +58,10 @@ export class SidebarComponent implements OnInit {
     this.channelSelectionService.setSelectedChannel(
       this.hideOrShowSidebar.AllChannels[i]
     );
-    // alert(this.hideOrShowSidebar.AllChannels[i] + ' open');
+     alert(this.hideOrShowSidebar.AllChannels[i] + ' open');
+     console.log(this.hideOrShowSidebar.AllChannelsUsers[i]);
+     console.log(this.hideOrShowSidebar.AllChannelsImages[i]);
+     console.log(this.hideOrShowSidebar.AllChannelsUids[i]);
   }
 
   userActive(i: number) {

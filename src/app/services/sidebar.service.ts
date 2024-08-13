@@ -9,6 +9,9 @@ export class SidebarService {
   sidebarOpen = false;
   createChannelDialogActive = false;
   AllChannels : string[] = [];
+  AllChannelsUsers : string[] = [];
+  AllChannelsImages : string[] = [];
+  AllChannelsUids : string[] = [];
   AllUsers : string[] = [];
   AllEmails : string[] = [];
   AllImages : string[] = [];
@@ -35,11 +38,18 @@ export class SidebarService {
 
   async fetchChannels() {
     this.AllChannels = [];
+    this.AllChannelsUsers = [];
+    this.AllChannelsImages = [];
+    this.AllChannelsUids = [];
+
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
     querySnapshot.forEach((doc) => {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
+      this.AllChannelsUsers.push(channelData['users']);
+      this.AllChannelsUids.push(channelData['uids']);
+      this.AllChannelsImages.push(channelData['images']);
     });
   }
 
