@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
+import { Channel } from '../../models/channel';
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +8,21 @@ import { collection, Firestore, getDocs, query, where } from '@angular/fire/fire
 export class SearchService {
   constructor(private firestore: Firestore) {}
 
-  async searchChannels(searchTerm: string) {
+  async searchChannels(searchTerm: string): Promise<Channel[]> {
+    const normalizedTerm = searchTerm.toLowerCase();
     const channelsRef = collection(this.firestore, 'Channels');
+    
     const q = query(
       channelsRef,
-      where('name', '>=', searchTerm),
-      where('name', '<=', searchTerm + '\uf8ff')
+      where('name', '>=', normalizedTerm),
+      where('name', '<=', normalizedTerm + '\uf8ff')
     );
     const querySnapshot = await getDocs(q);
-    //console.log('Channels found:', querySnapshot.docs.map(doc => doc.data())); // Debugging
-    return querySnapshot.docs.map(doc => doc.data());
+  
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    } as Channel));
   }
   
   async searchAllChannelMessages(searchTerm: string) {

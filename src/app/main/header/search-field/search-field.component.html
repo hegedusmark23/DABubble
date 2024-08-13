@@ -9,8 +9,8 @@
         <div>
             <h2>Kanale:</h2>
             <ul>
-                <li *ngFor="let channel of channels">
-                    <span [innerHTML]="highlight(channel.name)"></span>
+                <li *ngFor="let channel of channels" (click)="onChannelClick(channel.id)">
+                    <span class="result" [innerHTML]="highlight(channel.name)"></span>
                 </li>
             </ul>
         </div>
@@ -19,12 +19,11 @@
         @if (users.length > 0) {
         <h2>Benutzer:</h2>
         <ul>
-            <li *ngFor="let user of users">
+            <li *ngFor="let user of users" (click)="onUserClick(user.id)">
                 <div class="result-user-container">
                     <img class="search-result-avatar" src="{{user.image}}" alt="">
-                    <span [innerHTML]="highlight(user.name)"></span>   
+                    <span [innerHTML]="highlight(user.name)"></span>
                 </div>
-                
             </li>
         </ul>
         }
@@ -32,8 +31,8 @@
         @if (messages.length > 0) {
         <h2>Nachrichten:</h2>
         <ul>
-            <li *ngFor="let message of messages">
-                <span [innerHTML]="highlight(message.message)"></span>
+            <li *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
+                <span class="result" [innerHTML]="highlight(message.message)"></span>
             </li>
         </ul>
         }
@@ -42,7 +41,6 @@
         <h2>Es gibt keine Übereinstimmung.</h2>
         }
 
-        
     </div>
 
 </div>

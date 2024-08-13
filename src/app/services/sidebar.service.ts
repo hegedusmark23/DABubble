@@ -34,6 +34,7 @@ export class SidebarService {
   activeEmail = '';
   activeUid = '';
   currentChannelNumber: number | any;
+  activeUserIndex: number | undefined;
 
   constructor(private firestore: Firestore) { }
 
