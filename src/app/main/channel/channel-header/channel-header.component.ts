@@ -26,4 +26,8 @@ export class ChannelHeaderComponent {
       this.currentChannel = channel;
     });
   }
+
+  openAddUserToChannel(){
+    alert('open list');
+  }
 }
