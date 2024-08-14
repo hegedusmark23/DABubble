@@ -4,11 +4,13 @@
       {{ this.currentChannel }}
     </p>
   </div>
-  <div class="channelUserContainer">
-    <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index">
-      <img src="{{userImage}}" class="profil-image">
+  <div class="header-right">
+    <div class="channelUserContainer">
+      <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index">
+        <img src="{{userImage}}" class="profil-image">
+      </div>
+      <div class="userNumber fs-20">3</div>
     </div>
-    <div>3</div>
     <div (click)="openAddUserToChannel()" class="add-user-icon">
       <svg
         width="40"
