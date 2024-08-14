@@ -20,6 +20,10 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
+  padding-left: 32px;
+  padding-right: 12px;
+  margin-right: 20px;
+  border-radius: 30px;
   &:hover {
     background-color: #ECEEFE;
   }
@@ -27,6 +31,7 @@
 
 .add-user-icon {
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .profil-image {
@@ -34,11 +39,12 @@
   height: 40px;
   border-radius: 20px;
   margin-left: -20px;
+  margin-top: 5px;
   border: 1px solid white;
 }
 
 .userNumber {
   font-weight: 600;
   margin-left: -4px;
-  margin-right: 20px;
+  
 }
