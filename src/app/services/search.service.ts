@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel';
-import { User } from '../../models/user';
 import { SidebarService } from './sidebar.service';
 
 @Injectable({
@@ -28,38 +27,42 @@ export class SearchService {
   
   async searchAllChannelMessages(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
-    const filteredMessages: any[] | PromiseLike<any[]> = [];
-  
-    // Feltételezve, hogy minden csatornánál van egy messages tömb
-    for (let channelIndex = 0; channelIndex < this.hideOrShowSidebar.AllChannels.length; channelIndex++) {
-      const messages = await this.getMessagesForChannel(this.hideOrShowSidebar.AllChannelsUids[channelIndex]);
-      messages.forEach((message, messageIndex) => {
-        if (message.text.toLowerCase().includes(normalizedTerm)) {
+    const filteredMessages = [];
+    const channelsRef = collection(this.firestore, 'Channels');
+    const channelsSnapshot = await getDocs(channelsRef);
+    for (const channelDoc of channelsSnapshot.docs) {
+      const channelId = channelDoc.id;
+      const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
+      const messagesSnapshot = await getDocs(messagesRef);
+      for (const messageDoc of messagesSnapshot.docs) {
+        const messageData = messageDoc.data();
+        //console.log('Message data:', messageData); // Debugging
+        if (messageData['message'] && messageData['message'].toLowerCase().includes(normalizedTerm)) {
           filteredMessages.push({
-            channelId: this.hideOrShowSidebar.AllChannelsUids[channelIndex],
-            message: message.text,
-            messageId: message.id, // Ha az üzenetnek van ID-ja
+            id: messageDoc.id,
+            channelId: channelId,
+            message: messageData['message'],
+            uid: messageData['uid'],
           });
         }
-      });
+      }
     }
-  
+    //console.log('Filtered Messages:', filteredMessages); 
     return filteredMessages;
   }
   
   async getMessagesForChannel(channelId: string): Promise<any[]> {
-    // Implementáld a csatorna üzeneteinek lekérdezését
     const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
     const querySnapshot = await getDocs(messagesRef);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, text: doc.data()['message'] }));
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      text: doc.data()['message'],
+    }));
   }
-  
- 
   
   async searchUsers(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const filteredUsers = [];
-  
     for (let i = 0; i < this.hideOrShowSidebar.AllUsers.length; i++) {
       const userName = this.hideOrShowSidebar.AllUsers[i].toLowerCase();
       if (userName.includes(normalizedTerm)) {
@@ -71,8 +74,7 @@ export class SearchService {
         });
       }
     }
-  
-    console.log('Filtered Users:', filteredUsers); // Debugging
+    //console.log('Filtered Users:', filteredUsers); // Debugging
     return filteredUsers;
   }
 }
