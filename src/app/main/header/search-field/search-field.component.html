@@ -19,7 +19,7 @@
         @if (users.length > 0) {
         <h2>Benutzer:</h2>
         <ul>
-            <li *ngFor="let user of users" (click)="onUserClick(user.id)">
+            <li *ngFor="let user of users" (click)="onUserClick(user.uid)">
                 <div class="result-user-container">
                     <img class="search-result-avatar" src="{{user.image}}" alt="">
                     <span [innerHTML]="highlight(user.name)"></span>

@@ -56,19 +56,31 @@ export class SearchFieldComponent {
   }
 
   onUserClick(userId: string) {
-    const userIndex = this.users.findIndex(user => user.id === userId);
+    console.log('Selected user ID:', userId); // Debugging
+    const userIndex = this.hideOrShowSidebar.AllUids.findIndex(uid => uid === userId);
     if (userIndex !== -1) {
       this.userActive(userIndex);
       this.isSearching = false;
+    } else {
+      console.log('User not found with ID:', userId);
     }
   }
 
   onMessageClick(channelId: string, messageId: string) {
-    const channelIndex = this.channels.findIndex(channel => channel.id === channelId);
+    const channelIndex = this.hideOrShowSidebar.AllChannelsUids.findIndex(id => id === channelId);
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
-      this.isSearching = false;
-      // Optionally, scroll to the message within the channel view or highlight it
+      // Görgetés az üzenethez
+      this.scrollToMessage(messageId);
+    }
+  }
+  
+  scrollToMessage(messageId: string) {
+    // Implementáld a görgetést az üzenethez
+    const messageElement = document.getElementById(messageId);
+    if (messageElement) {
+      messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      messageElement.classList.add('highlighted-message'); // Optional: highlight
     }
   }
 
@@ -81,7 +93,16 @@ export class SearchFieldComponent {
   userActive(i: number) {
     this.hideOrShowSidebar.activeUserIndex = i;
     this.hideOrShowSidebar.userProfilOpen = true;
-    this.hideOrShowSidebar.activeUser = this.users[i].name;
+    this.hideOrShowSidebar.activeUser = this.hideOrShowSidebar.AllUsers[i];
+    this.hideOrShowSidebar.activeEmail = this.hideOrShowSidebar.AllEmails[i];
+    this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
+    this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
+    console.log('Activated user:', {
+      name: this.hideOrShowSidebar.AllUsers[i],
+      email: this.hideOrShowSidebar.AllEmails[i],
+      image: this.hideOrShowSidebar.AllImages[i],
+      uid: this.hideOrShowSidebar.AllUids[i]
+    });
   }
 }
 

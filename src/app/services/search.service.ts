@@ -1,75 +1,78 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel';
+import { User } from '../../models/user';
+import { SidebarService } from './sidebar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
+  hideOrShowSidebar = inject(SidebarService)
   constructor(private firestore: Firestore) {}
 
   async searchChannels(searchTerm: string): Promise<Channel[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const channelsRef = collection(this.firestore, 'Channels');
-    
     const q = query(
       channelsRef,
       where('name', '>=', normalizedTerm),
       where('name', '<=', normalizedTerm + '\uf8ff')
     );
     const querySnapshot = await getDocs(q);
-  
     return querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     } as Channel));
   }
   
-  async searchAllChannelMessages(searchTerm: string) {
+  async searchAllChannelMessages(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
-    const channelsRef = collection(this.firestore, 'Channels');
-    
-    // Get all channels
-    const channelsSnapshot = await getDocs(channelsRef);
-    const messages: any[] = [];
+    const filteredMessages: any[] | PromiseLike<any[]> = [];
   
-    for (const channelDoc of channelsSnapshot.docs) {
-      const channelId = channelDoc.id;
-      const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
-      
-      // Get all messages in the current channel
-      const messagesSnapshot = await getDocs(messagesRef);
-      
-      // Filter messages in the current channel
-      const filteredMessages = messagesSnapshot.docs
-        .map(doc => doc.data())
-        .filter(message => 
-          message['message'] && message['message'].toLowerCase().includes(normalizedTerm)
-        );
-  
-      messages.push(...filteredMessages);
+    // Feltételezve, hogy minden csatornánál van egy messages tömb
+    for (let channelIndex = 0; channelIndex < this.hideOrShowSidebar.AllChannels.length; channelIndex++) {
+      const messages = await this.getMessagesForChannel(this.hideOrShowSidebar.AllChannelsUids[channelIndex]);
+      messages.forEach((message, messageIndex) => {
+        if (message.text.toLowerCase().includes(normalizedTerm)) {
+          filteredMessages.push({
+            channelId: this.hideOrShowSidebar.AllChannelsUids[channelIndex],
+            message: message.text,
+            messageId: message.id, // Ha az üzenetnek van ID-ja
+          });
+        }
+      });
     }
   
-    //console.log('All matching messages found:', messages); // Debugging
-    return messages;
+    return filteredMessages;
   }
   
-  async searchUsers(searchTerm: string) {
+  async getMessagesForChannel(channelId: string): Promise<any[]> {
+    // Implementáld a csatorna üzeneteinek lekérdezését
+    const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
+    const querySnapshot = await getDocs(messagesRef);
+    return querySnapshot.docs.map(doc => ({ id: doc.id, text: doc.data()['message'] }));
+  }
+  
+ 
+  
+  async searchUsers(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
-    const usersRef = collection(this.firestore, 'Users');
-    
-    // This will get all users, so we will filter in the application
-    const q = query(usersRef);
-    const querySnapshot = await getDocs(q);
+    const filteredUsers = [];
   
-    // Filter results client-side due to lack of case-insensitive queries in Firestore
-    const users = querySnapshot.docs
-      .map(doc => doc.data())
-      .filter(user => 
-        user['name'] && user['name'].toLowerCase().includes(normalizedTerm)
-      );
+    for (let i = 0; i < this.hideOrShowSidebar.AllUsers.length; i++) {
+      const userName = this.hideOrShowSidebar.AllUsers[i].toLowerCase();
+      if (userName.includes(normalizedTerm)) {
+        filteredUsers.push({
+          uid: this.hideOrShowSidebar.AllUids[i],
+          name: this.hideOrShowSidebar.AllUsers[i],
+          email: this.hideOrShowSidebar.AllEmails[i],
+          image: this.hideOrShowSidebar.AllImages[i],
+        });
+      }
+    }
   
-    //console.log('Users found:', users); // Debugging
-    return users;
+    console.log('Filtered Users:', filteredUsers); // Debugging
+    return filteredUsers;
   }
 }
