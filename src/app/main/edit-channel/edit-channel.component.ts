@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { EditChannelService } from '../../services/edit-channel.service';
 import {
   Firestore,
@@ -8,6 +8,7 @@ import {
   query,
 } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-edit-channel',
@@ -20,6 +21,7 @@ export class EditChannelComponent implements OnInit {
   currentChannel: any;
   channel: any;
   selectetChannelData: any;
+  channelInfo = inject(SidebarService);
 
   constructor(
     public editChannelService: EditChannelService, // Füge den Service hier hinzu

@@ -12,6 +12,7 @@ export class SidebarService {
   AllChannelsUsers : string[] = [];
   AllChannelsImages : string[] = [];
   AllChannelsUids : string[] = [];
+  AllChannelsDescriptions : string[] = [];
   AllUsers : string[] = [];
   AllEmails : string[] = [];
   AllImages : string[] = [];
@@ -43,6 +44,7 @@ export class SidebarService {
     this.AllChannelsUsers = [];
     this.AllChannelsImages = [];
     this.AllChannelsUids = [];
+    this.AllChannelsDescriptions = [];
 
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
@@ -52,6 +54,7 @@ export class SidebarService {
       this.AllChannelsUsers.push(channelData['users']);
       this.AllChannelsUids.push(channelData['uids']);
       this.AllChannelsImages.push(channelData['images']);
+      this.AllChannelsDescriptions.push(channelData['description']);
     });
   }
 
