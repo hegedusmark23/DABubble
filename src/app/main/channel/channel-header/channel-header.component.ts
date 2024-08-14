@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class ChannelHeaderComponent {
   currentChannel: any;
   channelInfo = inject(SidebarService);
+  userNumber : number = 0;
 
   constructor(
     public editChannelService: EditChannelService,
