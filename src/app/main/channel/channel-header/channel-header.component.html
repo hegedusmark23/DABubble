@@ -8,7 +8,6 @@
     <div class="channelUserContainer">
       <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index ">
         <img src="{{userImage}}" class="profil-image">
-        <span class="userNumber fs-20">{{ i + 1 }}</span>
       </div>
     </div>
     <div (click)="openAddUserToChannel()" class="add-user-icon">

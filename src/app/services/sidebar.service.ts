@@ -26,6 +26,7 @@ export class SidebarService {
   editProfilContactformOpen = false;
   userProfilOpen = false;
   addUserToChanelOpen = false;
+  addUserFromHeaderToChannelOpen = false;
   addAllUsersToChannel = true;
   addSelectedUsersToChannel = false;
   selectedUsers: any[] = [];
