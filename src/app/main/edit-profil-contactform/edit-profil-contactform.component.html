@@ -18,7 +18,7 @@
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="input-container">
             <div class="channel-name-container">
                 <span class="fs-18">Vollständiger Name</span>
-                @if (authService.currentUserSignal() == null) {
+                @if (authService.currentUserSignal()?.name === 'Gast') {
                 <input disabled value="Guest"  type="text" class="disabled-input" name="name">
                 } @else {
                 <input value="{{authService.currentUserSignal()?.name}}" formControlName="name" type="text"
@@ -28,7 +28,7 @@
 
             <div class="channel-name-container">
                 <span class="fs-18">E-Mail-Adresse</span>
-                @if (authService.currentUserSignal() == null) {
+                @if (authService.currentUserSignal()?.name === 'Gast') {
                 <input disabled value="guest@guestmail.com"  type="text" class="disabled-input" name="name">
                 } @else {
                 <input value="{{authService.currentUserSignal()?.email}}" formControlName="email" type="text"
@@ -39,17 +39,16 @@
             <div class="message-container">
                 <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
                 <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-                <div *ngIf="authService.currentUserSignal() == null" class="error-message">Änderungen am Gast Profil sind nicht möglich.</div>
+                <div *ngIf="authService.currentUserSignal()?.name === 'Gast'" class="error-message">Änderungen am Gast Profil sind nicht möglich.</div>
             </div>
 
             <div class="buttons-container">
                 <button type="button" class="cancel" (click)="cancel()"><span class="fs-18">Abbrechen</span></button>
-                @if (authService.currentUserSignal() == null) {
+                @if (authService.currentUserSignal()?.name === 'Gast') {
                 <button disabled type="submit" class="disabled-btn"><span class="fs-18">Speichern</span></button>
                 } @else {
                 <button type="submit" class="save"><span class="fs-18">Speichern</span></button>
                 }
-
             </div>
 
         </form>
