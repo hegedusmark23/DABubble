@@ -10,6 +10,7 @@ export class SidebarService {
   createChannelDialogActive = false;
   AllChannels : string[] = [];
   AllChannelsUsers : string[] = [];
+  AllChannelsIds : string[] = [];
   AllChannelsImages : string[] = [];
   AllChannelsUids : string[] = [];
   AllChannelsDescriptions : string[] = [];
@@ -44,6 +45,7 @@ export class SidebarService {
   async fetchChannels() {
     this.AllChannels = [];
     this.AllChannelsUsers = [];
+    this.AllChannelsIds = [];
     this.AllChannelsImages = [];
     this.AllChannelsUids = [];
     this.AllChannelsDescriptions = [];
@@ -55,6 +57,7 @@ export class SidebarService {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
       this.AllChannelsUsers.push(channelData['users']);
+      this.AllChannelsIds.push(channelData['id']);
       this.AllChannelsUids.push(channelData['uids']);
       this.AllChannelsImages.push(channelData['images']);
       this.AllChannelsDescriptions.push(channelData['description']);

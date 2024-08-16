@@ -56,7 +56,7 @@ export class SidebarComponent implements OnInit {
 
     this.activeChannelIndex = i;
     this.channelSelectionService.setSelectedChannel(
-      this.hideOrShowSidebar.AllChannels[i]
+      this.hideOrShowSidebar.AllChannelsIds[i]
     );
     this.hideOrShowSidebar.currentChannelNumber = i;
      console.log(this.hideOrShowSidebar.AllChannels[i] + ' open');
