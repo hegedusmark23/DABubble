@@ -15,6 +15,7 @@ import { OnInit } from '@angular/core';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
 import { EditChannelService } from '../../services/edit-channel.service';
 import { NewMessageComponent } from '../new-message/new-message/new-message.component'; // Importiere den EditChannelService
+import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.component';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +34,7 @@ import { NewMessageComponent } from '../new-message/new-message/new-message.comp
     CommonModule,
     EditChannelComponent,
     NewMessageComponent,
+    ChannelUserlistComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

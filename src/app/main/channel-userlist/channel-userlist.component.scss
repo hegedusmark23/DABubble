@@ -1,0 +1,30 @@
+.channel-userlist-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.display-flex {
+    display: flex;
+}
+
+.display-none {
+    display: none;
+}
+
+.channel-userlist-dialog {
+    width: 872px;
+    height: 509px;
+    background-color: white;
+    border-radius: 30px;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

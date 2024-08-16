@@ -1,1 +1,6 @@
-<p>channel-userlist works!</p>
+<div class="channel-userlist-container" (click)="closeDialog()"
+    [ngClass]="{'display-flex': channelInfo.openUserList, 'display-none': !channelInfo.openUserList }">
+    <div class="channel-userlist-dialog" (click)="notCloseDialog($event)">
+    </div>
+</div>
+

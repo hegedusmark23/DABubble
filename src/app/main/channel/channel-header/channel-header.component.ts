@@ -51,6 +51,10 @@ export class ChannelHeaderComponent {
     alert('Add user to channel window open');
   }
 
+  openUserList(){
+    this.channelInfo.openUserList = true;
+  }
+
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
