@@ -1,13 +1,21 @@
-<div class="header">
+<div *ngIf="this.currentChannel" class="header">
   <div>
-    <p (click)="editChannelService.setEditChannel(true, this.currentChannel)">
-      {{ this.currentChannel }}
+    <p (click)="editChannelService.setEditChannel(true, this.currentChannelId)">
+      {{ this.currentChannel.name }}
     </p>
   </div>
   <div class="header-right">
     <div class="channelUserContainer">
-      <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index ">
-        <img src="{{userImage}}" class="profil-image">
+      <div
+        class="channelUser"
+        *ngFor="
+          let userImage of channelInfo.AllChannelsImages[
+            channelInfo.currentChannelNumber
+          ];
+          let i = index
+        "
+      >
+        <img src="{{ userImage }}" class="profil-image" />
       </div>
     </div>
     <div (click)="openAddUserToChannel()" class="add-user-icon">

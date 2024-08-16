@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
@@ -59,10 +59,10 @@ export class SidebarComponent implements OnInit {
       this.hideOrShowSidebar.AllChannelsIds[i]
     );
     this.hideOrShowSidebar.currentChannelNumber = i;
-     console.log(this.hideOrShowSidebar.AllChannels[i] + ' open');
-     console.log(this.hideOrShowSidebar.AllChannelsUsers[i]);
-     console.log(this.hideOrShowSidebar.AllChannelsImages[i]);
-     console.log(this.hideOrShowSidebar.AllChannelsUids[i]);
+    console.log(this.hideOrShowSidebar.AllChannels[i] + ' open');
+    console.log(this.hideOrShowSidebar.AllChannelsUsers[i]);
+    console.log(this.hideOrShowSidebar.AllChannelsImages[i]);
+    console.log(this.hideOrShowSidebar.AllChannelsUids[i]);
   }
 
   userActive(i: number) {

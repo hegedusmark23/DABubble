@@ -15,7 +15,7 @@ export class EditChannelService {
   }
 
   // Setzt den Wert von editChannel und openChannel
-  setEditChannel(edit: boolean, open: any): void {
+  setEditChannel(edit: boolean, open: any) {
     this.editChannel = edit;
     this.openChannel = open;
   }
