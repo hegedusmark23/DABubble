@@ -29,6 +29,7 @@ export class ChannelSelectionService {
 
   // Setter for selectedChannel
   setSelectedChannel(channel: string): void {
+    console.log(channel);
     this.selectedChannel.next(channel);
   }
 }

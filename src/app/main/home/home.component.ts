@@ -13,7 +13,8 @@ import { CommonModule } from '@angular/common';
 import { EditChannelComponent } from '../edit-channel/edit-channel.component';
 import { OnInit } from '@angular/core';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
-import { EditChannelService } from '../../services/edit-channel.service'; // Importiere den EditChannelService
+import { EditChannelService } from '../../services/edit-channel.service';
+import { NewMessageComponent } from '../new-message/new-message/new-message.component'; // Importiere den EditChannelService
 
 @Component({
   selector: 'app-home',
@@ -31,6 +32,7 @@ import { EditChannelService } from '../../services/edit-channel.service'; // Imp
     DirectMessagesComponent,
     CommonModule,
     EditChannelComponent,
+    NewMessageComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
