@@ -11,7 +11,8 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
   verifyPasswordResetCode,
-  updateEmail
+  updateEmail,
+  signInAnonymously
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
@@ -104,6 +105,36 @@ export class AuthService {
       // this.saveUser.saveUser(uId, email, name, imgUrl);
     });
     return from(promise);
+  }
+
+  guestLogin(): Observable<void> {
+    return from(
+      signInAnonymously(this.firebaseAuth)
+        .then((result) => {
+          const user = result.user;
+          if (user) {
+            const name = 'Gast';
+            const email = "gast@gast.com";
+            const imgUrl = "https://firebasestorage.googleapis.com/v0/b/dabubble-3c5b0.appspot.com/o/profileCache%2Fprofile.png?alt=media&token=d5014d48-3413-475b-aca4-3f15ca3aaab4";
+            const uId = user.uid;
+            return updateProfile(user, { displayName: name, photoURL: imgUrl })
+              .then(() => {
+                this.currentUserSignal.set({
+                  name,
+                  email,
+                  imgUrl,
+                  uId,
+                });
+                console.log('Guest logged in with UID:', uId);
+              });
+          } else {
+            return Promise.resolve();
+          }
+        }).catch((error) => {
+          console.error('Error during guest login:', error);
+          throw error;
+        })
+    );
   }
 
   logOut(): Observable<void> {

@@ -36,19 +36,28 @@ export class LogInComponent {
   }
 
   guestLogin() {
-    this.router.navigateByUrl('/home');
-  }
-
-  onSubmit(): void {
-    const rawForm = this.form.getRawValue();
-    this.authService.logIn(rawForm.email, rawForm.password).subscribe({
+    this.authService.guestLogin().subscribe({
       next: () => {
         this.router.navigateByUrl('/home');
       },
       error: (err) => {
-        this.handleError(err.code); 
+        console.error('Guest login failed:', err);
       }
     });
+  }
+
+  onSubmit(): void {
+    const rawForm = this.form.getRawValue();
+    if (this.form.valid) {
+      this.authService.logIn(rawForm.email, rawForm.password).subscribe({
+        next: () => {
+          this.router.navigateByUrl('/home');
+        },
+        error: (err) => {
+          this.handleError(err.code);
+        }
+      });
+    }
   }
 
   private handleError(errorCode: string): void {
