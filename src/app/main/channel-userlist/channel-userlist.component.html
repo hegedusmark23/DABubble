@@ -7,7 +7,7 @@
         </div>
         <div class="userlist">
             <div *ngFor=" let user of channelInfo.AllChannelsUsers[channelInfo.currentChannelNumber]; let i = index">
-                <div class="user fs-18">
+                <div class="user fs-18" (click)="openUserProfil(i)">
                     <img src="{{channelInfo.AllChannelsImages[channelInfo.currentChannelNumber][i]}}"
                         class="selected-img">
                     <span>{{ user }}</span>

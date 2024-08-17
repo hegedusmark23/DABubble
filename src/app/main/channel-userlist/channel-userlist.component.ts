@@ -27,4 +27,13 @@ export class ChannelUserlistComponent {
     this.closeDialog();
   }
 
+  openUserProfil(i: number){
+    this.channelInfo.userProfilOpen = true;
+    this.channelInfo.activeUser = this.channelInfo.AllUsers[i];
+    this.channelInfo.activeEmail = this.channelInfo.AllEmails[i];
+    this.channelInfo.activeImage = this.channelInfo.AllImages[i];
+    this.channelInfo.activeUid = this.channelInfo.AllUids[i];
+    this.closeDialog();
+  }
+
 }

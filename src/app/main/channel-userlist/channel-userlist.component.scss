@@ -76,7 +76,13 @@
     margin-left: 20px;
     margin-top: 8px;
     margin-bottom: 8px;
+    padding: 6px 16px 6px 16px;
+    border-radius: 30px;
     font-weight: 400;
+    cursor: pointer;
+    &:hover {
+        background-color: #ECEEFE;
+    }
 }
 
 .add-user-container {
