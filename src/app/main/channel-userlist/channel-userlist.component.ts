@@ -13,13 +13,19 @@ import { FormsModule } from '@angular/forms';
 export class ChannelUserlistComponent {
 
   channelInfo = inject(SidebarService);
-  
+
   closeDialog() {
     this.channelInfo.openUserList = false;
   }
 
   notCloseDialog(e: any) {
     e.stopPropagation(e);
+  }
+
+  addUserToChannel(){
+    this.channelInfo.addUserFromHeaderToChannelOpen = true;
+    this.closeDialog();
+    alert('open add user to channel window');
   }
 
 }
