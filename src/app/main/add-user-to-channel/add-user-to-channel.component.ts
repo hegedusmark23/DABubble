@@ -3,7 +3,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-user-to-channel',
@@ -17,16 +17,6 @@ export class AddUserToChannelComponent {
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
 
-  newChannel = {
-    name: '',
-    id : '',
-    description: '',
-    users: [],
-    uids: [],
-    images: [],
-    channelCreator: ''
-  };
-  loading = false;
   activeUserIndex: number | null = null;
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
@@ -36,9 +26,6 @@ export class AddUserToChannelComponent {
 
   constructor(private firestore: Firestore) {}
 
-  isInputValid(): boolean {
-    return this.newChannel.name.length >= 3;
-  }
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
@@ -76,16 +63,6 @@ export class AddUserToChannelComponent {
     e.stopPropagation(e);
   }
 
-  addSelectedUser() {
-    this.hideOrShowSidebar.addAllUsersToChannel = false;
-    this.hideOrShowSidebar.addSelectedUsersToChannel = true;
-  }
-
-  addAllUser() {
-    this.hideOrShowSidebar.addAllUsersToChannel = true;
-    this.hideOrShowSidebar.addSelectedUsersToChannel = false;
-  }
-
   closeDialogAddUser() {
     this.hideOrShowSidebar.addUserFromHeaderToChannelOpen = false;
   }
@@ -94,76 +71,35 @@ export class AddUserToChannelComponent {
     e.stopPropagation(e);
   }
 
-  createChannel() {
-    this.hideOrShowSidebar.addUserToChanelOpen = true;
-    this.hideOrShowSidebar.createChannelDialogActive = false;
-  }
-
-  generateId(length: number = 28): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 28; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        this.result += characters[randomIndex];
-    }
-    return this.result;
-}
-
-  async saveChannel() {
-    this.loading = true;
-    const channelRef = doc(
-      collection(this.firestore, 'Channels'),
-      this.generateId()
-    );
-    await setDoc(channelRef, this.toJSON())
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(() => {
-        this.loading = false;
-        this.newChannel.name = '',
-        this.newChannel.id = '',
-        this.newChannel.description = '',
-        this.newChannel.channelCreator = '';
-        this.newChannel.users = [];
+  async saveUsers() {
+    console.log(this.hideOrShowSidebar.selectedUsers);
+    console.log(this.hideOrShowSidebar.selectedImages);
+    console.log(this.hideOrShowSidebar.selectedUids);
+  
+    const channelId = this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber];
+    const channelRef = doc(collection(this.firestore, 'Channels'), channelId);
+  
+    try {
+      const channelDoc = await getDoc(channelRef);
+      if (channelDoc.exists()) {
+        const channelData = channelDoc.data();
+        const updatedUsers = [...(channelData['users'] || []), ...this.hideOrShowSidebar.selectedUsers];
+        const updatedImages = [...(channelData['images'] || []), ...this.hideOrShowSidebar.selectedImages];
+        const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
+        await updateDoc(channelRef, {
+          users: updatedUsers,
+          images: updatedImages,
+          uids: updatedUids
+        });
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.selectedUids = [];
-        this.hideOrShowSidebar.userList = [];
-        this.hideOrShowSidebar.imageList = [];
-        this.hideOrShowSidebar.uidList = [];
-        this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
-        this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
-        this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
-        this.hideOrShowSidebar.fetchChannels();
-        this.hideOrShowSidebar.fetchUsers();
-        this.closeDialogAddUser();
-        this.result = '';
-      });
-  }
-
-  toJSON() {
-    if (this.hideOrShowSidebar.addAllUsersToChannel) {
-      return {
-        name: this.newChannel.name,
-        id: this.result,
-        description: this.newChannel.description,
-        users: this.hideOrShowSidebar.userList,
-        uids: this.hideOrShowSidebar.uidList,
-        images: this.hideOrShowSidebar.imageList,
-        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
-      };
-    } else {
-      return {
-        name: this.newChannel.name,
-        id: this.result,
-        description: this.newChannel.description,
-        users: this.hideOrShowSidebar.selectedUsers,
-        uids: this.hideOrShowSidebar.selectedUids,
-        images: this.hideOrShowSidebar.selectedImages,
-        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
-      };
+      }
+    } catch (error) {
+      console.error('Fehler beim Speichern der Daten:', error);
     }
   }
+  
 
   userActive(i: number) {
     this.activeUserIndex = i;
