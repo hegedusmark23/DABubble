@@ -34,7 +34,7 @@ import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.c
     CommonModule,
     EditChannelComponent,
     NewMessageComponent,
-    ChannelUserlistComponent
+    ChannelUserlistComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

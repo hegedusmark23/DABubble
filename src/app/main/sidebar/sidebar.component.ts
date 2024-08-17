@@ -83,6 +83,6 @@ export class SidebarComponent implements OnInit {
   }
 
   addNewMessage() {
-    alert('Add new message window open');
+    this.channelSelectionService.openNewMessage();
   }
 }

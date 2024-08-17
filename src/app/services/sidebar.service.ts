@@ -71,7 +71,6 @@ export class SidebarService {
   }
 
   setTopChannel() {
-    console.log(this.AllChannelsIds[0]);
     this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[0]);
   }
 
@@ -91,8 +90,6 @@ export class SidebarService {
       this.userList.push(userData['name']);
       this.imageList.push(userData['image']);
       this.uidList.push(userData['uid']);
-      //this.userList = this.AllUsers;
-      //this.imageList = this.AllImages;
     });
   }
 }

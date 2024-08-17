@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ChannelSelectionService {
   private selectedChannel = new BehaviorSubject<string>('');
-  ChannelOpenVariable: any = true;
+  ChannelOpenVariable: any = 'channel';
   constructor() {}
 
   // Getter for selectedChannel as an Observable
@@ -19,7 +19,15 @@ export class ChannelSelectionService {
   }
 
   openChannel() {
-    this.ChannelOpenVariable = true;
+    this.ChannelOpenVariable = 'channel';
+  }
+
+  openDirectMessage() {
+    this.ChannelOpenVariable = 'directMessage';
+  }
+
+  openNewMessage() {
+    this.ChannelOpenVariable = 'newMessage';
   }
 
   closeChannel() {

@@ -2,11 +2,15 @@
 
 <div class="content">
   <app-sidebar></app-sidebar>
-  <app-channel *ngIf="channelSelectionService.isChannelOpen()"></app-channel>
+  <app-channel
+    *ngIf="channelSelectionService.isChannelOpen() == 'channel'"
+  ></app-channel>
   <app-direct-messages
-    *ngIf="!channelSelectionService.isChannelOpen()"
+    *ngIf="channelSelectionService.isChannelOpen() == 'directMessage'"
   ></app-direct-messages>
-  <!-- <app-new-message></app-new-message> -->
+  <app-new-message
+    *ngIf="channelSelectionService.isChannelOpen() == 'newMessage'"
+  ></app-new-message>
   <app-create-channel></app-create-channel>
   <app-open-sidebar></app-open-sidebar>
   <app-edit-profil></app-edit-profil>
