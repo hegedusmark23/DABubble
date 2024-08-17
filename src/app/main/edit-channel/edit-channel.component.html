@@ -102,13 +102,23 @@
         <span>Beschreibung</span><button>Bearbeiten</button>
       </div>
       <div>
-        {{ this.channelInfo.AllChannelsDescriptions[this.channelInfo.currentChannelNumber] }}
+        {{
+          this.channelInfo.AllChannelsDescriptions[
+            this.channelInfo.currentChannelNumber
+          ]
+        }}
       </div>
       <div class="spacer"></div>
       <div class="nameHeader">
         <span>Erstellt von</span>
       </div>
-      <div>{{ this.channelInfo.AllChannelsCreators[this.channelInfo.currentChannelNumber] }}</div>
+      <div>
+        {{
+          this.channelInfo.AllChannelsCreators[
+            this.channelInfo.currentChannelNumber
+          ]
+        }}
+      </div>
     </div>
   </div>
 </div>

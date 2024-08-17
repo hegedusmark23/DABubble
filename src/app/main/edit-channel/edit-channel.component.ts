@@ -37,14 +37,16 @@ export class EditChannelComponent implements OnInit {
     onSnapshot(q, (list) => {
       this.channel = [];
       list.forEach((element) => {
-        this.channel.push(this.setNoteObject(element.data(), element.id));
+        this.channel.push(this.setNoteChannel(element.data(), element.id));
       });
       this.getSelectedChannel();
     });
   }
 
-  setNoteObject(obj: any, id: string) {
+  setNoteChannel(obj: any, id: string) {
     return {
+      id: id,
+      channelCreator: obj.channelCreator || '',
       description: obj.description || '',
       images: obj.images || '',
       name: obj.name || '',
@@ -55,9 +57,8 @@ export class EditChannelComponent implements OnInit {
   getSelectedChannel() {
     for (let i = 0; i < this.channel.length; i++) {
       const element = this.channel[i];
-      if (element.name == this.currentChannel) {
+      if (element.id == this.currentChannel) {
         this.selectetChannelData = element;
-        console.log(this.selectetChannelData);
       }
     }
   }

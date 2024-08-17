@@ -18,6 +18,7 @@ export class CreateChannelComponent {
 
   newChannel = {
     name: '',
+    id : '',
     description: '',
     users: [],
     uids: [],
@@ -114,6 +115,7 @@ export class CreateChannelComponent {
       .then(() => {
         this.loading = false;
         this.newChannel.name = '',
+        this.newChannel.id = '',
         this.newChannel.description = '',
         this.newChannel.channelCreator = '';
         this.newChannel.users = [];
@@ -137,6 +139,7 @@ export class CreateChannelComponent {
     if (this.hideOrShowSidebar.addAllUsersToChannel) {
       return {
         name: this.newChannel.name,
+        id: this.result,
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.userList,
         uids: this.hideOrShowSidebar.uidList,
@@ -146,6 +149,7 @@ export class CreateChannelComponent {
     } else {
       return {
         name: this.newChannel.name,
+        id: this.result,
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.selectedUsers,
         uids: this.hideOrShowSidebar.selectedUids,

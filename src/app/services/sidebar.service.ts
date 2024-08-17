@@ -1,32 +1,34 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { ChannelSelectionService } from './channel-selection.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SidebarService {
-
   sidebarOpen = false;
   createChannelDialogActive = false;
-  AllChannels : string[] = [];
-  AllChannelsUsers : string[] = [];
-  AllChannelsImages : string[] = [];
-  AllChannelsUids : string[] = [];
-  AllChannelsDescriptions : string[] = [];
-  AllChannelsCreators : string[] = [];
-  AllUsers : string[] = [];
-  AllEmails : string[] = [];
-  AllImages : string[] = [];
-  AllUids : string[] = [];
-  userList : string[] = [];
-  imageList : string[] = [];
-  uidList : string[] = [];
+  AllChannels: string[] = [];
+  AllChannelsUsers: string[] = [];
+  AllChannelsIds: string[] = [];
+  AllChannelsImages: string[] = [];
+  AllChannelsUids: string[] = [];
+  AllChannelsDescriptions: string[] = [];
+  AllChannelsCreators: string[] = [];
+  AllUsers: string[] = [];
+  AllEmails: string[] = [];
+  AllImages: string[] = [];
+  AllUids: string[] = [];
+  userList: string[] = [];
+  imageList: string[] = [];
+  uidList: string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
   userProfilOpen = false;
   addUserToChanelOpen = false;
   addUserFromHeaderToChannelOpen = false;
+  openUserList = false;
   addAllUsersToChannel = true;
   addSelectedUsersToChannel = false;
   selectedUsers: any[] = [];
@@ -39,11 +41,15 @@ export class SidebarService {
   currentChannelNumber: number = 0;
   activeUserIndex: number | undefined;
 
-  constructor(private firestore: Firestore) { }
+  constructor(
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService
+  ) {}
 
   async fetchChannels() {
     this.AllChannels = [];
     this.AllChannelsUsers = [];
+    this.AllChannelsIds = [];
     this.AllChannelsImages = [];
     this.AllChannelsUids = [];
     this.AllChannelsDescriptions = [];
@@ -55,11 +61,17 @@ export class SidebarService {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
       this.AllChannelsUsers.push(channelData['users']);
+      this.AllChannelsIds.push(channelData['id']);
       this.AllChannelsUids.push(channelData['uids']);
       this.AllChannelsImages.push(channelData['images']);
       this.AllChannelsDescriptions.push(channelData['description']);
       this.AllChannelsCreators.push(channelData['channelCreator']);
     });
+    this.setTopChannel();
+  }
+
+  setTopChannel() {
+    this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[0]);
   }
 
   async fetchUsers() {
@@ -78,8 +90,6 @@ export class SidebarService {
       this.userList.push(userData['name']);
       this.imageList.push(userData['image']);
       this.uidList.push(userData['uid']);
-      //this.userList = this.AllUsers;
-      //this.imageList = this.AllImages;
     });
   }
 }
