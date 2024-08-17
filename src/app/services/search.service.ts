@@ -13,16 +13,13 @@ export class SearchService {
   async searchChannels(searchTerm: string): Promise<Channel[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const channelsRef = collection(this.firestore, 'Channels');
-    const q = query(
-      channelsRef,
-      where('name', '>=', normalizedTerm),
-      where('name', '<=', normalizedTerm + '\uf8ff')
-    );
-    const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    } as Channel));
+    const querySnapshot = await getDocs(channelsRef);
+    const filteredChannels = querySnapshot.docs
+      .map(doc => ({
+        id: doc.id,
+        name: doc.data()['name']
+      })).filter(channel => channel.name.toLowerCase().includes(normalizedTerm));
+    return filteredChannels;
   }
   
   async searchAllChannelMessages(searchTerm: string): Promise<any[]> {
