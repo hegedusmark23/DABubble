@@ -94,6 +94,8 @@ export class AddUserToChannelComponent {
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.selectedUids = [];
+        this.hideOrShowSidebar.fetchChannels();
+        this.closeDialog();
       }
     } catch (error) {
       console.error('Fehler beim Speichern der Daten:', error);
