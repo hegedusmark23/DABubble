@@ -25,7 +25,6 @@ export class ChannelUserlistComponent {
   addUserToChannel(){
     this.channelInfo.addUserFromHeaderToChannelOpen = true;
     this.closeDialog();
-    alert('open add user to channel window');
   }
 
 }

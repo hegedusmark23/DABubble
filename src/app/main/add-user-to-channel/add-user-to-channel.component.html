@@ -26,7 +26,6 @@
                 </div>
         </div>
         <div class="button-container-addUser">
-            @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
                 <div class="userList" (click)="notCloseDialog($event)">
                     <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
                         <img class="profil-image" [src]="filteredImageList[i]">
@@ -34,7 +33,6 @@
                         <span>{{ user }}</span>
                       </div>
                 </div>
-            }
             <button type="submit" class="save"><span class="fs-18">Hinzufügen</span></button>
         </div>
     </div>

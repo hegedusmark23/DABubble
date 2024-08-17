@@ -48,7 +48,6 @@ export class ChannelHeaderComponent {
 
   openAddUserToChannel() {
     this.channelInfo.addUserFromHeaderToChannelOpen = true;
-    alert('open add user to channel window');
   }
 
   openUserList() {

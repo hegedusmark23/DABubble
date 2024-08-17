@@ -42,14 +42,18 @@ export class AddUserToChannelComponent {
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
-    
+
     if (this.searchTerm) {
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
 
         this.hideOrShowSidebar.userList.forEach((user, index) => {
-            if (user.toLowerCase().includes(this.searchTerm)) {
+            const isUserInChannel = this.hideOrShowSidebar.AllChannelsUsers[this.hideOrShowSidebar.currentChannelNumber].includes(user);
+            const isImageInChannel = this.hideOrShowSidebar.AllChannelsImages[this.hideOrShowSidebar.currentChannelNumber].includes(this.hideOrShowSidebar.imageList[index]);
+            const isUidInChannel = this.hideOrShowSidebar.AllChannelsUids[this.hideOrShowSidebar.currentChannelNumber].includes(this.hideOrShowSidebar.uidList[index]);
+
+            if (user.toLowerCase().includes(this.searchTerm) && !isUserInChannel && !isImageInChannel && !isUidInChannel) {
                 this.filteredUserList.push(user);
                 this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
                 this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
@@ -61,6 +65,7 @@ export class AddUserToChannelComponent {
         this.filteredUidList = [];
     }
 }
+
 
 
   closeDialog() {
