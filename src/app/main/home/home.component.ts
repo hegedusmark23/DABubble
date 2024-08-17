@@ -16,6 +16,7 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
 import { EditChannelService } from '../../services/edit-channel.service';
 import { NewMessageComponent } from '../new-message/new-message/new-message.component'; // Importiere den EditChannelService
 import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.component';
+import { AddMoreUserToChannelComponent } from '../add-more-user-to-channel/add-more-user-to-channel.component';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,8 @@ import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.c
     CommonModule,
     EditChannelComponent,
     NewMessageComponent,
-    ChannelUserlistComponent
+    ChannelUserlistComponent,
+    AddMoreUserToChannelComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
