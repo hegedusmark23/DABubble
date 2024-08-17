@@ -1,6 +1,20 @@
 <div class="channel-userlist-container" (click)="closeDialog()"
     [ngClass]="{'display-flex': channelInfo.openUserList, 'display-none': !channelInfo.openUserList }">
     <div class="channel-userlist-dialog" (click)="notCloseDialog($event)">
+        <div class="dialog-title-container">
+            <span class="fs-24 dialog-title">Mitglieder</span>
+            <div class="close-button" (click)="closeDialog()"></div>
+        </div>
+        <div class="userlist">
+            <div *ngFor=" let user of channelInfo.AllChannelsUsers[channelInfo.currentChannelNumber]; let i = index">
+                <div class="user fs-18">
+                    <img src="{{channelInfo.AllChannelsImages[channelInfo.currentChannelNumber][i]}}"
+                        class="selected-img">
+                    <span>{{ user }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="add-user-container">
+        </div>
     </div>
 </div>
-
