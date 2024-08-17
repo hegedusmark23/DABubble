@@ -33,6 +33,7 @@
     placeholder="Nachricht an #Entwicklerteam"
     type="text"
     [(ngModel)]="message.message"
+    [(ngModel)]="directMessage.message"
     #messageTextarea
     (keydown.enter)="saveMessage()"
   ></textarea>

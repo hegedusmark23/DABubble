@@ -44,9 +44,9 @@ import { DirectMessage } from '../../../../models/direct-message.class';
 export class DirectMessagesHeaderComponent implements OnInit {
   authService = inject(AuthService);
   allUser: any = [];
-  user: any;
   messageUser: any;
-
+  imageUrl: any;
+  userName: any;
   constructor(
     private firestore: Firestore,
     public directMessageSelectionService: DirectMessageSelectionService
@@ -54,20 +54,6 @@ export class DirectMessagesHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.subUser();
-    this.setUser();
-    this.setOpenUser();
-  }
-
-  setOpenUser() {
-    this.user = this.authService.currentUserSignal()!.uId;
-  }
-
-  setUser() {
-    this.directMessageSelectionService
-      .getSelectedChannel()
-      .subscribe((value) => {
-        this.messageUser = value;
-      });
   }
 
   subUser() {
@@ -77,22 +63,26 @@ export class DirectMessagesHeaderComponent implements OnInit {
       list.forEach((element) => {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
+      this.setUser();
     });
   }
 
-  getUsername(uid: any) {
-    for (let i = 0; i < this.allUser.length; i++) {
-      const element = this.allUser[i];
-      if (element.uid === uid) {
-        return element.name;
-      }
-    }
+  setUser() {
+    this.directMessageSelectionService
+      .getSelectedChannel()
+      .subscribe((value) => {
+        this.messageUser = value;
+        this.getProfile();
+        console.log(this.messageUser);
+      });
   }
-  getProfileImg(uid: any) {
+
+  getProfile() {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
-      if (element.uid === uid) {
-        return element.image;
+      if (element.uid === this.messageUser) {
+        this.imageUrl = element.image;
+        this.userName = element.name;
       }
     }
   }

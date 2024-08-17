@@ -231,6 +231,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       }
     }
     this.allMessagesSortedDate = this.allMessagesSorted;
+    console.log(this.allMessagesSortedDate);
   }
 
   getMonthName(monthNumber: number): string {

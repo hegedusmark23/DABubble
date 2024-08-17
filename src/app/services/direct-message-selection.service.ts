@@ -11,13 +11,12 @@ export class DirectMessageSelectionService {
 
   // Getter für selectedChannel als Observable
   getSelectedChannel() {
-    console.log(this.selectedUser);
-
     return this.selectedUser.asObservable();
   }
 
   // Setter für selectedChannel
-  setSelectedChannel(channel: any): void {
+  setSelectedChannel(channel: any) {
+    console.log(channel);
     this.selectedUser.next(channel);
   }
 }

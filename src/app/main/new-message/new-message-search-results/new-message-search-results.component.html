@@ -1,6 +1,9 @@
 <div class="contentContainer" id="messageContainer">
   <div *ngFor="let element of allChannelSorted">
-    <div class="channel">
+    <div
+      class="channel cursor-pointer"
+      (click)="setChannel(element.id, 'channel')"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="30"
@@ -30,6 +33,8 @@
     </div>
   </div>
   <div *ngFor="let element of allUserSorted">
-    <div class="user"><img src="{{ element.image }}" />{{ element.name }}</div>
+    <div class="user cursor-pointer" (click)="setChannel(element.uid, 'user')">
+      <img src="{{ element.image }}" />{{ element.name }}
+    </div>
   </div>
 </div>
