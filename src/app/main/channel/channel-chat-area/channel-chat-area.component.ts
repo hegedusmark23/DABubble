@@ -63,7 +63,8 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   @ViewChild('messageTextarea') messageTextarea: any;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
-  currentChannel = 'Entwicklerteam';
+  currentChannel: any;
+  currentChannelId: any;
 
   constructor(
     private threadService: ThreadService,
@@ -75,12 +76,10 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    this.subUser();
-    this.subMessages(); // Move subMessages to ngAfterViewInit to ensure View is initialized
-
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannel = channel;
-      this.onChannelChange(channel);
+      this.currentChannelId = channel;
+      this.subUser();
+      this.subMessages();
     });
 
     this.messageLoaded.changes.subscribe((t) => {
@@ -89,6 +88,31 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         this.scrollToBottom();
       }
     });
+  }
+
+  subChannels() {
+    const q = query(collection(this.firestore, 'Channels'), limit(1000));
+    onSnapshot(q, (list) => {
+      let channel: any;
+      list.forEach((element) => {
+        channel = this.setNoteChannel(element.data(), element.id);
+        if ((channel.id = this.currentChannelId)) {
+          this.currentChannel = channel;
+          console.log(this.currentChannel);
+        }
+      });
+    });
+  }
+
+  setNoteChannel(obj: any, id: string) {
+    return {
+      id: id,
+      channelCreator: obj.channelCreator || '',
+      description: obj.description || '',
+      images: obj.images || '',
+      name: obj.name || '',
+      users: obj.users || '',
+    };
   }
 
   openThread(thread: any) {
@@ -103,18 +127,25 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   subMessages() {
-    const q = query(
-      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
-      limit(1000)
-    );
-    onSnapshot(q, (list) => {
-      this.allMessages = [];
-      list.forEach((element) => {
-        this.allMessages.push(this.setNoteObject(element.data(), element.id));
+    if (this.currentChannelId) {
+      const q = query(
+        collection(
+          this.firestore,
+          'Channels',
+          this.currentChannelId,
+          'messages'
+        ),
+        limit(1000)
+      );
+      onSnapshot(q, (list) => {
+        this.allMessages = [];
+        list.forEach((element) => {
+          this.allMessages.push(this.setNoteObject(element.data(), element.id));
+        });
+        this.sortMessages();
+        this.dateLoaded();
       });
-      this.sortMessages();
-      this.dateLoaded();
-    });
+    }
   }
 
   subUser() {
@@ -304,7 +335,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     const messageRef = doc(
       this.firestore,
       'Channels',
-      this.currentChannel,
+      this.currentChannelId,
       'messages',
       messageId
     );
@@ -413,7 +444,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     const messageRef = doc(
       this.firestore,
       'Channels',
-      this.currentChannel,
+      this.currentChannelId,
       'messages',
       messageId
     );

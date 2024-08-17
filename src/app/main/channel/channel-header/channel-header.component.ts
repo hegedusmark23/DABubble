@@ -42,8 +42,8 @@ export class ChannelHeaderComponent {
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
+      this.subChannels();
     });
-    this.subChannels();
   }
 
   openAddUserToChannel() {
@@ -51,7 +51,7 @@ export class ChannelHeaderComponent {
     alert('Add user to channel window open');
   }
 
-  openUserList(){
+  openUserList() {
     this.channelInfo.openUserList = true;
   }
 
@@ -61,9 +61,8 @@ export class ChannelHeaderComponent {
       let channel: any;
       list.forEach((element) => {
         channel = this.setNoteChannel(element.data(), element.id);
-        if ((channel.id = this.currentChannelId)) {
+        if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
-          console.log(this.currentChannel);
         }
       });
     });

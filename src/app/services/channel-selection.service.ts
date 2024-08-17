@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ChannelSelectionService {
-  private selectedChannel = new BehaviorSubject<string>('Entwicklerteam');
+  private selectedChannel = new BehaviorSubject<string>('');
   ChannelOpenVariable: any = true;
   constructor() {}
 
@@ -19,7 +19,6 @@ export class ChannelSelectionService {
   }
 
   openChannel() {
-    console.log('opening Channel');
     this.ChannelOpenVariable = true;
   }
 
@@ -29,7 +28,6 @@ export class ChannelSelectionService {
 
   // Setter for selectedChannel
   setSelectedChannel(channel: string): void {
-    console.log(channel);
     this.selectedChannel.next(channel);
   }
 }

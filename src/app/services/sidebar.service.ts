@@ -71,6 +71,7 @@ export class SidebarService {
   }
 
   setTopChannel() {
+    console.log(this.AllChannelsIds[0]);
     this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[0]);
   }
 
