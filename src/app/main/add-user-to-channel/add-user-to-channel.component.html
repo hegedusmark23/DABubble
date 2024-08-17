@@ -1,5 +1,41 @@
 <div class="add-user-to-channel-container" (click)="closeDialogAddUser()"
-    [ngClass]="{'display-flex': channelInfo.addUserFromHeaderToChannelOpen, 'display-none': !channelInfo.addUserFromHeaderToChannelOpen }">
+    [ngClass]="{'display-flex': hideOrShowSidebar.addUserFromHeaderToChannelOpen, 'display-none': !hideOrShowSidebar.addUserFromHeaderToChannelOpen }">
     <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">
+        <div class="dialog-title-container-addUser">
+            <span class="fs-24 dialog-title">Leute hinzufügen</span>
+            <div class="close-button" (click)="closeDialogAddUser()"></div>
+        </div>
+        <div class="select-user-group-container">
+            <div class="select-user-group">
+                # Channel-name
+            </div>
+        </div>
+        <div>
+                <div class="input-hidden">
+                    <div *ngFor="let selectedUser of hideOrShowSidebar.selectedUsers; let i = index" class="selected-user">
+                        <div>
+                            <img src="{{hideOrShowSidebar.selectedImages[i]}}" class="selected-img">
+                        </div>
+                        <span>{{ selectedUser }}</span>
+                        <div (click)="deleteUser(i)" class="close-button"></div>
+                    </div>
+                    <div>
+                        <input type="text" class="input-field-add-user-to-channel" id="name" name="name" placeholder="Name eingeben"
+                        (input)="onSearch($event)" [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+        </div>
+        <div class="button-container-addUser">
+            @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
+                <div class="userList" (click)="notCloseDialog($event)">
+                    <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
+                        <img class="profil-image" [src]="filteredImageList[i]">
+                        <img class="online-icon" src="../../../assets/img/sidebar/Online.png">
+                        <span>{{ user }}</span>
+                      </div>
+                </div>
+            }
+            <button type="submit" class="save"><span class="fs-18">Hinzufügen</span></button>
+        </div>
     </div>
 </div>
