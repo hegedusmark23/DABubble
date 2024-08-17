@@ -11,6 +11,14 @@ import { CommonModule } from '@angular/common';
 })
 export class AddUserToChannelComponent {
 
-  
+  channelInfo = inject(SidebarService);
+
+  closeDialogAddUser() {
+    this.channelInfo.addUserFromHeaderToChannelOpen = false;
+  }
+
+  notCloseDialogAddUser(e: any) {
+    e.stopPropagation(e);
+  }
 
 }

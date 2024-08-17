@@ -1,0 +1,5 @@
+<div class="add-user-to-channel-container" (click)="closeDialogAddUser()"
+    [ngClass]="{'display-flex': channelInfo.addUserFromHeaderToChannelOpen, 'display-none': !channelInfo.addUserFromHeaderToChannelOpen }">
+    <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">
+    </div>
+</div>
