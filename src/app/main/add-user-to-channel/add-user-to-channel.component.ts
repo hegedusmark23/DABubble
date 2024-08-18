@@ -143,9 +143,5 @@ deleteUser(i: number) {
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
     this.hideOrShowSidebar.selectedUids.splice(i, 1);
     this.hideOrShowSidebar.selectedEmails.splice(i, 1);
-    this.filteredUserList = this.hideOrShowSidebar.userList.slice();
-    this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
-    this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
-    this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
 }
 }
