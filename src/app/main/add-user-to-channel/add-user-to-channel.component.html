@@ -34,7 +34,11 @@
                         <span>{{ user }}</span>
                       </div>
                 </div>
-            <button type="submit" class="save" (click)="saveUsers()"><span class="fs-18">Hinzufügen</span></button>
+                @if(this.addUserEnabled){
+                    <button type="submit" class="save" (click)="saveUsers()"><span class="fs-18">Hinzufügen</span></button>
+                }@else{
+                    <button type="submit" class="disabled"><span class="fs-18">Hinzufügen</span></button>
+                }
         </div>
     </div>
 </div>
