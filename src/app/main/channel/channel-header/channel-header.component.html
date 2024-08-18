@@ -1,8 +1,10 @@
 <div *ngIf="this.currentChannel" class="header">
-  <div>
-    <p (click)="editChannelService.setEditChannel(true, this.currentChannelId)">
+  <div class="channel-name-container">
+    <div class="tag"></div>
+    <p (click)="editChannelService.setEditChannel(true, this.currentChannelId)" class="channel-name fs-20">
       {{ this.currentChannel.name }}
     </p>
+    <div class="arrow"></div>
   </div>
   <div class="header-right">
     <div class="channelUserContainer" (click)="openUserList()">

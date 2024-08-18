@@ -51,3 +51,44 @@
   margin-left: 12px;
   z-index: -5;
 }
+
+.tag {
+  background-image: url('../../../../assets/img/sidebar/tag.png');
+  width: 24px;
+  height: 24px;
+}
+
+.arrow {
+  background-image: url('../../../../assets/img/header/keyboard_arrow_down.png');
+  width: 30px;
+  height: 30px;
+}
+
+.channel-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 30px;
+  &:hover {
+    background-color: #ECEEFE;
+    .channel-name {
+      color: #535AF1;
+    }
+    .tag {
+      background-image: url('../../../../assets/img/sidebar/tag_hover.png');
+    }
+    .arrow {
+      background-image: url('../../../../assets/img/header/expand_more.png');
+    }
+    cursor: pointer;
+  }
+}
+
+.channel-name {
+  font-weight: 700;
+}
+
+
