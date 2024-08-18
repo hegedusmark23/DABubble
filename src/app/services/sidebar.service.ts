@@ -58,20 +58,30 @@ export class SidebarService {
     this.AllChannelsUids = [];
     this.AllChannelsDescriptions = [];
     this.AllChannelsCreators = [];
-
+  
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
+  
     querySnapshot.forEach((doc) => {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
       this.AllChannelsUsers.push(channelData['users']);
       this.AllChannelsEmails.push(channelData['emails']);
-      this.AllChannelsIds.push(channelData['id']);
-      this.AllChannelsUids.push(channelData['uids']);
+      this.AllChannelsIds.push(doc.id);  // A Firestore dokumentum azonosítója a csatorna ID
       this.AllChannelsImages.push(channelData['images']);
       this.AllChannelsDescriptions.push(channelData['description']);
       this.AllChannelsCreators.push(channelData['channelCreator']);
+  
+      const uids = channelData['uids'];
+      if (Array.isArray(uids)) {
+        uids.forEach(uid => {
+          this.AllChannelsUids.push(uid);
+        });
+      } else {
+        this.AllChannelsUids.push(uids);
+      }
     });
+  
     this.setTopChannel();
   }
 

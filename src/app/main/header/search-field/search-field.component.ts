@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { SidebarService } from '../../../services/sidebar.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-search-field',
@@ -22,7 +23,10 @@ export class SearchFieldComponent {
   searchTerm: string = '';
   channelSelectionService = inject(ChannelSelectionService)
   hideOrShowSidebar = inject(SidebarService);
-  constructor(private searchService: SearchService, private sanitizer: DomSanitizer) { }
+  activeChannelIndex: number | null = null;
+  constructor(private searchService: SearchService, 
+    private sanitizer: DomSanitizer,
+    private cdRef: ChangeDetectorRef) { }
 
   async onSearch(event: Event) {
     this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
@@ -47,10 +51,17 @@ export class SearchFieldComponent {
   }
 
   onChannelClick(channelId: string) {
-    const channelIndex = this.channels.findIndex(channel => channel.id === channelId);
+    console.log('Channel ID to find:', channelId); 
+    console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds); // Ellenőrizd a csatorna ID-kat
+  
+    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex(id => id === channelId);
+    console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
+  
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
       this.isSearching = false;
+    } else {
+      console.error('Channel not found with ID:', channelId);
     }
   }
 
@@ -66,7 +77,7 @@ export class SearchFieldComponent {
   }
 
   onMessageClick(channelId: string, messageId: string) {
-    const channelIndex = this.hideOrShowSidebar.AllChannels.findIndex(channel => channel === channelId);
+    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex(channel => channel === channelId);
     console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId); 
   
     if (channelIndex !== -1) {
@@ -93,21 +104,13 @@ export class SearchFieldComponent {
   }
 
   channelActive(i: number) {
-    console.log('Active channel index:', i); 
-    const channelName = this.hideOrShowSidebar.AllChannels[i];
-    if (!channelName) {
-      console.error('Channel not found at index:', i); 
-      return;
-    }
     this.channelSelectionService.openChannel();
-    this['activeChannelIndex'] = i;
-    this.channelSelectionService.setSelectedChannel(channelName);
+    this.activeChannelIndex = i;
+    this.channelSelectionService.setSelectedChannel(this.hideOrShowSidebar.AllChannelsIds[i]);
     this.hideOrShowSidebar.currentChannelNumber = i;
-    /*console.log('Opening channel:', channelName); // Ellenőrizd a csatorna nevét
-    console.log('Channel users:', this.hideOrShowSidebar.AllChannelsUsers[i]);
-    console.log('Channel images:', this.hideOrShowSidebar.AllChannelsImages[i]);
-    console.log('Channel UIDs:', this.hideOrShowSidebar.AllChannelsUids[i]);*/
+    this.cdRef.detectChanges();
   }
+  
 
   userActive(i: number) {
     this.hideOrShowSidebar.activeUserIndex = i;
@@ -116,12 +119,6 @@ export class SearchFieldComponent {
     this.hideOrShowSidebar.activeEmail = this.hideOrShowSidebar.AllEmails[i];
     this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
     this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
-    /*console.log('Activated user:', {
-      name: this.hideOrShowSidebar.AllUsers[i],
-      email: this.hideOrShowSidebar.AllEmails[i],
-      image: this.hideOrShowSidebar.AllImages[i],
-      uid: this.hideOrShowSidebar.AllUids[i]
-    });*/
   }
 }
 

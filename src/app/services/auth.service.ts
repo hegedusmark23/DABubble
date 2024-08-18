@@ -125,6 +125,7 @@ export class AuthService {
                   imgUrl,
                   uId,
                 });
+                this.saveUser.saveUser(uId, email, name, imgUrl);
                 console.log('Guest logged in with UID:', uId);
               });
           } else {
