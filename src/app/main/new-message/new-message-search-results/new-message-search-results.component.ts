@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
 export class NewMessageSearchResultsComponent implements OnInit {
   allUserSorted: any[] = [];
   allChannelSorted: any[] = [];
-
+  selectedElement: any;
   constructor(public newMessageSelectionService: NewMessageSelectionService) {}
 
   ngOnInit(): void {
@@ -26,8 +26,17 @@ export class NewMessageSearchResultsComponent implements OnInit {
     });
   }
 
-  setChannel(uid: any, channel: any) {
+  setChannel(uid: any, channel: any, event: any) {
     this.newMessageSelectionService.setselecteduid(uid);
     this.newMessageSelectionService.setselectedChannel(channel);
+
+    // Entferne die Klasse 'selectedContent' vom zuvor ausgewählten Element
+    if (this.selectedElement) {
+      this.selectedElement.classList.remove('selectedContent');
+    }
+
+    // Füge die Klasse 'selectedContent' dem aktuell ausgewählten Element hinzu
+    event.currentTarget.classList.add('selectedContent');
+    this.selectedElement = event.currentTarget;
   }
 }
