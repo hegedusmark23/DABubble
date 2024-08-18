@@ -173,7 +173,7 @@ input {
 .add-user-to-channel-dialog {
     width: 710px;
     padding: 30px;
-    gap: 20px;
+    gap: 28px;
     border-radius: 30px;
     background-color: white;
     box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
@@ -208,7 +208,7 @@ input {
     align-items: center;
     margin-top: 12px;
     margin-bottom: 12px;
-    gap: 16px;
+    gap: 6px;
     cursor: pointer;
 }
 
@@ -322,4 +322,10 @@ input {
     width: 36px;
     border-radius: 72px;
     margin-right: 10px;
+}
+
+.channel-name {
+    font-weight: 400;
+    color: #797EF3;
+
 }
