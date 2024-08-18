@@ -59,19 +59,10 @@ export class SidebarComponent implements OnInit {
       this.hideOrShowSidebar.AllChannelsIds[i]
     );
     this.hideOrShowSidebar.currentChannelNumber = i;
-    console.log(this.hideOrShowSidebar.AllChannels[i] + ' open');
-    console.log(this.hideOrShowSidebar.AllChannelsUsers[i]);
-    console.log(this.hideOrShowSidebar.AllChannelsImages[i]);
-    console.log(this.hideOrShowSidebar.AllChannelsUids[i]);
   }
 
   userActive(i: number) {
     this.activeUserIndex = i;
-    this.hideOrShowSidebar.userProfilOpen = true;
-    this.hideOrShowSidebar.activeUser = this.hideOrShowSidebar.AllUsers[i];
-    this.hideOrShowSidebar.activeEmail = this.hideOrShowSidebar.AllEmails[i];
-    this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
-    this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
   }
 
   addMessage() {

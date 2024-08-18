@@ -75,6 +75,7 @@ export class ChannelHeaderComponent {
       images: obj.images || '',
       name: obj.name || '',
       users: obj.users || '',
+      emails: obj.emails || ''
     };
   }
 }

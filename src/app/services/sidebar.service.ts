@@ -65,7 +65,7 @@ export class SidebarService {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
       this.AllChannelsUsers.push(channelData['users']);
-      this.AllChannelsEmails.push(channelData['email']);
+      this.AllChannelsEmails.push(channelData['emails']);
       this.AllChannelsIds.push(channelData['id']);
       this.AllChannelsUids.push(channelData['uids']);
       this.AllChannelsImages.push(channelData['images']);

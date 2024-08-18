@@ -21,6 +21,7 @@ export class AddUserToChannelComponent {
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
   filteredUidList: string[] = this.hideOrShowSidebar.uidList;
+  filteredEmailList: string[] = this.hideOrShowSidebar.emailList;
   searchTerm: string = '';
   result = '';
 
@@ -34,22 +35,24 @@ export class AddUserToChannelComponent {
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
 
         this.hideOrShowSidebar.userList.forEach((user, index) => {
             const isUserInChannel = this.hideOrShowSidebar.AllChannelsUsers[this.hideOrShowSidebar.currentChannelNumber].includes(user);
             const isImageInChannel = this.hideOrShowSidebar.AllChannelsImages[this.hideOrShowSidebar.currentChannelNumber].includes(this.hideOrShowSidebar.imageList[index]);
             const isUidInChannel = this.hideOrShowSidebar.AllChannelsUids[this.hideOrShowSidebar.currentChannelNumber].includes(this.hideOrShowSidebar.uidList[index]);
-
             if (user.toLowerCase().includes(this.searchTerm) && !isUserInChannel && !isImageInChannel && !isUidInChannel) {
                 this.filteredUserList.push(user);
                 this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
                 this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
+                this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
             }
         });
     } else {
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
     }
 }
 
@@ -72,9 +75,6 @@ export class AddUserToChannelComponent {
   }
 
   async saveUsers() {
-    console.log(this.hideOrShowSidebar.selectedUsers);
-    console.log(this.hideOrShowSidebar.selectedImages);
-    console.log(this.hideOrShowSidebar.selectedUids);
   
     const channelId = this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber];
     const channelRef = doc(collection(this.firestore, 'Channels'), channelId);
@@ -86,14 +86,17 @@ export class AddUserToChannelComponent {
         const updatedUsers = [...(channelData['users'] || []), ...this.hideOrShowSidebar.selectedUsers];
         const updatedImages = [...(channelData['images'] || []), ...this.hideOrShowSidebar.selectedImages];
         const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
+        const updatedEmails = [...(channelData['emails'] || []), ...this.hideOrShowSidebar.selectedEmails];
         await updateDoc(channelRef, {
           users: updatedUsers,
           images: updatedImages,
-          uids: updatedUids
+          uids: updatedUids,
+          emails: updatedEmails
         });
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.selectedUids = [];
+        this.hideOrShowSidebar.selectedEmails = [];
         this.hideOrShowSidebar.fetchChannels();
         this.closeDialog();
       }
@@ -114,15 +117,19 @@ export class AddUserToChannelComponent {
         this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
         this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
         this.hideOrShowSidebar.selectedUids.push(this.hideOrShowSidebar.uidList[indexInMainList]);
+        this.hideOrShowSidebar.selectedEmails.push(this.hideOrShowSidebar.emailList[indexInMainList]);
         this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
         this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
         this.hideOrShowSidebar.uidList.splice(indexInMainList, 1);
+        this.hideOrShowSidebar.emailList.splice(indexInMainList, 1);
         this.filteredUserList.splice(i, 1);
         this.filteredImageList.splice(i, 1);
         this.filteredUidList.splice(i, 1);
+        this.filteredEmailList.splice(i, 1);
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
         this.searchTerm = '';
     }
 }
@@ -131,11 +138,14 @@ deleteUser(i: number) {
     this.hideOrShowSidebar.userList.push(this.hideOrShowSidebar.selectedUsers[i]);
     this.hideOrShowSidebar.imageList.push(this.hideOrShowSidebar.selectedImages[i]);
     this.hideOrShowSidebar.uidList.push(this.hideOrShowSidebar.selectedUids[i]);
+    this.hideOrShowSidebar.emailList.push(this.hideOrShowSidebar.selectedEmails[i]);
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
     this.hideOrShowSidebar.selectedUids.splice(i, 1);
+    this.hideOrShowSidebar.selectedEmails.splice(i, 1);
     this.filteredUserList = this.hideOrShowSidebar.userList.slice();
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
     this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
+    this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
 }
 }
