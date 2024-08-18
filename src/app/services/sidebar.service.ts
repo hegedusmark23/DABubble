@@ -11,6 +11,7 @@ export class SidebarService {
   AllChannels: string[] = [];
   AllChannelsUsers: string[] = [];
   AllChannelsIds: string[] = [];
+  AllChannelsEmails: string[] = [];
   AllChannelsImages: string[] = [];
   AllChannelsUids: string[] = [];
   AllChannelsDescriptions: string[] = [];
@@ -22,6 +23,7 @@ export class SidebarService {
   userList: string[] = [];
   imageList: string[] = [];
   uidList: string[] = [];
+  emailList: string[] = [];
   popUpOpen = false;
   editProfilOpen = false;
   editProfilContactformOpen = false;
@@ -34,6 +36,7 @@ export class SidebarService {
   selectedUsers: any[] = [];
   selectedImages: any[] = [];
   selectedUids: any[] = [];
+  selectedEmails: any[] = [];
   activeUser = '';
   activeImage = '';
   activeEmail = '';
@@ -49,6 +52,7 @@ export class SidebarService {
   async fetchChannels() {
     this.AllChannels = [];
     this.AllChannelsUsers = [];
+    this.AllChannelsEmails = [];
     this.AllChannelsIds = [];
     this.AllChannelsImages = [];
     this.AllChannelsUids = [];
@@ -61,6 +65,7 @@ export class SidebarService {
       const channelData = doc.data();
       this.AllChannels.push(channelData['name']);
       this.AllChannelsUsers.push(channelData['users']);
+      this.AllChannelsEmails.push(channelData['email']);
       this.AllChannelsIds.push(channelData['id']);
       this.AllChannelsUids.push(channelData['uids']);
       this.AllChannelsImages.push(channelData['images']);
@@ -79,6 +84,7 @@ export class SidebarService {
     this.userList = [];
     this.imageList = [];
     this.uidList = [];
+    this.emailList = [];
     const usersCollection = collection(this.firestore, 'Users');
     const querySnapshot = await getDocs(usersCollection);
     querySnapshot.forEach((doc) => {
@@ -90,6 +96,7 @@ export class SidebarService {
       this.userList.push(userData['name']);
       this.imageList.push(userData['image']);
       this.uidList.push(userData['uid']);
+      this.emailList.push(userData['email']);
     });
   }
 }

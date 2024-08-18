@@ -29,10 +29,10 @@ export class ChannelUserlistComponent {
 
   openUserProfil(i: number){
     this.channelInfo.userProfilOpen = true;
-    this.channelInfo.activeUser = this.channelInfo.AllUsers[i];
+    this.channelInfo.activeUser = this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][i];
     this.channelInfo.activeEmail = this.channelInfo.AllEmails[i];
-    this.channelInfo.activeImage = this.channelInfo.AllImages[i];
-    this.channelInfo.activeUid = this.channelInfo.AllUids[i];
+    this.channelInfo.activeImage = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][i];
+    this.channelInfo.activeUid = this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber][i];
     this.closeDialog();
   }
 

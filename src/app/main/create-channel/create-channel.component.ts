@@ -22,6 +22,7 @@ export class CreateChannelComponent {
     description: '',
     users: [],
     uids: [],
+    emails: [],
     images: [],
     channelCreator: ''
   };
@@ -30,6 +31,7 @@ export class CreateChannelComponent {
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
   filteredUidList: string[] = this.hideOrShowSidebar.uidList;
+  filteredEmailList: string[] = this.hideOrShowSidebar.emailList;
   searchTerm: string = '';
   result = '';
 
@@ -46,18 +48,21 @@ export class CreateChannelComponent {
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
 
         this.hideOrShowSidebar.userList.forEach((user, index) => {
             if (user.toLowerCase().includes(this.searchTerm)) {
                 this.filteredUserList.push(user);
                 this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
                 this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
+                this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
             }
         });
     } else {
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
     }
 }
 
@@ -119,15 +124,19 @@ export class CreateChannelComponent {
         this.newChannel.description = '',
         this.newChannel.channelCreator = '';
         this.newChannel.users = [];
+        this.newChannel.emails = [];
         this.hideOrShowSidebar.selectedUsers = [];
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.selectedUids = [];
+        this.hideOrShowSidebar.selectedEmails = [];
         this.hideOrShowSidebar.userList = [];
         this.hideOrShowSidebar.imageList = [];
         this.hideOrShowSidebar.uidList = [];
+        this.hideOrShowSidebar.emailList = [];
         this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
         this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
+        this.hideOrShowSidebar.emailList = this.hideOrShowSidebar.AllEmails;
         this.hideOrShowSidebar.fetchChannels();
         this.hideOrShowSidebar.fetchUsers();
         this.closeDialogAddUser();
@@ -143,6 +152,7 @@ export class CreateChannelComponent {
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.userList,
         uids: this.hideOrShowSidebar.uidList,
+        emails: this.hideOrShowSidebar.emailList,
         images: this.hideOrShowSidebar.imageList,
         channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
@@ -153,6 +163,7 @@ export class CreateChannelComponent {
         description: this.newChannel.description,
         users: this.hideOrShowSidebar.selectedUsers,
         uids: this.hideOrShowSidebar.selectedUids,
+        emails: this.hideOrShowSidebar.selectedEmails,
         images: this.hideOrShowSidebar.selectedImages,
         channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
       };
@@ -170,15 +181,19 @@ export class CreateChannelComponent {
         this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
         this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
         this.hideOrShowSidebar.selectedUids.push(this.hideOrShowSidebar.uidList[indexInMainList]);
+        this.hideOrShowSidebar.selectedEmails.push(this.hideOrShowSidebar.emailList[indexInMainList]);
         this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
         this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
         this.hideOrShowSidebar.uidList.splice(indexInMainList, 1);
+        this.hideOrShowSidebar.emailList.splice(indexInMainList, 1);
         this.filteredUserList.splice(i, 1);
         this.filteredImageList.splice(i, 1);
         this.filteredUidList.splice(i, 1);
+        this.filteredEmailList.splice(i, 1);
         this.filteredUserList = [];
         this.filteredImageList = [];
         this.filteredUidList = [];
+        this.filteredEmailList = [];
         this.searchTerm = '';
     }
 }
@@ -187,12 +202,15 @@ deleteUser(i: number) {
     this.hideOrShowSidebar.userList.push(this.hideOrShowSidebar.selectedUsers[i]);
     this.hideOrShowSidebar.imageList.push(this.hideOrShowSidebar.selectedImages[i]);
     this.hideOrShowSidebar.uidList.push(this.hideOrShowSidebar.selectedUids[i]);
+    this.hideOrShowSidebar.emailList.push(this.hideOrShowSidebar.selectedEmails[i]);
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
     this.hideOrShowSidebar.selectedUids.splice(i, 1);
+    this.hideOrShowSidebar.selectedEmails.splice(i, 1);
     this.filteredUserList = this.hideOrShowSidebar.userList.slice();
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
     this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
+    this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
 }
 
 }
