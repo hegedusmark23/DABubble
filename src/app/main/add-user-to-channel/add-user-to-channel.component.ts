@@ -24,6 +24,7 @@ export class AddUserToChannelComponent {
   filteredEmailList: string[] = this.hideOrShowSidebar.emailList;
   searchTerm: string = '';
   result = '';
+  addUserEnabled = false;
 
   constructor(private firestore: Firestore) {}
 
@@ -97,6 +98,7 @@ export class AddUserToChannelComponent {
         this.hideOrShowSidebar.selectedImages = [];
         this.hideOrShowSidebar.selectedUids = [];
         this.hideOrShowSidebar.selectedEmails = [];
+        this.addUserEnabled = false;
         this.hideOrShowSidebar.fetchChannels();
         this.closeDialog();
       }
@@ -132,6 +134,11 @@ export class AddUserToChannelComponent {
         this.filteredEmailList = [];
         this.searchTerm = '';
     }
+    if(this.hideOrShowSidebar.selectedUsers.length > 0){
+      this.addUserEnabled = true;
+    }else {
+      this.addUserEnabled = false;
+    }
 }
 
 deleteUser(i: number) {
@@ -143,5 +150,10 @@ deleteUser(i: number) {
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
     this.hideOrShowSidebar.selectedUids.splice(i, 1);
     this.hideOrShowSidebar.selectedEmails.splice(i, 1);
-}
+    if(this.hideOrShowSidebar.selectedUsers.length > 0){
+      this.addUserEnabled = true;
+    }else {
+      this.addUserEnabled = false;
+    }
+  }
 }
