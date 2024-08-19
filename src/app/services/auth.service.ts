@@ -17,6 +17,7 @@ import {
 import { from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
 import { SaveNewUserService } from './save-new-user.service';
+import { doc, Firestore, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class AuthService {
   currentUserSignal = signal<UserInterFace | null | undefined>(undefined);
   provider = new GoogleAuthProvider();
   saveUser = inject(SaveNewUserService);
-
+  firestore = inject(Firestore)
   signInWithGoogle(): Observable<void> {
     return from(
       signInWithPopup(this.firebaseAuth, this.provider)
@@ -35,7 +36,7 @@ export class AuthService {
           const credential = GoogleAuthProvider.credentialFromResult(result);
           if (credential) {
             const token = credential.accessToken;
-            console.log("Google Access Token:", token);
+            //console.log("Google Access Token:", token);
           }
           const name = result.user.displayName ?? 'Unknown User';
           const email = result.user.email ?? 'unknown@example.com';
@@ -72,20 +73,13 @@ export class AuthService {
         const uId = response.user.uid;
         return updateProfile(response.user, { displayName: name, photoURL: imgUrl })
           .then(() => {
-            this.currentUserSignal.set({
-              name,
-              email,
-              imgUrl,
-              uId,
-            });
+            this.currentUserSignal.set({ name, email, imgUrl, uId, });
             return uId;
           });
-      })
-      .catch(error => {
+      }).catch(error => {
         console.error('Error updating profile:', error);
         throw error;
       });
-  
     return from(promise);
   }
 
@@ -94,15 +88,7 @@ export class AuthService {
       const uId = result.user.uid;
       const name = result.user.displayName ?? 'Unknown User';
       const imgUrl = result.user.photoURL ?? '';
-      this.currentUserSignal.set({
-        name,
-        email,
-        imgUrl,
-        uId,
-      });
-
-      // Optionally save user if needed
-      // this.saveUser.saveUser(uId, email, name, imgUrl);
+      this.currentUserSignal.set({ name, email, imgUrl, uId, });
     });
     return from(promise);
   }
@@ -119,14 +105,9 @@ export class AuthService {
             const uId = user.uid;
             return updateProfile(user, { displayName: name, photoURL: imgUrl })
               .then(() => {
-                this.currentUserSignal.set({
-                  name,
-                  email,
-                  imgUrl,
-                  uId,
-                });
+                this.currentUserSignal.set({ name, email, imgUrl, uId, });
                 this.saveUser.saveUser(uId, email, name, imgUrl);
-                console.log('Guest logged in with UID:', uId);
+                //console.log('Guest logged in with UID:', uId);
               });
           } else {
             return Promise.resolve();
@@ -161,29 +142,41 @@ export class AuthService {
       throw new Error('Invalid or expired password reset code.');
     });
   }
-  
+
   async updateUserData(email: string, name: string): Promise<void> {
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
-      throw new Error('No user is currently signed in.');
-    } try {
-      if (currentUser.email !== email) {
-        await updateEmail(currentUser, email);
-      } if (currentUser.displayName !== name) {
-        await updateProfile(currentUser, { displayName: name });
-      }
-      this.currentUserSignal.set({
-        email,
-        name,
-        imgUrl: currentUser.photoURL ?? '',
-        uId: currentUser.uid
-      });
-      //console.log('User profile updated successfully.');
-    } catch (error) {
-      console.error('Error updating user profile:', error);
-      throw error;
+        throw new Error('No user is currently signed in.');
     }
-  }
+    try {
+        // Update the email in Firebase Authentication if it has changed
+        if (currentUser.email !== email) {
+            await updateEmail(currentUser, email);
+        }
 
+        // Update the display name in Firebase Authentication if it has changed
+        if (currentUser.displayName !== name) {
+            await updateProfile(currentUser, { displayName: name });
+        }
+
+        // Update the user's name in the database
+        await this.updateUserInDatabase(currentUser.uid, name);
+
+        // Update the local signal with the new user data
+        this.currentUserSignal.set({
+            email, name, imgUrl: currentUser.photoURL ?? '', uId: currentUser.uid
+        });
+
+        console.log('User profile updated successfully.');
+    } catch (error) {
+        console.error('Error updating user profile:', error);
+        throw error;
+    }
+}
+
+  async updateUserInDatabase(userId: string, name: string) {
+    const userDocRef = doc(this.firestore, `Users/${userId}`);
+    await updateDoc(userDocRef, { name: name });
+}
 }
 
