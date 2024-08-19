@@ -42,3 +42,60 @@ section {
         border-radius: 50px;
     }
 }
+
+@media (max-width: 800px) {
+    .impressum-section{
+        h1{
+            font-size: 38px;
+        }
+
+        p{
+            font-size: 16px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .impressum-section{
+        h1{
+            font-size: 32px;
+        }
+
+        p{
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    .impressum-section{
+        h1{
+            font-size: 28px;
+        }
+
+        p{
+            font-size: 12px;
+        }
+    }
+
+    .logo{
+        height: 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .impressum-section{
+        padding: 25px;
+        h1{
+            font-size: 28px;
+        }
+
+        p{
+            font-size: 12px;
+        }
+    }
+
+    .arrow-back{
+        left: 20px;
+    }
+}

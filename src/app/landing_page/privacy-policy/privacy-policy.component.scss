@@ -52,3 +52,146 @@ section {
 .pb-30{
     padding-top: 30px;
 }
+
+@media (max-height: 1024px){
+    .privacy-section{
+        max-height: 750px;
+    }
+}
+
+@media (max-height: 982px){
+    .privacy-section{
+        max-height: 670px;
+    }
+}
+
+@media (max-height: 904px){
+    .privacy-section{
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 800px) {
+    .pPHeadline {
+        font-size: 38px;
+    }
+
+    p{
+        font-size: 16px;
+    }
+
+    .fs-25 {
+        font-size: 20px;
+    }
+
+    .privacy-section {
+        max-width: 500px;
+    }
+
+    .logo{
+        height: 50px;
+    }
+}
+
+@media (max-width: 600px) {
+    .pPHeadline {
+        font-size: 32px;
+    }
+
+    p{
+        font-size: 14px;
+    }
+
+    .fs-25 {
+        font-size: 18px;
+    }
+
+    .privacy-section {
+        max-width: 400px;
+    }
+
+    .logo{
+        height: 40px;
+    }
+
+    .privacy-content {
+        padding: 20px;
+    }
+
+    li {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 500px) {
+    .pPHeadline {
+        font-size: 28px;
+    }
+
+    p{
+        font-size: 12px;
+    }
+
+    .fs-25 {
+        font-size: 16px;
+    }
+
+    .privacy-section {
+        max-width: 300px;
+    }
+
+    .logo{
+        height: 40px;
+    }
+
+    .privacy-content {
+        padding: 5px;
+    }
+
+    li {
+        font-size: 12px;
+    }
+
+    .arrow-back{
+        left: 20px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+}
+
+@media (max-width: 500px) {
+    .pPHeadline {
+        font-size: 20px;
+    }
+
+    p{
+        font-size: 11px;
+    }
+
+    .fs-25 {
+        font-size: 14px;
+    }
+
+    .privacy-section {
+        max-width: 250px;
+        max-height: 440px;
+    }
+
+    .logo{
+        height: 30px;
+    }
+
+    .privacy-content {
+        padding: 5px;
+    }
+
+    li {
+        font-size: 11px;
+    }
+
+    .arrow-back{
+        left: 20px;
+    }
+}

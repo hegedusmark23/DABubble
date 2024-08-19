@@ -22,7 +22,7 @@ section {
 .legal-section {
     display: flex;
     position: absolute;
-    bottom: 50px;
+    bottom: 30px;
     gap: 16px;
 }
 
@@ -260,5 +260,42 @@ section {
         z-index: 1;
         height: 70px;
         width: 243px;
+    }
+}
+
+@media (max-width: 1360px) {
+
+    .login-section{
+        padding: 25px;
+
+        h1{
+            font-size: 40px;
+        }
+
+        p{
+            font-size: 16px;
+        }
+
+        a{
+            font-size: 16px;
+        }
+
+        button{
+            font-size: 16px;
+        }
+
+        input{
+            font-size: 16px;
+        }
+    }
+
+    .sign-in-section{
+        p{
+            font-size: 16px;
+        }
+
+        a{
+            font-size: 16px;
+        }
     }
 }
