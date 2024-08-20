@@ -64,7 +64,21 @@
         </svg>
       </p>
     </div>
-    <div class="content">
+    <div class="content-edit" *ngIf="this.editChannelNameOpen">
+      <div class="nameHeader-edit">
+        <span>Channel-Name</span><button (click)="saveChannelName()" class="edit-button"><span>Speichern</span></button>
+      </div>
+      <div class="channel-name-container">
+        <input type="text" class="input-field"
+            id="channelDescription" name="channelDescription"  placeholder="{{ this.selectetChannelData.name }}">
+        <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
+    </div>
+      <div>
+        
+        <p></p>
+      </div>
+    </div>
+    <div class="content" *ngIf="!this.editChannelNameOpen">
       <div class="nameHeader">
         <span>Channel-Name</span><button (click)="editChannelName()" class="edit-button"><span>Bearbeiten</span></button>
       </div>
@@ -97,7 +111,7 @@
         <p>{{ this.selectetChannelData.name }}</p>
       </div>
     </div>
-    <div class="content">
+    <div class="content" *ngIf="!this.editChannelDescriptionOpen">
       <div class="nameHeader">
         <span>Beschreibung</span><button (click)="editChannelDescription()" class="edit-button"><span>Bearbeiten</span></button>
       </div>

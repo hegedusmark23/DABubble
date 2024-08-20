@@ -21,6 +21,8 @@ export class EditChannelComponent implements OnInit {
   currentChannel: any;
   channel: any;
   selectetChannelData: any;
+  editChannelNameOpen = false;
+  editChannelDescriptionOpen = false;
   channelInfo = inject(SidebarService);
 
   constructor(
@@ -68,10 +70,14 @@ export class EditChannelComponent implements OnInit {
   }
 
   editChannelName(){
-    alert('edit channel name');
+    this.editChannelNameOpen = true;
   }
 
   editChannelDescription(){
-    alert('edit channel description')
+    this.editChannelDescriptionOpen = true;
+  }
+
+  saveChannelName(){
+    this.editChannelNameOpen = false;
   }
 }
