@@ -92,70 +92,44 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     this.saveFileToCache();
   }
 
+  //erstannt eine nachricht
   async saveMessage() {
-    this.user = this.getCurrentUserId();
-
+    this.user = this.authService.currentUserSignal()?.uId;
     if (this.selectedFile) {
-      await this.handleFileOperations();
+      await this.saveFile();
+      this.addIMG();
+      this.deleteFile();
     }
 
     this.updateDateTime();
+    this.message.communicationType = 'send';
 
-    await this.saveMessageForUser(this.user, this.openUser, 'send');
-    await this.saveMessageForUser(this.openUser, this.user, 'resive');
-
-    this.clearMessage();
-  }
-
-  // Hilfsmethode, um die aktuelle Benutzer-ID abzurufen
-  getCurrentUserId() {
-    return this.authService.currentUserSignal()?.uId;
-  }
-
-  // Hilfsmethode, um Dateioperationen zu behandeln
-  async handleFileOperations() {
-    await this.saveFile();
-    this.addIMG();
-    this.deleteFile();
-  }
-
-  // Speichert die Nachricht für einen bestimmten Benutzer
-  async saveMessageForUser(
-    senderId: string,
-    recipientId: string,
-    type: string
-  ) {
-    this.message.communicationType = type;
-
-    const messageRef = this.createMessageReference(senderId, recipientId);
-    await this.saveDocument(messageRef);
-
-    this.resetCommunicationType();
-  }
-
-  // Erstellt eine Dokumentenreferenz für eine Nachricht
-  createMessageReference(senderId: string, recipientId: string) {
-    return doc(
-      collection(this.firestore, 'direcmessages', senderId, recipientId)
+    // Generiere die Dokument-ID
+    const messageRef = doc(
+      collection(this.firestore, 'direcmessages', this.user, this.openUser)
     );
-  }
-
-  // Speichert das Dokument in Firestore
-  async saveDocument(messageRef: any) {
     const messageId = messageRef.id;
+
+    // Speichere die Nachricht mit der generierten ID für den Sender
     await setDoc(messageRef, this.toJSON()).catch((err) => {
-      console.error(`Error saving document with ID ${messageId}:`, err);
+      console.error(err);
     });
-  }
 
-  // Setzt den Nachrichtentext und den Kommunikationstyp zurück
-  clearMessage() {
+    this.message.communicationType = 'resive';
+
+    // Speichere die Nachricht mit der gleichen ID für den Empfänger
+    const recipientRef = doc(
+      this.firestore,
+      'direcmessages',
+      this.openUser,
+      this.user,
+      messageId
+    );
+    await setDoc(recipientRef, this.toJSON()).catch((err) => {
+      console.error(err);
+    });
+
     this.message.message = '';
-    this.resetCommunicationType();
-  }
-
-  // Setzt den Kommunikationstyp der Nachricht zurück
-  resetCommunicationType() {
     this.message.communicationType = '';
   }
 

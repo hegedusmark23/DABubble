@@ -90,6 +90,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   subMessages() {
+    console.log(this.user, this.messageUser);
     if (this.user && this.messageUser) {
       const q = query(
         collection(
@@ -105,6 +106,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
         list.forEach((element) => {
           this.allMessages.push(this.setNoteObject(element.data(), element.id));
         });
+        console.log(this.allMessages);
         this.sortMessages();
         this.dateLoaded();
       });
@@ -131,8 +133,8 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       list.forEach((element) => {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
-      this.setUser();
       this.setOpenUser();
+      this.setUser();
     });
   }
 
@@ -263,12 +265,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
     return `${hours}:${minutes} Uhr`;
   }
 
-  onChannelChange(channel: string): void {
-    setTimeout(() => {
-      this.subMessages(); // Ensure messages are fetched on channel change
-    }, 10);
-  }
-
   getUsername(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
@@ -294,12 +290,13 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
     this.emojiselectior = false;
   }
 
-  getThreadCount(message: any) {
-    return 'test';
-  }
-
   addReaction(reaction: any, message: any) {
     this.updateMessageVariable(
+      message.id,
+      this.authService.currentUserSignal()?.uId,
+      reaction
+    );
+    this.updateMessageVariableTwo(
       message.id,
       this.authService.currentUserSignal()?.uId,
       reaction
@@ -316,6 +313,54 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       'direcmessages',
       this.user,
       this.messageUser,
+      messageId
+    );
+
+    try {
+      // Get the current value of the variable
+      const messageSnapshot = await getDoc(messageRef);
+      if (messageSnapshot.exists()) {
+        const currentData = messageSnapshot.data();
+        let currentValue = currentData[variableName] || '';
+
+        // Convert currentValue to an array of values
+        let valuesArray = currentValue.split(' ').filter((value: any) => value);
+
+        if (valuesArray.includes(newValue)) {
+          // Remove the newValue if it exists
+          valuesArray = valuesArray.filter((value: any) => value !== newValue);
+        } else {
+          // Append the new value with a space if it doesn't exist
+          valuesArray.push(newValue);
+        }
+
+        // Join the array back to a string
+        const updatedValue = valuesArray.join(' ');
+
+        // Update the document with the new value
+        await updateDoc(messageRef, {
+          [variableName]: updatedValue,
+        });
+        console.log('Document successfully updated!');
+      } else {
+        console.log('No such document!');
+      }
+    } catch (err) {
+      console.error('Error updating document: ', err);
+    }
+  }
+
+  async updateMessageVariableTwo(
+    messageId: any,
+    newValue: any,
+    variableName: any
+  ) {
+    console.log('direcmessages', this.messageUser, this.user, messageId);
+    const messageRef = doc(
+      this.firestore,
+      'direcmessages',
+      this.messageUser,
+      this.user,
       messageId
     );
 
