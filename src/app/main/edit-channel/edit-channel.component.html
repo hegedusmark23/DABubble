@@ -82,7 +82,7 @@
       <div class="nameHeader">
         <span>Channel-Name</span><button (click)="editChannelName()" class="edit-button"><span>Bearbeiten</span></button>
       </div>
-      <div>
+      <div class="channel-tag-name">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -122,6 +122,27 @@
           ]
         }}
       </div>
+      <div class="spacer"></div>
+      <div class="nameHeader">
+        <span>Erstellt von</span>
+      </div>
+      <div>
+        {{
+          this.channelInfo.AllChannelsCreators[
+            this.channelInfo.currentChannelNumber
+          ]
+        }}
+      </div>
+    </div>
+    <div class="content-edit" *ngIf="this.editChannelDescriptionOpen">
+      <div class="nameHeader-edit">
+        <span>Beschreibung</span><button (click)="saveChannelDescription()" class="edit-button"><span>Speichern</span></button>
+      </div>
+      <div class="channel-name-container">
+        <input type="text" class="input-field"
+            id="channelDescription" name="channelDescription"  placeholder="{{ this.channelInfo.AllChannelsDescriptions[this.channelInfo.currentChannelNumber] }}">
+        <img src="../../../assets/img/header/tag.png" class="tag-icon">
+    </div>
       <div class="spacer"></div>
       <div class="nameHeader">
         <span>Erstellt von</span>

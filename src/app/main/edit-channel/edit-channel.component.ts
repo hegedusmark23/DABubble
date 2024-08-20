@@ -80,4 +80,8 @@ export class EditChannelComponent implements OnInit {
   saveChannelName(){
     this.editChannelNameOpen = false;
   }
+
+  saveChannelDescription(){
+    this.editChannelDescriptionOpen = false;
+  }
 }
