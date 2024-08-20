@@ -11,8 +11,7 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
   verifyPasswordResetCode,
-  updateEmail,
-  signInAnonymously
+  updateEmail
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { UserInterFace } from '../../models/user.interface';
@@ -29,6 +28,7 @@ export class AuthService {
   provider = new GoogleAuthProvider();
   saveUser = inject(SaveNewUserService);
   firestore = inject(Firestore)
+
   signInWithGoogle(): Observable<void> {
     return from(
       signInWithPopup(this.firebaseAuth, this.provider)
@@ -94,30 +94,18 @@ export class AuthService {
   }
 
   guestLogin(): Observable<void> {
-    return from(
-      signInAnonymously(this.firebaseAuth)
-        .then((result) => {
-          const user = result.user;
-          if (user) {
-            const name = 'Gast';
-            const email = "gast@gast.com";
-            const imgUrl = "https://firebasestorage.googleapis.com/v0/b/dabubble-3c5b0.appspot.com/o/profileCache%2Fprofile.png?alt=media&token=d5014d48-3413-475b-aca4-3f15ca3aaab4";
-            const uId = user.uid;
-            return updateProfile(user, { displayName: name, photoURL: imgUrl })
-              .then(() => {
-                this.currentUserSignal.set({ name, email, imgUrl, uId, });
-                this.saveUser.saveUser(uId, email, name, imgUrl);
-                //console.log('Guest logged in with UID:', uId);
-              });
-          } else {
-            return Promise.resolve();
-          }
-        }).catch((error) => {
-          console.error('Error during guest login:', error);
-          throw error;
-        })
-    );
-  }
+    const predefinedEmail = 'gast@gastmail.com';
+    const predefinedPassword = 'asdasd';
+    const promise = signInWithEmailAndPassword(this.firebaseAuth, predefinedEmail, predefinedPassword)
+      .then((result) => {
+        const uId = result.user.uid;
+        const name = result.user.displayName ?? 'Gast';
+        const imgUrl = result.user.photoURL ?? '../../../assets/img/landing-page/profile.png';
+        this.currentUserSignal.set({ name, email: predefinedEmail, imgUrl, uId });
+      });
+
+    return from(promise);
+}
 
   logOut(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
@@ -146,37 +134,26 @@ export class AuthService {
   async updateUserData(email: string, name: string): Promise<void> {
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
-        throw new Error('No user is currently signed in.');
-    }
-    try {
-        // Update the email in Firebase Authentication if it has changed
-        if (currentUser.email !== email) {
-            await updateEmail(currentUser, email);
-        }
-
-        // Update the display name in Firebase Authentication if it has changed
-        if (currentUser.displayName !== name) {
-            await updateProfile(currentUser, { displayName: name });
-        }
-
-        // Update the user's name in the database
-        await this.updateUserInDatabase(currentUser.uid, name);
-
-        // Update the local signal with the new user data
-        this.currentUserSignal.set({
-            email, name, imgUrl: currentUser.photoURL ?? '', uId: currentUser.uid
-        });
-
-        console.log('User profile updated successfully.');
+      throw new Error('No user is currently signed in.');
+    } try {
+      if (currentUser.email !== email) {
+        await updateEmail(currentUser, email);
+      } if (currentUser.displayName !== name) {
+        await updateProfile(currentUser, { displayName: name });
+      }
+      await this.updateUserInDatabase(currentUser.uid, name);
+      this.currentUserSignal.set({
+        email, name, imgUrl: currentUser.photoURL ?? '', uId: currentUser.uid
+      });
     } catch (error) {
-        console.error('Error updating user profile:', error);
-        throw error;
+      console.error('Error updating user profile:', error);
+      throw error;
     }
-}
+  }
 
   async updateUserInDatabase(userId: string, name: string) {
     const userDocRef = doc(this.firestore, `Users/${userId}`);
     await updateDoc(userDocRef, { name: name });
-}
+  }
 }
 
