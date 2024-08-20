@@ -16,7 +16,6 @@ export class DirectMessageSelectionService {
 
   // Setter für selectedChannel
   setSelectedChannel(channel: any) {
-    console.log(channel);
     this.selectedUser.next(channel);
   }
 }

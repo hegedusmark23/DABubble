@@ -73,7 +73,6 @@ export class DirectMessagesHeaderComponent implements OnInit {
       .subscribe((value) => {
         this.messageUser = value;
         this.getProfile();
-        console.log(this.messageUser);
       });
   }
 

@@ -5,6 +5,7 @@ import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
 import { AuthService } from '../../services/auth.service';
 import { ThreadService } from '../../services/thread.service';
+import { DirectMessageSelectionService } from '../../services/direct-message-selection.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,18 +21,19 @@ export class SidebarComponent implements OnInit {
   activeUserIndex: number | null = null;
   usersTitleActive = true;
 
-  hideOrShowSidebar = inject(SidebarService);
+  sidebarService = inject(SidebarService);
   authService = inject(AuthService);
 
   ngOnInit(): void {
-    this.hideOrShowSidebar.fetchChannels();
-    this.hideOrShowSidebar.fetchUsers();
+    this.sidebarService.fetchChannels();
+    this.sidebarService.fetchUsers();
   }
 
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
-    private threadService: ThreadService
+    private threadService: ThreadService,
+    public directMessageSelectionService: DirectMessageSelectionService
   ) {}
 
   hoverChannelTitle() {
@@ -47,7 +49,7 @@ export class SidebarComponent implements OnInit {
   }
 
   addChannel() {
-    this.hideOrShowSidebar.createChannelDialogActive = true;
+    this.sidebarService.createChannelDialogActive = true;
   }
 
   channelActive(i: number) {
@@ -56,13 +58,17 @@ export class SidebarComponent implements OnInit {
 
     this.activeChannelIndex = i;
     this.channelSelectionService.setSelectedChannel(
-      this.hideOrShowSidebar.AllChannelsIds[i]
+      this.sidebarService.AllChannelsIds[i]
     );
-    this.hideOrShowSidebar.currentChannelNumber = i;
+    this.sidebarService.currentChannelNumber = i;
   }
 
   userActive(i: number) {
     this.activeUserIndex = i;
+    this.channelSelectionService.openDirectMessage();
+    this.directMessageSelectionService.setSelectedChannel(
+      this.sidebarService.AllUids[i]
+    );
   }
 
   addMessage() {

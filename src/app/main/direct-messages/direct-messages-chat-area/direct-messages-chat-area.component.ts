@@ -76,14 +76,11 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setUser();
-    this.setOpenUser();
+    this.subUser();
     this.subMessages();
   }
 
   ngAfterViewInit(): void {
-    this.subUser();
-
     this.messageLoaded.changes.subscribe((t) => {
       if (this.scrolled) {
         this.scrolled = false;
@@ -134,6 +131,8 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       list.forEach((element) => {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
+      this.setUser();
+      this.setOpenUser();
     });
   }
 
@@ -231,7 +230,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       }
     }
     this.allMessagesSortedDate = this.allMessagesSorted;
-    console.log(this.allMessagesSortedDate);
   }
 
   getMonthName(monthNumber: number): string {
@@ -274,7 +272,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   getUsername(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
-      if (element.uid === uid) {
+      if (element.uid === uid.uid) {
         return element.name;
       }
     }
