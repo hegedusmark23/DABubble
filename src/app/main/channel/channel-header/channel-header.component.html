@@ -1,7 +1,7 @@
 <div *ngIf="this.currentChannel" class="header">
-  <div class="channel-name-container">
+  <div class="channel-name-container" (click)="editChannelService.setEditChannel(true, this.currentChannelId)">
     <div class="tag"></div>
-    <p (click)="editChannelService.setEditChannel(true, this.currentChannelId)" class="channel-name fs-20">
+    <p  class="channel-name fs-20">
       {{ this.currentChannel.name }}
     </p>
     <div class="arrow"></div>
