@@ -134,10 +134,28 @@ span {
   white-space: nowrap;
 }
 
+input {
+  height: 60px;
+  border-radius: 40px;
+  outline: 1px solid rgba(173, 176, 217, 1);
+  border: none;
+  padding: 18px, 20px, 18px, 20px;
+  font-size: 18px;
+  gap: 20px;
+  &:focus {
+      outline: 2px solid black;
+  }
+}
+
+.channel-name-container {
+  position: relative;
+}
+
 .input-field {
   width: 100%; 
-  padding: 0px 50px;
+  padding: 10px 50px;
   box-sizing: border-box;
+  border-radius: 100px;
   &:focus {
       border-color: none;
   }
@@ -145,6 +163,6 @@ span {
 
 .tag-icon {
   position: absolute;
-  top: 64px;
+  top: 22px;
   left: 20px;
 }
