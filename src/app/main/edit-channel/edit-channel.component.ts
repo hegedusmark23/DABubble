@@ -62,4 +62,8 @@ export class EditChannelComponent implements OnInit {
       }
     }
   }
+
+  abandon() {
+    alert('channel verlassen');
+  }
 }

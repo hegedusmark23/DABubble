@@ -23,8 +23,8 @@
   box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
   border-radius: 0px 30px 30px 30px;
   background: white;
-  margin-top: calc(115px + 25px + 54px);
-  margin-left: 451px;
+  top: 115px;
+  left: calc(50vw - 436px);
 }
 
 .header {
@@ -78,4 +78,30 @@ span {
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+}
+
+.abandon {
+  width: 185px;
+  height: 49px;
+  padding: 12px 25px 12px 25px;
+  gap: 10px;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  background-color: #444DF2;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #797ef3;;
+  }
+}
+
+.button-text {
+  font-weight: 400;
+  color: white;
+  white-space: nowrap;
 }
