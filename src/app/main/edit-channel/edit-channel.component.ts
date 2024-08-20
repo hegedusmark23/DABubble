@@ -66,4 +66,12 @@ export class EditChannelComponent implements OnInit {
   abandon() {
     alert('channel verlassen');
   }
+
+  editChannelName(){
+    alert('edit channel name');
+  }
+
+  editChannelDescription(){
+    alert('edit channel description')
+  }
 }

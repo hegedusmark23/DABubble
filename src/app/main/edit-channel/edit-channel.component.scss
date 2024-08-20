@@ -48,10 +48,22 @@ button {
   font-family: Nunito;
   font-size: 18px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   line-height: normal;
   border: none;
   background-color: unset;
+  cursor: pointer;
+}
+
+.edit-button {
+  span{
+    color: #535af1;
+  }
+  &:hover {
+    span {
+      font-weight: 700 !important;
+    }
+  }
 }
 
 .content {
