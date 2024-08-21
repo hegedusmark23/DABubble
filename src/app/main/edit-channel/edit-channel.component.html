@@ -3,7 +3,7 @@
   class="contentContainer"
   (click)="editChannelService.setEditChannel(false, null)"
 >
-  <div class="mainContent" (click)="$event.stopPropagation()">
+  <div class="mainContent" (click)="$event.stopPropagation()"> 
     <div class="header">
       <p>
         <svg
@@ -69,8 +69,8 @@
         <span>Channel-Name</span><button (click)="saveChannelName()" class="edit-button"><span>Speichern</span></button>
       </div>
       <div class="channel-name-container">
-        <input type="text" class="input-field"
-            id="channelDescription" name="channelDescription"  placeholder="{{ this.selectetChannelData.name }}">
+        <input type="text" class="input-field" [(ngModel)]="channelName"
+            id="channelName" name="channelName"  placeholder="{{ this.selectetChannelData.name }}">
         <img src="../../../assets/img/header/tag.png" class="tag-icon">
     </div>
       <div>

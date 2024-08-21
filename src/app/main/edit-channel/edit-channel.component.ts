@@ -3,17 +3,20 @@ import { EditChannelService } from '../../services/edit-channel.service';
 import {
   Firestore,
   collection,
+  doc,
   limit,
   onSnapshot,
   query,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { SidebarService } from '../../services/sidebar.service';
+import { SidebarService } from '../../services/sidebar.service'; 
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-channel',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './edit-channel.component.html',
   styleUrl: './edit-channel.component.scss',
 })
@@ -23,6 +26,7 @@ export class EditChannelComponent implements OnInit {
   selectetChannelData: any;
   editChannelNameOpen = false;
   editChannelDescriptionOpen = false;
+  channelName = '';
   channelInfo = inject(SidebarService);
 
   constructor(
@@ -65,6 +69,10 @@ export class EditChannelComponent implements OnInit {
     }
   }
 
+  isInputValid(): boolean {
+    return this.channelName.length >= 3;
+  }
+
   abandon() {
     alert('channel verlassen');
   }
@@ -77,9 +85,39 @@ export class EditChannelComponent implements OnInit {
     this.editChannelDescriptionOpen = true;
   }
 
-  saveChannelName(){
-    this.editChannelNameOpen = false;
-  }
+  async saveChannelName() {
+    // Überprüfen, ob this.channelName korrekt gesetzt ist
+    if (!this.channelName) {
+      console.error('Channel name is empty. Please provide a valid name.');
+      return;
+    }
+
+    const channelRef = doc(
+      collection(this.firestore, 'Channels'),
+      this.currentChannel
+    );
+
+    try {
+        await updateDoc(channelRef, this.toJSON());
+        console.log('Channel name updated successfully');
+
+        // Stelle sicher, dass this.channelName nach der Aktualisierung auf einen leeren String gesetzt wird
+        this.channelName = ''; 
+
+        // Aktualisieren der Channels und Benutzerinformationen
+        this.channelInfo.fetchChannels();
+        this.channelInfo.fetchUsers();
+    } catch (err) {
+        console.error('Error updating channel name: ', err);
+    }
+}
+
+toJSON() {
+    return {
+        name: this.channelName
+    };
+}
+
 
   saveChannelDescription(){
     this.editChannelDescriptionOpen = false;
