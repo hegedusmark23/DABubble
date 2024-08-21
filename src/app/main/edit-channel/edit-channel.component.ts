@@ -4,14 +4,16 @@ import {
   Firestore,
   collection,
   doc,
+  getDocs,
   limit,
   onSnapshot,
   query,
   updateDoc,
 } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
-import { SidebarService } from '../../services/sidebar.service'; 
+import { SidebarService } from '../../services/sidebar.service';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-edit-channel',
@@ -29,11 +31,12 @@ export class EditChannelComponent implements OnInit {
   channelName = '';
   channelDescription = '';
   channelInfo = inject(SidebarService);
+  authService = inject(AuthService);
 
   constructor(
     public editChannelService: EditChannelService, // Füge den Service hier hinzu
     private firestore: Firestore
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.currentChannel = this.editChannelService.getOpenChannel();
     this.subMessages();
@@ -74,15 +77,44 @@ export class EditChannelComponent implements OnInit {
     return this.channelName.length >= 3;
   }
 
-  abandon() {
-    alert('channel verlassen');
+  async abandon() {
+    const channelsCollection = collection(this.firestore, 'Channels');
+    const querySnapshot = await getDocs(channelsCollection);
+
+    querySnapshot.forEach(async (docSnapshot) => {
+      const channelData = docSnapshot.data();
+
+      if (channelData['id'] === this.selectetChannelData.id) {
+        const userNumber = channelData['uids'].indexOf(this.authService.currentUserSignal()?.uId);
+
+        if (userNumber > -1) {
+          channelData['uids'].splice(userNumber, 1);
+          channelData['emails'].splice(userNumber, 1);
+          channelData['images'].splice(userNumber, 1);
+          channelData['users'].splice(userNumber, 1);
+
+          const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
+          await updateDoc(channelDocRef, {
+            uids: channelData['uids'],
+            emails: channelData['emails'],
+            images: channelData['images'],
+            users: channelData['users']
+          });
+          this.channelInfo.fetchChannels;
+          this.editChannelService.setEditChannel(false,null);
+        }else{
+          alert('du bist kein mitglied');
+        }
+      }
+    });
   }
 
-  editChannelName(){
+
+  editChannelName() {
     this.editChannelNameOpen = true;
   }
 
-  editChannelDescription(){
+  editChannelDescription() {
     this.editChannelDescriptionOpen = true;
   }
 
@@ -96,25 +128,25 @@ export class EditChannelComponent implements OnInit {
       this.currentChannel
     );
     try {
-        await updateDoc(channelRef, this.toJSON());
-        console.log('Channel name updated successfully');
-        this.channelName = ''; 
-        this.editChannelNameOpen = false;
-        this.channelInfo.fetchChannels();
-        this.channelInfo.fetchUsers();
+      await updateDoc(channelRef, this.toJSON());
+      console.log('Channel name updated successfully');
+      this.channelName = '';
+      this.editChannelNameOpen = false;
+      this.channelInfo.fetchChannels();
+      this.channelInfo.fetchUsers();
     } catch (err) {
-        console.error('Error updating channel name: ', err);
+      console.error('Error updating channel name: ', err);
     }
-}
+  }
 
-toJSON() {
+  toJSON() {
     return {
-        name: this.channelName
+      name: this.channelName
     };
-}
+  }
 
 
-  async saveChannelDescription(){
+  async saveChannelDescription() {
     if (!this.channelDescription) {
       console.error('Channel name is empty. Please provide a valid description.');
       return;
@@ -124,20 +156,20 @@ toJSON() {
       this.currentChannel
     );
     try {
-        await updateDoc(channelRef, this.toJSONDescription());
-        console.log('Channel name updated successfully');
-        this.channelDescription = ''; 
-        this.editChannelDescriptionOpen = false;
-        this.channelInfo.fetchChannels();
-        this.channelInfo.fetchUsers();
+      await updateDoc(channelRef, this.toJSONDescription());
+      console.log('Channel name updated successfully');
+      this.channelDescription = '';
+      this.editChannelDescriptionOpen = false;
+      this.channelInfo.fetchChannels();
+      this.channelInfo.fetchUsers();
     } catch (err) {
-        console.error('Error updating channel name: ', err);
+      console.error('Error updating channel name: ', err);
     }
   }
 
   toJSONDescription() {
     return {
-        description: this.channelDescription
+      description: this.channelDescription
     };
-}
+  }
 }
