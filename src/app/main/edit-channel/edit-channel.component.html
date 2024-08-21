@@ -127,11 +127,13 @@
         <span>Erstellt von</span>
       </div>
       <div>
-        {{
-          this.channelInfo.AllChannelsCreators[
-            this.channelInfo.currentChannelNumber
-          ]
-        }}
+        <span class="creator-name">
+          {{
+            this.channelInfo.AllChannelsCreators[
+              this.channelInfo.currentChannelNumber
+            ]
+          }}
+        </span>
       </div>
     </div>
     <div class="content-edit" *ngIf="this.editChannelDescriptionOpen">
@@ -148,11 +150,13 @@
         <span>Erstellt von</span>
       </div>
       <div>
-        {{
-          this.channelInfo.AllChannelsCreators[
-            this.channelInfo.currentChannelNumber
-          ]
-        }}
+        <span class="creator-name">
+          {{
+            this.channelInfo.AllChannelsCreators[
+              this.channelInfo.currentChannelNumber
+            ]
+          }}
+        </span>
       </div>
     </div>
     <div>
