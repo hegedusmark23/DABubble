@@ -27,6 +27,7 @@ export class EditChannelComponent implements OnInit {
   editChannelNameOpen = false;
   editChannelDescriptionOpen = false;
   channelName = '';
+  channelDescription = '';
   channelInfo = inject(SidebarService);
 
   constructor(
@@ -86,25 +87,19 @@ export class EditChannelComponent implements OnInit {
   }
 
   async saveChannelName() {
-    // Überprüfen, ob this.channelName korrekt gesetzt ist
     if (!this.channelName) {
       console.error('Channel name is empty. Please provide a valid name.');
       return;
     }
-
     const channelRef = doc(
       collection(this.firestore, 'Channels'),
       this.currentChannel
     );
-
     try {
         await updateDoc(channelRef, this.toJSON());
         console.log('Channel name updated successfully');
-
-        // Stelle sicher, dass this.channelName nach der Aktualisierung auf einen leeren String gesetzt wird
         this.channelName = ''; 
-
-        // Aktualisieren der Channels und Benutzerinformationen
+        this.editChannelNameOpen = false;
         this.channelInfo.fetchChannels();
         this.channelInfo.fetchUsers();
     } catch (err) {
@@ -119,7 +114,30 @@ toJSON() {
 }
 
 
-  saveChannelDescription(){
-    this.editChannelDescriptionOpen = false;
+  async saveChannelDescription(){
+    if (!this.channelDescription) {
+      console.error('Channel name is empty. Please provide a valid description.');
+      return;
+    }
+    const channelRef = doc(
+      collection(this.firestore, 'Channels'),
+      this.currentChannel
+    );
+    try {
+        await updateDoc(channelRef, this.toJSONDescription());
+        console.log('Channel name updated successfully');
+        this.channelDescription = ''; 
+        this.editChannelDescriptionOpen = false;
+        this.channelInfo.fetchChannels();
+        this.channelInfo.fetchUsers();
+    } catch (err) {
+        console.error('Error updating channel name: ', err);
+    }
   }
+
+  toJSONDescription() {
+    return {
+        description: this.channelDescription
+    };
+}
 }

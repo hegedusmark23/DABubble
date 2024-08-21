@@ -139,7 +139,7 @@
         <span>Beschreibung</span><button (click)="saveChannelDescription()" class="edit-button"><span>Speichern</span></button>
       </div>
       <div class="channel-name-container">
-        <input type="text" class="input-field"
+        <input type="text" class="input-field" [(ngModel)]="channelDescription"
             id="channelDescription" name="channelDescription"  placeholder="Dein Text hier">
         <img src="../../../assets/img/header/tag.png" class="tag-icon">
     </div>
