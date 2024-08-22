@@ -11,7 +11,12 @@
                     <img src="{{channelInfo.AllChannelsImages[channelInfo.currentChannelNumber][i]}}"
                         class="selected-img">
                     <span>{{ user }}</span>
-                    <img src="../../../assets/img/sidebar/Offline.png" class="online">
+                    @if(authService.currentUserSignal()?.name == channelInfo.AllChannelsUsers[channelInfo.currentChannelNumber][i] &&
+                        authService.currentUserSignal()?.email == channelInfo.AllChannelsEmails[channelInfo.currentChannelNumber][i]){
+                        <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
+                      }@else {
+                        <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+                      }
                 </div>
             </div>
         </div>

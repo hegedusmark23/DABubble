@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-channel-userlist',
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 export class ChannelUserlistComponent {
 
   channelInfo = inject(SidebarService);
+  authService = inject(AuthService);
 
   closeDialog() {
     this.channelInfo.openUserList = false;
