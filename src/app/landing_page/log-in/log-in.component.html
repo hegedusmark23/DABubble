@@ -10,14 +10,14 @@
     <img class="logo" src="../../../assets/img/landing-page/DABubble-logo.png" alt="daBubble-logo">
 
     <div class="sign-in-section">
-        <p style="padding-right: 10px;" class="fs-18">Neu bei DABubble?</p>
+        <p  class="fs-18">Neu bei DABubble?</p>
         <a class="fs-18 purp-link" href="sign-up">Konto erstellen</a>
     </div>
 
     <div class="login-section">
         <h1 class="fs-46">Anmeldung</h1>
 
-        <p style="max-width: 486px; text-align: center;" class="fs-20">Wir empfehlen dir, die E-Mail-Adresse zu nutzen,
+        <p  class="fs-20">Wir empfehlen dir, die E-Mail-Adresse zu nutzen,
             die du bei der Arbeit verwendest.</p>
 
         <form [formGroup]="form" class="formfield" (ngSubmit)="onSubmit()">
@@ -62,6 +62,11 @@
                 <button (click)="guestLogin()" class="white-btn fs-18 cursor-pointer">Gäste-Login</button>
             </span>
         </form>
+    </div>
+
+    <div class="sign-in-section-phone">
+        <p class="fs-18">Neu bei DABubble?</p>
+        <a class="fs-18 purp-link" href="sign-up">Konto erstellen</a>
     </div>
 
     <div class="legal-section">

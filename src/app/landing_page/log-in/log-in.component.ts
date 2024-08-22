@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'] 
+  styleUrls: ['./log-in.component.scss','./log-in.component-2.scss'] 
 })
 export class LogInComponent {
   authService = inject(AuthService);

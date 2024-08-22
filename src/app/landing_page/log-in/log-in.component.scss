@@ -8,6 +8,10 @@ section {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 .logo {
@@ -26,6 +30,12 @@ section {
     gap: 16px;
 }
 
+.sign-in-section-phone {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
 .sign-in-section {
     display: flex;
     flex-direction: column;
@@ -33,6 +43,10 @@ section {
     top: 50px;
     right: 30px;
     align-items: end;
+
+    p {
+        padding-right: 10px;
+    }
 }
 
 .login-section {
@@ -46,6 +60,11 @@ section {
     max-width: 606px;
     border-radius: 30px;
     gap: 30px;
+
+    p {
+        max-width: 486px;
+        text-align: center
+    }
 }
 
 .formfield {
@@ -246,6 +265,23 @@ section {
     }
 }
 
+@keyframes logoSlidePhone {
+    0% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        top: 50px;
+        left: 30px;
+        transform: translate(0, 0);
+        z-index: 1;
+        height: 50px;
+        width: auto;
+    }
+}
+
 @keyframes logoSlideOriginal {
     0% {
         top: 50%;
@@ -265,37 +301,122 @@ section {
 
 @media (max-width: 1360px) {
 
-    .login-section{
+    .login-section {
         padding: 25px;
 
-        h1{
+        h1 {
             font-size: 40px;
         }
 
-        p{
+        p {
             font-size: 16px;
         }
 
-        a{
+        a {
             font-size: 16px;
         }
 
-        button{
+        button {
             font-size: 16px;
         }
 
-        input{
+        input {
             font-size: 16px;
         }
     }
 
-    .sign-in-section{
-        p{
+    .sign-in-section {
+        p {
             font-size: 16px;
         }
 
-        a{
+        a {
             font-size: 16px;
         }
+    }
+}
+
+@media (max-width: 650px) {
+
+    .login-section {
+        padding: 25px;
+
+        h1 {
+            font-size: 35px;
+        }
+
+        p {
+            font-size: 12px;
+        }
+
+        a {
+            font-size: 12px;
+        }
+
+        button {
+            font-size: 12px;
+        }
+
+        input {
+            font-size: 12px;
+        }
+
+        p {
+            max-width: 400px;
+        }
+    }
+
+    .error-message {
+        font-size: 12px;
+    }
+
+    .sign-in-section {
+        p {
+            font-size: 12px;
+        }
+
+        a {
+            font-size: 12px;
+        }
+    }
+
+    .legal-section {
+        a {
+            font-size: 12px;
+        }
+    }
+
+    .logo {
+        animation: logoSlidePhone;
+        animation-delay: 2500ms;
+        animation-timing-function: ease-in-out;
+        animation-duration: 500ms;
+        animation-fill-mode: forwards;
+    }
+
+    .animated-logo {
+        height: 50px;
+    }
+
+    .input-design {
+        width: 400px;
+        height: 45px;
+    }
+
+    .grey-line {
+        width: 170px;
+    }
+
+    .login-google-btn {
+        width: 400px;
+        height: 45px;
+    }
+
+    .input-icon {
+        top: 15px;
+    }
+
+    .input-icon-lock {
+        top: 11px;
     }
 }
