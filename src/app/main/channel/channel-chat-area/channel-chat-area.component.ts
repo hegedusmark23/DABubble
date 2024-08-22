@@ -40,7 +40,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
+export class ChannelChatAreaComponent implements AfterViewInit {
   authService = inject(AuthService);
 
   allMessagesSortedDate: any = [];
@@ -55,6 +55,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   emojiSelector = false;
   openEditMessage: any = '';
   editedMessage: any;
+  user: any;
 
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
@@ -73,7 +74,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {}
+  setOpenUser() {
+    this.user = this.authService.currentUserSignal()?.uId;
+  }
 
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
@@ -98,7 +101,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         channel = this.setNoteChannel(element.data(), element.id);
         if ((channel.id = this.currentChannelId)) {
           this.currentChannel = channel;
-          console.log(this.currentChannel);
         }
       });
     });
@@ -155,6 +157,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       list.forEach((element) => {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
+      this.setOpenUser();
     });
   }
 
@@ -298,6 +301,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       }
     }
   }
+
   getProfileImg(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
@@ -456,5 +460,13 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   onMessageInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
     this.editedMessage = textarea.value;
+  }
+
+  reacted(id: any) {
+    if (id.includes(this.user)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

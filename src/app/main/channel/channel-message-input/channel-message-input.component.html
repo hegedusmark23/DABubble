@@ -34,8 +34,11 @@
     type="text"
     [(ngModel)]="message.message"
     #messageTextarea
+    (keydown)="onKeyDown($event)"
+    (ngModelChange)="onMessageChange($event)"
     (keydown.enter)="saveMessage()"
   ></textarea>
+
   <div class="inputButtons">
     <div>
       <label class="inputFile">
@@ -195,3 +198,13 @@
   set="twitter"
   [darkMode]="false"
 ></emoji-mart>
+
+<div *ngIf="currentChannel && allUser && tagUserSelector" class="tagContainer">
+  <div *ngFor="let content of allUids">
+    <div class="tagUser" (click)="tagUser(content)">
+      <img src="{{ getUser(content).image }}" />
+      <div>{{ getUser(content).name }}</div>
+    </div>
+  </div>
+  <div *ngIf="this.userSearch">{{ this.userSearch }}</div>
+</div>

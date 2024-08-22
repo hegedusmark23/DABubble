@@ -174,6 +174,7 @@
               *ngIf="splitWords(message.checkMark) > 0"
               class="reaction"
               (click)="addReaction('checkMark', message)"
+              [ngClass]="{ userReacted: reacted(message.checkMark) }"
             >
               <div>{{ splitWords(message.checkMark) }}</div>
               <img src="./../../../../assets/reactions/check-mark.png" />
@@ -183,6 +184,7 @@
               *ngIf="splitWords(message.handshake) > 0"
               class="reaction"
               (click)="addReaction('handshake', message)"
+              [ngClass]="{ userReacted: reacted(message.handshake) }"
             >
               <div>{{ splitWords(message.handshake) }}</div>
               <img src="./../../../../assets/reactions/handshake.png" />
@@ -191,6 +193,7 @@
               *ngIf="splitWords(message.thumbsUp) > 0"
               class="reaction"
               (click)="addReaction('thumbsUp', message)"
+              [ngClass]="{ userReacted: reacted(message.thumbsUp) }"
             >
               <div>{{ splitWords(message.thumbsUp) }}</div>
               <img src="./../../../../assets/reactions/thumbs-up.png" />
@@ -200,6 +203,7 @@
               *ngIf="splitWords(message.thumbsDown) > 0"
               class="reaction"
               (click)="addReaction('thumbsDown', message)"
+              [ngClass]="{ userReacted: reacted(message.thumbsDown) }"
             >
               <div>{{ splitWords(message.thumbsDown) }}</div>
               <img src="./../../../../assets/reactions/thumbs-down.png" />
@@ -209,6 +213,7 @@
               *ngIf="splitWords(message.rocket) > 0"
               class="reaction"
               (click)="addReaction('rocket', message)"
+              [ngClass]="{ userReacted: reacted(message.rocket) }"
             >
               <div>{{ splitWords(message.rocket) }}</div>
               <img src="./../../../../assets/reactions/rocket.png" />
@@ -218,6 +223,7 @@
               *ngIf="splitWords(message.nerdFace) > 0"
               class="reaction"
               (click)="addReaction('nerdFace', message)"
+              [ngClass]="{ userReacted: reacted(message.nerdFace) }"
             >
               <div>{{ splitWords(message.nerdFace) }}</div>
               <img src="./../../../../assets/reactions/nerd-face.png" />
@@ -227,6 +233,7 @@
               *ngIf="splitWords(message.noted) > 0"
               class="reaction"
               (click)="addReaction('noted', message)"
+              [ngClass]="{ userReacted: reacted(message.noted) }"
             >
               <div>{{ splitWords(message.noted) }}</div>
               <img src="./../../../../assets/reactions/noted.png" />
@@ -236,6 +243,7 @@
               *ngIf="splitWords(message.shushingFace) > 0"
               class="reaction"
               (click)="addReaction('shushingFace', message)"
+              [ngClass]="{ userReacted: reacted(message.shushingFace) }"
             >
               <div>{{ splitWords(message.shushingFace) }}</div>
               <img src="./../../../../assets/reactions/shushing-face.png" />
@@ -396,6 +404,7 @@
               *ngIf="splitWords(message.checkMark) > 0"
               class="reaction"
               (click)="addReaction('checkMark', message)"
+              [ngClass]="{ userReacted: reacted(message.checkMark) }"
             >
               <div>{{ splitWords(message.checkMark) }}</div>
               <img src="./../../../../assets/reactions/check-mark.png" />
@@ -405,6 +414,7 @@
               *ngIf="splitWords(message.handshake) > 0"
               class="reaction"
               (click)="addReaction('handshake', message)"
+              [ngClass]="{ userReacted: reacted(message.handshake) }"
             >
               <div>{{ splitWords(message.handshake) }}</div>
               <img src="./../../../../assets/reactions/handshake.png" />
@@ -413,6 +423,7 @@
               *ngIf="splitWords(message.thumbsUp) > 0"
               class="reaction"
               (click)="addReaction('thumbsUp', message)"
+              [ngClass]="{ userReacted: reacted(message.thumbsUp) }"
             >
               <div>{{ splitWords(message.thumbsUp) }}</div>
               <img src="./../../../../assets/reactions/thumbs-up.png" />
@@ -422,6 +433,7 @@
               *ngIf="splitWords(message.thumbsDown) > 0"
               class="reaction"
               (click)="addReaction('thumbsDown', message)"
+              [ngClass]="{ userReacted: reacted(message.thumbsDown) }"
             >
               <div>{{ splitWords(message.thumbsDown) }}</div>
               <img src="./../../../../assets/reactions/thumbs-down.png" />
@@ -431,6 +443,7 @@
               *ngIf="splitWords(message.rocket) > 0"
               class="reaction"
               (click)="addReaction('rocket', message)"
+              [ngClass]="{ userReacted: reacted(message.rocket) }"
             >
               <div>{{ splitWords(message.rocket) }}</div>
               <img src="./../../../../assets/reactions/rocket.png" />
@@ -440,6 +453,7 @@
               *ngIf="splitWords(message.nerdFace) > 0"
               class="reaction"
               (click)="addReaction('nerdFace', message)"
+              [ngClass]="{ userReacted: reacted(message.nerdFace) }"
             >
               <div>{{ splitWords(message.nerdFace) }}</div>
               <img src="./../../../../assets/reactions/nerd-face.png" />
@@ -449,6 +463,7 @@
               *ngIf="splitWords(message.noted) > 0"
               class="reaction"
               (click)="addReaction('noted', message)"
+              [ngClass]="{ userReacted: reacted(message.noted) }"
             >
               <div>{{ splitWords(message.noted) }}</div>
               <img src="./../../../../assets/reactions/noted.png" />
@@ -458,6 +473,7 @@
               *ngIf="splitWords(message.shushingFace) > 0"
               class="reaction"
               (click)="addReaction('shushingFace', message)"
+              [ngClass]="{ userReacted: reacted(message.shushingFace) }"
             >
               <div>{{ splitWords(message.shushingFace) }}</div>
               <img src="./../../../../assets/reactions/shushing-face.png" />

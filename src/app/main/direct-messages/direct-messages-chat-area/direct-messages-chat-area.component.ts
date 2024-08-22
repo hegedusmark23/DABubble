@@ -90,7 +90,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   subMessages() {
-    console.log(this.user, this.messageUser);
     if (this.user && this.messageUser) {
       const q = query(
         collection(
@@ -106,7 +105,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
         list.forEach((element) => {
           this.allMessages.push(this.setNoteObject(element.data(), element.id));
         });
-        console.log(this.allMessages);
         this.sortMessages();
         this.dateLoaded();
       });
@@ -268,7 +266,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   getUsername(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
-      if (element.uid === uid.uid) {
+      if (element.uid == uid) {
         return element.name;
       }
     }
@@ -341,13 +339,9 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
         await updateDoc(messageRef, {
           [variableName]: updatedValue,
         });
-        console.log('Document successfully updated!');
       } else {
-        console.log('No such document!');
       }
-    } catch (err) {
-      console.error('Error updating document: ', err);
-    }
+    } catch (err) {}
   }
 
   async updateMessageVariableTwo(
@@ -355,7 +349,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
     newValue: any,
     variableName: any
   ) {
-    console.log('direcmessages', this.messageUser, this.user, messageId);
     const messageRef = doc(
       this.firestore,
       'direcmessages',
@@ -491,5 +484,13 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   onMessageInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
     this.editedMessage = textarea.value;
+  }
+
+  reacted(message: any) {
+    if (message.includes(this.user)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

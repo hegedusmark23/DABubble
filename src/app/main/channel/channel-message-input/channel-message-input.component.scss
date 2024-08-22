@@ -117,3 +117,22 @@ emoji-mart {
   position: absolute;
   transform: translateY(-618px) translatex(45px);
 }
+
+.tagContainer {
+  position: absolute;
+  transform: translateY(calc(-100% - 146px - 20px - 40px)) translateX(45px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: red;
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+}
+.tagUser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

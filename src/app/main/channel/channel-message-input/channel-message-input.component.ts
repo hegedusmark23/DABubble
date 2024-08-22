@@ -1,6 +1,13 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  Firestore,
+  limit,
+  onSnapshot,
+  query,
+} from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
@@ -25,12 +32,19 @@ export class ChannelMessageInputComponent implements OnInit {
   minute: any;
   user: any;
 
+  currentChannelId: any;
   currentChannel: any;
-
   selectedFile: File | null = null;
   FileUrl: any;
   emojiSelector: any = false;
   authService = inject(AuthService);
+  allUser: any;
+  allUids: any;
+
+  userSearch: any;
+
+  tagUserSelector: boolean = false;
+  tagedUser: any = [];
 
   @ViewChild('messageTextarea') messageTextarea: any;
 
@@ -43,7 +57,9 @@ export class ChannelMessageInputComponent implements OnInit {
   //speichert wercher channel gerade ausgewählt ist
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannel = channel;
+      this.currentChannelId = channel;
+      this.subUser();
+      this.subChannels();
     });
   }
 
@@ -87,7 +103,7 @@ export class ChannelMessageInputComponent implements OnInit {
 
     this.updateDateTime();
     await addDoc(
-      collection(this.firestore, 'Channels', this.currentChannel, 'messages'),
+      collection(this.firestore, 'Channels', this.currentChannelId, 'messages'),
       this.toJSON()
     ).catch((err) => {
       console.error(err);
@@ -171,6 +187,27 @@ export class ChannelMessageInputComponent implements OnInit {
     }, 0);
   }
 
+  insertTag(uid: any) {
+    console.log(this.tagedUser);
+
+    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+
+    // Aktuelle Position des Cursors
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+
+    // Wert des Textarea-Felds aktualisieren
+    this.message.message =
+      textarea.value.substring(0, startPos) +
+      uid +
+      textarea.value.substring(endPos, textarea.value.length);
+
+    // Cursor-Position nach dem Einfügen des Textes setzen
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = startPos + uid.length;
+    }, 0);
+  }
+
   addEmoji($event: any) {
     let element = $event;
     this.insertEmoji(element['emoji'].native);
@@ -178,5 +215,114 @@ export class ChannelMessageInputComponent implements OnInit {
 
   openEmojiSelector() {
     this.emojiSelector = !this.emojiSelector;
+  }
+
+  subUser() {
+    const q = query(collection(this.firestore, 'Users'), limit(1000));
+    onSnapshot(q, (list) => {
+      this.allUser = [];
+      list.forEach((element) => {
+        this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
+      });
+    });
+  }
+  setNoteObjectUser(obj: any, id: string) {
+    return {
+      email: obj.email || '',
+      image: obj.image || '',
+      name: obj.name || '',
+      uid: obj.uid || '',
+    };
+  }
+
+  subChannels() {
+    const q = query(collection(this.firestore, 'Channels'), limit(1000));
+    onSnapshot(q, (list) => {
+      let channel: any;
+      list.forEach((element) => {
+        channel = this.setNoteChannel(element.data(), element.id);
+        if ((channel.id = this.currentChannelId)) {
+          this.currentChannel = channel;
+          this.allUids = this.currentChannel.uids;
+        }
+      });
+    });
+  }
+
+  setNoteChannel(obj: any, id: string) {
+    return {
+      id: id,
+      channelCreator: obj.channelCreator || '',
+      description: obj.description || '',
+      images: obj.images || '',
+      name: obj.name || '',
+      uids: obj.uids || '',
+    };
+  }
+
+  getUser(uid: any) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      const element = this.allUser[i];
+      if (element.uid === uid) {
+        return element;
+      }
+    }
+  }
+
+  tagUser(uid: any) {
+    console.log(uid);
+    // this.insertTag('"@' + this.getUser(uid).name + '" ');
+  }
+
+  onMessageChange(event: any) {}
+
+  onKeyDown(event: KeyboardEvent) {
+    const inputElement = event.target as HTMLTextAreaElement;
+
+    // Verarbeitet den Text nach dem aktuellen Tastendruck
+    setTimeout(() => {
+      const cursorPosition = inputElement.selectionStart;
+      const text = inputElement.value;
+
+      // Finde das letzte @-Zeichen vor oder an der Cursor-Position
+      const atIndex = text.lastIndexOf('@');
+      if (atIndex !== -1) {
+        // Der Text nach dem @-Zeichen bis zum nächsten Leerzeichen oder zum Ende des Strings
+        let textAfterAt = text.substring(atIndex + 1);
+        const spaceIndex = textAfterAt.search(/\s/);
+
+        // Überprüfen, ob der Cursor im Bereich nach dem @-Zeichen ist
+        const isCursorInMentionArea =
+          cursorPosition > atIndex &&
+          (spaceIndex === -1 || cursorPosition <= atIndex + spaceIndex + 1);
+
+        // Setze tagUserSelector basierend auf der Cursor-Position
+        if (isCursorInMentionArea) {
+          this.userSearch = textAfterAt
+            .substring(0, cursorPosition - atIndex - 1)
+            .toLowerCase();
+          this.tagUserSelector = true;
+        } else {
+          this.tagUserSelector = false;
+        }
+
+        // Benutzer basierend auf der Suche filtern
+        this.allUids = [];
+        for (let i = 0; i < this.currentChannel.uids.length; i++) {
+          const element = this.currentChannel.uids[i];
+          const userName = this.getUser(element).name.toLowerCase();
+
+          if (userName.includes(this.userSearch)) {
+            this.allUids.push(element);
+          }
+        }
+
+        console.log(this.allUids);
+        console.log('Text after @:', textAfterAt);
+      } else {
+        // Wenn kein @-Zeichen mehr relevant ist, setze tagUserSelector auf false
+        this.tagUserSelector = false;
+      }
+    }, 0);
   }
 }
