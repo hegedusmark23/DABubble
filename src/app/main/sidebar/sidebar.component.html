@@ -74,7 +74,7 @@
           class="profil-image"
           src="{{ this.sidebarService.AllImages[i] }}"
         />
-        @if(authService.currentUserSignal()?.name == this.sidebarService.AllUsers[i]){
+        @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
           <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
         }@else {
           <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
