@@ -7,24 +7,20 @@
     <div class="arrow"></div>
   </div>
   <div class="header-right">
-    <div class="channelUserContainer" (click)="openUserList()">
-      <div
-        class="channelUser"
-        *ngFor="
-          let userImage of channelInfo.AllChannelsImages[
-            channelInfo.currentChannelNumber
-          ];
-          let i = index
-        "
-      >
-      <!--
+    <div class="channelUserContainer">
+      <div class="channelUser" *ngFor="let userImage of channelInfo.AllChannelsImages[channelInfo.currentChannelNumber]; let i = index">
       @if(channelInfo.AllChannelsImages[channelInfo.currentChannelNumber].length > 0 && i > channelInfo.AllChannelsImages[channelInfo.currentChannelNumber].length -4){
           <img src="{{ userImage }}" class="profil-image" />
         }
-      -->
-        <img src="{{ userImage }}" class="profil-image" />
+      </div>
+      <div class="user-number-container">
+        <span class="fs-18 user-number"[ngClass]="{
+      'user-number-hover': divHover}">{{ userNumber }}</span>
       </div>
     </div>
+    <div class="channelUser-background" [ngClass]="{
+      'channelUser-background-hover': divHover}"></div>
+    <div class ="channelUser-background-top" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
     <div (click)="openAddUserToChannel()" class="add-user-icon">
       <svg
         width="40"

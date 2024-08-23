@@ -31,7 +31,8 @@ export class ChannelHeaderComponent {
   currentChannelId: any;
   currentChannel: any;
   channelInfo = inject(SidebarService);
-  userNumber: number = 0;
+  userNumber: number |  undefined;
+  divHover = false;
 
   constructor(
     private firestore: Firestore,
@@ -62,6 +63,7 @@ export class ChannelHeaderComponent {
         channel = this.setNoteChannel(element.data(), element.id);
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
+          this.userNumber = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber].length;
         }
       });
     });
@@ -77,5 +79,13 @@ export class ChannelHeaderComponent {
       users: obj.users || '',
       emails: obj.emails || ''
     };
+  }
+
+  hover(){
+    this.divHover = true;
+  }
+
+  hoverOff(){
+  this.divHover = false;
   }
 }

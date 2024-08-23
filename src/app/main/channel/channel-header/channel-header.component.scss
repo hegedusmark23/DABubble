@@ -12,7 +12,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 .channelUserContainer {
@@ -21,13 +20,37 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  padding-left: 32px;
-  padding-right: 12px;
   margin-right: 20px;
   border-radius: 30px;
-  &:hover {
-    background-color: #ECEEFE;
-  }
+}
+
+.channelUser-background {
+  width: 150px;
+  height: 55px;
+  border-radius: 100px;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.channelUser-background-hover {
+  background-color: #ECEEFE;
+}
+
+.channelUser-background-top {
+  width: 150px;
+  height: 55px;
+  border-radius: 100px;
+  opacity: 0;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.channelUser {
+  z-index: 1;
 }
 
 .add-user-icon {
@@ -89,6 +112,19 @@
 
 .channel-name {
   font-weight: 700;
+}
+
+.user-number {
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.user-number-hover {
+  color:#535AF1;
+}
+
+.user-number-container {
+  z-index: 1;
 }
 
 
