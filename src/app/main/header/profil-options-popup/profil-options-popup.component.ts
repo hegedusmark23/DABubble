@@ -33,6 +33,7 @@ export class ProfilOptionsPopupComponent {
       this.router.navigate(['/']);
     });
     this.hideOrShowPopUp.popUpOpen = false;
+    this.hideOrShowPopUp.currentChannelNumber = 0;
   }
 
 }

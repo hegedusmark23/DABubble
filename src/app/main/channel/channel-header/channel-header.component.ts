@@ -31,7 +31,7 @@ export class ChannelHeaderComponent {
   currentChannelId: any;
   currentChannel: any;
   channelInfo = inject(SidebarService);
-  userNumber: number |  undefined;
+  userNumber: number = 0;
   divHover = false;
 
   constructor(
@@ -63,11 +63,22 @@ export class ChannelHeaderComponent {
         channel = this.setNoteChannel(element.data(), element.id);
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
-          //this.userNumber = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber].length;
+  
+          if (this.channelInfo.AllChannelsImages && this.channelInfo.currentChannelNumber !== undefined) {
+            const images = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber];
+            if (images) {
+              this.userNumber = images.length;
+            } else {
+              this.userNumber = 0;
+            }
+          } else {
+            this.userNumber = 0;
+          }
         }
       });
     });
   }
+  
 
   setNoteChannel(obj: any, id: string) {
     return {
