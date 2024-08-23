@@ -80,10 +80,15 @@ section {
 
     .logo{
         height: 50px;
+        top: 220px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 430px) {
     .impressum-section{
         padding: 25px;
         h1{
@@ -93,6 +98,10 @@ section {
         p{
             font-size: 12px;
         }
+    }
+
+    .logo{
+        top: 130px;
     }
 
     .arrow-back{
