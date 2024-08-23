@@ -63,7 +63,7 @@ export class ChannelHeaderComponent {
         channel = this.setNoteChannel(element.data(), element.id);
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
-          this.userNumber = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber].length;
+          //this.userNumber = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber].length;
         }
       });
     });
