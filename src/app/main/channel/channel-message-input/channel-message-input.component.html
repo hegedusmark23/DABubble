@@ -29,15 +29,16 @@
   </button>
 </div>
 <div class="content">
-  <textarea
+  <div
+    class="textArea"
+    contenteditable="true"
     placeholder="Nachricht an #Entwicklerteam"
     type="text"
-    [(ngModel)]="message.message"
     #messageTextarea
     (keydown)="onKeyDown($event)"
     (ngModelChange)="onMessageChange($event)"
     (keydown.enter)="saveMessage()"
-  ></textarea>
+  ></div>
 
   <div class="inputButtons">
     <div>

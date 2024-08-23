@@ -93,22 +93,38 @@ export class ChannelMessageInputComponent implements OnInit {
     this.saveFileToCache();
   }
 
-  //erstannt eine nachricht
   async saveMessage() {
+    // Finde das 'contenteditable' Div Element
+    const messageTextarea = document.querySelector('.textArea') as HTMLElement;
+
+    if (messageTextarea) {
+      // Setze den aktuellen Inhalt des Divs in die message.message Variable
+      this.message.message = messageTextarea.innerText || ''; // oder textContent
+    }
+
+    // Überprüfe, ob eine Datei ausgewählt ist und speichere sie
     if (this.selectedFile) {
       await this.saveFile();
       this.addIMG();
       this.deleteFile();
     }
 
+    // Aktualisiere die Zeit
     this.updateDateTime();
+
+    // Speichere die Nachricht in der Firestore-Datenbank
     await addDoc(
       collection(this.firestore, 'Channels', this.currentChannelId, 'messages'),
       this.toJSON()
     ).catch((err) => {
       console.error(err);
     });
+
+    // Leere das message.message Feld und den Inhalt des contenteditable Divs
     this.message.message = '';
+    if (messageTextarea) {
+      messageTextarea.innerText = ''; // oder textContent = '';
+    }
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
@@ -277,12 +293,16 @@ export class ChannelMessageInputComponent implements OnInit {
   onMessageChange(event: any) {}
 
   onKeyDown(event: KeyboardEvent) {
-    const inputElement = event.target as HTMLTextAreaElement;
+    const inputElement = event.target as HTMLElement;
 
-    // Verarbeitet den Text nach dem aktuellen Tastendruck
     setTimeout(() => {
-      const cursorPosition = inputElement.selectionStart;
-      const text = inputElement.value;
+      // Cursor-Position ermitteln
+      const selection = window.getSelection();
+      const range = selection?.getRangeAt(0);
+      const cursorPosition = range?.startOffset || 0;
+
+      // Textinhalt des Divs ermitteln
+      const text = inputElement.innerText || '';
 
       // Finde das letzte @-Zeichen vor oder an der Cursor-Position
       const atIndex = text.lastIndexOf('@');

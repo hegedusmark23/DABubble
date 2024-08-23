@@ -6,7 +6,7 @@
   border-radius: 0 0 30px 30px;
 }
 
-textarea {
+.textArea {
   border: none;
   overflow: auto;
   outline: none;
@@ -16,10 +16,7 @@ textarea {
   box-shadow: none;
 
   resize: none; /*remove the resize handle on the bottom right*/
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
+
   width: 100%;
   border-radius: 20px 20px 0 0;
   border: 1px solid #adb0d9;
