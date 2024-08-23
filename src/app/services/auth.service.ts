@@ -42,12 +42,7 @@ export class AuthService {
           const email = result.user.email ?? 'unknown@example.com';
           const imgUrl = result.user.photoURL ?? '';
           const uId = result.user.uid;
-          this.currentUserSignal.set({
-            name,
-            email,
-            imgUrl,
-            uId,
-          });
+          this.currentUserSignal.set({name,email,imgUrl,uId,});
           console.log("User signed in with Google:", name, email);
           this.saveUser.saveUser(uId, email, name, imgUrl);
         })
