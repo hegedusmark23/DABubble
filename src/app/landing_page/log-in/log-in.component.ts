@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-log-in',
@@ -16,6 +17,7 @@ export class LogInComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
   errorMessage: string | null = null; 
+  userInfo = inject(SidebarService);
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
@@ -28,6 +30,7 @@ export class LogInComponent {
     this.authService.signInWithGoogle().subscribe({
       next: () => {
         this.router.navigateByUrl('/home');
+        this.userInfo.fetchUsers();
       },
       error: (err) => {
         this.errorMessage = err.message;
@@ -39,6 +42,7 @@ guestLogin() {
   this.authService.guestLogin().subscribe({
     next: () => {
       this.router.navigateByUrl('/home');
+      this.userInfo.fetchUsers();
     },
     error: (err) => {
       console.error('Guest login failed:', err);

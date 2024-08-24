@@ -59,20 +59,15 @@ export class AddUserToChannelComponent {
   
   selectUser(i: number) {
     const selectedUid = this.filteredUidList[i];
-  
-    // Prüfen, ob der Benutzer bereits ausgewählt wurde
     if (!this.hideOrShowSidebar.selectedUids.includes(selectedUid)) {
       this.hideOrShowSidebar.selectedUsers.push(this.filteredUserList[i]);
       this.hideOrShowSidebar.selectedImages.push(this.filteredImageList[i]);
       this.hideOrShowSidebar.selectedUids.push(selectedUid);
       this.hideOrShowSidebar.selectedEmails.push(this.filteredEmailList[i]);
-  
-      // Entfernen aus der gefilterten Liste
       this.filteredUserList.splice(i, 1);
       this.filteredImageList.splice(i, 1);
       this.filteredUidList.splice(i, 1);
       this.filteredEmailList.splice(i, 1);
-  
       this.searchTerm = '';
     }
   

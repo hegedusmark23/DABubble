@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { ChannelSelectionService } from './channel-selection.service';
 
 @Injectable({
@@ -21,6 +21,7 @@ export class SidebarService {
   AllEmails: string[] = [];
   AllImages: string[] = [];
   AllUids: string[] = [];
+  AllCreators: string[] = [];
   userList: string[] = [];
   imageList: string[] = [];
   uidList: string[] = [];
@@ -142,6 +143,39 @@ fetchChannels() {
     this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[0]);
   }
 
+
+fetchUsers() {
+    const usersCollection = collection(this.firestore, 'Users');
+    
+    onSnapshot(usersCollection, (querySnapshot) => {
+        this.AllUsers = [];
+        this.AllImages = [];
+        this.AllEmails = [];
+        this.AllUids = [];
+        this.userList = [];
+        this.imageList = [];
+        this.uidList = [];
+        this.emailList = [];
+
+        querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            this.AllUsers.push(userData['name']);
+            this.AllEmails.push(userData['email']);
+            this.AllImages.push(userData['image']);
+            this.AllUids.push(userData['uid']);
+            this.AllCreators.push(userData['channelCreator']);
+            this.userList.push(userData['name']);
+            this.imageList.push(userData['image']);
+            this.uidList.push(userData['uid']);
+            this.emailList.push(userData['email']);
+        });
+    }, (error) => {
+        console.error('Fehler beim Abrufen der Benutzerdaten:', error);
+    });
+  }
+
+
+  /* Alte FetchUsers
   async fetchUsers() {
     this.AllUsers = [];
     this.userList = [];
@@ -162,4 +196,5 @@ fetchChannels() {
       this.emailList.push(userData['email']);
     });
   }
+  */
 }

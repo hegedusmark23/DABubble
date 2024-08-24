@@ -6,13 +6,12 @@
             <div class="close-button" (click)="closeDialog()"></div>
         </div>
         <div class="userlist">
-            <div *ngFor=" let user of channelInfo.AllChannelsUsers[channelInfo.currentChannelNumber]; let i = index">
+            <div *ngFor=" let user of channelInfo.userList; let i = index">
                 <div class="user fs-18" (click)="openUserProfil(i)">
-                    <img src="{{channelInfo.AllChannelsImages[channelInfo.currentChannelNumber][i]}}"
+                    <img src="{{channelInfo.imageList[i]}}"
                         class="selected-img">
                     <span>{{ user }}</span>
-                    @if(authService.currentUserSignal()?.name == channelInfo.AllChannelsUsers[channelInfo.currentChannelNumber][i] &&
-                        authService.currentUserSignal()?.email == channelInfo.AllChannelsEmails[channelInfo.currentChannelNumber][i]){
+                    @if(authService.currentUserSignal()?.uId == channelInfo.uidList[i]){
                         <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                       }@else {
                         <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
