@@ -298,3 +298,10 @@
     align-items: center;
     white-space: nowrap;
 }
+
+.user-name-me {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    transform: translateX(-24px);
+}

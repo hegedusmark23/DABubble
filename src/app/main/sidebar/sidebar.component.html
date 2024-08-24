@@ -81,6 +81,9 @@
         }
         
         <span class="fs-18 user-name">{{ user }}</span>
+        @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          <span class="fs-18 user-name-me">(Du)</span>
+        }
       </div>
     </div>
     }
