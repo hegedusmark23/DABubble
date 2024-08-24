@@ -69,6 +69,17 @@ export class CreateChannelComponent {
 
   closeDialog() {
     this.hideOrShowSidebar.createChannelDialogActive = false;
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+    this.hideOrShowSidebar.selectedUsers = [];
+    this.hideOrShowSidebar.selectedImages = [];
+    this.hideOrShowSidebar.selectedUids = [];
+    this.hideOrShowSidebar.selectedEmails = [];
+    this.searchTerm = '';
+    this.newChannel.name = '';
+    this.newChannel.description = '';
   }
 
   notCloseDialog(e: any) {
@@ -87,6 +98,17 @@ export class CreateChannelComponent {
 
   closeDialogAddUser() {
     this.hideOrShowSidebar.addUserToChanelOpen = false;
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+    this.hideOrShowSidebar.selectedUsers = [];
+    this.hideOrShowSidebar.selectedImages = [];
+    this.hideOrShowSidebar.selectedUids = [];
+    this.hideOrShowSidebar.selectedEmails = [];
+    this.searchTerm = '';
+    this.newChannel.name = '';
+    this.newChannel.description = '';
   }
 
   notCloseDialogAddUser(e: any) {
@@ -211,6 +233,11 @@ deleteUser(i: number) {
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
     this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
     this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+    this.searchTerm = '';
 }
 
 }
