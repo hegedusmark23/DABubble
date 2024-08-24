@@ -68,6 +68,10 @@ export class AddUserToChannelComponent {
       this.filteredImageList.splice(i, 1);
       this.filteredUidList.splice(i, 1);
       this.filteredEmailList.splice(i, 1);
+      this.filteredUserList = [];
+      this.filteredImageList = [];
+      this.filteredUidList = [];
+      this.filteredEmailList = [];
       this.searchTerm = '';
     }
   
@@ -78,6 +82,15 @@ export class AddUserToChannelComponent {
 
   closeDialog() {
     this.hideOrShowSidebar.addUserFromHeaderToChannelOpen = false;
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+    this.hideOrShowSidebar.selectedUsers = [];
+    this.hideOrShowSidebar.selectedImages = [];
+    this.hideOrShowSidebar.selectedUids = [];
+    this.hideOrShowSidebar.selectedEmails = [];
+    this.searchTerm = '';
   }
 
   notCloseDialog(e: any) {
@@ -86,6 +99,15 @@ export class AddUserToChannelComponent {
 
   closeDialogAddUser() {
     this.hideOrShowSidebar.addUserFromHeaderToChannelOpen = false;
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+    this.hideOrShowSidebar.selectedUsers = [];
+    this.hideOrShowSidebar.selectedImages = [];
+    this.hideOrShowSidebar.selectedUids = [];
+    this.hideOrShowSidebar.selectedEmails = [];
+    this.searchTerm = '';
   }
 
   notCloseDialogAddUser(e: any) {
@@ -143,5 +165,9 @@ deleteUser(i: number) {
       this.addUserEnabled = false;
     }
     this.searchTerm = '';
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
   }
 }
