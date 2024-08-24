@@ -203,7 +203,7 @@
 
 <div *ngIf="currentChannel && allUser && tagUserSelector" class="tagContainer">
   <div *ngFor="let content of allUids">
-    <div class="tagUser" (click)="clearTagUser(); tagUser(content)">
+    <div class="tagUser" (click)="clearTagUser(); addTagUser(content)">
       <img src="{{ getUser(content).image }}" />
       <div>{{ getUser(content).name }}</div>
     </div>

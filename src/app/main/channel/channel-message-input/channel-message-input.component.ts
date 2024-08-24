@@ -45,6 +45,7 @@ export class ChannelMessageInputComponent implements OnInit {
 
   tagUserSelector: boolean = false;
   tagedUser: any = [];
+  lastAtPosition: number | null = null;
 
   @ViewChild('messageTextarea') messageTextarea: any;
 
@@ -301,6 +302,9 @@ export class ChannelMessageInputComponent implements OnInit {
     const atIndex = text.lastIndexOf('@');
 
     if (atIndex !== -1) {
+      // Speichere die Position des @-Zeichens
+      this.lastAtPosition = atIndex + 1;
+
       // Finde den Index des nächsten Leerzeichens nach dem @-Zeichen
       const spaceIndex = text.indexOf(' ', atIndex);
 
@@ -328,52 +332,44 @@ export class ChannelMessageInputComponent implements OnInit {
     }
   }
 
-  tagUser(tag: string) {
+  addTagUser(tag: string) {
     // Versuche, das Eingabeelement über die ID zu bekommen
     const inputElement = document.getElementById('input') as HTMLElement;
 
-    // Prüfe, ob das Element existiert
-    if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
+    // Prüfe, ob das Element existiert und die letzte Position des @-Zeichens bekannt ist
+    if (!inputElement || this.lastAtPosition === null) {
+      console.error(
+        'Das Eingabeelement wurde nicht gefunden oder die Position des @-Zeichens ist unbekannt.'
+      );
       return;
     }
 
     // Textinhalt des Divs ermitteln
     const text = inputElement.innerText || '';
 
-    // Finde das letzte @-Zeichen im Text
-    const atIndex = text.lastIndexOf('@');
+    // Bestimme den neuen Text: füge den Tag an der gespeicherten Position ein
+    const newText =
+      text.substring(0, this.lastAtPosition) +
+      tag +
+      ' ' +
+      text.substring(this.lastAtPosition);
 
-    if (atIndex !== -1) {
-      // Finde den Index des nächsten Leerzeichens nach dem @-Zeichen
-      const spaceIndex = text.indexOf(' ', atIndex);
+    // Setze den neuen Text ins Eingabeelement
+    inputElement.innerText = newText;
 
-      // Erstelle ein span-Element mit gelbem Hintergrund, das @ und den Tag enthält
-      const span = document.createElement('span');
-      span.style.backgroundColor = 'yellow';
-      span.textContent = '@' + tag;
+    // Setze den Cursor direkt nach dem eingefügten Tag
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.setStart(
+      inputElement.childNodes[0],
+      this.lastAtPosition + tag.length + 1
+    );
+    range.collapse(true);
+    selection!.removeAllRanges();
+    selection!.addRange(range);
 
-      // Lösche den alten Text bis einschließlich zum @-Zeichen
-      const newText =
-        spaceIndex === -1
-          ? text.substring(0, atIndex)
-          : text.substring(0, atIndex) + text.substring(spaceIndex);
-      inputElement.innerHTML = newText;
-
-      // Füge das span-Element an der richtigen Stelle ein
-      const range = document.createRange();
-      range.setStart(inputElement.childNodes[0], atIndex);
-      range.insertNode(span);
-
-      // Setze den Cursor hinter das eingefügte span
-      const selection = window.getSelection();
-      range.setStartAfter(span);
-      range.collapse(true);
-      selection!.removeAllRanges();
-      selection!.addRange(range);
-    } else {
-      console.log('Kein @-Zeichen gefunden.');
-    }
+    // Leere die Position des @-Zeichens
+    this.lastAtPosition = null;
   }
 
   onMessageChange(event: any) {}

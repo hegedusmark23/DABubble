@@ -128,9 +128,12 @@ emoji-mart {
     height: 40px;
   }
 }
-
 .tagUser {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.highlight {
+  background-color: red;
 }
