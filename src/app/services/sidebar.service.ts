@@ -51,6 +51,48 @@ export class SidebarService {
     private channelSelectionService: ChannelSelectionService
   ) {}
 
+
+fetchChannels() {
+    const channelsCollection = collection(this.firestore, 'Channels');
+    
+    onSnapshot(channelsCollection, (querySnapshot) => {
+        this.AllChannels = [];
+        this.AllChannelsUsers = [];
+        this.AllChannelsEmails = [];
+        this.AllChannelsIds = [];
+        this.AllChannelsImages = [];
+        this.AllChannelsUids = [];
+        this.AllChannelsDescriptions = [];
+        this.AllChannelsCreators = [];
+        this.GlobalChannelUids = [];
+
+        querySnapshot.forEach((doc) => {
+            const channelData = doc.data();
+            this.AllChannels.push(channelData['name']);
+            this.AllChannelsUsers.push(channelData['users']);
+            this.AllChannelsEmails.push(channelData['emails']);
+            this.AllChannelsIds.push(doc.id); 
+            this.AllChannelsImages.push(channelData['images']);
+            this.AllChannelsDescriptions.push(channelData['description']);
+            this.AllChannelsCreators.push(channelData['channelCreator']);
+            this.GlobalChannelUids.push(channelData['uids']);
+
+            const uids = channelData['uids'];
+            if (Array.isArray(uids)) {
+                uids.forEach(uid => {
+                    this.AllChannelsUids.push(uid);
+                });
+            } else {
+                this.AllChannelsUids.push(uids);
+            }
+        });
+        this.setTopChannel();
+    }, (error) => {
+        console.error('Fehler beim Abrufen der Kanaldaten:', error);
+    });
+}
+
+  /* Alte fetchChannels Funktion
   async fetchChannels() {
     this.AllChannels = [];
     this.AllChannelsUsers = [];
@@ -88,55 +130,6 @@ export class SidebarService {
   
     this.setTopChannel();
   }
-
-  /*
-fetchChannels() {
-  this.AllChannels = [];
-  this.AllChannelsUsers = [];
-  this.AllChannelsEmails = [];
-  this.AllChannelsIds = [];
-  this.AllChannelsImages = [];
-  this.AllChannelsUids = [];
-  this.AllChannelsDescriptions = [];
-  this.AllChannelsCreators = [];
-  
-  const channelsCollection = collection(this.firestore, 'Channels');
-  
-  // Echtzeit-Listener für die Channels Collection
-  onSnapshot(channelsCollection, (querySnapshot) => {
-    // Leere die Arrays, bevor neue Daten hinzugefügt werden
-    this.AllChannels = [];
-    this.AllChannelsUsers = [];
-    this.AllChannelsEmails = [];
-    this.AllChannelsIds = [];
-    this.AllChannelsImages = [];
-    this.AllChannelsUids = [];
-    this.AllChannelsDescriptions = [];
-    this.AllChannelsCreators = [];
-
-    // Daten verarbeiten, wenn sie empfangen werden
-    querySnapshot.forEach((doc) => {
-      const channelData = doc.data();
-      this.AllChannels.push(channelData['name']);
-      this.AllChannelsUsers.push(channelData['users']);
-      this.AllChannelsEmails.push(channelData['emails']);
-      this.AllChannelsIds.push(doc.id);  // Firestore Dokument-ID als Channel ID
-      this.AllChannelsImages.push(channelData['images']);
-      this.AllChannelsDescriptions.push(channelData['description']);
-      this.AllChannelsCreators.push(channelData['channelCreator']);
-  
-      const uids = channelData['uids'];
-      if (Array.isArray(uids)) {
-        uids.forEach(uid => {
-          this.AllChannelsUids.push(uid);
-        });
-      } else {
-        this.AllChannelsUids.push(uids);
-      }
-    });
-  });
-}
-
   */
 
   setTopChannel() {
