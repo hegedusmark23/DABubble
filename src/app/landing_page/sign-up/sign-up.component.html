@@ -12,7 +12,7 @@
 
                 <h1 class="fs-46">Konto erstellen</h1>
 
-                <p style="max-width: 486px; text-align: center;" class="fs-20">Mit deinem Namen und deiner
+                <p class="sign-up-description fs-20">Mit deinem Namen und deiner
                     E-Mail-Adresse
                     hast
                     du dein neues DABubble-Konto.</p>
@@ -30,13 +30,16 @@
                 <div class="input-container" style="position: relative;">
                     <img class="input-icon" src="../../../assets/img/landing-page/mail.png" alt="mail">
                     <input formControlName="email" required class="input-design" placeholder="beispielname@email.com"
-                        type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" />
+                        type="email" />
                     <span *ngIf="
                         form.get('email')?.invalid &&
                         (form.get('email')?.dirty || form.get('email')?.touched) &&
                         !errorMessage
                       " class="error-message">
                         *Diese E-Mail-Adresse ist leider ungültig.
+                    </span>
+                    <span *ngIf="errorMessage" class="error-message">
+                        {{errorMessage}}
                     </span>
                 </div>
 
@@ -78,9 +81,9 @@
                         (mouseout)="imgSrcArrow = '../../../assets/img/landing-page/arrow-back.png'"
                         alt="arrow-back"></a>
 
-                <h1 class="fs-46">Wähle deinen Avatar</h1>
+                <h1 class="avatar-title fs-46">Wähle deinen Avatar</h1>
                 @if (imgUrl == '') {
-                <img src="../../../assets/img/landing-page/profile.png" alt="profile">
+                <img class="avatar" src="../../../assets/img/landing-page/profile.png" alt="profile">
                 } @else {
                 <img class="avatar" src="{{imgUrl}}" alt="profile">
                 }

@@ -39,6 +39,7 @@ img {
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
+    word-break: break-all;
 }   
 
 .closed-result-container {

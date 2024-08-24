@@ -13,7 +13,7 @@ import { SaveNewUserService } from '../../services/save-new-user.service';
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss'
+  styleUrls: ['./sign-up.component.scss', 'sign-up.component-2.scss']
 })
 export class SignUpComponent {
   authService = inject(AuthService);
@@ -51,7 +51,7 @@ export class SignUpComponent {
   registerSuccesful: boolean = false
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
-    email: ['', Validators.required],
+    email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
     password: ['', Validators.required],
   })
   
@@ -82,7 +82,8 @@ export class SignUpComponent {
           }, 500);
         }, error: (err) => {
           if (err.code === 'auth/email-already-in-use') {
-            this.errorMessage = 'This email address is already registered. Please use a different email.';
+            this.stepTwo = false;
+            this.errorMessage = 'Diese E-Mail-Adresse ist bereits registriert. Bitte verwenden Sie eine andere E-Mail.';
           } else {
             this.errorMessage = err.code;
           }

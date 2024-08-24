@@ -41,7 +41,7 @@
         (mouseleave)="closeEmojiSelector()"
         *ngIf="message.uid !== authService.currentUserSignal()?.uId"
       >
-        <div class="messageResiveContainer">
+        <div id="{{message.id}}" class="messageResiveContainer">
           <div class="messagecontentContainer">
             <div class="messageResive">
               <div>
@@ -298,7 +298,7 @@
           this.openEditMessage !== message.id
         "
       >
-        <div id="{{ message.id }}" class="messageSendContainer">
+        <div class="messageSendContainer">
           <div class="messagecontentContainerSend">
             <div class="hoverSend d-none">
               <div *ngIf="!emojiselectior" class="hoverContent">

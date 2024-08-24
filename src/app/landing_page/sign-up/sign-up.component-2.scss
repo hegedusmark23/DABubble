@@ -1,0 +1,61 @@
+
+@media (max-width: 460px) {
+    .signUp-section {
+        max-width: 350px;
+
+    }
+
+    .avatar-title{
+        width: 200px;
+        text-align: center;
+    }
+
+    .logo{
+        top: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+    }
+
+    .arrow-back {
+        top: 46px;
+        left: 20px;
+    }
+
+    .formfield .form-container {
+        gap: 20px;
+    }
+
+    .blue-btn{
+        font-size: 12px;
+    }
+
+    .sign-up-description{
+        width: 300px;
+    }
+
+    .default-profile-imgs {
+        width: 40px;
+    }
+    .image-container {
+         gap: 0; 
+    }
+
+    .logo {
+        height: 50px;
+    }
+
+    .input-design {
+        width: 300px;
+        height: 40px;
+    }
+
+    .input-icon {
+        top: 15px;
+    }
+
+    .input-icon-lock {
+        top: 11px;
+    }
+}
