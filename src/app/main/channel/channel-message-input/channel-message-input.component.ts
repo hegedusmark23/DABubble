@@ -328,6 +328,54 @@ export class ChannelMessageInputComponent implements OnInit {
     }
   }
 
+  tagUser(tag: string) {
+    // Versuche, das Eingabeelement über die ID zu bekommen
+    const inputElement = document.getElementById('input') as HTMLElement;
+
+    // Prüfe, ob das Element existiert
+    if (!inputElement) {
+      console.error('Das Eingabeelement wurde nicht gefunden.');
+      return;
+    }
+
+    // Textinhalt des Divs ermitteln
+    const text = inputElement.innerText || '';
+
+    // Finde das letzte @-Zeichen im Text
+    const atIndex = text.lastIndexOf('@');
+
+    if (atIndex !== -1) {
+      // Finde den Index des nächsten Leerzeichens nach dem @-Zeichen
+      const spaceIndex = text.indexOf(' ', atIndex);
+
+      // Erstelle ein span-Element mit gelbem Hintergrund, das @ und den Tag enthält
+      const span = document.createElement('span');
+      span.style.backgroundColor = 'yellow';
+      span.textContent = '@' + tag;
+
+      // Lösche den alten Text bis einschließlich zum @-Zeichen
+      const newText =
+        spaceIndex === -1
+          ? text.substring(0, atIndex)
+          : text.substring(0, atIndex) + text.substring(spaceIndex);
+      inputElement.innerHTML = newText;
+
+      // Füge das span-Element an der richtigen Stelle ein
+      const range = document.createRange();
+      range.setStart(inputElement.childNodes[0], atIndex);
+      range.insertNode(span);
+
+      // Setze den Cursor hinter das eingefügte span
+      const selection = window.getSelection();
+      range.setStartAfter(span);
+      range.collapse(true);
+      selection!.removeAllRanges();
+      selection!.addRange(range);
+    } else {
+      console.log('Kein @-Zeichen gefunden.');
+    }
+  }
+
   onMessageChange(event: any) {}
 
   onKeyDown(event: KeyboardEvent) {
