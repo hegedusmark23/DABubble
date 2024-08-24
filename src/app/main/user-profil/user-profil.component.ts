@@ -17,6 +17,7 @@ export class UserProfilComponent {
   authService = inject(AuthService);
   userOnline = true;
   userEmail = 'udgfuid gi@uhegi.eoig';
+  Gast = 'Gast';
 
   constructor(
     public directMessageSelectionService: DirectMessageSelectionService,
