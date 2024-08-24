@@ -34,10 +34,10 @@ export class SidebarService {
   openUserList = false;
   addAllUsersToChannel = true;
   addSelectedUsersToChannel = false;
-  selectedUsers: any[] = [];
-  selectedImages: any[] = [];
-  selectedUids: any[] = [];
-  selectedEmails: any[] = [];
+  selectedUsers: string[] = [];
+  selectedImages: string[] = [];
+  selectedUids: string[] = [];
+  selectedEmails: string[] = [];
   activeUser = '';
   activeImage = '';
   activeEmail = '';
