@@ -93,7 +93,8 @@ export class ChannelMessageInputComponent implements OnInit {
     this.saveFileToCache();
   }
 
-  async saveMessage() {
+  async saveMessage(event: any) {
+    event?.preventDefault();
     // Finde das 'contenteditable' Div Element
     const messageTextarea = document.querySelector('.textArea') as HTMLElement;
 
@@ -204,8 +205,6 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   insertTag(uid: any) {
-    console.log(this.tagedUser);
-
     const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
 
     // Aktuelle Position des Cursors
@@ -285,9 +284,48 @@ export class ChannelMessageInputComponent implements OnInit {
     }
   }
 
-  tagUser(uid: any) {
-    console.log(uid);
-    // this.insertTag('"@' + this.getUser(uid).name + '" ');
+  clearTagUser() {
+    // Versuche, das Eingabeelement über die ID zu bekommen
+    const inputElement = document.getElementById('input') as HTMLElement;
+
+    // Prüfe, ob das Element existiert
+    if (!inputElement) {
+      console.error('Das Eingabeelement wurde nicht gefunden.');
+      return;
+    }
+
+    // Textinhalt des Divs ermitteln
+    const text = inputElement.innerText || '';
+
+    // Finde das letzte @-Zeichen im Text
+    const atIndex = text.lastIndexOf('@');
+
+    if (atIndex !== -1) {
+      // Finde den Index des nächsten Leerzeichens nach dem @-Zeichen
+      const spaceIndex = text.indexOf(' ', atIndex);
+
+      // Bestimme den neuen Text: bis zum @-Zeichen +1 (damit das @ bestehen bleibt)
+      // und hänge den Text nach dem Leerzeichen (falls vorhanden) an
+      const newText =
+        spaceIndex === -1
+          ? text.substring(0, atIndex + 1) // Falls kein Leerzeichen gefunden, alles nach @ löschen
+          : text.substring(0, atIndex + 1) + text.substring(spaceIndex);
+
+      inputElement.innerText = newText;
+
+      // Setze den Cursor nach dem @-Zeichen
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.setStart(inputElement.childNodes[0], atIndex + 1);
+      range.collapse(true);
+      selection!.removeAllRanges();
+      selection!.addRange(range);
+
+      // Setze tagUserSelector auf false, da der Text nach dem @-Zeichen entfernt wurde
+      this.tagUserSelector = false;
+    } else {
+      console.log('Kein @-Zeichen gefunden.');
+    }
   }
 
   onMessageChange(event: any) {}
@@ -304,23 +342,28 @@ export class ChannelMessageInputComponent implements OnInit {
       // Textinhalt des Divs ermitteln
       const text = inputElement.innerText || '';
 
-      // Finde das letzte @-Zeichen vor oder an der Cursor-Position
-      const atIndex = text.lastIndexOf('@');
+      // Finde das @-Zeichen, das vor dem aktuellen Cursor steht
+      let atIndex = -1;
+      for (let i = cursorPosition - 1; i >= 0; i--) {
+        if (text[i] === '@') {
+          atIndex = i;
+          break;
+        }
+      }
+
       if (atIndex !== -1) {
         // Der Text nach dem @-Zeichen bis zum nächsten Leerzeichen oder zum Ende des Strings
-        let textAfterAt = text.substring(atIndex + 1);
+        let textAfterAt = text.substring(atIndex + 1, cursorPosition);
         const spaceIndex = textAfterAt.search(/\s/);
 
         // Überprüfen, ob der Cursor im Bereich nach dem @-Zeichen ist
         const isCursorInMentionArea =
           cursorPosition > atIndex &&
-          (spaceIndex === -1 || cursorPosition <= atIndex + spaceIndex + 1);
+          (spaceIndex === -1 || cursorPosition <= atIndex + textAfterAt.length);
 
         // Setze tagUserSelector basierend auf der Cursor-Position
         if (isCursorInMentionArea) {
-          this.userSearch = textAfterAt
-            .substring(0, cursorPosition - atIndex - 1)
-            .toLowerCase();
+          this.userSearch = textAfterAt.toLowerCase();
           this.tagUserSelector = true;
         } else {
           this.tagUserSelector = false;
@@ -337,7 +380,6 @@ export class ChannelMessageInputComponent implements OnInit {
           }
         }
 
-        console.log(this.allUids);
         console.log('Text after @:', textAfterAt);
       } else {
         // Wenn kein @-Zeichen mehr relevant ist, setze tagUserSelector auf false
