@@ -384,7 +384,7 @@ export class ChannelMessageInputComponent implements OnInit {
           );
 
           const span = document.createElement('span');
-          span.className = 'highlight';
+          span.className = 'tagHighlight';
           span.textContent = '@' + tag;
           span.contentEditable = 'false';
 
