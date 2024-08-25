@@ -257,7 +257,8 @@ export class ChannelMessageInputComponent implements OnInit {
       let channel: any;
       list.forEach((element) => {
         channel = this.setNoteChannel(element.data(), element.id);
-        if ((channel.id = this.currentChannelId)) {
+
+        if (channel.id == this.currentChannelId) {
           this.currentChannel = channel;
           this.allUids = this.currentChannel.uids;
         }
@@ -335,7 +336,7 @@ export class ChannelMessageInputComponent implements OnInit {
   addTagUser(tag: string) {
     // Versuche, das Eingabeelement über die ID zu bekommen
     const inputElement = document.getElementById('input') as HTMLElement;
-
+  
     // Prüfe, ob das Element existiert und die letzte Position des @-Zeichens bekannt ist
     if (!inputElement || this.lastAtPosition === null) {
       console.error(
@@ -343,34 +344,42 @@ export class ChannelMessageInputComponent implements OnInit {
       );
       return;
     }
-
+  
     // Textinhalt des Divs ermitteln
     const text = inputElement.innerText || '';
-
-    // Bestimme den neuen Text: füge den Tag an der gespeicherten Position ein
-    const newText =
-      text.substring(0, this.lastAtPosition) +
-      tag +
-      ' ' +
-      text.substring(this.lastAtPosition);
-
+  
+    // Erstelle das span-Element mit der Klasse highlight und füge das @-Zeichen und den Tag hinzu
+    const span = document.createElement('span');
+    span.className = 'highlight';
+    span.textContent = '@' + tag;
+    span.contentEditable = 'false'; // Markiere das span-Element als nicht bearbeitbar
+  
+    // Lösche den Text nach der Position des @-Zeichens
+    const beforeText = text.substring(0, this.lastAtPosition - 1); // -1, um das @-Zeichen zu berücksichtigen
+  
     // Setze den neuen Text ins Eingabeelement
-    inputElement.innerText = newText;
-
-    // Setze den Cursor direkt nach dem eingefügten Tag
+    inputElement.innerHTML = ''; // Leere das Eingabeelement
+    inputElement.appendChild(document.createTextNode(beforeText)); // Füge den Text vor dem Tag hinzu
+    inputElement.appendChild(span); // Füge das span-Element hinzu
+  
+    // Füge den Text " User" nach dem span hinzu
+    const userText = document.createTextNode(' User');
+    inputElement.appendChild(userText);
+  
+    // Setze den Cursor direkt nach " User"
     const range = document.createRange();
     const selection = window.getSelection();
-    range.setStart(
-      inputElement.childNodes[0],
-      this.lastAtPosition + tag.length + 1
-    );
+    range.setStartAfter(userText); // Cursor nach " User" setzen
     range.collapse(true);
     selection!.removeAllRanges();
     selection!.addRange(range);
-
+  
     // Leere die Position des @-Zeichens
     this.lastAtPosition = null;
   }
+  
+  
+  
 
   onMessageChange(event: any) {}
 
@@ -418,7 +427,7 @@ export class ChannelMessageInputComponent implements OnInit {
         for (let i = 0; i < this.currentChannel.uids.length; i++) {
           const element = this.currentChannel.uids[i];
           const userName = this.getUser(element).name.toLowerCase();
-
+          console.log(this.currentChannel.uids);
           if (userName.includes(this.userSearch)) {
             this.allUids.push(element);
           }
