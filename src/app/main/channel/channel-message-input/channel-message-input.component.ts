@@ -336,7 +336,7 @@ export class ChannelMessageInputComponent implements OnInit {
   addTagUser(tag: string) {
     // Versuche, das Eingabeelement über die ID zu bekommen
     const inputElement = document.getElementById('input') as HTMLElement;
-  
+
     // Prüfe, ob das Element existiert und die letzte Position des @-Zeichens bekannt ist
     if (!inputElement || this.lastAtPosition === null) {
       console.error(
@@ -344,28 +344,38 @@ export class ChannelMessageInputComponent implements OnInit {
       );
       return;
     }
-  
+
     // Textinhalt des Divs ermitteln
-    const text = inputElement.innerText || '';
-  
+    const text = this.getTextWithoutSpans(inputElement) || '';
+
     // Erstelle das span-Element mit der Klasse highlight und füge das @-Zeichen und den Tag hinzu
     const span = document.createElement('span');
     span.className = 'highlight';
     span.textContent = '@' + tag;
     span.contentEditable = 'false'; // Markiere das span-Element als nicht bearbeitbar
-  
-    // Lösche den Text nach der Position des @-Zeichens
+
+    // Position zum Einfügen des neuen span-Elements ermitteln
     const beforeText = text.substring(0, this.lastAtPosition - 1); // -1, um das @-Zeichen zu berücksichtigen
-  
-    // Setze den neuen Text ins Eingabeelement
-    inputElement.innerHTML = ''; // Leere das Eingabeelement
-    inputElement.appendChild(document.createTextNode(beforeText)); // Füge den Text vor dem Tag hinzu
-    inputElement.appendChild(span); // Füge das span-Element hinzu
-  
+    const afterText = text.substring(this.lastAtPosition - 1); // Alles nach der Position des @-Zeichens
+
+    // Leere das Eingabeelement
+    inputElement.innerHTML = '';
+
+    // Füge den Text vor dem Tag hinzu
+    inputElement.appendChild(document.createTextNode(beforeText));
+
+    // Füge das span-Element hinzu
+    inputElement.appendChild(span);
+
+    // Füge den restlichen Text nach dem Tag hinzu
+    inputElement.appendChild(
+      document.createTextNode(afterText.replace(/@$/, ''))
+    ); // Entferne eventuell nachfolgendes @
+
     // Füge den Text " User" nach dem span hinzu
-    const userText = document.createTextNode(' User');
+    const userText = document.createTextNode(' ');
     inputElement.appendChild(userText);
-  
+
     // Setze den Cursor direkt nach " User"
     const range = document.createRange();
     const selection = window.getSelection();
@@ -373,13 +383,11 @@ export class ChannelMessageInputComponent implements OnInit {
     range.collapse(true);
     selection!.removeAllRanges();
     selection!.addRange(range);
-  
+
     // Leere die Position des @-Zeichens
     this.lastAtPosition = null;
+    this.tagUserSelector = false;
   }
-  
-  
-  
 
   onMessageChange(event: any) {}
 
@@ -387,34 +395,52 @@ export class ChannelMessageInputComponent implements OnInit {
     const inputElement = event.target as HTMLElement;
 
     setTimeout(() => {
-      // Cursor-Position ermitteln
       const selection = window.getSelection();
       const range = selection?.getRangeAt(0);
-      const cursorPosition = range?.startOffset || 0;
 
-      // Textinhalt des Divs ermitteln
-      const text = inputElement.innerText || '';
+      // Berechne die tatsächliche Cursor-Position über den gesamten Textinhalt
+      let cursorPosition = 0;
+      const iterator = document.createNodeIterator(
+        inputElement,
+        NodeFilter.SHOW_TEXT,
+        null
+      );
+      let currentNode;
+      let foundCursor = false;
 
-      // Finde das @-Zeichen, das vor dem aktuellen Cursor steht
-      let atIndex = -1;
-      for (let i = cursorPosition - 1; i >= 0; i--) {
-        if (text[i] === '@') {
-          atIndex = i;
-          break;
+      while ((currentNode = iterator.nextNode()) && !foundCursor) {
+        if (currentNode === range?.startContainer) {
+          cursorPosition += range.startOffset;
+          foundCursor = true;
+        } else {
+          cursorPosition += currentNode.textContent?.length || 0;
         }
       }
 
+      // Debugging: Originaler Text im Input-Element
+      const originalText = inputElement.textContent || '';
+      console.log('Original Text:', originalText);
+
+      // Text ohne Spans
+      const text = this.getTextWithoutSpans(inputElement) || '';
+      console.log('Text ohne Spans:', text);
+
+      // Überprüfe berechnete Cursor-Position
+      console.log('Berechnete Cursor Position:', cursorPosition);
+
+      // Finde das letzte @-Zeichen vor dem Cursor
+      let atIndex = text.lastIndexOf('@', cursorPosition - 1);
+      console.log('Index of last @:', atIndex);
+
       if (atIndex !== -1) {
-        // Der Text nach dem @-Zeichen bis zum nächsten Leerzeichen oder zum Ende des Strings
         let textAfterAt = text.substring(atIndex + 1, cursorPosition);
+        console.log('Text after @:', textAfterAt);
         const spaceIndex = textAfterAt.search(/\s/);
 
-        // Überprüfen, ob der Cursor im Bereich nach dem @-Zeichen ist
         const isCursorInMentionArea =
           cursorPosition > atIndex &&
           (spaceIndex === -1 || cursorPosition <= atIndex + textAfterAt.length);
 
-        // Setze tagUserSelector basierend auf der Cursor-Position
         if (isCursorInMentionArea) {
           this.userSearch = textAfterAt.toLowerCase();
           this.tagUserSelector = true;
@@ -422,12 +448,10 @@ export class ChannelMessageInputComponent implements OnInit {
           this.tagUserSelector = false;
         }
 
-        // Benutzer basierend auf der Suche filtern
         this.allUids = [];
         for (let i = 0; i < this.currentChannel.uids.length; i++) {
           const element = this.currentChannel.uids[i];
           const userName = this.getUser(element).name.toLowerCase();
-          console.log(this.currentChannel.uids);
           if (userName.includes(this.userSearch)) {
             this.allUids.push(element);
           }
@@ -435,9 +459,23 @@ export class ChannelMessageInputComponent implements OnInit {
 
         console.log('Text after @:', textAfterAt);
       } else {
-        // Wenn kein @-Zeichen mehr relevant ist, setze tagUserSelector auf false
         this.tagUserSelector = false;
       }
     }, 0);
+  }
+
+  getTextWithoutSpans(element: HTMLElement): string {
+    let text = '';
+    element.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        text += node.textContent || '';
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = node as HTMLElement;
+        if (el.tagName !== 'SPAN') {
+          text += this.getTextWithoutSpans(el);
+        }
+      }
+    });
+    return text;
   }
 }
