@@ -10,7 +10,11 @@
                 <div class="user fs-18" (click)="openUserProfil(i)">
                     <img src="{{channelInfo.AllChannelsImages[channelInfo.currentChannelNumber][i]}}"
                         class="selected-img">
-                    <span>{{ user }}</span>
+                    @if(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i] == authService.currentUserSignal()?.uId){
+                        <span>{{ authService.currentUserSignal()?.name }}</span>
+                    }@else{
+                        <span>{{ user }}</span>
+                    }
                     @if(authService.currentUserSignal()?.uId == channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]){
                         <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                       }@else {
