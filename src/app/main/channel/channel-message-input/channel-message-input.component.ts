@@ -296,37 +296,53 @@ export class ChannelMessageInputComponent implements OnInit {
       return;
     }
 
-    // Textinhalt des Divs ermitteln
-    const text = inputElement.innerText || '';
+    // Finde das letzte @-Zeichen im gesamten Inhalt (inklusive Text und Span-Elementen)
+    let atIndex = -1;
+    let currentIndex = 0;
 
-    // Finde das letzte @-Zeichen im Text
-    const atIndex = text.lastIndexOf('@');
+    inputElement.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const nodeText = node.textContent || '';
+        const localAtIndex = nodeText.lastIndexOf('@');
+        if (localAtIndex !== -1) {
+          atIndex = currentIndex + localAtIndex;
+        }
+        currentIndex += nodeText.length;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        currentIndex += (node as HTMLElement).innerText.length;
+      }
+    });
 
     if (atIndex !== -1) {
-      // Speichere die Position des @-Zeichens
       this.lastAtPosition = atIndex + 1;
-
-      // Finde den Index des nächsten Leerzeichens nach dem @-Zeichen
-      const spaceIndex = text.indexOf(' ', atIndex);
-
-      // Bestimme den neuen Text: bis zum @-Zeichen +1 (damit das @ bestehen bleibt)
-      // und hänge den Text nach dem Leerzeichen (falls vorhanden) an
-      const newText =
-        spaceIndex === -1
-          ? text.substring(0, atIndex + 1) // Falls kein Leerzeichen gefunden, alles nach @ löschen
-          : text.substring(0, atIndex + 1) + text.substring(spaceIndex);
-
-      inputElement.innerText = newText;
 
       // Setze den Cursor nach dem @-Zeichen
       const range = document.createRange();
       const selection = window.getSelection();
-      range.setStart(inputElement.childNodes[0], atIndex + 1);
-      range.collapse(true);
-      selection!.removeAllRanges();
-      selection!.addRange(range);
 
-      // Setze tagUserSelector auf false, da der Text nach dem @-Zeichen entfernt wurde
+      let nodeIndex = 0;
+      let found = false;
+
+      inputElement.childNodes.forEach((node) => {
+        if (found) return;
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          if (nodeIndex + node.textContent!.length >= this.lastAtPosition!) {
+            range.setStart(node, this.lastAtPosition! - nodeIndex);
+            range.collapse(true);
+            found = true;
+          }
+          nodeIndex += node.textContent!.length;
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          nodeIndex += (node as HTMLElement).innerText.length;
+        }
+      });
+
+      if (found) {
+        selection!.removeAllRanges();
+        selection!.addRange(range);
+      }
+
       this.tagUserSelector = false;
     } else {
       console.log('Kein @-Zeichen gefunden.');
@@ -345,46 +361,54 @@ export class ChannelMessageInputComponent implements OnInit {
       return;
     }
 
-    // Textinhalt des Divs ermitteln
-    const text = this.getTextWithoutSpans(inputElement) || '';
+    let nodeIndex = 0;
+    let found = false;
 
-    // Erstelle das span-Element mit der Klasse highlight und füge das @-Zeichen und den Tag hinzu
-    const span = document.createElement('span');
-    span.className = 'highlight';
-    span.textContent = '@' + tag;
-    span.contentEditable = 'false'; // Markiere das span-Element als nicht bearbeitbar
+    inputElement.childNodes.forEach((node) => {
+      if (found) return;
 
-    // Position zum Einfügen des neuen span-Elements ermitteln
-    const beforeText = text.substring(0, this.lastAtPosition - 1); // -1, um das @-Zeichen zu berücksichtigen
-    const afterText = text.substring(this.lastAtPosition - 1); // Alles nach der Position des @-Zeichens
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (nodeIndex + node.textContent!.length >= this.lastAtPosition!) {
+          // Teile den Textknoten an der Stelle des @-Zeichens
+          const textBeforeAt = node.textContent!.substring(
+            0,
+            this.lastAtPosition! - 1
+          );
+          const textAfterAt = node.textContent!.substring(this.lastAtPosition!);
 
-    // Leere das Eingabeelement
-    inputElement.innerHTML = '';
+          const span = document.createElement('span');
+          span.className = 'highlight';
+          span.textContent = '@' + tag;
+          span.contentEditable = 'false';
 
-    // Füge den Text vor dem Tag hinzu
-    inputElement.appendChild(document.createTextNode(beforeText));
+          const afterSpanText = document.createTextNode(textAfterAt);
 
-    // Füge das span-Element hinzu
-    inputElement.appendChild(span);
+          // Ersetze den Textknoten mit dem neuen Inhalt
+          const parent = node.parentNode!;
+          parent.replaceChild(afterSpanText, node);
+          parent.insertBefore(span, afterSpanText);
+          parent.insertBefore(document.createTextNode(textBeforeAt), span);
 
-    // Füge den restlichen Text nach dem Tag hinzu
-    inputElement.appendChild(
-      document.createTextNode(afterText.replace(/@$/, ''))
-    ); // Entferne eventuell nachfolgendes @
+          found = true;
+        }
+        nodeIndex += node.textContent!.length;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        nodeIndex += (node as HTMLElement).innerText.length;
+      }
+    });
 
-    // Füge den Text " User" nach dem span hinzu
-    const userText = document.createTextNode(' ');
-    inputElement.appendChild(userText);
-
-    // Setze den Cursor direkt nach " User"
+    // Setze den Cursor nach dem eingefügten Tag
     const range = document.createRange();
     const selection = window.getSelection();
-    range.setStartAfter(userText); // Cursor nach " User" setzen
+
+    const lastTextNode =
+      inputElement.childNodes[inputElement.childNodes.length - 1];
+    range.setStartAfter(lastTextNode);
     range.collapse(true);
     selection!.removeAllRanges();
     selection!.addRange(range);
 
-    // Leere die Position des @-Zeichens
+    // Reset der Position des @-Zeichens und des Tag-Selectors
     this.lastAtPosition = null;
     this.tagUserSelector = false;
   }
