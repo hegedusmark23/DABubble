@@ -447,22 +447,15 @@ export class ChannelMessageInputComponent implements OnInit {
 
       // Debugging: Originaler Text im Input-Element
       const originalText = inputElement.textContent || '';
-      console.log('Original Text:', originalText);
 
       // Text ohne Spans
       const text = this.getTextWithoutSpans(inputElement) || '';
-      console.log('Text ohne Spans:', text);
-
-      // Überprüfe berechnete Cursor-Position
-      console.log('Berechnete Cursor Position:', cursorPosition);
 
       // Finde das letzte @-Zeichen vor dem Cursor
       let atIndex = text.lastIndexOf('@', cursorPosition - 1);
-      console.log('Index of last @:', atIndex);
 
       if (atIndex !== -1) {
         let textAfterAt = text.substring(atIndex + 1, cursorPosition);
-        console.log('Text after @:', textAfterAt);
         const spaceIndex = textAfterAt.search(/\s/);
 
         const isCursorInMentionArea =
@@ -484,8 +477,6 @@ export class ChannelMessageInputComponent implements OnInit {
             this.allUids.push(element);
           }
         }
-
-        console.log('Text after @:', textAfterAt);
       } else {
         this.tagUserSelector = false;
       }
