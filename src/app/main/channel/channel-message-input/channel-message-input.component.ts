@@ -287,16 +287,13 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   clearTagUser() {
-    // Versuche, das Eingabeelement über die ID zu bekommen
     const inputElement = document.getElementById('input') as HTMLElement;
 
-    // Prüfe, ob das Element existiert
     if (!inputElement) {
       console.error('Das Eingabeelement wurde nicht gefunden.');
       return;
     }
 
-    // Finde das letzte @-Zeichen im gesamten Inhalt (inklusive Text und Span-Elementen)
     let atIndex = -1;
     let currentIndex = 0;
 
@@ -316,32 +313,43 @@ export class ChannelMessageInputComponent implements OnInit {
     if (atIndex !== -1) {
       this.lastAtPosition = atIndex + 1;
 
-      // Setze den Cursor nach dem @-Zeichen
-      const range = document.createRange();
-      const selection = window.getSelection();
-
-      let nodeIndex = 0;
       let found = false;
+      currentIndex = 0;
 
       inputElement.childNodes.forEach((node) => {
         if (found) return;
 
         if (node.nodeType === Node.TEXT_NODE) {
-          if (nodeIndex + node.textContent!.length >= this.lastAtPosition!) {
-            range.setStart(node, this.lastAtPosition! - nodeIndex);
-            range.collapse(true);
+          const nodeText = node.textContent || '';
+          if (currentIndex + nodeText.length >= this.lastAtPosition!) {
+            const indexInNode = this.lastAtPosition! - currentIndex;
+
+            // Text nach dem @ löschen
+            node.textContent = nodeText.substring(0, indexInNode);
+
             found = true;
           }
-          nodeIndex += node.textContent!.length;
+          currentIndex += nodeText.length;
         } else if (node.nodeType === Node.ELEMENT_NODE) {
-          nodeIndex += (node as HTMLElement).innerText.length;
+          currentIndex += (node as HTMLElement).innerText.length;
         }
       });
 
-      if (found) {
-        selection!.removeAllRanges();
-        selection!.addRange(range);
+      const range = document.createRange();
+      const selection = window.getSelection();
+      let lastTextNode =
+        inputElement.childNodes[inputElement.childNodes.length - 1];
+
+      // Wenn das letzte Element kein Textknoten ist, füge einen neuen leeren Textknoten hinzu
+      if (lastTextNode.nodeType !== Node.TEXT_NODE) {
+        lastTextNode = document.createTextNode('');
+        inputElement.appendChild(lastTextNode);
       }
+
+      range.setStart(lastTextNode, lastTextNode.textContent!.length);
+      range.collapse(true);
+      selection!.removeAllRanges();
+      selection!.addRange(range);
 
       this.tagUserSelector = false;
     } else {
@@ -350,10 +358,8 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   addTagUser(tag: string) {
-    // Versuche, das Eingabeelement über die ID zu bekommen
     const inputElement = document.getElementById('input') as HTMLElement;
 
-    // Prüfe, ob das Element existiert und die letzte Position des @-Zeichens bekannt ist
     if (!inputElement || this.lastAtPosition === null) {
       console.error(
         'Das Eingabeelement wurde nicht gefunden oder die Position des @-Zeichens ist unbekannt.'
@@ -368,13 +374,14 @@ export class ChannelMessageInputComponent implements OnInit {
       if (found) return;
 
       if (node.nodeType === Node.TEXT_NODE) {
-        if (nodeIndex + node.textContent!.length >= this.lastAtPosition!) {
-          // Teile den Textknoten an der Stelle des @-Zeichens
-          const textBeforeAt = node.textContent!.substring(
-            0,
-            this.lastAtPosition! - 1
+        const textContent = node.textContent || '';
+        const atPositionInNode = this.lastAtPosition! - 1 - nodeIndex;
+
+        if (nodeIndex + textContent.length >= this.lastAtPosition!) {
+          const textBeforeAt = textContent.substring(0, atPositionInNode);
+          const textAfterAt = textContent.substring(
+            this.lastAtPosition! - nodeIndex
           );
-          const textAfterAt = node.textContent!.substring(this.lastAtPosition!);
 
           const span = document.createElement('span');
           span.className = 'highlight';
@@ -383,7 +390,6 @@ export class ChannelMessageInputComponent implements OnInit {
 
           const afterSpanText = document.createTextNode(textAfterAt);
 
-          // Ersetze den Textknoten mit dem neuen Inhalt
           const parent = node.parentNode!;
           parent.replaceChild(afterSpanText, node);
           parent.insertBefore(span, afterSpanText);
@@ -391,13 +397,12 @@ export class ChannelMessageInputComponent implements OnInit {
 
           found = true;
         }
-        nodeIndex += node.textContent!.length;
+        nodeIndex += textContent.length;
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         nodeIndex += (node as HTMLElement).innerText.length;
       }
     });
 
-    // Setze den Cursor nach dem eingefügten Tag
     const range = document.createRange();
     const selection = window.getSelection();
 
@@ -408,7 +413,6 @@ export class ChannelMessageInputComponent implements OnInit {
     selection!.removeAllRanges();
     selection!.addRange(range);
 
-    // Reset der Position des @-Zeichens und des Tag-Selectors
     this.lastAtPosition = null;
     this.tagUserSelector = false;
   }
