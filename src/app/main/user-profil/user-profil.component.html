@@ -10,12 +10,15 @@
         </div>
         <div class="name-container">
             <div class="name-edit">
-                <span class="user-name fs-32">{{ this.hideOrShowSidebar.activeUser }}</span>
+                @if(this.hideOrShowSidebar.activeUid == authService.currentUserSignal()?.uId){
+                    <span class="user-name fs-32">{{ authService.currentUserSignal()?.name }}</span>
+                }@else{
+                    <span class="user-name fs-32">{{ this.hideOrShowSidebar.activeUser }}</span>
+                }
             </div>
             <div class="online">
-                @if((authService.currentUserSignal()?.name == this.hideOrShowSidebar.activeUser &&
-                    authService.currentUserSignal()?.email == this.hideOrShowSidebar.activeEmail)
-                    || this.hideOrShowSidebar.activeUser == 'Gast'){
+                @if(this.hideOrShowSidebar.activeUid == authService.currentUserSignal()?.uId ||
+                this.hideOrShowSidebar.activeUser == 'Gast'){
                         <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                         <span class="fs-20">Aktiv</span>
                       }@else {
@@ -30,7 +33,11 @@
                 <span class="fs-20 email-adress-title">E-Mail-Adresse</span>
             </div>
             <div class="email-adress-container">
-                <span class="fs-18">{{ this.hideOrShowSidebar.activeEmail }}</span>
+                @if(this.hideOrShowSidebar.activeUid == authService.currentUserSignal()?.uId){
+                    <span class="fs-18">{{ authService.currentUserSignal()?.email }}</span>
+                }@else{
+                    <span class="fs-18">{{ this.hideOrShowSidebar.activeEmail }}</span>
+                }
             </div>
         </div>
 
