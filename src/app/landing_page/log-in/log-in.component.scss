@@ -115,6 +115,13 @@ section {
     top: 19px
 }
 
+.input-icon-reveal{
+    position: absolute;
+    right: 25px;
+    top: 19px;
+    height: 25px;
+}
+
 .separator {
     display: flex;
     flex-direction: row;
@@ -402,6 +409,7 @@ section {
     .input-design {
         width: 400px;
         height: 45px;
+        text-indent: 60px;
     }
 
     .grey-line {
@@ -411,6 +419,10 @@ section {
     .login-google-btn {
         width: 400px;
         height: 45px;
+    }
+
+    .input-icon-reveal{
+        top: 11px;
     }
 
     .input-icon {

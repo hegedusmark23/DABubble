@@ -92,6 +92,13 @@ section {
     top: 19px
 }
 
+.input-icon-reveal{
+    position: absolute;
+    right: 25px;
+    top: 19px;
+    height: 25px;
+}
+
 .btn-container {
     display: flex;
     gap: 30px;
@@ -336,6 +343,10 @@ input[type="file"] {
         .input-icon-lock {
             top: 11px;
         }
+
+        .input-icon-reveal {
+            top: 10px;
+        }
     }
 }
 
@@ -403,6 +414,7 @@ input[type="file"] {
     .input-design {
         width: 350px;
         height: 40px;
+        text-indent: 60px;
     }
 
     .input-icon {
@@ -413,6 +425,10 @@ input[type="file"] {
     .input-icon-lock {
         top: 11px;
         height: 15px;
+    }
+
+    .input-icon-reveal {
+        top: 8px;
     }
 }
 

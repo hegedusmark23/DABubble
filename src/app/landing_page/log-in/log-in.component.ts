@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
+import { RevealPasswordService } from '../../services/reveal-password.service';
 
 @Component({
   selector: 'app-log-in',
@@ -18,6 +19,7 @@ export class LogInComponent {
   fb = inject(FormBuilder);
   errorMessage: string | null = null; 
   userInfo = inject(SidebarService);
+  revealPasswordService = inject(RevealPasswordService)
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
@@ -25,6 +27,7 @@ export class LogInComponent {
   });
 
   constructor() {}
+  
 
   googleSignIn() {
     this.authService.signInWithGoogle().subscribe({

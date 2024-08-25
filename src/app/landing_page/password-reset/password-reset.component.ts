@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RevealPasswordService } from '../../services/reveal-password.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -16,6 +17,7 @@ export class PasswordResetComponent {
   fb = inject(FormBuilder);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  revealPasswordService = inject(RevealPasswordService)
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
   succes: boolean = false
   errorMessage: string | null = null;

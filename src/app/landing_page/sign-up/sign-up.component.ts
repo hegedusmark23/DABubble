@@ -7,6 +7,7 @@ import {Location} from '@angular/common';
 import { getStorage, ref } from "firebase/storage";
 import { deleteObject, getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { SaveNewUserService } from '../../services/save-new-user.service';
+import { RevealPasswordService } from '../../services/reveal-password.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,6 +21,7 @@ export class SignUpComponent {
   router = inject(Router);
   fb = inject(FormBuilder);
   saveUser = inject(SaveNewUserService);
+  revealPasswordService = inject(RevealPasswordService)
 
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
   imgSrcCheck: string = '../../../assets/img/landing-page/checkbox-unchecked.png';

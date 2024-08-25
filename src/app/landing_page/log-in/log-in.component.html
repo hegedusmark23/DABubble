@@ -32,7 +32,8 @@
 
             <div class="input-container" style="position: relative;">
                 <img class="input-icon-lock" src="../../../assets/img/landing-page/lock.png" alt="">
-                <input formControlName="password" class="input-design" placeholder="Passwort" type="password">
+                <img (click)="revealPasswordService.togglePassword()" class="input-icon-reveal" src="{{revealPasswordService.imgUrl}}" alt="">
+                <input maxlength="21" formControlName="password" class="input-design" placeholder="Passwort" type="{{revealPasswordService.type}}">
                 <span
                     *ngIf="form.get('password')?.invalid && (form.get('password')?.dirty || form.get('password')?.touched)"
                     class="error-message">
