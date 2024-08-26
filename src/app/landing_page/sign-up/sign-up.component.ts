@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { getStorage, ref } from "firebase/storage";
 import { deleteObject, getDownloadURL, uploadBytesResumable } from '@angular/fire/storage';
 import { SaveNewUserService } from '../../services/save-new-user.service';
@@ -30,7 +30,7 @@ export class SignUpComponent {
   imgSrcUncheckedHover: string = '../../../assets/img/landing-page/checkbox-unchecked-hover.png';
   imgSrcCheckedHover: string = '../../../assets/img/landing-page/checkbox-checked-hover.png';
 
-  profileImgsSrc: string[]  = [
+  profileImgsSrc: string[] = [
     '../../../assets/img/profile-imgs/female1.png',
     '../../../assets/img/profile-imgs/female2.png',
     '../../../assets/img/profile-imgs/male1.png',
@@ -41,8 +41,8 @@ export class SignUpComponent {
   stepTwo: boolean = false;
   isClicked: boolean = false;
   isHoveringOver: boolean = false;
-  public submitted:boolean = false;
-  imgUrl: string  = '';
+  public submitted: boolean = false;
+  imgUrl: string = '';
   errorMessage: string | null = null;
   selectedFileCache: File | null = null;
   selectectUrlCache: any;
@@ -50,22 +50,32 @@ export class SignUpComponent {
   selectedFile: File | null = null;
   selectectUrl: any;
   selectetFileName: any;
-  registerSuccesful: boolean = false
+  registerSuccesful: boolean = false;
+  imgChosen: boolean = false;
+
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
     password: ['', Validators.required],
   })
-  
+
   constructor(private _location: Location) {
     this.updateImageSrc();
+  }
+
+  observeImgChosen() {
+    if (this.imgUrl == '') {
+      this.imgChosen = false;
+    } else {
+      this.imgChosen = true;
+    }
   }
 
   goBack() {
     this._location.back();
   }
 
-  toggleStep(){
+  toggleStep() {
     this.stepTwo = !this.stepTwo
   }
 
@@ -94,8 +104,9 @@ export class SignUpComponent {
     };
   }
 
-  chooseAvatar(profileImg: string){
+  chooseAvatar(profileImg: string) {
     this.imgUrl = profileImg;
+    this.observeImgChosen();
   }
 
   onFileSelected(event: any) {
@@ -129,6 +140,7 @@ export class SignUpComponent {
       );
       this.selectetFileNameCache = this.selectedFileCache;
       this.selectectUrlCache = imageUrl;
+      this.observeImgChosen();
     } else {
       console.error('No file selected');
     }
@@ -141,7 +153,7 @@ export class SignUpComponent {
     return new Promise<string>((resolve, reject) => {
       uploadTask.on(
         'state_changed',
-        (snapshot) => {},
+        (snapshot) => { },
         (error) => {
           reject(error);
         },
@@ -162,7 +174,7 @@ export class SignUpComponent {
     return new Promise<string>((resolve, reject) => {
       uploadTask.on(
         'state_changed',
-        (snapshot) => {},
+        (snapshot) => { },
         (error) => {
           reject(error);
         },
@@ -189,7 +201,7 @@ export class SignUpComponent {
       });
   }
 
-  mouseOver(){
+  mouseOver() {
     if (this.imgSrcCheck == "../../../assets/img/landing-page/checkbox-unchecked.png") {
       this.imgSrcCheck = "../../../assets/img/landing-page/checkbox-unchecked-hover.png"
     } else {
@@ -197,10 +209,10 @@ export class SignUpComponent {
     }
   }
 
-  mouseOut(){
+  mouseOut() {
     if (this.imgSrcCheck == "../../../assets/img/landing-page/checkbox-unchecked-hover.png") {
       this.imgSrcCheck = "../../../assets/img/landing-page/checkbox-unchecked.png"
-    } else if (this.imgSrcCheck == "../../../assets/img/landing-page/checkbox-checked-hover.png" || this.isClicked ) {
+    } else if (this.imgSrcCheck == "../../../assets/img/landing-page/checkbox-checked-hover.png" || this.isClicked) {
       this.imgSrcCheck = "../../../assets/img/landing-page/checkbox-checked.png"
     }
   }
@@ -217,5 +229,5 @@ export class SignUpComponent {
       this.imgSrcCheck = this.imgSrcUnchecked;
     }
   }
-  
+
 }
