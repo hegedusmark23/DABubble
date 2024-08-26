@@ -127,13 +127,17 @@
         <span>Erstellt von</span>
       </div>
       <div>
-        <span class="creator-name">
-          {{
-            this.channelInfo.AllChannelsCreators[
-              this.channelInfo.currentChannelNumber
-            ]
-          }}
-        </span>
+        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreators[channelInfo.currentChannelNumber]){
+          <span class="creator-name">{{this.authService.currentUserSignal()?.name}}</span>
+        }@else {
+          <span class="creator-name">
+            {{
+              this.channelInfo.AllCreators[
+                this.channelInfo.currentChannelNumber
+              ]
+            }}
+          </span>
+        }
       </div>
     </div>
     <div class="content-edit" *ngIf="this.editChannelDescriptionOpen">
@@ -149,9 +153,9 @@
       <div class="nameHeader edit-description">
         <span>Erstellt von</span>
       </div>
-      <div *ngFor="let creator of channelInfo.AllChannelsCreators[channelInfo.currentChannelNumber]; let i = index">
-        @if(creator == this.authService.currentUserSignal()?.uId){
-          <span class="creator-name">{{this.channelInfo.AllCreators[this.channelInfo.currentChannelNumber]}}</span>
+      <div>
+        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreators[channelInfo.currentChannelNumber]){
+          <span class="creator-name">{{this.authService.currentUserSignal()?.name}}</span>
         }@else {
           <span class="creator-name">
             {{
