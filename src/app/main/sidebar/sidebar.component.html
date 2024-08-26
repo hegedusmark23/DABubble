@@ -45,35 +45,26 @@
       [ngClass]="{ 'scroll-container-users': activetedChannelTitle , 'scroll-container-users-max': !activetedChannelTitle }">
       @if(usersTitleActive){
       <div>
-        <div class="user-name-container" *ngFor="let user of sidebarService.AllUsers; let i = index"
+        <div *ngFor="let user of sidebarService.AllUsers; let i = index"
           (click)="userActive(i)">
           @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
-          <img class="profil-image-user" src="{{ this.sidebarService.AllImages[i] }}" />
-          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          <div class="user-name-container">
+            <img class="profil-image-user" src="{{ this.sidebarService.AllImages[i] }}" />
           <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
-          }@else {
-          <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
-          }
           <span class="fs-18 user-name">{{ user }}</span>
-          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
           <span class="fs-18 user-name-me">(Du)</span>
-          }
+          </div>
           }
         </div>
       </div>
       <div>
-        <div class="user-list" *ngFor="let user of sidebarService.AllUsers; let i = index" (click)="userActive(i)">
+        <div *ngFor="let user of sidebarService.AllUsers; let i = index" (click)="userActive(i)">
           @if(authService.currentUserSignal()?.uId !== this.sidebarService.AllUids[i]){
-          <img class="profil-image" src="{{ this.sidebarService.AllImages[i] }}" />
-          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
-          <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
-          }@else {
-          <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
-          }
-          <span class="fs-18 user-name">{{ user }}</span>
-          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
-          <span class="fs-18 user-name-me">(Du)</span>
-          }
+            <div class="user-list" >
+                <img class="profil-image" src="{{ this.sidebarService.AllImages[i] }}" />
+                <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+                <span class="fs-18 user-name">{{ user }}</span>
+            </div>
           }
         </div>
       </div>
