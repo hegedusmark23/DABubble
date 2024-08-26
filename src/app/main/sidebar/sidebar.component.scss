@@ -291,6 +291,19 @@
     &:hover {
         background-color: #ECEEFE;
     }
+    &:active {
+        background-color: #ECEEFE;
+        cursor: pointer;
+        span {
+            font-weight: 700;
+            color: rgba(83, 90, 241, 1);
+        }
+    }
+}
+
+.user-active {
+    font-weight: 700;
+    color: rgba(83, 90, 241, 1);
 }
 
 .user-name-container {

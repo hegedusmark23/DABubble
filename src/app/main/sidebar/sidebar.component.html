@@ -51,8 +51,8 @@
           <div class="user-name-container">
             <img class="profil-image-user" src="{{ this.sidebarService.AllImages[i] }}" />
           <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
-          <span class="fs-18 user-name">{{ user }}</span>
-          <span class="fs-18 user-name-me">(Du)</span>
+          <span class="fs-18 user-name" [ngClass]="{ 'user-active': activeUserIndex === i }">{{ user }}</span>
+          <span class="fs-18 user-name-me" [ngClass]="{ 'user-active': activeUserIndex === i }">(Du)</span>
           </div>
           }
         </div>
@@ -63,7 +63,7 @@
             <div class="user-list" >
                 <img class="profil-image" src="{{ this.sidebarService.AllImages[i] }}" />
                 <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
-                <span class="fs-18 user-name">{{ user }}</span>
+                <span class="fs-18 user-name" [ngClass]="{ 'user-active': activeUserIndex === i }">{{ user }}</span>
             </div>
           }
         </div>
