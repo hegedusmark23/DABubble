@@ -127,12 +127,12 @@
         <span>Erstellt von</span>
       </div>
       <div>
-        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreators[channelInfo.currentChannelNumber]){
+        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){
           <span class="creator-name">{{this.authService.currentUserSignal()?.name}}</span>
         }@else {
           <span class="creator-name">
             {{
-              this.channelInfo.AllCreators[
+              this.channelInfo.AllChannelsCreatorsNames[
                 this.channelInfo.currentChannelNumber
               ]
             }}
@@ -154,12 +154,12 @@
         <span>Erstellt von</span>
       </div>
       <div>
-        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreators[channelInfo.currentChannelNumber]){
+        @if(this.authService.currentUserSignal()?.uId == channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){
           <span class="creator-name">{{this.authService.currentUserSignal()?.name}}</span>
         }@else {
           <span class="creator-name">
             {{
-              this.channelInfo.AllCreators[
+              this.channelInfo.AllChannelsCreatorsNames[
                 this.channelInfo.currentChannelNumber
               ]
             }}

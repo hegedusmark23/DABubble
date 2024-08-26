@@ -16,7 +16,8 @@ export class SidebarService {
   AllChannelsUids: string[] = [];
   GlobalChannelUids: string[] = [];
   AllChannelsDescriptions: string[] = [];
-  AllChannelsCreators: string[] = [];
+  AllChannelsCreatorsNames: string[] = [];
+  AllChannelsCreatorsUids: string[] = [];
   AllUsers: string[] = [];
   AllEmails: string[] = [];
   AllImages: string[] = [];
@@ -64,7 +65,8 @@ fetchChannels() {
         this.AllChannelsImages = [];
         this.AllChannelsUids = [];
         this.AllChannelsDescriptions = [];
-        this.AllChannelsCreators = [];
+        this.AllChannelsCreatorsNames = [];
+        this.AllChannelsCreatorsUids = [];
         this.GlobalChannelUids = [];
 
         querySnapshot.forEach((doc) => {
@@ -75,7 +77,8 @@ fetchChannels() {
             this.AllChannelsIds.push(doc.id); 
             this.AllChannelsImages.push(channelData['images']);
             this.AllChannelsDescriptions.push(channelData['description']);
-            this.AllChannelsCreators.push(channelData['channelCreator']);
+            this.AllChannelsCreatorsNames.push(channelData['channelCreatorName']);
+            this.AllChannelsCreatorsUids.push(channelData['channelCreatorUid']);
             this.GlobalChannelUids.push(channelData['uids']);
 
             const uids = channelData['uids'];
