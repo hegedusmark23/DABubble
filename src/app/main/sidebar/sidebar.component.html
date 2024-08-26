@@ -64,7 +64,7 @@
       </div>
     </div>
     @if(usersTitleActive){
-    <div class="scroll-container-users">
+    <div [ngClass]="{ 'scroll-container-users': activetedChannelTitle , 'scroll-container-users-max': !activetedChannelTitle }">
       <div
         class="user-list"
         *ngFor="let user of sidebarService.AllUsers; let i = index"
