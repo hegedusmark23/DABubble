@@ -176,7 +176,7 @@ export class CreateChannelComponent {
         uids: this.hideOrShowSidebar.uidList,
         emails: this.hideOrShowSidebar.emailList,
         images: this.hideOrShowSidebar.imageList,
-        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
+        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.uId || 'Gast'
       };
     } else {
       return {
@@ -187,7 +187,7 @@ export class CreateChannelComponent {
         uids: this.hideOrShowSidebar.selectedUids,
         emails: this.hideOrShowSidebar.selectedEmails,
         images: this.hideOrShowSidebar.selectedImages,
-        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.name || ''
+        channelCreator: this.newChannel.channelCreator = this.authService.currentUserSignal()?.uId || 'Gast'
       };
     }
   }
