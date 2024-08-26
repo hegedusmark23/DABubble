@@ -1,10 +1,7 @@
-<div
-  class="sidebar-container"
-  [ngClass]="{
+<div class="sidebar-container" [ngClass]="{
     'sidebar-container-open': !sidebarService.sidebarOpen,
     'sidebar-container-close': sidebarService.sidebarOpen
-  }"
->
+  }">
   <div class="header">
     <img src="../../../assets/img/sidebar/Workspace logo.png" />
     <span class="title">Devspace</span>
@@ -13,36 +10,19 @@
   <div class="menu">
     <div class="channels-container">
       <div class="channels-title-container">
-        <div
-          (click)="activeteChannelTitle()"
-          [ngClass]="{
+        <div (click)="activeteChannelTitle()" [ngClass]="{
             'channels-title': !activetedChannelTitle,
             'channels-title-active': activetedChannelTitle
-          }"
-        ></div>
+          }"></div>
         <div class="add-channel-button" (click)="addChannel()"></div>
       </div>
       @if(activetedChannelTitle){
       <div class="scroll-container">
-        <div
-          class="channel-list"
-          *ngFor="let channel of sidebarService.AllChannels; let i = index"
-        >
-          <div
-            class="channel"
-            (click)="channelActive(i)"
-            [ngClass]="{ 'channel-active': activeChannelIndex === i }"
-          >
-            <div
-              class="raute"
-              [ngClass]="{ 'raute-active': activeChannelIndex === i }"
-            ></div>
-            <span
-              class="channel-title fs-18"
-              [ngClass]="{ 'channel-title-active': activeChannelIndex === i }"
-              class="channel-title fs-18"
-              >{{ channel }}</span
-            >
+        <div class="channel-list" *ngFor="let channel of sidebarService.AllChannels; let i = index">
+          <div class="channel" (click)="channelActive(i)" [ngClass]="{ 'channel-active': activeChannelIndex === i }">
+            <div class="raute" [ngClass]="{ 'raute-active': activeChannelIndex === i }"></div>
+            <span class="channel-title fs-18" [ngClass]="{ 'channel-title-active': activeChannelIndex === i }"
+              class="channel-title fs-18">{{ channel }}</span>
           </div>
         </div>
       </div>
@@ -55,37 +35,49 @@
     </div>
     <div class="users-container">
       <div class="users-title-container" (click)="openUsersList()">
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'users-title': !usersTitleActive,
             'users-title-active': usersTitleActive
-          }"
-        ></div>
+          }"></div>
       </div>
     </div>
-    @if(usersTitleActive){
-    <div [ngClass]="{ 'scroll-container-users': activetedChannelTitle , 'scroll-container-users-max': !activetedChannelTitle }">
-      <div
-        class="user-list"
-        *ngFor="let user of sidebarService.AllUsers; let i = index"
-        (click)="userActive(i)"
-      >
-        <img
-          class="profil-image"
-          src="{{ this.sidebarService.AllImages[i] }}"
-        />
-        @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+    <div
+      [ngClass]="{ 'scroll-container-users': activetedChannelTitle , 'scroll-container-users-max': !activetedChannelTitle }">
+      @if(usersTitleActive){
+      <div>
+        <div class="user-name-container" *ngFor="let user of sidebarService.AllUsers; let i = index"
+          (click)="userActive(i)">
+          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          <img class="profil-image-user" src="{{ this.sidebarService.AllImages[i] }}" />
+          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
           <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
-        }@else {
+          }@else {
           <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
-        }
-        
-        <span class="fs-18 user-name">{{ user }}</span>
-        @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          }
+          <span class="fs-18 user-name">{{ user }}</span>
+          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
           <span class="fs-18 user-name-me">(Du)</span>
-        }
+          }
+          }
+        </div>
       </div>
+      <div>
+        <div class="user-list" *ngFor="let user of sidebarService.AllUsers; let i = index" (click)="userActive(i)">
+          @if(authService.currentUserSignal()?.uId !== this.sidebarService.AllUids[i]){
+          <img class="profil-image" src="{{ this.sidebarService.AllImages[i] }}" />
+          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
+          }@else {
+          <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+          }
+          <span class="fs-18 user-name">{{ user }}</span>
+          @if(authService.currentUserSignal()?.uId == this.sidebarService.AllUids[i]){
+          <span class="fs-18 user-name-me">(Du)</span>
+          }
+          }
+        </div>
+      </div>
+      }
     </div>
-    }
   </div>
 </div>
