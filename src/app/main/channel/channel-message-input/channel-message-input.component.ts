@@ -389,11 +389,38 @@ export class ChannelMessageInputComponent implements OnInit {
           span.contentEditable = 'false';
 
           const afterSpanText = document.createTextNode(textAfterAt);
-
           const parent = node.parentNode!;
+
+          // Textknoten vor und nach dem span einfügen
+          const beforeSpanText = document.createTextNode(
+            textBeforeAt || '\u200B'
+          ); // Zero-width space
+          const afterSpanPlaceholder = document.createTextNode('\u200B'); // Zero-width space
+
           parent.replaceChild(afterSpanText, node);
           parent.insertBefore(span, afterSpanText);
-          parent.insertBefore(document.createTextNode(textBeforeAt), span);
+          parent.insertBefore(beforeSpanText, span);
+          parent.insertBefore(afterSpanPlaceholder, afterSpanText);
+
+          // Löschevent hinzufügen
+          span.addEventListener('keydown', function (event) {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
+              if (
+                event.key === 'Backspace' &&
+                beforeSpanText.textContent === '\u200B'
+              ) {
+                parent.removeChild(span);
+                event.preventDefault();
+              }
+              if (
+                event.key === 'Delete' &&
+                afterSpanPlaceholder.textContent === '\u200B'
+              ) {
+                parent.removeChild(span);
+                event.preventDefault();
+              }
+            }
+          });
 
           found = true;
         }
@@ -403,11 +430,12 @@ export class ChannelMessageInputComponent implements OnInit {
       }
     });
 
+    // Nach dem Einfügen den Cursor richtig setzen
     const range = document.createRange();
     const selection = window.getSelection();
-
     const lastTextNode =
       inputElement.childNodes[inputElement.childNodes.length - 1];
+
     range.setStartAfter(lastTextNode);
     range.collapse(true);
     selection!.removeAllRanges();
