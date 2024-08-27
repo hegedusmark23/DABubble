@@ -36,10 +36,14 @@ export class SearchFieldComponent {
         this.channels = await this.searchService.searchChannels(this.searchTerm);
         this.users = await this.searchService.searchUsers(this.searchTerm);
         const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
-        this.messages = rawMessages.map(message => ({
-          ...message,
-          message: this.getMessage(message)
-        }));
+        this.messages = rawMessages.map(message => {
+          const username = this.getUsername(message.uid); 
+          return {
+            ...message,
+            message: this.getMessage(message),  
+            username: username 
+          };
+        });
         this.isSearching = true;
       } else {
         this.channels = [];
