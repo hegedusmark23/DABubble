@@ -31,9 +31,12 @@
         @if (messages.length > 0) {
         <h2>Nachrichten:</h2>
         <ul>
-            <li *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
-                <small>{{ message.username }} -</small> <!-- Felhasználó neve megjelenítése -->
-                <span class="result" [innerHTML]="highlight(message.message)"></span>
+            <li class="result" *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
+                <div class="result-user-container">
+                    <img [src]="message.userImage" alt="{{message.username}}" class="search-result-avatar">
+                    <span><b>{{ message.username }}:</b></span>
+                </div>
+                <span [innerHTML]="highlight(message.message)"></span>
             </li>
         </ul>
         }
@@ -45,4 +48,3 @@
     </div>
 
 </div>
-

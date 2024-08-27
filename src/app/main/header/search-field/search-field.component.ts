@@ -36,14 +36,19 @@ export class SearchFieldComponent {
         this.channels = await this.searchService.searchChannels(this.searchTerm);
         this.users = await this.searchService.searchUsers(this.searchTerm);
         const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
+    
+        // Feldolgozzuk az üzeneteket a helyesített megjelenítéshez és hozzáadjuk a felhasználói adatokat
         this.messages = rawMessages.map(message => {
-          const username = this.getUsername(message.uid); 
+          const username = this.getUsername(message.uid);
+          const userImage = this.getUserImage(message.uid);
           return {
             ...message,
-            message: this.getMessage(message),  
-            username: username 
+            message: this.getMessage(message),
+            username: username,
+            userImage: userImage,
           };
         });
+        
         this.isSearching = true;
       } else {
         this.channels = [];
@@ -60,19 +65,23 @@ export class SearchFieldComponent {
       (match: any, p1: any) => {
         const username = this.getUsername(p1);
         if (message.uid !== this.authService.currentUserSignal()?.uId) {
-          return `<span><b>@${username}</b></span>`;
+          return `<b>@${username}</b>`;
         } else {
-          return `<span><b>@${username}</b></span>`;
+          return `<b>@${username}</b>`;
         }
       }
     );
-  
     return modifiedMessage;
   }
   
   getUsername(uid: string): string {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllUsers[index] : 'Unknown User';
+  }
+  
+  getUserImage(uid: string): string {
+    const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
+    return index !== -1 ? this.hideOrShowSidebar.AllImages[index] : 'default-image-url';
   }
 
   highlight(text: string): SafeHtml {
