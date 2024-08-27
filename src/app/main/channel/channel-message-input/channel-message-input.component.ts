@@ -148,6 +148,7 @@ export class ChannelMessageInputComponent implements OnInit {
     if (messageTextarea) {
       messageTextarea.innerText = ''; // oder textContent = '';
     }
+    this.tagUserSelector = false;
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
