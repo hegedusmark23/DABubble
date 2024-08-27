@@ -96,12 +96,33 @@ export class ChannelMessageInputComponent implements OnInit {
 
   async saveMessage(event: any) {
     event?.preventDefault();
+    this.tagUserSelector = false;
+
     // Finde das 'contenteditable' Div Element
     const messageTextarea = document.querySelector('.textArea') as HTMLElement;
 
     if (messageTextarea) {
-      // Setze den aktuellen Inhalt des Divs in die message.message Variable
-      this.message.message = messageTextarea.innerText || ''; // oder textContent
+      const children = messageTextarea.childNodes;
+      let result = '';
+
+      children.forEach((child) => {
+        if (
+          child.nodeType === Node.ELEMENT_NODE &&
+          (child as HTMLElement).tagName === 'SPAN'
+        ) {
+          // Es ist ein span-Element, extrahiere das data-uid
+          const uid = (child as HTMLElement).getAttribute('data-uid');
+          if (uid) {
+            result += `@${uid} `;
+          }
+        } else if (child.nodeType === Node.TEXT_NODE) {
+          // Es ist ein Textknoten, füge den Textinhalt hinzu
+          result += child.textContent;
+        }
+      });
+
+      // Speichere das Ergebnis in der message.message Variable
+      this.message.message = result.trim(); // Ergebnis z.B.: "asddasd @zqk0MWq9TcWYUdYtXpTTKsnFro12 sdasad @7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2"
     }
 
     // Überprüfe, ob eine Datei ausgewählt ist und speichere sie
@@ -357,7 +378,7 @@ export class ChannelMessageInputComponent implements OnInit {
     }
   }
 
-  addTagUser(tag: string) {
+  addTagUser(tag: string, uid: any) {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement || this.lastAtPosition === null) {
@@ -387,6 +408,7 @@ export class ChannelMessageInputComponent implements OnInit {
           span.className = 'tagHighlight';
           span.textContent = '@' + tag;
           span.contentEditable = 'false';
+          span.setAttribute('data-uid', uid);
 
           const afterSpanText = document.createTextNode(textAfterAt);
           const parent = node.parentNode!;
@@ -524,5 +546,42 @@ export class ChannelMessageInputComponent implements OnInit {
       }
     });
     return text;
+  }
+
+  openTag() {
+    const inputElement = document.getElementById('input') as HTMLElement;
+
+    if (!inputElement) {
+      console.error('Das Eingabeelement wurde nicht gefunden.');
+      return;
+    }
+
+    // @-Zeichen erstellen
+    const atSymbol = document.createTextNode('@');
+
+    // Sicherstellen, dass der letzte Textknoten ohne das @ existiert
+    const lastChild =
+      inputElement.childNodes[inputElement.childNodes.length - 1];
+    if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
+      lastChild.textContent += '@';
+    } else {
+      inputElement.appendChild(atSymbol);
+    }
+
+    // Cursor nach dem @-Zeichen setzen
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    range.setStartAfter(
+      inputElement.childNodes[inputElement.childNodes.length - 1]
+    );
+    range.collapse(true);
+
+    selection!.removeAllRanges();
+    selection!.addRange(range);
+
+    // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
+    this.lastAtPosition = inputElement.innerText.length;
+    this.tagUserSelector = true;
   }
 }

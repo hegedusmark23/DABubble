@@ -118,7 +118,7 @@
           </g>
         </svg>
       </div>
-      <div>
+      <div (click)="openTag()">
         <svg
           width="24"
           height="24"
@@ -202,14 +202,23 @@
 ></emoji-mart>
 
 <div *ngIf="currentChannel && allUser && tagUserSelector" class="tagContainer">
-  <div *ngFor="let content of allUids">
+  <div class="userListTitle">Mitglieder</div>
+  <div class="userListTitle" *ngIf="allUids < 1">Kein Benutzer gefunden</div>
+
+  <div class="tagUser" *ngFor="let content of allUids">
     <div
-      class="tagUser"
-      (click)="clearTagUser(); addTagUser(getUser(content).name)"
+      class="user fs-18"
+      (click)="clearTagUser(); addTagUser(getUser(content).name, content)"
     >
-      <img src="{{ getUser(content).image }}" />
-      <div>{{ getUser(content).name }}</div>
+      <img class="selected-img" src="{{ getUser(content).image }}" /><span>{{
+        getUser(content).name
+      }}</span>
+      @if(authService.currentUserSignal()?.uId == content){
+      <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
+      }@else {
+      <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+      }
     </div>
   </div>
-  <div *ngIf="this.userSearch">{{ this.userSearch }}</div>
+  <!-- <div *ngIf="this.userSearch">{{ this.userSearch }}</div> -->
 </div>
