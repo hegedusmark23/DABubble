@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { SidebarService } from '../../../services/sidebar.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-search-field',
@@ -23,24 +24,51 @@ export class SearchFieldComponent {
   searchTerm: string = '';
   channelSelectionService = inject(ChannelSelectionService)
   hideOrShowSidebar = inject(SidebarService);
+  authService = inject(AuthService)
   activeChannelIndex: number | null = null;
   constructor(private searchService: SearchService, 
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef) { }
 
-  async onSearch(event: Event) {
-    this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    if (this.searchTerm) {
-      this.channels = await this.searchService.searchChannels(this.searchTerm);
-      this.users = await this.searchService.searchUsers(this.searchTerm);
-      this.messages = await this.searchService.searchAllChannelMessages(this.searchTerm);
-      this.isSearching = true;
-    } else {
-      this.channels = [];
-      this.users = [];
-      this.messages = [];
-      this.isSearching = false;
+    async onSearch(event: Event) {
+      this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
+      if (this.searchTerm) {
+        this.channels = await this.searchService.searchChannels(this.searchTerm);
+        this.users = await this.searchService.searchUsers(this.searchTerm);
+        const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
+        this.messages = rawMessages.map(message => ({
+          ...message,
+          message: this.getMessage(message)
+        }));
+        this.isSearching = true;
+      } else {
+        this.channels = [];
+        this.users = [];
+        this.messages = [];
+        this.isSearching = false;
+      }
     }
+
+  getMessage(message: any): string {
+    const regex = /₿ЯæŶ∆Ωг(\S+)/g;
+    const modifiedMessage = message.message.replace(
+      regex,
+      (match: any, p1: any) => {
+        const username = this.getUsername(p1);
+        if (message.uid !== this.authService.currentUserSignal()?.uId) {
+          return `<span><b>@${username}</b></span>`;
+        } else {
+          return `<span><b>@${username}</b></span>`;
+        }
+      }
+    );
+  
+    return modifiedMessage;
+  }
+  
+  getUsername(uid: string): string {
+    const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
+    return index !== -1 ? this.hideOrShowSidebar.AllUsers[index] : 'Unknown User';
   }
 
   highlight(text: string): SafeHtml {
@@ -52,7 +80,7 @@ export class SearchFieldComponent {
 
   onChannelClick(channelId: string) {
     console.log('Channel ID to find:', channelId); 
-    console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds); // Ellenőrizd a csatorna ID-kat
+    console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
   
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex(id => id === channelId);
     console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
@@ -91,12 +119,10 @@ export class SearchFieldComponent {
   
   
   scrollToMessage(messageId: string) {
-    // Implementáld a görgetést az üzenethez
     setTimeout(() => {
       const messageElement = document.getElementById(messageId);
       if (messageElement) {
         messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        //messageElement.classList.add('highlighted-message'); // Optional: highlight
       } else {
         console.log('Message element not found with ID:', messageId);
       }
@@ -120,6 +146,8 @@ export class SearchFieldComponent {
     this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
     this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
   }
+
+  
 }
 
 
