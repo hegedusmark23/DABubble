@@ -113,7 +113,7 @@ export class ChannelMessageInputComponent implements OnInit {
           // Es ist ein span-Element, extrahiere das data-uid
           const uid = (child as HTMLElement).getAttribute('data-uid');
           if (uid) {
-            result += `@${uid} `;
+            result += `₿ЯæŶ∆Ωг${uid} `;
           }
         } else if (child.nodeType === Node.TEXT_NODE) {
           // Es ist ein Textknoten, füge den Textinhalt hinzu
