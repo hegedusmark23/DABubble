@@ -469,4 +469,25 @@ export class ChannelChatAreaComponent implements AfterViewInit {
       return false;
     }
   }
+
+  getMessage(message: any) {
+    const regex = /₿ЯæŶ∆Ωг(\S+)/g;
+
+    // Replace each match with a span containing the match and the class "tag"
+    const modifiedMessage = message.message.replace(
+      regex,
+      (match: any, p1: any) => {
+        console.log(message.uid, this.authService.currentUserSignal()?.uId);
+        if (message.uid !== this.authService.currentUserSignal()?.uId) {
+          return `<span class="tagHighlight">@${this.getUsername(p1)}</span>`;
+        } else {
+          return `<span class="tagHighlightSend">@${this.getUsername(
+            p1
+          )}</span>`;
+        }
+      }
+    );
+
+    return modifiedMessage;
+  }
 }

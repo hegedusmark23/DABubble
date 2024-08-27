@@ -41,7 +41,7 @@
         (mouseleave)="closeEmojiSelector()"
         *ngIf="message.uid !== authService.currentUserSignal()?.uId"
       >
-        <div id="{{message.id}}" class="messageResiveContainer">
+        <div id="{{ message.id }}" class="messageResiveContainer">
           <div class="messagecontentContainer">
             <div class="messageResive">
               <div>
@@ -61,9 +61,10 @@
 
                   <div></div>
                 </div>
-                <span *ngIf="message.message.length > 0">{{
-                  message.message
-                }}</span>
+                <span
+                  *ngIf="message.message.length > 0"
+                  [innerHTML]="getMessage(message)"
+                ></span>
                 <img
                   *ngIf="message.fileUrl.length > 0"
                   class="picture"
@@ -452,9 +453,10 @@
                     </p>
                   </div>
                 </div>
-                <span *ngIf="message.message.length > 0">{{
-                  message.message
-                }}</span>
+                <span
+                  *ngIf="message.message.length > 0"
+                  [innerHTML]="getMessage(message)"
+                ></span>
 
                 <img
                   *ngIf="message.fileUrl.length > 0"
