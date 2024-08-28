@@ -33,13 +33,15 @@
     id="input"
     class="textArea"
     contenteditable="true"
-    placeholder="Nachricht an #Entwicklerteam"
     type="text"
     #messageTextarea
     (keydown)="onKeyDown($event)"
-    (ngModelChange)="onMessageChange($event)"
     (keydown.enter)="saveMessage($event)"
-  ></div>
+    (focus)="removePlaceholder()"
+    (blur)="restorePlaceholder()"
+  >
+    <p *ngIf="showPlaceholder">Nachricht an #Entwicklerteam</p>
+  </div>
 
   <div class="inputButtons">
     <div>

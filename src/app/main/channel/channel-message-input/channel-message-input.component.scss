@@ -16,7 +16,7 @@
   box-shadow: none;
 
   resize: none; /*remove the resize handle on the bottom right*/
-
+  position: relative;
   width: 100%;
   border-radius: 20px 20px 0 0;
   border: 1px solid #adb0d9;
@@ -25,6 +25,14 @@
   padding: 20px;
   height: 65px;
   box-sizing: border-box; /* Sicherstellen, dass das Padding und der Border zur Breite beitragen */
+  p {
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
 }
 
 .inputButtons {

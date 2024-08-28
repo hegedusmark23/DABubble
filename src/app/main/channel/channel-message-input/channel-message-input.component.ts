@@ -46,6 +46,7 @@ export class ChannelMessageInputComponent implements OnInit {
   tagUserSelector: boolean = false;
   tagedUser: any = [];
   lastAtPosition: number | null = null;
+  showPlaceholder: boolean = true;
 
   @ViewChild('messageTextarea') messageTextarea: any;
 
@@ -62,6 +63,14 @@ export class ChannelMessageInputComponent implements OnInit {
       this.subUser();
       this.subChannels();
     });
+  }
+
+  removePlaceholder() {
+    this.showPlaceholder = false;
+  }
+
+  restorePlaceholder() {
+    this.showPlaceholder = true;
   }
 
   //speichert die bilder in den cache
@@ -467,8 +476,6 @@ export class ChannelMessageInputComponent implements OnInit {
     this.lastAtPosition = null;
     this.tagUserSelector = false;
   }
-
-  onMessageChange(event: any) {}
 
   onKeyDown(event: KeyboardEvent) {
     const inputElement = event.target as HTMLElement;
