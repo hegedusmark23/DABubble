@@ -70,7 +70,10 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   restorePlaceholder() {
-    this.showPlaceholder = true;
+    if (this.messageTextarea.nativeElement.innerText.trim() !== '') {
+    } else {
+      this.showPlaceholder = true;
+    }
   }
 
   //speichert die bilder in den cache
@@ -218,41 +221,56 @@ export class ChannelMessageInputComponent implements OnInit {
   }
 
   insertEmoji(emoji: any) {
-    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+    // Holen Sie sich das referenzierte `div`-Element
+    const textarea = this.messageTextarea.nativeElement;
 
-    // Aktuelle Position des Cursors
-    const startPos = textarea.selectionStart;
-    const endPos = textarea.selectionEnd;
+    // Stellen Sie sicher, dass das `div` den Fokus hat
+    textarea.focus();
 
-    // Wert des Textarea-Felds aktualisieren
-    this.message.message =
-      textarea.value.substring(0, startPos) +
-      emoji +
-      textarea.value.substring(endPos, textarea.value.length);
+    // Aktuelle Selektion erhalten
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) {
+      console.error('Keine gültige Selektion gefunden.');
+      return;
+    }
 
-    // Cursor-Position nach dem Einfügen des Textes setzen
-    setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = startPos + emoji.length;
-    }, 0);
-  }
+    // Den aktuellen Range (Bereich) erhalten
+    const range = selection.getRangeAt(0);
 
-  insertTag(uid: any) {
-    const textarea: HTMLTextAreaElement = this.messageTextarea.nativeElement;
+    // Sicherstellen, dass der Range im `textarea` liegt
+    const commonAncestor = range.commonAncestorContainer;
+    if (!textarea.contains(commonAncestor)) {
+      console.error('Selektion liegt außerhalb des `textarea`.');
+      return;
+    }
 
-    // Aktuelle Position des Cursors
-    const startPos = textarea.selectionStart;
-    const endPos = textarea.selectionEnd;
+    // Emoji Text extrahieren
+    const emojiText = emoji.native || emoji.emoji || emoji;
+    if (!emojiText) {
+      console.error('Kein gültiger Emoji-Text gefunden.');
+      return;
+    }
 
-    // Wert des Textarea-Felds aktualisieren
-    this.message.message =
-      textarea.value.substring(0, startPos) +
-      uid +
-      textarea.value.substring(endPos, textarea.value.length);
+    // Emoji als Textnode erstellen
+    const textNode = document.createTextNode(emojiText);
 
-    // Cursor-Position nach dem Einfügen des Textes setzen
-    setTimeout(() => {
-      textarea.selectionStart = textarea.selectionEnd = startPos + uid.length;
-    }, 0);
+    // Range auf das Ende des Inhalts setzen
+    range.selectNodeContents(textarea); // Wählt den gesamten Inhalt des `div`
+    range.collapse(false); // Verschiebt den Cursor ans Ende
+
+    // Textnode am Ende des Inhalts einfügen
+    range.insertNode(textNode);
+
+    // Den Cursor direkt nach dem eingefügten Emoji setzen
+    range.setStartAfter(textNode);
+    range.setEndAfter(textNode);
+
+    // Selektion aktualisieren
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    // Scroll position anpassen (optional, falls benötigt)
+    textarea.scrollTop = textarea.scrollHeight;
   }
 
   addEmoji($event: any) {
