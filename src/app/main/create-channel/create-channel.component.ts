@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Firestore, collection, setDoc, doc } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth.service';
+import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-create-channel',
@@ -36,7 +38,10 @@ export class CreateChannelComponent {
   searchTerm: string = '';
   result = '';
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService,
+  ) {}
 
   isInputValid(): boolean {
     return this.newChannel.name.length >= 3;
@@ -161,8 +166,12 @@ export class CreateChannelComponent {
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
         this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
         this.hideOrShowSidebar.emailList = this.hideOrShowSidebar.AllEmails;
-        this.hideOrShowSidebar.fetchChannels();
-        this.hideOrShowSidebar.fetchUsers();
+        this.threadService.closeThread();
+        this.channelSelectionService.openChannel();
+        this.channelSelectionService.setSelectedChannel(
+        this.result
+      );
+        this.hideOrShowSidebar.fetchChannels;
         this.closeDialogAddUser();
         this.result = '';
       });

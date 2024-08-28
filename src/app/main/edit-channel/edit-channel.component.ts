@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-edit-channel',
@@ -35,7 +37,9 @@ export class EditChannelComponent implements OnInit {
 
   constructor(
     public editChannelService: EditChannelService, // Füge den Service hier hinzu
-    private firestore: Firestore
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService,
   ) { }
   ngOnInit(): void {
     this.currentChannel = this.editChannelService.getOpenChannel();
@@ -102,6 +106,11 @@ export class EditChannelComponent implements OnInit {
           });
           this.channelInfo.fetchChannels;
           this.editChannelService.setEditChannel(false,null);
+          this.threadService.closeThread();
+          this.channelSelectionService.openChannel();
+          this.channelSelectionService.setSelectedChannel(
+          this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+      );
         }else{
           alert('du bist kein mitglied');
         }
@@ -132,8 +141,11 @@ export class EditChannelComponent implements OnInit {
       console.log('Channel name updated successfully');
       this.channelName = '';
       this.editChannelNameOpen = false;
-      this.channelInfo.fetchChannels();
-      this.channelInfo.fetchUsers();
+      this.threadService.closeThread();
+      this.channelSelectionService.openChannel();
+      this.channelSelectionService.setSelectedChannel(
+      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+      );
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }
@@ -160,8 +172,11 @@ export class EditChannelComponent implements OnInit {
       console.log('Channel name updated successfully');
       this.channelDescription = '';
       this.editChannelDescriptionOpen = false;
-      this.channelInfo.fetchChannels();
-      this.channelInfo.fetchUsers();
+      this.threadService.closeThread();
+      this.channelSelectionService.openChannel();
+      this.channelSelectionService.setSelectedChannel(
+      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+      );
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }

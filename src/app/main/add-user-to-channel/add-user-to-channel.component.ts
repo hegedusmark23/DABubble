@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { ThreadService } from '../../services/thread.service';
 
 @Component({
   selector: 'app-add-user-to-channel',
@@ -26,7 +28,10 @@ export class AddUserToChannelComponent {
   result = '';
   addUserEnabled = false;
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService,
+  ) {}
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
@@ -138,9 +143,13 @@ export class AddUserToChannelComponent {
         this.hideOrShowSidebar.selectedUids = [];
         this.hideOrShowSidebar.selectedEmails = [];
         this.addUserEnabled = false;
-        this.hideOrShowSidebar.fetchChannels();
         this.searchTerm = '';
         this.closeDialog();
+        this.threadService.closeThread();
+        this.channelSelectionService.openChannel();
+        this.channelSelectionService.setSelectedChannel(
+        this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber]
+        );
       }
     } catch (error) {
       console.error('Fehler beim Speichern der Daten:', error);
