@@ -104,13 +104,14 @@ export class EditChannelComponent implements OnInit {
             images: channelData['images'],
             users: channelData['users']
           });
-          this.channelInfo.fetchChannels;
           this.editChannelService.setEditChannel(false,null);
           this.threadService.closeThread();
           this.channelSelectionService.openChannel();
           this.channelSelectionService.setSelectedChannel(
           this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
       );
+          this.channelInfo.fetchChannels;
+          this.channelInfo.fetchUsers;
         }else{
           alert('du bist kein mitglied');
         }
