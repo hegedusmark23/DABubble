@@ -18,9 +18,21 @@
       'user-number-hover': divHover}">{{ userNumber }}</span>
       </div>
     </div>
-    <div class="channelUser-background" [ngClass]="{
-      'channelUser-background-hover': divHover}"></div>
-    <div class ="channelUser-background-top" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
+    @if(channelInfo.AllChannelsImages[channelInfo.currentChannelNumber].length == 2){
+      <div class="channelUser-background-two" [ngClass]="{
+        'channelUser-background-hover': divHover}"></div>
+      <div class ="channelUser-background-top-two" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
+    }
+    @if(channelInfo.AllChannelsImages[channelInfo.currentChannelNumber].length == 1){
+      <div class="channelUser-background-one" [ngClass]="{
+        'channelUser-background-hover': divHover}"></div>
+      <div class ="channelUser-background-top-one" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
+    }
+    @if(channelInfo.AllChannelsImages[channelInfo.currentChannelNumber].length > 2) {
+      <div class="channelUser-background" [ngClass]="{
+        'channelUser-background-hover': divHover}"></div>
+      <div class ="channelUser-background-top" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
+    }
     <div (click)="openAddUserToChannel()" class="add-user-icon">
     </div>
   </div>
