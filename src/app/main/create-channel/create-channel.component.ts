@@ -171,7 +171,6 @@ export class CreateChannelComponent {
         this.channelSelectionService.setSelectedChannel(
         this.result
       );
-        this.hideOrShowSidebar.fetchChannels;
         this.closeDialogAddUser();
         this.result = '';
       });
