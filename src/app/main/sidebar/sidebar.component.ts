@@ -17,7 +17,6 @@ import { DirectMessageSelectionService } from '../../services/direct-message-sel
 export class SidebarComponent implements OnInit {
   hoveredChannelTitle = false;
   activetedChannelTitle = true;
-  activeChannelIndex: number | null = null;
   activeUserIndex: number | null = null;
   usersTitleActive = true;
 
@@ -53,14 +52,7 @@ export class SidebarComponent implements OnInit {
   }
 
   channelActive(i: number) {
-    this.threadService.closeThread();
-    this.channelSelectionService.openChannel();
-
-    this.activeChannelIndex = i;
-    this.channelSelectionService.setSelectedChannel(
-      this.sidebarService.AllChannelsIds[i]
-    );
-    this.sidebarService.currentChannelNumber = i;
+    this.sidebarService.openChannel(i);
   }
 
   userActive(i: number) {

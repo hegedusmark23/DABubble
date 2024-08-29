@@ -166,12 +166,8 @@ export class CreateChannelComponent {
         this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
         this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
         this.hideOrShowSidebar.emailList = this.hideOrShowSidebar.AllEmails;
-        this.threadService.closeThread();
-        this.channelSelectionService.openChannel();
-        this.channelSelectionService.setSelectedChannel(
-        this.result
-      );
         this.closeDialogAddUser();
+        this.openChannel(this.result);
         this.result = '';
       });
   }
@@ -201,6 +197,15 @@ export class CreateChannelComponent {
         channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
         channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast'
       };
+    }
+  }
+
+  openChannel(result: any) {
+    for (let i = 0; i < this.hideOrShowSidebar.AllChannelsIds.length; i++) {
+      const channelId = this.hideOrShowSidebar.AllChannelsIds[i];
+      if(channelId == result){
+        this.hideOrShowSidebar.openChannel(i);
+      } 
     }
   }
 

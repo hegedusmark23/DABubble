@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { ChannelSelectionService } from './channel-selection.service';
+import { ThreadService } from './thread.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,12 +48,24 @@ export class SidebarService {
   currentChannelNumber: number = 0;
   activeUserIndex: number | undefined;
   activeUserProfil: number | undefined;
+  activeChannelIndex: number | null = null;
+  threadService = inject(ThreadService);
 
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService
   ) {}
 
+openChannel(i:number) {
+  this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+
+    this.activeChannelIndex = i;
+    this.channelSelectionService.setSelectedChannel(
+      this.AllChannelsIds[i]
+    );
+    this.currentChannelNumber = i;
+}
 
 fetchChannels() {
     const channelsCollection = collection(this.firestore, 'Channels');

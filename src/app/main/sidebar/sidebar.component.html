@@ -19,9 +19,9 @@
       @if(activetedChannelTitle){
       <div class="scroll-container">
         <div class="channel-list" *ngFor="let channel of sidebarService.AllChannels; let i = index">
-          <div class="channel" (click)="channelActive(i)" [ngClass]="{ 'channel-active': activeChannelIndex === i }">
-            <div class="raute" [ngClass]="{ 'raute-active': activeChannelIndex === i }"></div>
-            <span class="channel-title fs-18" [ngClass]="{ 'channel-title-active': activeChannelIndex === i }"
+          <div class="channel" (click)="channelActive(i)" [ngClass]="{ 'channel-active': this.sidebarService.activeChannelIndex === i }">
+            <div class="raute" [ngClass]="{ 'raute-active': this.sidebarService.activeChannelIndex === i }"></div>
+            <span class="channel-title fs-18" [ngClass]="{ 'channel-title-active': this.sidebarService.activeChannelIndex === i }"
               class="channel-title fs-18">{{ channel }}</span>
           </div>
         </div>
