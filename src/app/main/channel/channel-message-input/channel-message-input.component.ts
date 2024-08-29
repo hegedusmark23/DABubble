@@ -48,6 +48,7 @@ export class ChannelMessageInputComponent implements OnInit {
   lastAtPosition: number | null = null;
   showPlaceholder: boolean = true;
 
+  allowMessageSend: boolean = false;
   @ViewChild('messageTextarea') messageTextarea: any;
 
   constructor(
@@ -79,6 +80,7 @@ export class ChannelMessageInputComponent implements OnInit {
   //speichert die bilder in den cache
   async saveFileToCache() {
     if (this.selectedFile) {
+      this.allowMessageSend = true;
       const imageUrl = await this.fileUploadeService.uploadFile(
         this.selectedFile,
         'messangeCache'
@@ -95,6 +97,7 @@ export class ChannelMessageInputComponent implements OnInit {
     this.fileUploadeService.deleteFile(name!, 'messangeCache');
     this.FileUrl = null;
     this.selectedFile = null;
+    this.allowMessageSend = false;
   }
 
   //läd die bilder in den cache wenn sie ausgewählt wurde
@@ -135,6 +138,10 @@ export class ChannelMessageInputComponent implements OnInit {
 
       // Speichere das Ergebnis in der message.message Variable
       this.message.message = result.trim(); // Ergebnis z.B.: "asddasd @zqk0MWq9TcWYUdYtXpTTKsnFro12 sdasad @7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2"
+    }
+
+    if (this.message.message.length < 1 && !this.selectedFile) {
+      return;
     }
 
     // Überprüfe, ob eine Datei ausgewählt ist und speichere sie
@@ -524,6 +531,11 @@ export class ChannelMessageInputComponent implements OnInit {
       // Debugging: Originaler Text im Input-Element
       const originalText = inputElement.textContent || '';
 
+      if (originalText.length > 0) {
+        this.allowMessageSend = true;
+      } else {
+        this.allowMessageSend = false;
+      }
       // Text ohne Spans
       const text = this.getTextWithoutSpans(inputElement) || '';
 
