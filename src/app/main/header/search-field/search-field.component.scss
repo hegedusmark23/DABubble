@@ -40,6 +40,7 @@ img {
     display: flex;
     flex-direction: column;
     word-break: break-all;
+    box-sizing: border-box;
 }   
 
 .closed-result-container {
@@ -56,7 +57,7 @@ img {
 
   .result-user-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 10px;
     border-radius: 30px;
     &:hover{
@@ -74,11 +75,26 @@ img {
 
   .result {
     border-radius: 30px;
-    padding: 5px;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
     &:hover{
         background-color: #ECEEFE;
         cursor: pointer;
     }
+  }
+
+  .result-user {
+    display: flex; 
+    align-items: start; 
+    height: 100%;
+  }
+
+  .message-result-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
 @keyframes openSearchResult {

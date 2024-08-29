@@ -31,12 +31,18 @@
         @if (messages.length > 0) {
         <h2>Nachrichten:</h2>
         <ul>
-            <li class="result" *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
+            <li *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
                 <div class="result-user-container">
-                    <img [src]="message.userImage" alt="{{message.username}}" class="search-result-avatar">
-                    <span><b>{{ message.username }}:</b></span>
+
+                    <div style="display: flex; align-items: center; gap: 5px;">
+                        <img [src]="message.userImage" alt="{{message.username}}" class="search-result-avatar">
+                        <span><b>{{ message.username }}:</b></span>
+                    </div>
+
+                    <div class="result">
+                        <span [innerHTML]="highlight(message.message)"></span>
+                    </div>
                 </div>
-                <span [innerHTML]="highlight(message.message)"></span>
             </li>
         </ul>
         }
