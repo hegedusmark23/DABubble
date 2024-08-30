@@ -4,8 +4,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
   inject,
   OnInit,
+  PLATFORM_ID,
   QueryList,
   ViewChild,
   ViewChildren,
@@ -25,13 +27,15 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../services/thread.service';
 import { ChannelSelectionService } from '../../../services/channel-selection.service';
 import { AuthService } from '../../../services/auth.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
+import { SidebarService } from '../../../services/sidebar.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -40,7 +44,7 @@ import { PickerComponent } from '@ctrl/ngx-emoji-mart';
   templateUrl: './channel-chat-area.component.html',
   styleUrl: './channel-chat-area.component.scss',
 })
-export class ChannelChatAreaComponent implements AfterViewInit {
+export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
 
   allMessagesSortedDate: any = [];
@@ -66,16 +70,24 @@ export class ChannelChatAreaComponent implements AfterViewInit {
   @ViewChild('myDiv') myDiv!: ElementRef;
   currentChannel: any;
   currentChannelId: any;
+  channelInfo = inject(SidebarService);
 
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
-    private cd: ChangeDetectorRef
+    private sanitizer: DomSanitizer,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   setOpenUser() {
     this.user = this.authService.currentUserSignal()?.uId;
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.addEventListener('click', this.handleClick.bind(this));
+    }
   }
 
   ngAfterViewInit(): void {
@@ -319,10 +331,6 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     this.emojiselectior = false;
   }
 
-  getThreadCount(message: any) {
-    return 'test';
-  }
-
   addReaction(reaction: any, message: any) {
     this.updateMessageVariable(
       message.id,
@@ -470,23 +478,54 @@ export class ChannelChatAreaComponent implements AfterViewInit {
     }
   }
 
-  getMessage(message: any) {
+  getMessage(message: any): SafeHtml {
     const regex = /₿ЯæŶ∆Ωг(\S+)/g;
-
-    // Replace each match with a span containing the match and the class "tag"
     const modifiedMessage = message.message.replace(
       regex,
       (match: any, p1: any) => {
-        if (message.uid !== this.authService.currentUserSignal()?.uId) {
-          return `<span class="tagHighlight">@${this.getUsername(p1)}</span>`;
-        } else {
-          return `<span class="tagHighlightSend">@${this.getUsername(
-            p1
-          )}</span>`;
-        }
+        const spanClass =
+          message.uid !== this.authService.currentUserSignal()?.uId
+            ? 'tagHighlight'
+            : 'tagHighlightSend';
+        return `<span class="${spanClass}" data-uid="${p1}">@${this.getUsername(
+          p1
+        )}</span>`;
       }
     );
 
-    return modifiedMessage;
+    return this.sanitizer.bypassSecurityTrustHtml(modifiedMessage);
+  }
+
+  handleClick(event: Event) {
+    const target = event.target as HTMLElement;
+
+    // Überprüfen, ob das angeklickte Element eine der span-Tags ist
+    if (
+      target.classList.contains('tagHighlight') ||
+      target.classList.contains('tagHighlightSend')
+    ) {
+      const uid = target.getAttribute('data-uid');
+      if (uid) {
+        this.openUserProfil(uid);
+      }
+    }
+  }
+
+  openUserProfil(uid: any) {
+    this.channelInfo.userProfilOpen = true;
+    this.channelInfo.activeUserProfil = 0;
+    this.channelInfo.activeUser = this.getUser(uid).name;
+    this.channelInfo.activeEmail = this.getUser(uid).email;
+    this.channelInfo.activeImage = this.getUser(uid).image;
+    this.channelInfo.activeUid = uid;
+  }
+
+  getUser(uid: any) {
+    for (let i = 0; i < this.allUser.length; i++) {
+      const element = this.allUser[i];
+      if (element.uid === uid) {
+        return element;
+      }
+    }
   }
 }

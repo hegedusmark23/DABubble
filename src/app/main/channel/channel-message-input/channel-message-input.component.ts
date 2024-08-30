@@ -14,6 +14,7 @@ import { ChannelSelectionService } from '../../../services/channel-selection.ser
 import { FileUploadeService } from '../../../services/file-upload.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { AuthService } from '../../../services/auth.service';
+import { SidebarService } from '../../../services/sidebar.service';
 
 @Component({
   selector: 'app-channel-message-input',
@@ -50,6 +51,7 @@ export class ChannelMessageInputComponent implements OnInit {
 
   allowMessageSend: boolean = false;
   @ViewChild('messageTextarea') messageTextarea: any;
+  channelInfo = inject(SidebarService);
 
   constructor(
     private firestore: Firestore,
@@ -298,6 +300,7 @@ export class ChannelMessageInputComponent implements OnInit {
       });
     });
   }
+
   setNoteObjectUser(obj: any, id: string) {
     return {
       email: obj.email || '',
@@ -444,6 +447,9 @@ export class ChannelMessageInputComponent implements OnInit {
           span.textContent = '@' + tag;
           span.contentEditable = 'false';
           span.setAttribute('data-uid', uid);
+          span.addEventListener('click', () => {
+            this.openUserProfil(uid);
+          });
 
           const afterSpanText = document.createTextNode(textAfterAt);
           const parent = node.parentNode!;
@@ -621,5 +627,14 @@ export class ChannelMessageInputComponent implements OnInit {
     // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
     this.lastAtPosition = inputElement.innerText.length;
     this.tagUserSelector = true;
+  }
+
+  openUserProfil(uid: any) {
+    this.channelInfo.userProfilOpen = true;
+    this.channelInfo.activeUserProfil = 0;
+    this.channelInfo.activeUser = this.getUser(uid).name;
+    this.channelInfo.activeEmail = this.getUser(uid).email;
+    this.channelInfo.activeImage = this.getUser(uid).image;
+    this.channelInfo.activeUid = uid;
   }
 }
