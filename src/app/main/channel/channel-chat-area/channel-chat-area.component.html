@@ -53,7 +53,9 @@
               <div class="messageInfo">
                 <div class="messageTitle">
                   <div class="messageUserName">
-                    <p class="userName">{{ getUsername(message.uid) }}</p>
+                    <p (click)="openUserProfil(message.uid)" class="userName">
+                      {{ getUsername(message.uid) }}
+                    </p>
                     <p class="smallGray">
                       {{ message.hour }}:{{ message.minute }} Uhr
                     </p>
@@ -447,7 +449,9 @@
                 <div class="messageTitle">
                   <div></div>
                   <div class="messageUserName">
-                    <p class="userName">{{ getUsername(message.uid) }}</p>
+                    <p (click)="openUserProfil(message.uid)" class="userName">
+                      {{ getUsername(message.uid) }}
+                    </p>
                     <p class="smallGray">
                       {{ getFormattedTime(message.hour, message.minute) }}
                     </p>
