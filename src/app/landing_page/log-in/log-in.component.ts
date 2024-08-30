@@ -34,6 +34,7 @@ export class LogInComponent {
       next: () => {
         this.router.navigateByUrl('/home');
         this.userInfo.fetchUsers();
+        this.userInfo.activeChannelIndex = 0;
       },
       error: (err) => {
         this.errorMessage = err.message;
@@ -46,6 +47,7 @@ guestLogin() {
     next: () => {
       this.router.navigateByUrl('/home');
       this.userInfo.fetchUsers();
+      this.userInfo.activeChannelIndex = 0;
     },
     error: (err) => {
       console.error('Guest login failed:', err);

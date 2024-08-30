@@ -48,7 +48,7 @@ export class SidebarService {
   currentChannelNumber: number = 0;
   activeUserIndex: number | undefined;
   activeUserProfil: number | undefined;
-  activeChannelIndex: number | null = null;
+  activeChannelIndex: number | null = 0;
   threadService = inject(ThreadService);
 
   constructor(
@@ -65,6 +65,7 @@ openChannel(i:number) {
       this.AllChannelsIds[i]
     );
     this.currentChannelNumber = i;
+    this.activeUserIndex = -1;
 }
 
 fetchChannels() {

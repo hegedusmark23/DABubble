@@ -56,11 +56,12 @@ export class SidebarComponent implements OnInit {
   }
 
   userActive(i: number) {
-    this.activeUserIndex = i;
+    this.sidebarService.activeUserIndex = i;
     this.channelSelectionService.openDirectMessage();
     this.directMessageSelectionService.setSelectedChannel(
       this.sidebarService.AllUids[i]
     );
+    this.sidebarService.activeChannelIndex = -1;
   }
 
   addMessage() {
