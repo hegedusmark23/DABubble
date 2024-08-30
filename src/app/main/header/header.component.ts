@@ -9,7 +9,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [SearchFieldComponent, ProfilOptionsPopupComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss', './header-responsiv.component.scss']
 })
 export class HeaderComponent {
   authService = inject(AuthService);
