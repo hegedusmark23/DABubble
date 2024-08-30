@@ -6,7 +6,7 @@ import { SidebarService } from '../../services/sidebar.service';
   standalone: true,
   imports: [],
   templateUrl: './open-sidebar.component.html',
-  styleUrl: './open-sidebar.component.scss'
+  styleUrls: ['./open-sidebar.component.scss', './open-sidebar-responsiv.component.scss']
 })
 export class OpenSidebarComponent {
 
