@@ -600,33 +600,66 @@ export class ChannelMessageInputComponent implements OnInit {
       return;
     }
 
-    // @-Zeichen erstellen
-    const atSymbol = document.createTextNode('@');
-
-    // Sicherstellen, dass der letzte Textknoten ohne das @ existiert
+    // Überprüfen, ob das letzte Zeichen ein @ ist
     const lastChild =
       inputElement.childNodes[inputElement.childNodes.length - 1];
     if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
-      lastChild.textContent += '@';
+      if (lastChild.textContent!.endsWith('@')) {
+        // @-Zeichen entfernen
+        lastChild.textContent = lastChild.textContent!.slice(0, -1);
+
+        // Optional: Wenn kein Text mehr vorhanden ist, den leeren Textknoten entfernen
+        if (lastChild.textContent === '') {
+          inputElement.removeChild(lastChild);
+        }
+
+        // Tag User Selector deaktivieren
+        this.tagUserSelector = false;
+      } else {
+        // @-Zeichen hinzufügen
+        lastChild.textContent += '@';
+        this.tagUserSelector = true;
+        this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
+      }
     } else {
+      // Neues @-Zeichen hinzufügen, wenn kein letzter Textknoten existiert
+      const atSymbol = document.createTextNode('@');
       inputElement.appendChild(atSymbol);
+      this.tagUserSelector = true;
+      this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
     }
 
-    // Cursor nach dem @-Zeichen setzen
-    const range = document.createRange();
-    const selection = window.getSelection();
+    // Cursor nach dem @-Zeichen setzen, wenn hinzugefügt
+    if (this.tagUserSelector) {
+      const range = document.createRange();
+      const selection = window.getSelection();
 
-    range.setStartAfter(
-      inputElement.childNodes[inputElement.childNodes.length - 1]
-    );
-    range.collapse(true);
+      range.setStartAfter(
+        inputElement.childNodes[inputElement.childNodes.length - 1]
+      );
+      range.collapse(true);
 
-    selection!.removeAllRanges();
-    selection!.addRange(range);
+      selection!.removeAllRanges();
+      selection!.addRange(range);
 
-    // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
-    this.lastAtPosition = inputElement.innerText.length;
-    this.tagUserSelector = true;
+      // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
+      this.lastAtPosition = inputElement.innerText.length;
+    }
+  }
+
+  triggerAtKeyDown(inputElement: HTMLElement) {
+    // Erstelle ein keydown-Event für das @-Zeichen
+    const event = new KeyboardEvent('keydown', {
+      key: '@',
+      code: 'Digit2', // Standardmäßig das @-Zeichen auf QWERTZ-Tastaturen
+      keyCode: 50, // KeyCode für 2/@
+      charCode: 64, // charCode für @
+      bubbles: true, // Event kann nach oben "blubbern"
+      cancelable: true, // Event kann abgebrochen werden
+    });
+
+    // Manuell die onKeyDown Funktion auslösen
+    inputElement.dispatchEvent(event);
   }
 
   openUserProfil(uid: any) {
