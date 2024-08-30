@@ -25,7 +25,7 @@ import {
   standalone: true,
   imports: [EditChannelComponent, CommonModule],
   templateUrl: './channel-header.component.html',
-  styleUrl: './channel-header.component.scss',
+  styleUrls: ['./channel-header.component.scss', './channel-header-responsiv.component.scss']
 })
 export class ChannelHeaderComponent {
   currentChannelId: any;
