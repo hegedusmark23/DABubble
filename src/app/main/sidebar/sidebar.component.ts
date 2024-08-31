@@ -33,7 +33,8 @@ export class SidebarComponent implements OnInit {
     private channelSelectionService: ChannelSelectionService,
     private threadService: ThreadService,
     public directMessageSelectionService: DirectMessageSelectionService
-  ) {}
+  ) {
+  }
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
@@ -52,7 +53,9 @@ export class SidebarComponent implements OnInit {
   }
 
   channelActive(i: number) {
-    this.sidebarService.openChannel(i);
+    if (this.sidebarService.GlobalChannelUids[i].includes(this.authService.currentUserSignal()?.uId ?? '')) {
+      this.sidebarService.openChannel(i);
+    }
   }
 
   userActive(i: number) {
