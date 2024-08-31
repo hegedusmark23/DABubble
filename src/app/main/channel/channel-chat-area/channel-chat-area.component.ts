@@ -512,6 +512,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   openUserProfil(uid: any) {
+    console.log('test');
     this.channelInfo.userProfilOpen = true;
     this.channelInfo.activeUserProfil = 0;
     this.channelInfo.activeUser = this.getUser(uid).name;
