@@ -58,7 +58,9 @@ export class SidebarComponent implements OnInit {
     if (this.sidebarService.GlobalChannelUids[i].includes(this.authService.currentUserSignal()?.uId ?? '')) {
       this.sidebarService.openChannel(i);
       this.responsiveService.isChannelOpen = true;
-      this.responsiveService.isSidebarOpen = false;
+      if(window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = false;
+      }
     }
   }
 
@@ -70,7 +72,10 @@ export class SidebarComponent implements OnInit {
     );
     this.sidebarService.activeChannelIndex = -1;
     this.responsiveService.isDirectMessageOpen = true;
-    this.responsiveService.isSidebarOpen = false;
+    if(window.innerWidth < 1000) {
+      this.responsiveService.isSidebarOpen = false;
+    }
+    
   }
 
   addMessage() {
@@ -84,6 +89,8 @@ export class SidebarComponent implements OnInit {
   addNewMessage() {
     this.channelSelectionService.openNewMessage();
     this.responsiveService.isDirectMessageOpen = true;
-    this.responsiveService.isSidebarOpen = false;
+    if(window.innerWidth < 1000) {
+      this.responsiveService.isSidebarOpen = false;
+    }
   }
 }

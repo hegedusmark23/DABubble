@@ -17,10 +17,6 @@
   overflow-x: hidden;
 }
 
-.channel-display-flex {
-  display: flex !important;
-}
-
 app-thread {
   display: block;
   height: 100%;
@@ -38,10 +34,4 @@ app-thread {
 
 .slide-out-right {
   width: 0px;
-}
-
-@media(max-width: 1000px){
-  .contentContainer {
-    display: none;
-  }
 }
