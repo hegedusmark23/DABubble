@@ -1,9 +1,9 @@
 <header>
     <img src="../../../assets/img/sidebar/Bubble-icon.png">
-    <app-search-field></app-search-field>
+    <app-search-field class="responsive"></app-search-field>
     <app-profil-options-popup></app-profil-options-popup>
     <div class="user-account" (click)="openDialog()">
-        <div>
+        <div class="user-name">
             @if (authService.currentUserSignal() == null) {
                 <span>Gast</span>
               } @else {

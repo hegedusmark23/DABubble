@@ -1,4 +1,6 @@
-<div class="contentContainer">
+<div class="contentContainer" [ngClass]="{
+  'channel-display-flex': responsiveService.isChannelOpen
+}">
   <div
     class="contentThreadClosed"
     [ngClass]="{ contentThreadOpen: currentThread }"

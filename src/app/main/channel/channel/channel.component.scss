@@ -10,11 +10,15 @@
 }
 
 .contentContainer {
-  display: flex;
+  //display: flex;
   flex-direction: row;
   height: 100%;
   margin-right: 20px;
   overflow-x: hidden;
+}
+
+.channel-display-flex {
+  display: flex !important;
 }
 
 app-thread {
@@ -34,4 +38,10 @@ app-thread {
 
 .slide-out-right {
   width: 0px;
+}
+
+@media(max-width: 1000px){
+  .contentContainer {
+    display: none;
+  }
 }

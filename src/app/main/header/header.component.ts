@@ -3,6 +3,7 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { SidebarService } from '../../services/sidebar.service';
 import { ProfilOptionsPopupComponent } from './profil-options-popup/profil-options-popup.component';
 import { AuthService } from '../../services/auth.service';
+import { ResponsiveService } from '../../services/responsive.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { AuthService } from '../../services/auth.service';
 export class HeaderComponent {
   authService = inject(AuthService);
   hideOrShowPopUp = inject(SidebarService);
+  responsiveService = inject(ResponsiveService);
 
   openDialog(){
    this.hideOrShowPopUp.popUpOpen = true;

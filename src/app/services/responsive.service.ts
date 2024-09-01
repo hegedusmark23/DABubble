@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 export class ResponsiveService {
 
   isSidebarOpen = true;
+  isHeaderOpen = false;
+  isChannelOpen = false;
 
   constructor() { }
 }

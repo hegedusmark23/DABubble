@@ -57,6 +57,8 @@ export class SidebarComponent implements OnInit {
   channelActive(i: number) {
     if (this.sidebarService.GlobalChannelUids[i].includes(this.authService.currentUserSignal()?.uId ?? '')) {
       this.sidebarService.openChannel(i);
+      this.responsiveService.isChannelOpen = true;
+      this.responsiveService.isSidebarOpen = false;
     }
   }
 
@@ -67,6 +69,8 @@ export class SidebarComponent implements OnInit {
       this.sidebarService.AllUids[i]
     );
     this.sidebarService.activeChannelIndex = -1;
+    this.responsiveService.isChannelOpen = true;
+    this.responsiveService.isSidebarOpen = false;
   }
 
   addMessage() {
