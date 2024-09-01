@@ -1,4 +1,6 @@
-<div class="contentContainer">
+<div class="contentContainer" [ngClass]="{
+  'contentContainer-display-flex': responsiveService.isDirectMessageOpen
+}">
   <div class="contentThreadClosed">
     <app-direct-messages-header></app-direct-messages-header>
     <app-direct-messages-chat-area></app-direct-messages-chat-area>

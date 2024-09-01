@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
       this.sidebarService.AllUids[i]
     );
     this.sidebarService.activeChannelIndex = -1;
-    this.responsiveService.isChannelOpen = true;
+    this.responsiveService.isDirectMessageOpen = true;
     this.responsiveService.isSidebarOpen = false;
   }
 
@@ -83,5 +83,7 @@ export class SidebarComponent implements OnInit {
 
   addNewMessage() {
     this.channelSelectionService.openNewMessage();
+    this.responsiveService.isDirectMessageOpen = true;
+    this.responsiveService.isSidebarOpen = false;
   }
 }
