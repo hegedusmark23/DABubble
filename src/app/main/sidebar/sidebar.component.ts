@@ -6,13 +6,14 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
 import { AuthService } from '../../services/auth.service';
 import { ThreadService } from '../../services/thread.service';
 import { DirectMessageSelectionService } from '../../services/direct-message-selection.service';
+import { ResponsiveService } from '../../services/responsive.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  styleUrls: ['./sidebar.component.scss', './sidebar-responsive.component.scss'],
 })
 export class SidebarComponent implements OnInit {
   hoveredChannelTitle = false;
@@ -22,6 +23,7 @@ export class SidebarComponent implements OnInit {
 
   sidebarService = inject(SidebarService);
   authService = inject(AuthService);
+  responsiveService = inject(ResponsiveService);
 
   ngOnInit(): void {
     this.sidebarService.fetchChannels();

@@ -1,4 +1,5 @@
-<div class="sidebar-container" [ngClass]="{
+@if(this.responsiveService.isSidebarOpen){
+  <div class="sidebar-container" [ngClass]="{
     'sidebar-container-open': !sidebarService.sidebarOpen,
     'sidebar-container-close': sidebarService.sidebarOpen
   }">
@@ -82,3 +83,4 @@
     </div>
   </div>
 </div>
+}

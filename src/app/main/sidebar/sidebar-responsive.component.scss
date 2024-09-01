@@ -1,0 +1,6 @@
+@media(max-width: 1000px){
+    .sidebar-container {
+        width: calc(100vw - 40px) !important;
+        max-width: calc(100% - 40px) !important;
+    }
+}
