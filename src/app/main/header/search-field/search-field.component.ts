@@ -92,19 +92,22 @@ export class SearchFieldComponent {
   }
 
   onChannelClick(channelId: string) {
-    console.log('Channel ID to find:', channelId); 
-    console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
-  
-    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex(id => id === channelId);
-    console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
-  
+    //console.log('Channel ID to find:', channelId); 
+    //console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
+    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((id, index) => {
+        if (id === channelId) {
+            return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '');
+        }
+        return false;
+    });
+    //console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
       this.isSearching = false;
     } else {
-      console.error('Channel not found with ID:', channelId);
+      console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
-  }
+}
 
   onUserClick(userId: string) {
     console.log('Selected user ID:', userId);
@@ -118,17 +121,18 @@ export class SearchFieldComponent {
   }
 
   onMessageClick(channelId: string, messageId: string) {
-    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex(channel => channel === channelId);
+    const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
+        return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '');
+    });
     console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId); 
-  
     if (channelIndex !== -1) {
       this.isSearching = false;
       this.channelActive(channelIndex);
       this.scrollToMessage(messageId);
     } else {
-      console.error('Channel not found:', channelId);
+      console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
-  }
+}
   
   
   scrollToMessage(messageId: string) {

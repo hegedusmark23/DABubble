@@ -23,7 +23,7 @@
          <div
             class="channel" (click)="channelActive(i)"
             [ngClass]="{ 'channel-active': this.sidebarService.activeChannelIndex === i }">
-            @if (sidebarService.GlobalChannelUids[i].includes(authService.currentUserSignal()?.uId ?? '')) {
+            @if (sidebarService.GlobalChannelUids[i].includes(authService.currentUserSignal()?.uId ?? '') || (sidebarService.AllChannelsIds[i] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA')) {
             <div class="raute" [ngClass]="{ 'raute-active': this.sidebarService.activeChannelIndex === i }"></div>
           } @else {
             <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
