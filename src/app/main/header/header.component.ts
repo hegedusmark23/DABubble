@@ -21,4 +21,12 @@ export class HeaderComponent {
    this.hideOrShowPopUp.popUpOpen = true;
   }
 
+  backToSidebar() {
+    this.responsiveService.isChannelOpen = false;
+    this.responsiveService.isDirectMessageOpen = false;
+      if(window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = true;
+      }
+  }
+
 }
