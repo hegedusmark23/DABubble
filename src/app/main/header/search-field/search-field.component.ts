@@ -96,7 +96,7 @@ export class SearchFieldComponent {
     //console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((id, index) => {
         if (id === channelId) {
-            return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '');
+            return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
         }
         return false;
     });
@@ -122,7 +122,7 @@ export class SearchFieldComponent {
 
   onMessageClick(channelId: string, messageId: string) {
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
-        return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '');
+        return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
     console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId); 
     if (channelIndex !== -1) {
