@@ -37,7 +37,7 @@ import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.c
     ChannelUserlistComponent,
   ],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./home.component.scss', './home-responsive.component.scss'],
 })
 export class HomeComponent implements OnInit {
   constructor(
