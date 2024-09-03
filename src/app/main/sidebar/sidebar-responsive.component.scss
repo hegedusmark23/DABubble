@@ -36,8 +36,8 @@
         background-repeat: no-repeat;
         cursor: pointer;
         position: absolute;
-        right: 30px;
-        bottom: 30px;
+        right: 20px;
+        bottom: 20px;
         z-index: 5;
     }
 
@@ -46,9 +46,38 @@
         color: black;
     }
 
+    .channel-active {
+        background-color: white;
+        cursor: pointer;
+        .raute {
+            background-image: url('../../../assets/img/sidebar/tag.png');
+        }
+    }
+
     .raute-active {
         height: 24px;
         width: 24px;
         background-image: url('../../../assets/img/sidebar/tag.png');
+    }
+
+    .channel {
+        &:hover {
+            background-color: white;
+            cursor: pointer;
+            .raute {
+                background-image: url('../../../assets/img/sidebar/tag.png');
+            }
+        }
+        &:active {
+            background-color: white;
+            cursor: pointer;
+            .raute {
+                background-image: url('../../../assets/img/sidebar/tag.png');
+            }
+            .channel-title {
+                font-weight: 500;
+                color: black;
+            }
+        }
     }
 }
