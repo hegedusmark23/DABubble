@@ -1,5 +1,5 @@
 <div class="search-field-container">
-    <input type="text" placeholder="Code learning durchsuchen" (input)="onSearch($event)">
+    <input type="text" placeholder={{placeholderText}} (input)="onSearch($event)">
     <img src="../../../../assets/img/header/search.png">
 
     <div [ngClass]="{'result-container': isSearching, 'closed-result-container': !isSearching}">

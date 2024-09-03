@@ -7,11 +7,12 @@ import { AuthService } from '../../services/auth.service';
 import { ThreadService } from '../../services/thread.service';
 import { DirectMessageSelectionService } from '../../services/direct-message-selection.service';
 import { ResponsiveService } from '../../services/responsive.service';
+import { SearchFieldComponent } from '../header/search-field/search-field.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SearchFieldComponent],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss', './sidebar-responsive.component.scss'],
 })

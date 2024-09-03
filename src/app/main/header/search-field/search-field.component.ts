@@ -13,7 +13,7 @@ import { AuthService } from '../../../services/auth.service';
   standalone: true,
   imports: [CommonModule,FormsModule],
   templateUrl: './search-field.component.html',
-  styleUrl: './search-field.component.scss'
+  styleUrls: ['./search-field.component.scss', './search-field-responsive.component.scss']
 })
 export class SearchFieldComponent {
   [x: string]: any;
@@ -26,6 +26,8 @@ export class SearchFieldComponent {
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService)
   activeChannelIndex: number | null = null;
+  placeholderText = 'Code learning durchsuchen';
+  placeholderTextResponsive = 'Gehe zu ...'
   constructor(private searchService: SearchService, 
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef) { }
