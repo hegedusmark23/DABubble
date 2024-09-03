@@ -529,4 +529,14 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       }
     }
   }
+
+  splitStringBySpace(input: string): string[] {
+    return input.split(' ');
+  }
+
+  log(content: any) {
+    let array = this.splitWords(content);
+    console.log(this.splitStringBySpace(content));
+    return 'test';
+  }
 }
