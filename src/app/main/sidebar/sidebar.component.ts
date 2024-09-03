@@ -16,6 +16,7 @@ import { ResponsiveService } from '../../services/responsive.service';
   styleUrls: ['./sidebar.component.scss', './sidebar-responsive.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+
   hoveredChannelTitle = false;
   activetedChannelTitle = true;
   activeUserIndex: number | null = null;
@@ -55,12 +56,15 @@ export class SidebarComponent implements OnInit {
   }
 
   channelActive(i: number) {
-    if (this.sidebarService.GlobalChannelUids[i].includes(this.authService.currentUserSignal()?.uId ?? '') || (this.sidebarService.AllChannelsIds[i] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA')) {
-      this.sidebarService.openChannel(i);
+    const reverseIndex = this.sidebarService.AllChannels.length - 1 - i;
+    if (this.sidebarService.GlobalChannelUids[reverseIndex].includes(this.authService.currentUserSignal()?.uId ?? '') 
+      || (this.sidebarService.AllChannelsIds[reverseIndex] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA')) {
+      this.sidebarService.openChannel(reverseIndex);
       this.responsiveService.isChannelOpen = true;
       if (window.innerWidth < 1000) {
         this.responsiveService.isSidebarOpen = false;
       }
+      this.sidebarService.activeChannelIndex = i;
     }
   }
 

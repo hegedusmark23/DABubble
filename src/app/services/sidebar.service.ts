@@ -1,10 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  collection,
-  Firestore,
-  getDocs,
-  onSnapshot,
-} from '@angular/fire/firestore';
+import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
 import { ChannelSelectionService } from './channel-selection.service';
 import { ThreadService } from './thread.service';
 
@@ -64,19 +59,20 @@ export class SidebarService {
   openChannel(i: number) {
     this.threadService.closeThread();
     this.channelSelectionService.openChannel();
-
-    this.activeChannelIndex = i;
-    this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[i]);
+  
+    // Az eredeti index marad meg itt
+    this.activeChannelIndex = this.AllChannels.length - 1 - i;
+    this.channelSelectionService.setSelectedChannel(
+      this.AllChannelsIds[i]
+    );
     this.currentChannelNumber = i;
     this.activeUserIndex = -1;
   }
 
-  fetchChannels() {
+fetchChannels() {
     const channelsCollection = collection(this.firestore, 'Channels');
-
-    onSnapshot(
-      channelsCollection,
-      (querySnapshot) => {
+    
+    onSnapshot(channelsCollection, (querySnapshot) => {
         this.AllChannels = [];
         this.AllChannelsUsers = [];
         this.AllChannelsEmails = [];
@@ -89,33 +85,31 @@ export class SidebarService {
         this.GlobalChannelUids = [];
 
         querySnapshot.forEach((doc) => {
-          const channelData = doc.data();
-          this.AllChannels.push(channelData['name']);
-          this.AllChannelsUsers.push(channelData['users']);
-          this.AllChannelsEmails.push(channelData['emails']);
-          this.AllChannelsIds.push(doc.id);
-          this.AllChannelsImages.push(channelData['images']);
-          this.AllChannelsDescriptions.push(channelData['description']);
-          this.AllChannelsCreatorsNames.push(channelData['channelCreatorName']);
-          this.AllChannelsCreatorsUids.push(channelData['channelCreatorUid']);
-          this.GlobalChannelUids.push(channelData['uids']);
+            const channelData = doc.data();
+            this.AllChannels.push(channelData['name']);
+            this.AllChannelsUsers.push(channelData['users']);
+            this.AllChannelsEmails.push(channelData['emails']);
+            this.AllChannelsIds.push(doc.id); 
+            this.AllChannelsImages.push(channelData['images']);
+            this.AllChannelsDescriptions.push(channelData['description']);
+            this.AllChannelsCreatorsNames.push(channelData['channelCreatorName']);
+            this.AllChannelsCreatorsUids.push(channelData['channelCreatorUid']);
+            this.GlobalChannelUids.push(channelData['uids']);
 
-          const uids = channelData['uids'];
-          if (Array.isArray(uids)) {
-            uids.forEach((uid) => {
-              this.AllChannelsUids.push(uid);
-            });
-          } else {
-            this.AllChannelsUids.push(uids);
-          }
+            const uids = channelData['uids'];
+            if (Array.isArray(uids)) {
+                uids.forEach(uid => {
+                    this.AllChannelsUids.push(uid);
+                });
+            } else {
+                this.AllChannelsUids.push(uids);
+            }
         });
         this.setTopChannel();
-      },
-      (error) => {
+    }, (error) => {
         console.error('Fehler beim Abrufen der Kanaldaten:', error);
-      }
-    );
-  }
+    });
+}
 
   /* Alte fetchChannels Funktion
   async fetchChannels() {
@@ -158,18 +152,16 @@ export class SidebarService {
   */
 
   setTopChannel() {
-    this.channelSelectionService.setSelectedChannel(
-      this.AllChannelsIds[this.AllChannelsIds.length - 1]
-    );
-    this.activeChannelIndex = this.AllChannelsIds.length - 1;
+    const topChannelIndex = this.AllChannelsIds.length - 1;
+    this.channelSelectionService.setSelectedChannel(this.AllChannelsIds[topChannelIndex]);
+    this.activeChannelIndex = 0;
   }
 
-  fetchUsers() {
-    const usersCollection = collection(this.firestore, 'Users');
 
-    onSnapshot(
-      usersCollection,
-      (querySnapshot) => {
+fetchUsers() {
+    const usersCollection = collection(this.firestore, 'Users');
+    
+    onSnapshot(usersCollection, (querySnapshot) => {
         this.AllUsers = [];
         this.AllImages = [];
         this.AllEmails = [];
@@ -180,23 +172,22 @@ export class SidebarService {
         this.emailList = [];
 
         querySnapshot.forEach((doc) => {
-          const userData = doc.data();
-          this.AllUsers.push(userData['name']);
-          this.AllEmails.push(userData['email']);
-          this.AllImages.push(userData['image']);
-          this.AllUids.push(userData['uid']);
-          this.AllCreators.push(userData['channelCreator']);
-          this.userList.push(userData['name']);
-          this.imageList.push(userData['image']);
-          this.uidList.push(userData['uid']);
-          this.emailList.push(userData['email']);
+            const userData = doc.data();
+            this.AllUsers.push(userData['name']);
+            this.AllEmails.push(userData['email']);
+            this.AllImages.push(userData['image']);
+            this.AllUids.push(userData['uid']);
+            this.AllCreators.push(userData['channelCreator']);
+            this.userList.push(userData['name']);
+            this.imageList.push(userData['image']);
+            this.uidList.push(userData['uid']);
+            this.emailList.push(userData['email']);
         });
-      },
-      (error) => {
+    }, (error) => {
         console.error('Fehler beim Abrufen der Benutzerdaten:', error);
-      }
-    );
+    });
   }
+
 
   /* Alte FetchUsers
   async fetchUsers() {

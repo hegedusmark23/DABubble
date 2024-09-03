@@ -18,8 +18,8 @@
         <div class="add-channel-button" (click)="addChannel()"></div>
       </div>
       @if(activetedChannelTitle){
-      <div class="scroll-container">
-        <div class="channel-list" *ngFor="let channel of sidebarService.AllChannels; let i = index">
+      <div #scrollContainer class="scroll-container">
+        <div class="channel-list" *ngFor="let channel of sidebarService.AllChannels.slice().reverse(); let i = index">
          <div
             class="channel" (click)="channelActive(i)"
             [ngClass]="{ 'channel-active': this.sidebarService.activeChannelIndex === i }">

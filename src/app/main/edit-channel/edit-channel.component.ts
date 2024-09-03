@@ -104,6 +104,7 @@ export class EditChannelComponent implements OnInit {
             images: channelData['images'],
             users: channelData['users']
           });
+          this.openTheNextChannel()
           this.editChannelService.setEditChannel(false,null);
           this.threadService.closeThread();
           this.channelSelectionService.openChannel();
@@ -112,6 +113,7 @@ export class EditChannelComponent implements OnInit {
       );
           this.channelInfo.fetchChannels;
           this.channelInfo.fetchUsers;
+          this.channelInfo.currentChannelNumber = +1
         }else{
           alert('du bist kein mitglied');
         }
@@ -119,6 +121,13 @@ export class EditChannelComponent implements OnInit {
     });
   }
 
+  openTheNextChannel() {
+    if (this.channelInfo.currentChannelNumber < this.channelInfo.AllChannelsIds.length - 1) {
+      this.channelInfo.currentChannelNumber = this.channelInfo.currentChannelNumber + 1;
+    } else {
+      this.channelInfo.currentChannelNumber = this.channelInfo.AllChannelsIds.length - 1;
+    }
+  }
 
   editChannelName() {
     this.editChannelNameOpen = true;
