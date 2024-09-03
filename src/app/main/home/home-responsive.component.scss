@@ -3,3 +3,9 @@
         margin-bottom: 0px;
       }
 }
+
+@media(max-width: 650px){
+  app-header {
+    height: 100px;
+  }
+}

@@ -2,10 +2,32 @@
     .responsive {
         display: none;
     }
-}
 
-@media(max-width: 750px){
+    .arrow {
+        display: none;
+    }
+
+    .user-account {
+        margin-right: 40px;
+    }
+
     .user-name {
         display: none;
+    }
+}
+
+@media(max-width: 650px){
+    .bubble-icon {
+        transform: translateX(-35px) scale(0.8);
+    }
+
+    .profil-image {
+        transform: translateX(25px) scale(0.8);
+    }
+
+    .online-icon {
+        width: 10px;
+        height: 10px;
+        transform: translateY(50px) translateX(77px);
     }
 }
