@@ -27,4 +27,57 @@
         margin-bottom: 28px;
         margin-left: 60px;
     }
+
+    .add-new-message-responsive {
+        background-image: url('../../../assets/img/sidebar/16B.\ edit_square.png');
+        height: 75px;
+        width: 75px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        cursor: pointer;
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        z-index: 5;
+    }
+
+    .channel-title-active {
+        font-weight: 500;
+        color: black;
+    }
+
+    .channel-active {
+        background-color: white;
+        cursor: pointer;
+        .raute {
+            background-image: url('../../../assets/img/sidebar/tag.png');
+        }
+    }
+
+    .raute-active {
+        height: 24px;
+        width: 24px;
+        background-image: url('../../../assets/img/sidebar/tag.png');
+    }
+
+    .channel {
+        &:hover {
+            background-color: white;
+            cursor: pointer;
+            .raute {
+                background-image: url('../../../assets/img/sidebar/tag.png');
+            }
+        }
+        &:active {
+            background-color: white;
+            cursor: pointer;
+            .raute {
+                background-image: url('../../../assets/img/sidebar/tag.png');
+            }
+            .channel-title {
+                font-weight: 500;
+                color: black;
+            }
+        }
+    }
 }
