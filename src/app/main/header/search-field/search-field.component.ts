@@ -7,6 +7,7 @@ import { ChannelSelectionService } from '../../../services/channel-selection.ser
 import { SidebarService } from '../../../services/sidebar.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-search-field',
@@ -25,6 +26,7 @@ export class SearchFieldComponent {
   channelSelectionService = inject(ChannelSelectionService)
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService)
+  responsiveService = inject(ResponsiveService);
   activeChannelIndex: number | null = null;
   placeholderText = 'Code learning durchsuchen';
   placeholderTextResponsive = 'Gehe zu ...'

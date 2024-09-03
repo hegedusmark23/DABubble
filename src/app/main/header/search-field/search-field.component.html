@@ -1,5 +1,9 @@
 <div class="search-field-container">
-    <input type="text" placeholder={{placeholderText}} (input)="onSearch($event)">
+    @if(!this.responsiveService.responsive){
+        <input type="text" placeholder={{placeholderText}} (input)="onSearch($event)">
+    }@else{
+        <input type="text" placeholder={{placeholderTextResponsive}} (input)="onSearch($event)">
+    }
     <img src="../../../../assets/img/header/search.png">
 
     <div [ngClass]="{'result-container': isSearching, 'closed-result-container': !isSearching}">

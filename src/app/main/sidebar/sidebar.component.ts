@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, inject, OnInit } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
@@ -30,6 +30,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.sidebarService.fetchChannels();
     this.sidebarService.fetchUsers();
+    this.checkScreenWidth();
   }
 
   constructor(
@@ -38,6 +39,20 @@ export class SidebarComponent implements OnInit {
     private threadService: ThreadService,
     public directMessageSelectionService: DirectMessageSelectionService
   ) {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.checkScreenWidth();
+  }
+
+  private checkScreenWidth(): void {
+    const width = window.innerWidth;
+    if(width < 1000){
+      this.responsiveService.responsive = true;
+    }else {
+      this.responsiveService.responsive = false;
+    }
   }
 
   hoverChannelTitle() {
