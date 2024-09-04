@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profil-options-popup.component.html',
-  styleUrl: './profil-options-popup.component.scss'
+  styleUrls: ['./profil-options-popup.component.scss', './profil-options-popup-responsive.component.scss']
 })
 export class ProfilOptionsPopupComponent {
   authService = inject(AuthService)
