@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.sidebarService.fetchChannels();
     this.sidebarService.fetchUsers();
-    //this.checkScreenWidth();
+    this.checkScreenWidth();
   }
 
   constructor(
@@ -43,17 +43,17 @@ export class SidebarComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    //this.checkScreenWidth();
+    this.checkScreenWidth();
   }
 
-  /*private checkScreenWidth(): void {
+  private checkScreenWidth(): void {
     const width = window.innerWidth;
     if(width < 1000){
       this.responsiveService.responsive = true;
     }else {
       this.responsiveService.responsive = false;
     }
-  }*/
+  }
 
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
