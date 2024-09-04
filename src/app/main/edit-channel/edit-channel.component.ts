@@ -84,19 +84,18 @@ export class EditChannelComponent implements OnInit {
   async abandon() {
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
-
+  
     querySnapshot.forEach(async (docSnapshot) => {
       const channelData = docSnapshot.data();
-
+  
       if (channelData['id'] === this.selectetChannelData.id) {
         const userNumber = channelData['uids'].indexOf(this.authService.currentUserSignal()?.uId);
-
+  
         if (userNumber > -1) {
           channelData['uids'].splice(userNumber, 1);
           channelData['emails'].splice(userNumber, 1);
           channelData['images'].splice(userNumber, 1);
           channelData['users'].splice(userNumber, 1);
-
           const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
           await updateDoc(channelDocRef, {
             uids: channelData['uids'],
@@ -104,28 +103,36 @@ export class EditChannelComponent implements OnInit {
             images: channelData['images'],
             users: channelData['users']
           });
-          this.openTheNextChannel()
-          this.editChannelService.setEditChannel(false,null);
+  
+          this.openTheNextChannel();
+  
+          this.editChannelService.setEditChannel(false, null);
           this.threadService.closeThread();
           this.channelSelectionService.openChannel();
+  
+          const reverseIndex = this.channelInfo.AllChannelsIds.length - 1 - this.channelInfo.currentChannelNumber;
+  
           this.channelSelectionService.setSelectedChannel(
-          this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
-      );
-          this.channelInfo.fetchChannels;
-          this.channelInfo.fetchUsers;
-          this.channelInfo.currentChannelNumber = +1
-        }else{
+            this.channelInfo.AllChannelsIds[reverseIndex]
+          );
+  
+          this.channelInfo.fetchChannels();
+          this.channelInfo.fetchUsers();
+  
+          this.channelInfo.currentChannelNumber = reverseIndex;
+        } else {
           alert('du bist kein mitglied');
         }
       }
     });
   }
+  
 
   openTheNextChannel() {
     if (this.channelInfo.currentChannelNumber < this.channelInfo.AllChannelsIds.length - 1) {
       this.channelInfo.currentChannelNumber = this.channelInfo.currentChannelNumber + 1;
     } else {
-      this.channelInfo.currentChannelNumber = this.channelInfo.AllChannelsIds.length - 1;
+      this.channelInfo.currentChannelNumber = 0;
     }
   }
 

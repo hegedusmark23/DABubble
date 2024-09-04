@@ -59,8 +59,6 @@ export class SidebarService {
   openChannel(i: number) {
     this.threadService.closeThread();
     this.channelSelectionService.openChannel();
-  
-    // Az eredeti index marad meg itt
     this.activeChannelIndex = this.AllChannels.length - 1 - i;
     this.channelSelectionService.setSelectedChannel(
       this.AllChannelsIds[i]
