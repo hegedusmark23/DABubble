@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, HostListener, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
 import { collection, getDocs, Firestore } from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
@@ -14,10 +20,12 @@ import { SearchFieldComponent } from '../header/search-field/search-field.compon
   standalone: true,
   imports: [CommonModule, SearchFieldComponent],
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss', './sidebar-responsive.component.scss'],
+  styleUrls: [
+    './sidebar.component.scss',
+    './sidebar-responsive.component.scss',
+  ],
 })
 export class SidebarComponent implements OnInit {
-
   hoveredChannelTitle = false;
   activetedChannelTitle = true;
   activeUserIndex: number | null = null;
@@ -38,8 +46,7 @@ export class SidebarComponent implements OnInit {
     private channelSelectionService: ChannelSelectionService,
     private threadService: ThreadService,
     public directMessageSelectionService: DirectMessageSelectionService
-  ) {
-  }
+  ) {}
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -47,11 +54,13 @@ export class SidebarComponent implements OnInit {
   }
 
   private checkScreenWidth(): void {
-    const width = window.innerWidth;
-    if(width < 1000){
-      this.responsiveService.responsive = true;
-    }else {
-      this.responsiveService.responsive = false;
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth;
+      if (width < 1000) {
+        this.responsiveService.responsive = true;
+      } else {
+        this.responsiveService.responsive = false;
+      }
     }
   }
 
@@ -73,8 +82,13 @@ export class SidebarComponent implements OnInit {
 
   channelActive(i: number) {
     const reverseIndex = this.sidebarService.AllChannels.length - 1 - i;
-    if (this.sidebarService.GlobalChannelUids[reverseIndex].includes(this.authService.currentUserSignal()?.uId ?? '') 
-      || (this.sidebarService.AllChannelsIds[reverseIndex] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA')) {
+    if (
+      this.sidebarService.GlobalChannelUids[reverseIndex].includes(
+        this.authService.currentUserSignal()?.uId ?? ''
+      ) ||
+      this.sidebarService.AllChannelsIds[reverseIndex] ==
+        'wXzgNEb34DReQq3fEsAo7VTcXXNA'
+    ) {
       this.sidebarService.openChannel(reverseIndex);
       this.responsiveService.isChannelOpen = true;
       if (window.innerWidth < 1000) {
@@ -95,7 +109,6 @@ export class SidebarComponent implements OnInit {
     if (window.innerWidth < 1000) {
       this.responsiveService.isSidebarOpen = false;
     }
-
   }
 
   addMessage() {
