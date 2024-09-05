@@ -18,6 +18,7 @@
   <app-user-profil></app-user-profil>
   <app-add-user-to-channel></app-add-user-to-channel>
   <app-channel-userlist></app-channel-userlist>
+  <app-reaction-list *ngIf="selectedReaction"></app-reaction-list>
   <app-edit-channel
     *ngIf="editChannelService.isEditChannel()"
   ></app-edit-channel>

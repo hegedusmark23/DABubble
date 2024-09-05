@@ -61,6 +61,25 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   editedMessage: any;
   user: any;
 
+  reactions = [
+    {
+      name: 'checkMark',
+      icon: './../../../../assets/reactions/check-mark.png',
+    },
+    { name: 'handshake', icon: './../../../../assets/reactions/handshake.png' },
+    { name: 'thumbsUp', icon: './../../../../assets/reactions/thumbs-up.png' },
+    {
+      name: 'thumbsDown',
+      icon: './../../../../assets/reactions/thumbs-down.png',
+    },
+    { name: 'rocket', icon: './../../../../assets/reactions/rocket.png' },
+    { name: 'nerdFace', icon: './../../../../assets/reactions/nerd-face.png' },
+    {
+      name: 'shushingFace',
+      icon: './../../../../assets/reactions/shushing-face.png',
+    },
+  ];
+
   @ViewChild('messageContainer') private messageContainer?: ElementRef;
   containerClasses: { [key: string]: boolean } = {};
 
@@ -75,7 +94,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
-    private channelSelectionService: ChannelSelectionService,
+    public channelSelectionService: ChannelSelectionService,
     private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -103,6 +122,23 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         this.scrollToBottom();
       }
     });
+  }
+
+  hasReaction(message: any, reactionName: string): boolean {
+    return message[reactionName] && message[reactionName].length > 0;
+  }
+
+  hasUserReacted(message: any, reactionName: string): boolean {
+    const userId = this.authService.currentUserSignal()?.uId;
+    return message[reactionName]?.split(' ').includes(userId);
+  }
+
+  getReactionCount(message: any, reactionName: string): number {
+    const reactions = message[reactionName];
+    if (reactions) {
+      return reactions.split(' ').length;
+    }
+    return 0;
   }
 
   subChannels() {
@@ -305,13 +341,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     }, 10);
   }
 
-  getUsername(uid: any) {
-    for (let i = 0; i < this.allUser.length; i++) {
-      const element = this.allUser[i];
-      if (element.uid === uid) {
-        return element.name;
-      }
-    }
+  getUsername(uid: string): string {
+    const user = this.allUser.find((user: any) => user.uid === uid);
+    return user ? user.name : 'Unbekannt';
   }
 
   getProfileImg(uid: any) {
@@ -532,11 +564,5 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   splitStringBySpace(input: string): string[] {
     return input.split(' ');
-  }
-
-  log(content: any) {
-    let array = this.splitWords(content);
-    console.log(this.splitStringBySpace(content));
-    return 'test';
   }
 }

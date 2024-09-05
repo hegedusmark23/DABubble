@@ -16,6 +16,7 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
 import { EditChannelService } from '../../services/edit-channel.service';
 import { NewMessageComponent } from '../new-message/new-message/new-message.component'; // Importiere den EditChannelService
 import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.component';
+import { ReactionListComponent } from '../reaction-list/reaction-list.component';
 
 @Component({
   selector: 'app-home',
@@ -35,17 +36,22 @@ import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.c
     EditChannelComponent,
     NewMessageComponent,
     ChannelUserlistComponent,
+    ReactionListComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss', './home-responsive.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  selectedReaction: string = ''; // Variable zum Speichern der Reaktion
+
   constructor(
     public channelSelectionService: ChannelSelectionService,
     public editChannelService: EditChannelService // Füge den Service hier hinzu
   ) {}
 
   ngOnInit() {
-    // Initialisierungen oder Subscriptions falls notwendig
+    this.channelSelectionService.getselectedReaction().subscribe((reaction) => {
+      this.selectedReaction = reaction;
+    });
   }
 }

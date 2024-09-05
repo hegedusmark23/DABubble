@@ -37,6 +37,7 @@
         <span class="spacer"></span>
       </div>
 
+      <!--message resive -->
       <div
         (mouseleave)="closeEmojiSelector()"
         *ngIf="message.uid !== authService.currentUserSignal()?.uId"
@@ -212,270 +213,56 @@
               </div>
             </div>
           </div>
+
           <div class="reactionContainer">
             <div
-              *ngIf="splitWords(message.checkMark) > 0"
-              class="reaction"
-              (click)="addReaction('checkMark', message)"
-              [ngClass]="{ userReacted: reacted(message.checkMark) }"
+              *ngFor="let reaction of reactions"
+              [ngClass]="{ hidden: !hasReaction(message, reaction.name) }"
             >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/check-mark.png"
-                  alt="Check Mark"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.checkMark);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.checkMark).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.checkMark) }}</div>
-              <img src="./../../../../assets/reactions/check-mark.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.handshake) > 0"
-              class="reaction"
-              (click)="addReaction('handshake', message)"
-              [ngClass]="{ userReacted: reacted(message.handshake) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/handshake.png"
-                  alt="Handshake"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.handshake);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.handshake).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.handshake) }}</div>
-              <img src="./../../../../assets/reactions/handshake.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.thumbsUp) > 0"
-              class="reaction"
-              (click)="addReaction('thumbsUp', message)"
-              [ngClass]="{ userReacted: reacted(message.thumbsUp) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/thumbs-up.png"
-                  alt="Thumbs Up"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.thumbsUp);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.thumbsUp).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.thumbsUp) }}</div>
-              <img src="./../../../../assets/reactions/thumbs-up.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.thumbsDown) > 0"
-              class="reaction"
-              (click)="addReaction('thumbsDown', message)"
-              [ngClass]="{ userReacted: reacted(message.thumbsDown) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/thumbs-down.png"
-                  alt="Thumbs Down"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.thumbsDown);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="
-                      i < splitStringBySpace(message.thumbsDown).length - 1
+              <div
+                class="reaction"
+                [ngClass]="{
+                  userReacted: hasUserReacted(message, reaction.name)
+                }"
+                (click)="addReaction(reaction.name, message)"
+              >
+                <div class="reactionHover">
+                  <p
+                    *ngFor="
+                      let user of splitStringBySpace(message[reaction.name])
                     "
                   >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.thumbsDown) }}</div>
-              <img src="./../../../../assets/reactions/thumbs-down.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.rocket) > 0"
-              class="reaction"
-              (click)="addReaction('rocket', message)"
-              [ngClass]="{ userReacted: reacted(message.rocket) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/rocket.png"
-                  alt="Rocket"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.rocket);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.rocket).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.rocket) }}</div>
-              <img src="./../../../../assets/reactions/rocket.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.nerdFace) > 0"
-              class="reaction"
-              (click)="addReaction('nerdFace', message)"
-              [ngClass]="{ userReacted: reacted(message.nerdFace) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/nerd-face.png"
-                  alt="Nerd Face"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.nerdFace);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.nerdFace).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.nerdFace) }}</div>
-              <img src="./../../../../assets/reactions/nerd-face.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.noted) > 0"
-              class="reaction"
-              (click)="addReaction('noted', message)"
-              [ngClass]="{ userReacted: reacted(message.noted) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/noted.png"
-                  alt="Noted"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.noted);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.noted).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.noted) }}</div>
-              <img src="./../../../../assets/reactions/noted.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.shushingFace) > 0"
-              class="reaction"
-              (click)="addReaction('shushingFace', message)"
-              [ngClass]="{ userReacted: reacted(message.shushingFace) }"
-            >
-              <div class="reactionHover">
-                <img
-                  src="./../../../../assets/reactions/shushing-face.png"
-                  alt="Shushing Face"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.shushingFace);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="
-                      i < splitStringBySpace(message.shushingFace).length - 1
+                    {{ getUsername(user) }}
+                    <span
+                      *ngIf="
+                        user !==
+                        splitStringBySpace(message[reaction.name]).slice(-1)[0]
+                      "
+                    >
+                      und
+                    </span>
+                  </p>
+                  <span>hat reagiert</span>
+                  <button
+                    (click)="
+                      channelSelectionService.setselectedReaction(
+                        message[reaction.name]
+                      );
+                      $event.stopPropagation()
                     "
                   >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
+                    Alle Reaktionen anzeigen
+                  </button>
+                </div>
+                <div>{{ splitWords(message[reaction.name]) }}</div>
+                <img [src]="reaction.icon" [alt]="reaction.name" />
               </div>
-              <div>{{ splitWords(message.shushingFace) }}</div>
-              <img src="./../../../../assets/reactions/shushing-face.png" />
             </div>
           </div>
         </div>
       </div>
 
+      <!-- message send -->
       <div
         (mouseleave)="closeEmojiSelector()"
         *ngIf="
@@ -673,232 +460,50 @@
               </div>
             </div>
           </div>
+
           <div class="reactionContainerSend">
             <div
-              *ngIf="splitWords(message.checkMark) > 0"
-              class="reaction"
-              (click)="addReaction('checkMark', message)"
-              [ngClass]="{ userReacted: reacted(message.checkMark) }"
+              *ngFor="let reaction of reactions"
+              [ngClass]="{ hidden: !hasReaction(message, reaction.name) }"
             >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/check-mark.png"
-                  alt="Check Mark"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.checkMark);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  >
-                  <span
-                    *ngIf="i < splitStringBySpace(message.checkMark).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.checkMark) }}</div>
-              <img src="./../../../../assets/reactions/check-mark.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.handshake) > 0"
-              class="reaction"
-              (click)="addReaction('handshake', message)"
-              [ngClass]="{ userReacted: reacted(message.handshake) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/handshake.png"
-                  alt="Handshake"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.handshake);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.handshake).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.handshake) }}</div>
-              <img src="./../../../../assets/reactions/handshake.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.thumbsUp) > 0"
-              class="reaction"
-              (click)="addReaction('thumbsUp', message)"
-              [ngClass]="{ userReacted: reacted(message.thumbsUp) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/thumbs-up.png"
-                  alt="Thumbs Up"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.thumbsUp);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.thumbsUp).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.thumbsUp) }}</div>
-              <img src="./../../../../assets/reactions/thumbs-up.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.thumbsDown) > 0"
-              class="reaction"
-              (click)="addReaction('thumbsDown', message)"
-              [ngClass]="{ userReacted: reacted(message.thumbsDown) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/thumbs-down.png"
-                  alt="Thumbs Down"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.thumbsDown);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="
-                      i < splitStringBySpace(message.thumbsDown).length - 1
+              <div
+                class="reaction"
+                [ngClass]="{
+                  userReacted: hasUserReacted(message, reaction.name)
+                }"
+                (click)="addReaction(reaction.name, message)"
+              >
+                <div class="reactionHoverSend">
+                  <p
+                    *ngFor="
+                      let user of splitStringBySpace(message[reaction.name])
                     "
                   >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.thumbsDown) }}</div>
-              <img src="./../../../../assets/reactions/thumbs-down.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.rocket) > 0"
-              class="reaction"
-              (click)="addReaction('rocket', message)"
-              [ngClass]="{ userReacted: reacted(message.rocket) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/rocket.png"
-                  alt="Rocket"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.rocket);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.rocket).length - 1"
+                    {{ getUsername(user) }}
+                    <span
+                      *ngIf="
+                        user !==
+                        splitStringBySpace(message[reaction.name]).slice(-1)[0]
+                      "
+                    >
+                      und
+                    </span>
+                  </p>
+                  <span>hat reagiert</span>
+                  <button
+                    (click)="
+                      channelSelectionService.setselectedReaction(
+                        message[reaction.name]
+                      );
+                      $event.stopPropagation()
+                    "
                   >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
+                    Alle Reaktionen anzeigen
+                  </button>
+                </div>
+                <div>{{ splitWords(message[reaction.name]) }}</div>
+                <img [src]="reaction.icon" [alt]="reaction.name" />
               </div>
-              <div>{{ splitWords(message.rocket) }}</div>
-              <img src="./../../../../assets/reactions/rocket.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.nerdFace) > 0"
-              class="reaction"
-              (click)="addReaction('nerdFace', message)"
-              [ngClass]="{ userReacted: reacted(message.nerdFace) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/nerd-face.png"
-                  alt="Nerd Face"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.nerdFace);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.nerdFace).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.nerdFace) }}</div>
-              <img src="./../../../../assets/reactions/nerd-face.png" />
-            </div>
-
-            <div
-              *ngIf="splitWords(message.noted) > 0"
-              class="reaction"
-              (click)="addReaction('noted', message)"
-              [ngClass]="{ userReacted: reacted(message.noted) }"
-            >
-              <div class="reactionHoverSend">
-                <img
-                  src="./../../../../assets/reactions/noted.png"
-                  alt="Noted"
-                />
-                <p
-                  *ngFor="
-                    let content of splitStringBySpace(message.noted);
-                    let i = index
-                  "
-                >
-                  <span *ngIf="user == content"> du</span>
-                  <span *ngIf="user != content">
-                    {{ getUser(content).name }}</span
-                  ><span
-                    *ngIf="i < splitStringBySpace(message.noted).length - 1"
-                  >
-                    und
-                  </span>
-                </p>
-                <span>hat reagiert</span>
-              </div>
-              <div>{{ splitWords(message.noted) }}</div>
-              <img src="./../../../../assets/reactions/noted.png" />
             </div>
           </div>
         </div>
@@ -912,6 +517,7 @@
         set="twitter"
         [darkMode]="false"
       ></emoji-mart>
+
       <div *ngIf="this.openEditMessage == message.id">
         <div class="messageEditContainer">
           <div class="textareaContainer">

@@ -6,12 +6,17 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ChannelSelectionService {
   private selectedChannel = new BehaviorSubject<string>('');
+  private selectedReaction = new BehaviorSubject<string>('');
   ChannelOpenVariable: any = 'channel';
   constructor() {}
 
   // Getter for selectedChannel as an Observable
   getSelectedChannel() {
     return this.selectedChannel.asObservable();
+  }
+
+  getselectedReaction() {
+    return this.selectedReaction.asObservable();
   }
 
   isChannelOpen() {
@@ -37,5 +42,9 @@ export class ChannelSelectionService {
   // Setter for selectedChannel
   setSelectedChannel(channel: string): void {
     this.selectedChannel.next(channel);
+  }
+
+  setselectedReaction(reactions: string): void {
+    this.selectedReaction.next(reactions);
   }
 }

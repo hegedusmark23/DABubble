@@ -10,6 +10,10 @@
   overflow: auto;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .justify-content-end {
   justify-content: end !important;
 }
@@ -443,7 +447,7 @@ button {
   left: -130px;
   top: 0;
   padding: 15px 20px;
-  transform: translateY(-100%) translateX(100%);
+  transform: translateY(-100%) translateX(80%);
   z-index: 1; /* Sicherstellen, dass das Overlay über den restlichen Inhalten liegt */
   background-color: #444df2;
   color: white;
