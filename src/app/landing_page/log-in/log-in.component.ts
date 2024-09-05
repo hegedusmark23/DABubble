@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
@@ -9,7 +9,7 @@ import { RevealPasswordService } from '../../services/reveal-password.service';
 @Component({
   selector: 'app-log-in',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss','./log-in.component-2.scss'] 
 })

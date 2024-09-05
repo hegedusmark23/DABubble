@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./main/header/header.component";
 import { OpenSidebarComponent } from "./main/open-sidebar/open-sidebar.component";
 import { SidebarComponent } from "./main/sidebar/sidebar.component";
@@ -13,7 +13,7 @@ import { AuthService } from './services/auth.service';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, OpenSidebarComponent, SidebarComponent, ChannelComponent, LogInComponent,
-    CreateChannelComponent, SignUpComponent],
+    CreateChannelComponent, SignUpComponent, RouterLink ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

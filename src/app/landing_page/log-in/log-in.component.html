@@ -11,7 +11,7 @@
 
     <div class="sign-in-section">
         <p  class="fs-18">Neu bei DABubble?</p>
-        <a class="fs-18 purp-link" href="sign-up">Konto erstellen</a>
+        <a class="fs-18 purp-link" [routerLink]="['/sign-up']">Konto erstellen</a>
     </div>
 
     <div class="login-section">
@@ -45,7 +45,7 @@
                 {{ errorMessage }}
             </div>
 
-            <a class="fs-18 password-link" href="reset-password">Passwort vergessen?</a>
+            <a class="fs-18 password-link" [routerLink]="['/reset-password']">Passwort vergessen?</a>
 
             <div class="separator">
                 <div class="grey-line"></div>
