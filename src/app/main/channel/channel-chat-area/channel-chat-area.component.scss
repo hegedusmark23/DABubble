@@ -312,6 +312,7 @@
   flex-direction: row;
   gap: 10px !important;
   margin: 0 131px;
+  position: relative;
 }
 
 .messagecontentContainer {
@@ -333,6 +334,7 @@
   justify-content: flex-end;
   gap: 10px !important;
   margin: 0 131px;
+  position: relative;
 }
 .textareaContainer {
   width: 100%;
@@ -441,19 +443,16 @@ button {
 .reactionHover {
   display: none;
   position: absolute;
-  left: -130px;
+  left: 50%; /* Positionierung in der Mitte des Haupt-divs */
   top: 0;
+  transform: translateX(0%) translateY(-100%); /* Keine Verschiebung, damit die rechte Seite in der Mitte liegt */
   padding: 15px 20px;
-  transform: translateY(-100%) translateX(80%);
-  z-index: 1; /* Sicherstellen, dass das Overlay über den restlichen Inhalten liegt */
+  z-index: 1;
   background-color: #444df2;
   color: white;
   border-radius: 30px 30px 30px 0px;
-  p {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-  }
+  cursor: unset !important;
+
   span {
     white-space: nowrap;
   }
@@ -462,20 +461,27 @@ button {
 .reactionHoverSend {
   display: none;
   position: absolute;
-  left: 35px;
+  right: 50%; /* Positionierung in der Mitte des Haupt-divs */
   top: 0;
-  transform: translateY(-100%) translateX(-100%);
+  transform: translateX(-0%) translateY(-100%); /* Verschiebung nach links, damit die linke Seite in der Mitte liegt */
   padding: 15px 20px;
   z-index: 1;
   background-color: #444df2;
   color: white;
   border-radius: 30px 30px 0px 30px;
-  p {
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 700;
-  }
+  cursor: unset !important;
+
   span {
     white-space: nowrap;
   }
+}
+
+.openAllReactions {
+  display: flex;
+  flex-direction: row;
+  font-weight: 700;
+  text-decoration: underline;
+  white-space: nowrap; /* Verhindert den Zeilenumbruch */
+  overflow: hidden; /* Versteckt den überfließenden Text */
+  text-overflow: ellipsis; /* Fügt '...' hinzu, wenn der Text abgeschnitten wird */
 }

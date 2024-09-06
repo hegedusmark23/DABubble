@@ -265,7 +265,14 @@
             </div>
           </div>
 
-          <div class="reactionContainerSend">
+          <div
+            [ngClass]="{
+              reactionContainer:
+                message.uid !== authService.currentUserSignal()?.uId,
+              reactionContainerSend:
+                message.uid === authService.currentUserSignal()?.uId
+            }"
+          >
             <div
               *ngFor="let reaction of reactions"
               [ngClass]="{ hidden: !hasReaction(message, reaction.name) }"
@@ -277,34 +284,93 @@
                 }"
                 (click)="addReaction(reaction.name, message)"
               >
-                <div class="reactionHoverSend">
-                  <p
-                    *ngFor="
-                      let user of splitStringBySpace(message[reaction.name])
-                    "
-                  >
-                    {{ getUsername(user) }}
+                <div
+                  [ngClass]="{
+                    reactionHover:
+                      message.uid !== authService.currentUserSignal()?.uId,
+                    reactionHoverSend:
+                      message.uid === authService.currentUserSignal()?.uId
+                  }"
+                >
+                  <p>
                     <span
-                      *ngIf="
-                        user !==
-                        splitStringBySpace(message[reaction.name]).slice(-1)[0]
+                      *ngFor="
+                        let user of splitStringBySpace(message[reaction.name]);
+                        let i = index
                       "
                     >
-                      und
+                      <!-- Zeige die Namen an, wenn es 3 oder weniger gibt -->
+                      <span
+                        *ngIf="
+                          splitStringBySpace(message[reaction.name]).length <= 3
+                        "
+                      >
+                        {{ getUsername(user) }}
+                      </span>
+
+                      <!-- Füge Komma nur hinzu, wenn es nicht der letzte Name ist -->
+                      <span
+                        *ngIf="
+                          splitStringBySpace(message[reaction.name]).length <=
+                            3 &&
+                          i <
+                            splitStringBySpace(message[reaction.name]).length -
+                              2
+                        "
+                        >,</span
+                      >
+
+                      <!-- Füge "und" nur vor dem letzten Namen hinzu -->
+                      <span
+                        *ngIf="
+                          splitStringBySpace(message[reaction.name]).length <=
+                            3 &&
+                          i ===
+                            splitStringBySpace(message[reaction.name]).length -
+                              2
+                        "
+                      >
+                        und
+                      </span>
+
+                      <!-- Zeige nur zwei Namen an und dann "und X weitere", wenn es mehr als 3 Namen gibt -->
+                      <span
+                        *ngIf="
+                          splitStringBySpace(message[reaction.name]).length >
+                            3 && i < 2
+                        "
+                      >
+                        {{ getUsername(user) }},
+                      </span>
                     </span>
+                    <a
+                      class="openAllReactions"
+                      *ngIf="splitWords(message[reaction.name]) > 3"
+                      (click)="
+                        channelSelectionService.setselectedReaction(
+                          message[reaction.name]
+                        );
+                        $event.stopPropagation()
+                      "
+                    >
+                      <p>und {{ splitWords(message[reaction.name]) - 2 }}</p>
+                      <p *ngIf="splitWords(message[reaction.name]) === 3">
+                        weiter
+                      </p>
+                      <p *ngIf="splitWords(message[reaction.name]) > 3">
+                        weitere
+                      </p>
+                    </a>
                   </p>
-                  <span>hat reagiert</span>
-                  <button
-                    (click)="
-                      channelSelectionService.setselectedReaction(
-                        message[reaction.name]
-                      );
-                      $event.stopPropagation()
-                    "
+
+                  <span *ngIf="splitWords(message[reaction.name]) > 1"
+                    >haben reagiert</span
                   >
-                    Alle Reaktionen anzeigen
-                  </button>
+                  <span *ngIf="splitWords(message[reaction.name]) === 1"
+                    >hat reagiert</span
+                  >
                 </div>
+
                 <div>{{ splitWords(message[reaction.name]) }}</div>
                 <img [src]="reaction.icon" [alt]="reaction.name" />
               </div>
