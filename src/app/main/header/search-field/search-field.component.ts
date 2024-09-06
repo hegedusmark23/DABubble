@@ -12,7 +12,7 @@ import { ResponsiveService } from '../../../services/responsive.service';
 @Component({
   selector: 'app-search-field',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './search-field.component.html',
   styleUrls: ['./search-field.component.scss', './search-field-responsive.component.scss']
 })
@@ -30,37 +30,35 @@ export class SearchFieldComponent {
   activeChannelIndex: number | null = null;
   placeholderText = 'Code learning durchsuchen';
   placeholderTextResponsive = 'Gehe zu ...'
-  constructor(private searchService: SearchService, 
+  constructor(private searchService: SearchService,
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef) { }
 
-    async onSearch(event: Event) {
-      this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
-      if (this.searchTerm) {
-        this.channels = await this.searchService.searchChannels(this.searchTerm);
-        this.users = await this.searchService.searchUsers(this.searchTerm);
-        const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
-    
-        // Feldolgozzuk az üzeneteket a helyesített megjelenítéshez és hozzáadjuk a felhasználói adatokat
-        this.messages = rawMessages.map(message => {
-          const username = this.getUsername(message.uid);
-          const userImage = this.getUserImage(message.uid);
-          return {
-            ...message,
-            message: this.getMessage(message),
-            username: username,
-            userImage: userImage,
-          };
-        });
-        
-        this.isSearching = true;
-      } else {
-        this.channels = [];
-        this.users = [];
-        this.messages = [];
-        this.isSearching = false;
-      }
+  async onSearch(event: Event) {
+    this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    if (this.searchTerm) {
+      this.channels = await this.searchService.searchChannels(this.searchTerm);
+      this.users = await this.searchService.searchUsers(this.searchTerm);
+      const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
+      this.messages = rawMessages.map(message => {
+        const username = this.getUsername(message.uid);
+        const userImage = this.getUserImage(message.uid);
+        return {
+          ...message,
+          message: this.getMessage(message),
+          username: username,
+          userImage: userImage,
+        };
+      });
+
+      this.isSearching = true;
+    } else {
+      this.channels = [];
+      this.users = [];
+      this.messages = [];
+      this.isSearching = false;
     }
+  }
 
   getMessage(message: any): string {
     const regex = /₿ЯæŶ∆Ωг(\S+)/g;
@@ -77,12 +75,12 @@ export class SearchFieldComponent {
     );
     return modifiedMessage;
   }
-  
+
   getUsername(uid: string): string {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllUsers[index] : 'Unknown User';
   }
-  
+
   getUserImage(uid: string): string {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllImages[index] : 'default-image-url';
@@ -99,10 +97,11 @@ export class SearchFieldComponent {
     //console.log('Channel ID to find:', channelId); 
     //console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((id, index) => {
-        if (id === channelId) {
-            return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
-        }
-        return false;
+      if (id === channelId) {
+        return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
+        || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+      }
+      return false;
     });
     //console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
     if (channelIndex !== -1) {
@@ -111,7 +110,7 @@ export class SearchFieldComponent {
     } else {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
-}
+  }
 
   onUserClick(userId: string) {
     console.log('Selected user ID:', userId);
@@ -126,9 +125,10 @@ export class SearchFieldComponent {
 
   onMessageClick(channelId: string, messageId: string) {
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
-        return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+      return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
+      || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
-    console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId); 
+    console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId);
     if (channelIndex !== -1) {
       this.isSearching = false;
       this.channelActive(channelIndex);
@@ -136,9 +136,9 @@ export class SearchFieldComponent {
     } else {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
-}
-  
-  
+  }
+
+
   scrollToMessage(messageId: string) {
     setTimeout(() => {
       const messageElement = document.getElementById(messageId);
@@ -152,12 +152,12 @@ export class SearchFieldComponent {
 
   channelActive(i: number) {
     this.channelSelectionService.openChannel();
-    this.activeChannelIndex = i;
+    this.hideOrShowSidebar.activeChannelIndex = this.hideOrShowSidebar.AllChannels.length - 1 - i;
     this.channelSelectionService.setSelectedChannel(this.hideOrShowSidebar.AllChannelsIds[i]);
     this.hideOrShowSidebar.currentChannelNumber = i;
     this.cdRef.detectChanges();
   }
-  
+
 
   userActive(i: number) {
     this.hideOrShowSidebar.activeUserIndex = i;
@@ -168,7 +168,7 @@ export class SearchFieldComponent {
     this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
   }
 
-  
+
 }
 
 

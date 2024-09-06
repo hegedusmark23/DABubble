@@ -17,7 +17,8 @@ export class SearchService {
     const filteredChannels = querySnapshot.docs
       .map(doc => ({
         id: doc.id,
-        name: doc.data()['name']
+        name: doc.data()['name'],
+        uids: doc.data()['uids']
       })).filter(channel => channel.name.toLowerCase().includes(normalizedTerm));
     return filteredChannels;
   }
