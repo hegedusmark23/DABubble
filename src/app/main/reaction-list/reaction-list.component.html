@@ -10,7 +10,9 @@
       "
     >
       <span *ngIf="user == content"> du</span>
-      <span *ngIf="user != content"> {{ getUser(content).name }}</span>
+      <span *ngIf="user != content && getUser(content)">
+        {{ getUser(content).name }}</span
+      >
       <span *ngIf="i < splitStringBySpace(selectedReaction).length - 1">
         und
       </span>
