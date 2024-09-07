@@ -353,7 +353,9 @@
                         $event.stopPropagation()
                       "
                     >
-                      <p>und {{ splitWords(message[reaction.name]) - 2 }}</p>
+                      <p>
+                        und {{ splitWords(message[reaction.name]) - 2 + " " }}
+                      </p>
                       <p *ngIf="splitWords(message[reaction.name]) === 3">
                         weiter
                       </p>
