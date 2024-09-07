@@ -2,16 +2,14 @@
     app-sidebar {
         margin-bottom: 0px;
       }
-}
 
-@media(max-width: 650px){
-  app-header {
-    height: 100px;
-  }
+    app-header {
+    height: 80px;
+    }
 
-  .content {
+    .content {
     display: flex;
     flex-direction: row;
-    height: calc(100vh - 100px);
-  }
+    height: calc(100vh - 80px);
+    }
 }

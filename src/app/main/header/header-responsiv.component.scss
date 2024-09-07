@@ -14,20 +14,18 @@
     .user-name {
         display: none;
     }
-}
 
-@media(max-width: 650px){
     .bubble-icon {
-        transform: translateX(-35px) scale(0.8);
+        transform: translateX(-60px) scale(0.6);
     }
 
     .profil-image {
-        transform: translateX(25px) scale(0.8);
+        transform: translateX(25px) scale(0.7);
     }
 
     .online-icon {
         width: 10px;
         height: 10px;
-        transform: translateY(50px) translateX(77px);
+        transform: translateY(47px) translateX(73px);
     }
 }
