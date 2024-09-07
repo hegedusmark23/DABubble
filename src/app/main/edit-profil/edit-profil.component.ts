@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './edit-profil.component.html',
-  styleUrl: './edit-profil.component.scss'
+  styleUrls: ['./edit-profil.component.scss', './edit-profil-responsive.component.scss']
 })
 export class EditProfilComponent {
 
