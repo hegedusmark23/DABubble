@@ -182,3 +182,22 @@ button {
     font-size: 18px;
     font-weight: 400;
 }
+
+.account-icon {
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+.mail-icon {
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+.input-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}

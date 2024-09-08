@@ -17,7 +17,10 @@
 
         <form [formGroup]="form" (ngSubmit)="onSubmit()" class="input-container">
             <div class="channel-name-container">
-                <span class="fs-18">Vollständiger Name</span>
+                <div class="input-title">
+                    <img src="../../../assets/img/sidebar/account_circle.png" class="account-icon">
+                    <span class="fs-18">Vollständiger Name</span>
+                </div>
                 @if (authService.currentUserSignal()?.name === 'Gast') {
                 <input disabled value="Guest"  type="text" class="disabled-input" name="name">
                 } @else {
@@ -27,7 +30,10 @@
             </div>
 
             <div class="channel-name-container">
-                <span class="fs-18">E-Mail-Adresse</span>
+                <div class="input-title">
+                    <img src="../../../assets/img/sidebar/mail.png" class="mail-icon">
+                    <span class="fs-18">E-Mail-Adresse</span>
+                </div>
                 @if (authService.currentUserSignal()?.name === 'Gast') {
                 <input disabled value="guest@guestmail.com"  type="text" class="disabled-input" name="name">
                 } @else {

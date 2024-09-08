@@ -8,6 +8,14 @@
     .header-title {
         white-space: nowrap;
     }
+
+    .account-icon {
+        display: flex;
+    }
+    
+    .mail-icon{
+        display: flex;
+    }
 }
 
 @media(max-width: 500px){
@@ -30,6 +38,6 @@
     }
 
     .input-field {
-        padding: 0px 15px;
+        padding: 0px 20px;
     }
 }
