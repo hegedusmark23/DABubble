@@ -12,7 +12,7 @@ import { ThreadService } from '../../services/thread.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './create-channel.component.html',
-  styleUrl: './create-channel.component.scss',
+  styleUrls: ['./create-channel.component.scss', './create-channel-responsive.component.scss']
 })
 export class CreateChannelComponent {
   hideOrShowSidebar = inject(SidebarService);

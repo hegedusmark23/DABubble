@@ -1,0 +1,17 @@
+@media(max-width: 1000px) {
+    .create-channel-dialog {
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+        border-radius: 0px;
+        position: absolute;
+        bottom: 0;
+        gap: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    
+}
