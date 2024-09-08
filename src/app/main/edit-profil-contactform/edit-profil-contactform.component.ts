@@ -9,7 +9,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './edit-profil-contactform.component.html',
-  styleUrls: ['./edit-profil-contactform.component.scss'] // Correct styleUrls syntax
+  styleUrls: ['./edit-profil-contactform.component.scss', './edit-profil-contactform-responsive.component.scss']
 })
 export class EditProfilContactformComponent {
   authService = inject(AuthService);
