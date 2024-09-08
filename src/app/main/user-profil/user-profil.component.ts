@@ -10,7 +10,7 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
   standalone: true,
   imports: [CommonModule],
   templateUrl: './user-profil.component.html',
-  styleUrl: './user-profil.component.scss',
+  styleUrls: ['./user-profil.component.scss', './user-profil-responsive.component.scss']
 })
 export class UserProfilComponent {
   hideOrShowSidebar = inject(SidebarService);
