@@ -7,4 +7,26 @@
         top : calc(100vh - 181px);
         right: 0px;
     }
+
+    .button-icon{
+        display: block;
+    }
+
+    .rectangle{
+        display: block;
+    }
+
+    .button{
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .button-container{
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        align-items: center;
+    }
 }
