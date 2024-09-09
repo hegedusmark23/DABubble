@@ -13,5 +13,9 @@
         flex-direction: column;
     }
 
+    .description, .dialog-title-container, .channel-name-container {
+        max-width: calc(100vw - 100px);
+    }
+
     
 }

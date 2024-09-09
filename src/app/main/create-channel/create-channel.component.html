@@ -1,4 +1,4 @@
-<div class="create-channel-container" (click)="closeDialog()"
+<div class="create-channel-container" (click)="closeDialog()" 
     [ngClass]="{'display-flex': hideOrShowSidebar.createChannelDialogActive, 'display-none': !hideOrShowSidebar.createChannelDialogActive }">
     <div class="create-channel-dialog" (click)="notCloseDialog($event)">
         <div class="dialog-title-container">
@@ -12,14 +12,13 @@
         <div class="channel-name-container">
             <span class="fs-18">Channel-Name</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
-                id="channelDescription" name="channelDescription"  placeholder="Bitte geben Sie mindestens 3 Zeichen ein">
+                id="channelDescription" name="channelDescription"  placeholder="z.B. Kooperationsprojekte">
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
             <input type="text" class="input-field" [(ngModel)]="newChannel.description" [disabled]="loading"
-                id="channelMessages" name="channelMessages" placeholder="Bitte geben Sie eine Beschreibung an">
-            <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
+                id="channelMessages" name="channelMessages" placeholder="Dein Text hier">
         </div>
         <div class="button-container">
             <button class="fs-18 add-disabled" *ngIf="!isInputValid()">Erstellen</button>
