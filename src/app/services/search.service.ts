@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import { Channel } from '../../models/channel';
 import { SidebarService } from './sidebar.service';
 
@@ -7,9 +7,15 @@ import { SidebarService } from './sidebar.service';
   providedIn: 'root'
 })
 export class SearchService {
-  hideOrShowSidebar = inject(SidebarService)
+  hideOrShowSidebar = inject(SidebarService);
   constructor(private firestore: Firestore) {}
 
+  /**
+   * Searches for channels based on the given search term.
+   * Filters channels whose names match the search term (case-insensitive).
+   * @param {string} searchTerm - The search term to filter channels by.
+   * @returns {Promise<Channel[]>} A promise that resolves to a list of filtered channels.
+   */
   async searchChannels(searchTerm: string): Promise<Channel[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const channelsRef = collection(this.firestore, 'Channels');
@@ -19,10 +25,17 @@ export class SearchService {
         id: doc.id,
         name: doc.data()['name'],
         uids: doc.data()['uids']
-      })).filter(channel => channel.name.toLowerCase().includes(normalizedTerm));
+      }))
+      .filter(channel => channel.name.toLowerCase().includes(normalizedTerm));
     return filteredChannels;
   }
   
+  /**
+   * Searches all messages across all channels for a specific term.
+   * Filters messages that contain the search term (case-insensitive).
+   * @param {string} searchTerm - The search term to filter messages by.
+   * @returns {Promise<any[]>} A promise that resolves to a list of filtered messages.
+   */
   async searchAllChannelMessages(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const filteredMessages = [];
@@ -34,7 +47,6 @@ export class SearchService {
       const messagesSnapshot = await getDocs(messagesRef);
       for (const messageDoc of messagesSnapshot.docs) {
         const messageData = messageDoc.data();
-        //console.log('Message data:', messageData); // Debugging
         if (messageData['message'] && messageData['message'].toLowerCase().includes(normalizedTerm)) {
           filteredMessages.push({
             id: messageDoc.id,
@@ -45,10 +57,14 @@ export class SearchService {
         }
       }
     }
-    //console.log('Filtered Messages:', filteredMessages); 
     return filteredMessages;
   }
   
+  /**
+   * Retrieves all messages for a specific channel.
+   * @param {string} channelId - The ID of the channel.
+   * @returns {Promise<any[]>} A promise that resolves to a list of messages for the specified channel.
+   */
   async getMessagesForChannel(channelId: string): Promise<any[]> {
     const messagesRef = collection(this.firestore, `Channels/${channelId}/messages`);
     const querySnapshot = await getDocs(messagesRef);
@@ -58,6 +74,12 @@ export class SearchService {
     }));
   }
   
+  /**
+   * Searches for users based on the given search term.
+   * Filters users whose names match the search term (case-insensitive).
+   * @param {string} searchTerm - The search term to filter users by.
+   * @returns {Promise<any[]>} A promise that resolves to a list of filtered users.
+   */
   async searchUsers(searchTerm: string): Promise<any[]> {
     const normalizedTerm = searchTerm.toLowerCase();
     const filteredUsers = [];
@@ -72,7 +94,6 @@ export class SearchService {
         });
       }
     }
-    //console.log('Filtered Users:', filteredUsers); // Debugging
     return filteredUsers;
   }
 }

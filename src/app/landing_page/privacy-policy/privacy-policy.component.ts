@@ -14,6 +14,9 @@ export class PrivacyPolicyComponent {
   constructor(private _location: Location){
   }
 
+  /**
+   * Redirects to the last visited page.
+   */
   goBack() {
     this._location.back();
   }

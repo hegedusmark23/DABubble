@@ -17,14 +17,19 @@ export class ResetPasswordComponent {
   fb = inject(FormBuilder);
   router = inject(Router);
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
-  emailSent: boolean = false
+  emailSent: boolean = false;
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]]
   });
 
-  constructor(private _location: Location) {
-  }
+  constructor(private _location: Location) {}
 
+  /**
+   * Handles the form submission to trigger a password reset email.
+   * If the form is valid, it calls the `passwordReset` method from `AuthService`.
+   * On success, sets `emailSent` to true and navigates to the homepage after a short delay.
+   * On failure, logs the error to the console.
+   */
   onSubmit() {
     if (this.form.valid) {
       const email = this.form.get('email')?.value;
@@ -44,6 +49,10 @@ export class ResetPasswordComponent {
     }
   }
 
+  /**
+   * Navigates the user back to the previous page.
+   * Uses the `Location` service to handle browser history.
+   */
   goBack() {
     this._location.back();
   }

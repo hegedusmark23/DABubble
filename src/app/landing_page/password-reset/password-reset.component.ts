@@ -17,9 +17,9 @@ export class PasswordResetComponent {
   fb = inject(FormBuilder);
   route = inject(ActivatedRoute);
   router = inject(Router);
-  revealPasswordService = inject(RevealPasswordService)
+  revealPasswordService = inject(RevealPasswordService);
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
-  succes: boolean = false
+  succes: boolean = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
 
@@ -28,9 +28,14 @@ export class PasswordResetComponent {
     confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
   }, { validators: this.passwordsMatchValidator });
   
-  constructor(){
-  }
+  constructor() {}
 
+  /**
+   * Handles the form submission for resetting the password.
+   * Validates the form and calls the `changePassword` method from `AuthService`.
+   * On success, sets `succes` to true and navigates to the homepage after a short delay.
+   * On error, sets an error message to display to the user.
+   */
   onSubmit(): void {
     const newPassword = this.form.get('newPassword')?.value;
     const actionCode = this.route.snapshot.queryParams['oobCode'];
@@ -48,6 +53,11 @@ export class PasswordResetComponent {
     }
   }
 
+  /**
+   * Custom validator to check if the `newPassword` and `confirmPassword` fields match.
+   * @param {AbstractControl} control - The form control group containing the password fields.
+   * @returns {object | null} Returns an object with an error key if the passwords don't match, otherwise null.
+   */
   passwordsMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const newPassword = control.get('newPassword');
     const confirmPassword = control.get('confirmPassword');
@@ -58,5 +68,6 @@ export class PasswordResetComponent {
   }
 
 }
+
 
 

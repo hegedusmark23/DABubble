@@ -17,23 +17,30 @@ import { ResponsiveService } from '../../../services/responsive.service';
   styleUrls: ['./search-field.component.scss', './search-field-responsive.component.scss']
 })
 export class SearchFieldComponent {
-  [x: string]: any;
   channels: any[] = [];
   users: any[] = [];
   messages: any[] = [];
   isSearching: boolean = false;
   searchTerm: string = '';
-  channelSelectionService = inject(ChannelSelectionService)
+  channelSelectionService = inject(ChannelSelectionService);
   hideOrShowSidebar = inject(SidebarService);
-  authService = inject(AuthService)
+  authService = inject(AuthService);
   responsiveService = inject(ResponsiveService);
   activeChannelIndex: number | null = null;
   placeholderText = 'Code learning durchsuchen';
-  placeholderTextResponsive = 'Gehe zu ...'
-  constructor(private searchService: SearchService,
-    private sanitizer: DomSanitizer,
-    private cdRef: ChangeDetectorRef) { }
+  placeholderTextResponsive = 'Gehe zu ...';
 
+  constructor(
+    private searchService: SearchService,
+    private sanitizer: DomSanitizer,
+    private cdRef: ChangeDetectorRef
+  ) {}
+
+  /**
+   * Handles the search input and fetches relevant channels, users, and messages based on the search term.
+   * Updates the `channels`, `users`, and `messages` arrays with filtered results.
+   * @param {Event} event - The input event triggered by the search field.
+   */
   async onSearch(event: Event) {
     this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (this.searchTerm) {
@@ -50,7 +57,6 @@ export class SearchFieldComponent {
           userImage: userImage,
         };
       });
-
       this.isSearching = true;
     } else {
       this.channels = [];
@@ -60,32 +66,48 @@ export class SearchFieldComponent {
     }
   }
 
+  /**
+   * Formats the message content, replacing placeholders with user mentions.
+   * @param {any} message - The message object.
+   * @returns {string} The formatted message with user mentions.
+   */
   getMessage(message: any): string {
     const regex = /₿ЯæŶ∆Ωг(\S+)/g;
     const modifiedMessage = message.message.replace(
       regex,
       (match: any, p1: any) => {
         const username = this.getUsername(p1);
-        if (message.uid !== this.authService.currentUserSignal()?.uId) {
-          return `<b>@${username}</b>`;
-        } else {
-          return `<b>@${username}</b>`;
-        }
+        return `<b>@${username}</b>`;
       }
     );
     return modifiedMessage;
   }
 
+  /**
+   * Retrieves the username corresponding to a given user ID.
+   * @param {string} uid - The user ID.
+   * @returns {string} The username associated with the given user ID.
+   */
   getUsername(uid: string): string {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllUsers[index] : 'Unknown User';
   }
 
+  /**
+   * Retrieves the user image URL corresponding to a given user ID.
+   * @param {string} uid - The user ID.
+   * @returns {string} The URL of the user's profile image.
+   */
   getUserImage(uid: string): string {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllImages[index] : 'default-image-url';
   }
 
+  /**
+   * Highlights the search term in the provided text.
+   * @param {string} text - The text to highlight the search term in.
+   * @returns {SafeHtml} The text with highlighted search terms.
+   */
   highlight(text: string): SafeHtml {
     if (!this.searchTerm) return text;
     const regex = new RegExp(`(${this.searchTerm})`, 'gi');
@@ -93,17 +115,17 @@ export class SearchFieldComponent {
     return this.sanitizer.bypassSecurityTrustHtml(highlightedText);
   }
 
+  /**
+   * Handles the event when a channel is clicked.
+   * Selects and activates the clicked channel if the user is a member of the channel.
+   * @param {string} channelId - The ID of the clicked channel.
+   */
   onChannelClick(channelId: string) {
-    //console.log('Channel ID to find:', channelId); 
-    //console.log('All channel IDs:', this.hideOrShowSidebar.AllChannelsIds);
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((id, index) => {
-      if (id === channelId) {
-        return this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
-        || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
-      }
-      return false;
+      return id === channelId && 
+        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
+        || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
-    //console.log('Current Channel Index:', this.hideOrShowSidebar.currentChannelNumber);
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
       this.isSearching = false;
@@ -112,8 +134,12 @@ export class SearchFieldComponent {
     }
   }
 
+  /**
+   * Handles the event when a user is clicked.
+   * Activates the clicked user's profile if found.
+   * @param {string} userId - The ID of the clicked user.
+   */
   onUserClick(userId: string) {
-    console.log('Selected user ID:', userId);
     const userIndex = this.hideOrShowSidebar.AllUids.findIndex(uid => uid === userId);
     if (userIndex !== -1) {
       this.userActive(userIndex);
@@ -123,12 +149,18 @@ export class SearchFieldComponent {
     }
   }
 
+  /**
+   * Handles the event when a message is clicked.
+   * Navigates to the channel containing the message and scrolls to the specific message.
+   * @param {string} channelId - The ID of the channel containing the message.
+   * @param {string} messageId - The ID of the clicked message.
+   */
   onMessageClick(channelId: string, messageId: string) {
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
-      return channel === channelId && this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
-      || (this.hideOrShowSidebar.AllChannelsIds[index] == 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+      return channel === channelId && 
+        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
+        || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
-    console.log('Navigating to channel index:', channelIndex, 'with ID:', channelId);
     if (channelIndex !== -1) {
       this.isSearching = false;
       this.channelActive(channelIndex);
@@ -138,7 +170,10 @@ export class SearchFieldComponent {
     }
   }
 
-
+  /**
+   * Scrolls smoothly to the specified message in the view.
+   * @param {string} messageId - The ID of the message to scroll to.
+   */
   scrollToMessage(messageId: string) {
     setTimeout(() => {
       const messageElement = document.getElementById(messageId);
@@ -150,6 +185,10 @@ export class SearchFieldComponent {
     }, 500);
   }
 
+  /**
+   * Activates the selected channel and updates the UI accordingly.
+   * @param {number} i - The index of the channel to activate.
+   */
   channelActive(i: number) {
     this.channelSelectionService.openChannel();
     this.hideOrShowSidebar.activeChannelIndex = this.hideOrShowSidebar.AllChannels.length - 1 - i;
@@ -158,7 +197,10 @@ export class SearchFieldComponent {
     this.cdRef.detectChanges();
   }
 
-
+  /**
+   * Activates the selected user's profile and updates the UI.
+   * @param {number} i - The index of the user to activate.
+   */
   userActive(i: number) {
     this.hideOrShowSidebar.activeUserIndex = i;
     this.hideOrShowSidebar.userProfilOpen = true;
@@ -167,8 +209,6 @@ export class SearchFieldComponent {
     this.hideOrShowSidebar.activeImage = this.hideOrShowSidebar.AllImages[i];
     this.hideOrShowSidebar.activeUid = this.hideOrShowSidebar.AllUids[i];
   }
-
-
 }
 
 

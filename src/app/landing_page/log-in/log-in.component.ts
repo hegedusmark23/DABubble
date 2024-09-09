@@ -19,7 +19,7 @@ export class LogInComponent {
   fb = inject(FormBuilder);
   errorMessage: string | null = null; 
   userInfo = inject(SidebarService);
-  revealPasswordService = inject(RevealPasswordService)
+  revealPasswordService = inject(RevealPasswordService);
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
@@ -28,7 +28,11 @@ export class LogInComponent {
 
   constructor() {}
   
-
+  /**
+   * Initiates Google Sign-In process.
+   * On success, it navigates to the '/home' page and fetches the user data.
+   * On failure, it sets the error message with the error received.
+   */
   googleSignIn() {
     this.authService.signInWithGoogle().subscribe({
       next: () => {
@@ -42,19 +46,29 @@ export class LogInComponent {
     });
   }
 
-guestLogin() {
-  this.authService.guestLogin().subscribe({
-    next: () => {
-      this.router.navigateByUrl('/home');
-      this.userInfo.fetchUsers();
-      this.userInfo.activeChannelIndex = 0;
-    },
-    error: (err) => {
-      console.error('Guest login failed:', err);
-    }
-  });
-}
+  /**
+   * Logs in as a guest user.
+   * On success, it navigates to the '/home' page and fetches user data.
+   * On failure, logs the error in the console.
+   */
+  guestLogin() {
+    this.authService.guestLogin().subscribe({
+      next: () => {
+        this.router.navigateByUrl('/home');
+        this.userInfo.fetchUsers();
+        this.userInfo.activeChannelIndex = 0;
+      },
+      error: (err) => {
+        console.error('Guest login failed:', err);
+      }
+    });
+  }
 
+  /**
+   * Handles the form submission for logging in.
+   * If the form is valid, it calls the `logIn` method from `AuthService` and navigates to '/home' on success.
+   * On error, it calls `handleError` to display the appropriate error message.
+   */
   onSubmit(): void {
     const rawForm = this.form.getRawValue();
     if (this.form.valid) {
@@ -69,6 +83,10 @@ guestLogin() {
     }
   }
 
+  /**
+   * Handles errors by mapping the error code to user-friendly messages.
+   * @param {string} errorCode - The error code returned by the authentication process.
+   */
   private handleError(errorCode: string): void {
     switch (errorCode) {
       case 'auth/user-not-found':

@@ -25,18 +25,33 @@ export class EditProfilContactformComponent {
     [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]],
   });
  
+  /**
+   * Closes the profile editing form.
+   */
   closeDialog() {
     this.hideOrShowPopUp.editProfilContactformOpen = false;
   }
 
+  /**
+   * Prevents the dialog from closing when clicking inside the form.
+   * @param {Event} e - The event object.
+   */
   notCloseDialog(e: any) {
     e.stopPropagation(e);
   }
 
+  /**
+   * Cancels the profile editing process and closes the dialog.
+   */
   cancel() {
     this.closeDialog();
   }
 
+  /**
+   * Handles the form submission to update the user profile.
+   * Validates the form and calls `updateUserData` from `AuthService` to update the user's name and email.
+   * Displays success or error messages based on the result.
+   */
   async onSubmit() {
     const { email, name } = this.form.getRawValue();
     if (this.form.invalid) {
@@ -45,7 +60,8 @@ export class EditProfilContactformComponent {
         this.errorMessage = '';
       }, 2000); 
       return;
-    } try {
+    }
+    try {
       await this.authService.updateUserData(email, name);
       this.successMessage = 'Profil erfolgreich aktualisiert.';
       setTimeout(() => {
@@ -58,4 +74,5 @@ export class EditProfilContactformComponent {
     }
   }
 }
+
 
