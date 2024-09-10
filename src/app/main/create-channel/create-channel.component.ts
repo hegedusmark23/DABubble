@@ -37,11 +37,21 @@ export class CreateChannelComponent {
   filteredEmailList: string[] = this.hideOrShowSidebar.emailList;
   searchTerm: string = '';
   result = '';
+  nameIsTaken: boolean = false;
 
   constructor(private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
     private threadService: ThreadService,
   ) {}
+
+  isNameValid() {
+    if (this.hideOrShowSidebar.AllChannels.includes(this.newChannel.name)) {
+      this.nameIsTaken = true; 
+    } else {
+      this.nameIsTaken = false;
+    }
+    console.log(this.nameIsTaken);
+  }
 
   isInputValid(): boolean {
     return this.newChannel.name.length >= 3;

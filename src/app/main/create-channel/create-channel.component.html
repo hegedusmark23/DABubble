@@ -11,9 +11,11 @@
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Channel-Name</span>
-            <input type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
+            <input (input)="isNameValid()" type="text" class="input-field" [(ngModel)]="newChannel.name" [disabled]="loading"
                 id="channelDescription" name="channelDescription"  placeholder="z.B. Kooperationsprojekte">
             <img src="../../../assets/img/create-channel/tag.png" class="tag-icon">
+            <span *ngIf="nameIsTaken" class="error-message">Dieser Name ist bereits vergeben.</span>
+            
         </div>
         <div class="channel-name-container">
             <span class="fs-18">Beschreibung (optional)</span>
@@ -21,8 +23,8 @@
                 id="channelMessages" name="channelMessages" placeholder="Dein Text hier">
         </div>
         <div class="button-container">
-            <button class="fs-18 add-disabled" *ngIf="!isInputValid()">Erstellen</button>
-            <button class="fs-18 add" *ngIf="isInputValid()" (click)="createChannel()" [disabled]="loading">Erstellen</button>
+            <button class="fs-18 add-disabled" *ngIf="!isInputValid() || nameIsTaken">Erstellen</button>
+            <button class="fs-18 add" *ngIf="isInputValid() && !nameIsTaken" (click)="createChannel()" [disabled]="loading">Erstellen</button>
         </div>
     </div>
 </div>
