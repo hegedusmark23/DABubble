@@ -29,6 +29,9 @@
 <div class="add-user-to-channel-container" (click)="closeDialogAddUser()"
     [ngClass]="{'display-flex': hideOrShowSidebar.addUserToChanelOpen, 'display-none': !hideOrShowSidebar.addUserToChanelOpen }">
     <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">
+        <div class="rectangle-container">
+            <img class="rectangle" src="../../../../assets/img/open-menu/Rectangle.png" alt="">
+        </div>
         <div class="dialog-title-container-addUser">
             <span class="fs-24 dialog-title">Leute hinzufügen</span>
             <div class="close-button" (click)="closeDialogAddUser()"></div>
