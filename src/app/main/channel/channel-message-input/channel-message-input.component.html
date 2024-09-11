@@ -28,7 +28,7 @@
     </svg>
   </button>
 </div>
-<div class="content">
+<div class="content" id="contentContainer">
   <div
     id="input"
     class="textArea"
@@ -264,4 +264,24 @@
     </div>
   </div>
   <!-- <div *ngIf="this.userSearch">{{ this.userSearch }}</div> -->
+</div>
+
+<div
+  *ngIf="currentChannel && allChannelArray && tagChannelSelector"
+  class="tagContainer"
+>
+  <div class="userListTitle">Mitglieder</div>
+  <div class="userListTitle" *ngIf="allChannelArray < 1">
+    Kein Benutzer gefunden
+  </div>
+
+  <div class="tagUser" *ngFor="let channel of allChannelArray">
+    <div
+      class="user fs-18"
+      (click)="clearTagChannel(); addTagChannel(channel.name, channel.id)"
+    >
+      <span>{{ channel.name }}</span>
+    </div>
+    <!-- <div *ngIf="this.userSearch">{{ this.userSearch }}</div> -->
+  </div>
 </div>

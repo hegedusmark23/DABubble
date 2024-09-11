@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   addDoc,
@@ -23,7 +29,7 @@ import { SidebarService } from '../../../services/sidebar.service';
   templateUrl: './channel-message-input.component.html',
   styleUrl: './channel-message-input.component.scss',
 })
-export class ChannelMessageInputComponent implements OnInit {
+export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   message = new Message();
   weekday: any;
   year: any;
@@ -41,17 +47,24 @@ export class ChannelMessageInputComponent implements OnInit {
   authService = inject(AuthService);
   allUser: any;
   allUids: any;
+  allChannel: any = [];
+  allChannelArray: any = [];
 
   userSearch: any;
+  channelSearch: any;
 
   tagUserSelector: boolean = false;
+  tagChannelSelector: boolean = false;
+
   tagedUser: any = [];
+  tagedChannel: any = [];
   lastAtPosition: number | null = null;
   showPlaceholder: boolean = true;
 
   allowMessageSend: boolean = false;
   @ViewChild('messageTextarea') messageTextarea: any;
   channelInfo = inject(SidebarService);
+  sidebarService = inject(SidebarService);
 
   constructor(
     private firestore: Firestore,
@@ -66,6 +79,30 @@ export class ChannelMessageInputComponent implements OnInit {
       this.subUser();
       this.subChannels();
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      this.clearInput();
+    });
+  }
+
+  clearInput() {
+    if (
+      typeof document !== 'undefined' &&
+      (document.querySelector('.textArea') as HTMLElement)
+    ) {
+      console.log('test');
+      const div = document.getElementById('input');
+
+      // Entferne alle Textknoten im `div`, aber lass das `p`-Element unverändert
+      div!.childNodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          node.nodeValue = ''; // Textknoten leeren
+        }
+      });
+      this.showPlaceholder = true;
+    }
   }
 
   removePlaceholder() {
@@ -313,9 +350,11 @@ export class ChannelMessageInputComponent implements OnInit {
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
+      this.allChannel = [];
       let channel: any;
       list.forEach((element) => {
         channel = this.setNoteChannel(element.data(), element.id);
+        this.allChannel.push(channel);
 
         if (channel.id == this.currentChannelId) {
           this.currentChannel = channel;
@@ -443,7 +482,7 @@ export class ChannelMessageInputComponent implements OnInit {
           );
 
           const span = document.createElement('span');
-          span.className = 'tagHighlight';
+          span.className = 'tagHighlightInput';
           span.textContent = '@' + tag;
           span.contentEditable = 'false';
           span.setAttribute('data-uid', uid);
@@ -508,6 +547,169 @@ export class ChannelMessageInputComponent implements OnInit {
     this.tagUserSelector = false;
   }
 
+  clearTagChannel() {
+    const inputElement = document.getElementById('input') as HTMLElement;
+
+    if (!inputElement) {
+      console.error('Das Eingabeelement wurde nicht gefunden.');
+      return;
+    }
+
+    let atIndex = -1;
+    let currentIndex = 0;
+
+    inputElement.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const nodeText = node.textContent || '';
+        const localAtIndex = nodeText.lastIndexOf('#');
+        if (localAtIndex !== -1) {
+          atIndex = currentIndex + localAtIndex;
+        }
+        currentIndex += nodeText.length;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        currentIndex += (node as HTMLElement).innerText.length;
+      }
+    });
+
+    if (atIndex !== -1) {
+      this.lastAtPosition = atIndex + 1;
+
+      let found = false;
+      currentIndex = 0;
+
+      inputElement.childNodes.forEach((node) => {
+        if (found) return;
+
+        if (node.nodeType === Node.TEXT_NODE) {
+          const nodeText = node.textContent || '';
+          if (currentIndex + nodeText.length >= this.lastAtPosition!) {
+            const indexInNode = this.lastAtPosition! - currentIndex;
+
+            // Text nach dem @ löschen
+            node.textContent = nodeText.substring(0, indexInNode);
+
+            found = true;
+          }
+          currentIndex += nodeText.length;
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          currentIndex += (node as HTMLElement).innerText.length;
+        }
+      });
+
+      const range = document.createRange();
+      const selection = window.getSelection();
+      let lastTextNode =
+        inputElement.childNodes[inputElement.childNodes.length - 1];
+
+      // Wenn das letzte Element kein Textknoten ist, füge einen neuen leeren Textknoten hinzu
+      if (lastTextNode.nodeType !== Node.TEXT_NODE) {
+        lastTextNode = document.createTextNode('');
+        inputElement.appendChild(lastTextNode);
+      }
+
+      range.setStart(lastTextNode, lastTextNode.textContent!.length);
+      range.collapse(true);
+      selection!.removeAllRanges();
+      selection!.addRange(range);
+
+      this.tagChannelSelector = false;
+    } else {
+      console.log('Kein #-Zeichen gefunden.');
+    }
+  }
+
+  addTagChannel(tag: string, uid: any) {
+    const inputElement = document.getElementById('input') as HTMLElement;
+
+    if (!inputElement || this.lastAtPosition === null) {
+      console.error(
+        'Das Eingabeelement wurde nicht gefunden oder die Position des @-Zeichens ist unbekannt.'
+      );
+      return;
+    }
+
+    let nodeIndex = 0;
+    let found = false;
+
+    inputElement.childNodes.forEach((node) => {
+      if (found) return;
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        const textContent = node.textContent || '';
+        const atPositionInNode = this.lastAtPosition! - 1 - nodeIndex;
+
+        if (nodeIndex + textContent.length >= this.lastAtPosition!) {
+          const textBeforeAt = textContent.substring(0, atPositionInNode);
+          const textAfterAt = textContent.substring(
+            this.lastAtPosition! - nodeIndex
+          );
+
+          const span = document.createElement('span');
+          span.className = 'tagHighlightInput';
+          span.textContent = '#' + tag;
+          span.contentEditable = 'false';
+          span.setAttribute('data-uid', uid);
+          span.addEventListener('click', () => {
+            this.openChannel(uid);
+          });
+
+          const afterSpanText = document.createTextNode(textAfterAt);
+          const parent = node.parentNode!;
+
+          // Textknoten vor und nach dem span einfügen
+          const beforeSpanText = document.createTextNode(
+            textBeforeAt || '\u200B'
+          ); // Zero-width space
+          const afterSpanPlaceholder = document.createTextNode('\u200B'); // Zero-width space
+
+          parent.replaceChild(afterSpanText, node);
+          parent.insertBefore(span, afterSpanText);
+          parent.insertBefore(beforeSpanText, span);
+          parent.insertBefore(afterSpanPlaceholder, afterSpanText);
+
+          // Löschevent hinzufügen
+          span.addEventListener('keydown', function (event) {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
+              if (
+                event.key === 'Backspace' &&
+                beforeSpanText.textContent === '\u200B'
+              ) {
+                parent.removeChild(span);
+                event.preventDefault();
+              }
+              if (
+                event.key === 'Delete' &&
+                afterSpanPlaceholder.textContent === '\u200B'
+              ) {
+                parent.removeChild(span);
+                event.preventDefault();
+              }
+            }
+          });
+
+          found = true;
+        }
+        nodeIndex += textContent.length;
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        nodeIndex += (node as HTMLElement).innerText.length;
+      }
+    });
+
+    // Nach dem Einfügen den Cursor richtig setzen
+    const range = document.createRange();
+    const selection = window.getSelection();
+    const lastTextNode =
+      inputElement.childNodes[inputElement.childNodes.length - 1];
+
+    range.setStartAfter(lastTextNode);
+    range.collapse(true);
+    selection!.removeAllRanges();
+    selection!.addRange(range);
+
+    this.lastAtPosition = null;
+    this.tagChannelSelector = false;
+  }
+
   onKeyDown(event: KeyboardEvent) {
     const inputElement = event.target as HTMLElement;
 
@@ -542,37 +744,70 @@ export class ChannelMessageInputComponent implements OnInit {
       } else {
         this.allowMessageSend = false;
       }
+
       // Text ohne Spans
       const text = this.getTextWithoutSpans(inputElement) || '';
 
-      // Finde das letzte @-Zeichen vor dem Cursor
+      // Finde das letzte @- oder #-Zeichen vor dem Cursor
       let atIndex = text.lastIndexOf('@', cursorPosition - 1);
+      let hashIndex = text.lastIndexOf('#', cursorPosition - 1);
 
-      if (atIndex !== -1) {
-        let textAfterAt = text.substring(atIndex + 1, cursorPosition);
-        const spaceIndex = textAfterAt.search(/\s/);
+      // Funktion zum Verarbeiten von Erwähnungen (@) und Kanälen (#)
+      const processTag = (index: number, type: 'user' | 'channel') => {
+        let textAfterTag = text.substring(index + 1, cursorPosition);
+        const spaceIndex = textAfterTag.search(/\s/);
 
-        const isCursorInMentionArea =
-          cursorPosition > atIndex &&
-          (spaceIndex === -1 || cursorPosition <= atIndex + textAfterAt.length);
+        const isCursorInTagArea =
+          cursorPosition > index &&
+          (spaceIndex === -1 || cursorPosition <= index + textAfterTag.length);
 
-        if (isCursorInMentionArea) {
-          this.userSearch = textAfterAt.toLowerCase();
-          this.tagUserSelector = true;
+        if (isCursorInTagArea) {
+          const searchTerm = textAfterTag.toLowerCase();
+
+          if (type === 'user') {
+            this.userSearch = searchTerm;
+            this.tagUserSelector = true;
+            this.tagChannelSelector = false;
+            // Suche nach passenden Benutzern
+            this.allUids = [];
+            for (let i = 0; i < this.currentChannel.uids.length; i++) {
+              const element = this.currentChannel.uids[i];
+              const userName = this.getUser(element).name.toLowerCase();
+              if (userName.includes(this.userSearch)) {
+                this.allUids.push(element);
+              }
+            }
+          } else if (type === 'channel') {
+            this.channelSearch = searchTerm;
+            this.tagChannelSelector = true;
+            this.tagUserSelector = false;
+            // Suche nach passenden Kanälen
+            this.allChannelArray = [];
+            for (let i = 0; i < this.allChannel.length; i++) {
+              const channel = this.allChannel[i];
+              const channelName = channel.name.toLowerCase();
+              if (channelName.includes(this.channelSearch)) {
+                this.allChannelArray.push(channel);
+              }
+            }
+          }
         } else {
-          this.tagUserSelector = false;
-        }
-
-        this.allUids = [];
-        for (let i = 0; i < this.currentChannel.uids.length; i++) {
-          const element = this.currentChannel.uids[i];
-          const userName = this.getUser(element).name.toLowerCase();
-          if (userName.includes(this.userSearch)) {
-            this.allUids.push(element);
+          if (type === 'user') {
+            this.tagUserSelector = false;
+          } else if (type === 'channel') {
+            this.tagChannelSelector = false;
           }
         }
+      };
+
+      // Prüfe, ob der Cursor in einem @- oder #-Bereich ist
+      if (atIndex !== -1 && (hashIndex === -1 || atIndex > hashIndex)) {
+        processTag(atIndex, 'user');
+      } else if (hashIndex !== -1) {
+        processTag(hashIndex, 'channel');
       } else {
         this.tagUserSelector = false;
+        this.tagChannelSelector = false;
       }
     }, 0);
   }
@@ -669,5 +904,16 @@ export class ChannelMessageInputComponent implements OnInit {
     this.channelInfo.activeEmail = this.getUser(uid).email;
     this.channelInfo.activeImage = this.getUser(uid).image;
     this.channelInfo.activeUid = uid;
+  }
+
+  openChannel(uid: any) {
+    console.log(uid);
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(uid);
+  }
+
+  log(channel: any) {
+    console.log(channel);
+    return channel;
   }
 }
