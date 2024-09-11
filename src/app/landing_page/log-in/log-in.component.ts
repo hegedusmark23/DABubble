@@ -55,6 +55,7 @@ export class LogInComponent implements OnInit{
         this.userInfo.activeChannelIndex = 0;
 
         this.userOnline();
+        this.fetchUsersOnline();
 
         this.userInfo.online = true;
         let time = new Date().getTime();
@@ -64,7 +65,6 @@ export class LogInComponent implements OnInit{
             if(this.userInfo.online){
               this.userInfo.asd = newTime - time;
               this.onlineSince();
-              this.fetchUsersOnline();
             }
           }, 1000);
         }
