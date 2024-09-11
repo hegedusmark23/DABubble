@@ -92,7 +92,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       typeof document !== 'undefined' &&
       (document.querySelector('.textArea') as HTMLElement)
     ) {
-      console.log('test');
       const div = document.getElementById('input');
 
       // Entferne alle Textknoten im `div`, aber lass das `p`-Element unverändert
@@ -167,7 +166,16 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
           // Es ist ein span-Element, extrahiere das data-uid
           const uid = (child as HTMLElement).getAttribute('data-uid');
           if (uid) {
-            result += `₿ЯæŶ∆Ωг${uid} `;
+            // Überprüfe das erste Zeichen des data-uid
+            const firstChar = (child as HTMLElement).innerHTML.charAt(0);
+            if (firstChar === '@') {
+              result += `₿ЯæŶ∆Ωг${uid} `;
+            } else if (firstChar === '#') {
+              result += `₣Ж◊ŦΨø℧${uid} `;
+            } else {
+              // Standardfall, falls das erste Zeichen weder @ noch # ist
+              result += `${uid} `;
+            }
           }
         } else if (child.nodeType === Node.TEXT_NODE) {
           // Es ist ein Textknoten, füge den Textinhalt hinzu
@@ -201,12 +209,9 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       console.error(err);
     });
 
-    // Leere das message.message Feld und den Inhalt des contenteditable Divs
-    this.message.message = '';
-    if (messageTextarea) {
-      messageTextarea.innerText = ''; // oder textContent = '';
-    }
+    this.clearInput();
     this.tagUserSelector = false;
+    this.tagChannelSelector = false;
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
@@ -385,169 +390,22 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   }
 
   clearTagUser() {
-    const inputElement = document.getElementById('input') as HTMLElement;
-
-    if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
-      return;
-    }
-
-    let atIndex = -1;
-    let currentIndex = 0;
-
-    inputElement.childNodes.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        const nodeText = node.textContent || '';
-        const localAtIndex = nodeText.lastIndexOf('@');
-        if (localAtIndex !== -1) {
-          atIndex = currentIndex + localAtIndex;
-        }
-        currentIndex += nodeText.length;
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        currentIndex += (node as HTMLElement).innerText.length;
-      }
-    });
-
-    if (atIndex !== -1) {
-      this.lastAtPosition = atIndex + 1;
-
-      let found = false;
-      currentIndex = 0;
-
-      inputElement.childNodes.forEach((node) => {
-        if (found) return;
-
-        if (node.nodeType === Node.TEXT_NODE) {
-          const nodeText = node.textContent || '';
-          if (currentIndex + nodeText.length >= this.lastAtPosition!) {
-            const indexInNode = this.lastAtPosition! - currentIndex;
-
-            // Text nach dem @ löschen
-            node.textContent = nodeText.substring(0, indexInNode);
-
-            found = true;
-          }
-          currentIndex += nodeText.length;
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-          currentIndex += (node as HTMLElement).innerText.length;
-        }
-      });
-
-      const range = document.createRange();
-      const selection = window.getSelection();
-      let lastTextNode =
-        inputElement.childNodes[inputElement.childNodes.length - 1];
-
-      // Wenn das letzte Element kein Textknoten ist, füge einen neuen leeren Textknoten hinzu
-      if (lastTextNode.nodeType !== Node.TEXT_NODE) {
-        lastTextNode = document.createTextNode('');
-        inputElement.appendChild(lastTextNode);
-      }
-
-      range.setStart(lastTextNode, lastTextNode.textContent!.length);
-      range.collapse(true);
-      selection!.removeAllRanges();
-      selection!.addRange(range);
-
-      this.tagUserSelector = false;
-    } else {
-      console.log('Kein @-Zeichen gefunden.');
-    }
+    this.clearTag('@');
   }
 
-  addTagUser(tag: string, uid: any) {
-    const inputElement = document.getElementById('input') as HTMLElement;
-
-    if (!inputElement || this.lastAtPosition === null) {
-      console.error(
-        'Das Eingabeelement wurde nicht gefunden oder die Position des @-Zeichens ist unbekannt.'
-      );
-      return;
-    }
-
-    let nodeIndex = 0;
-    let found = false;
-
-    inputElement.childNodes.forEach((node) => {
-      if (found) return;
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        const textContent = node.textContent || '';
-        const atPositionInNode = this.lastAtPosition! - 1 - nodeIndex;
-
-        if (nodeIndex + textContent.length >= this.lastAtPosition!) {
-          const textBeforeAt = textContent.substring(0, atPositionInNode);
-          const textAfterAt = textContent.substring(
-            this.lastAtPosition! - nodeIndex
-          );
-
-          const span = document.createElement('span');
-          span.className = 'tagHighlightInput';
-          span.textContent = '@' + tag;
-          span.contentEditable = 'false';
-          span.setAttribute('data-uid', uid);
-          span.addEventListener('click', () => {
-            this.openUserProfil(uid);
-          });
-
-          const afterSpanText = document.createTextNode(textAfterAt);
-          const parent = node.parentNode!;
-
-          // Textknoten vor und nach dem span einfügen
-          const beforeSpanText = document.createTextNode(
-            textBeforeAt || '\u200B'
-          ); // Zero-width space
-          const afterSpanPlaceholder = document.createTextNode('\u200B'); // Zero-width space
-
-          parent.replaceChild(afterSpanText, node);
-          parent.insertBefore(span, afterSpanText);
-          parent.insertBefore(beforeSpanText, span);
-          parent.insertBefore(afterSpanPlaceholder, afterSpanText);
-
-          // Löschevent hinzufügen
-          span.addEventListener('keydown', function (event) {
-            if (event.key === 'Backspace' || event.key === 'Delete') {
-              if (
-                event.key === 'Backspace' &&
-                beforeSpanText.textContent === '\u200B'
-              ) {
-                parent.removeChild(span);
-                event.preventDefault();
-              }
-              if (
-                event.key === 'Delete' &&
-                afterSpanPlaceholder.textContent === '\u200B'
-              ) {
-                parent.removeChild(span);
-                event.preventDefault();
-              }
-            }
-          });
-
-          found = true;
-        }
-        nodeIndex += textContent.length;
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        nodeIndex += (node as HTMLElement).innerText.length;
-      }
-    });
-
-    // Nach dem Einfügen den Cursor richtig setzen
-    const range = document.createRange();
-    const selection = window.getSelection();
-    const lastTextNode =
-      inputElement.childNodes[inputElement.childNodes.length - 1];
-
-    range.setStartAfter(lastTextNode);
-    range.collapse(true);
-    selection!.removeAllRanges();
-    selection!.addRange(range);
-
-    this.lastAtPosition = null;
-    this.tagUserSelector = false;
+  addTagUser(userName: string, uid: any) {
+    this.addTag('@', userName, uid, this.openUserProfil);
   }
 
   clearTagChannel() {
+    this.clearTag('#');
+  }
+
+  addTagChannel(channelName: string, uid: any) {
+    this.addTag('#', channelName, uid, this.openChannel);
+  }
+
+  clearTag(tagSymbol: string) {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement) {
@@ -561,7 +419,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     inputElement.childNodes.forEach((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
         const nodeText = node.textContent || '';
-        const localAtIndex = nodeText.lastIndexOf('#');
+        const localAtIndex = nodeText.lastIndexOf(tagSymbol); // `@` or `#`
         if (localAtIndex !== -1) {
           atIndex = currentIndex + localAtIndex;
         }
@@ -585,9 +443,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
           if (currentIndex + nodeText.length >= this.lastAtPosition!) {
             const indexInNode = this.lastAtPosition! - currentIndex;
 
-            // Text nach dem @ löschen
             node.textContent = nodeText.substring(0, indexInNode);
-
             found = true;
           }
           currentIndex += nodeText.length;
@@ -601,7 +457,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       let lastTextNode =
         inputElement.childNodes[inputElement.childNodes.length - 1];
 
-      // Wenn das letzte Element kein Textknoten ist, füge einen neuen leeren Textknoten hinzu
       if (lastTextNode.nodeType !== Node.TEXT_NODE) {
         lastTextNode = document.createTextNode('');
         inputElement.appendChild(lastTextNode);
@@ -612,18 +467,27 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       selection!.removeAllRanges();
       selection!.addRange(range);
 
-      this.tagChannelSelector = false;
+      if (tagSymbol == '#') {
+        this.tagChannelSelector = false;
+      } else {
+        this.tagUserSelector = false;
+      }
     } else {
-      console.log('Kein #-Zeichen gefunden.');
+      console.log(`Kein ${tagSymbol}-Zeichen gefunden.`);
     }
   }
 
-  addTagChannel(tag: string, uid: any) {
+  addTag(
+    tagSymbol: string,
+    tag: string,
+    uid: any,
+    openFunction: (uid: any) => void
+  ) {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement || this.lastAtPosition === null) {
       console.error(
-        'Das Eingabeelement wurde nicht gefunden oder die Position des @-Zeichens ist unbekannt.'
+        'Das Eingabeelement wurde nicht gefunden oder die Position des Symbols ist unbekannt.'
       );
       return;
     }
@@ -646,28 +510,24 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
 
           const span = document.createElement('span');
           span.className = 'tagHighlightInput';
-          span.textContent = '#' + tag;
+          span.textContent = tagSymbol + tag;
           span.contentEditable = 'false';
           span.setAttribute('data-uid', uid);
-          span.addEventListener('click', () => {
-            this.openChannel(uid);
-          });
+          span.addEventListener('click', () => openFunction(uid));
 
           const afterSpanText = document.createTextNode(textAfterAt);
           const parent = node.parentNode!;
 
-          // Textknoten vor und nach dem span einfügen
           const beforeSpanText = document.createTextNode(
             textBeforeAt || '\u200B'
-          ); // Zero-width space
-          const afterSpanPlaceholder = document.createTextNode('\u200B'); // Zero-width space
+          );
+          const afterSpanPlaceholder = document.createTextNode('\u200B');
 
           parent.replaceChild(afterSpanText, node);
           parent.insertBefore(span, afterSpanText);
           parent.insertBefore(beforeSpanText, span);
           parent.insertBefore(afterSpanPlaceholder, afterSpanText);
 
-          // Löschevent hinzufügen
           span.addEventListener('keydown', function (event) {
             if (event.key === 'Backspace' || event.key === 'Delete') {
               if (
@@ -695,7 +555,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       }
     });
 
-    // Nach dem Einfügen den Cursor richtig setzen
     const range = document.createRange();
     const selection = window.getSelection();
     const lastTextNode =
@@ -707,7 +566,11 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     selection!.addRange(range);
 
     this.lastAtPosition = null;
-    this.tagChannelSelector = false;
+    if (tagSymbol == '#') {
+      this.tagChannelSelector = true;
+    } else {
+      this.tagUserSelector = true;
+    }
   }
 
   onKeyDown(event: KeyboardEvent) {
@@ -907,13 +770,11 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   }
 
   openChannel(uid: any) {
-    console.log(uid);
     this.channelSelectionService.openChannel();
     this.channelSelectionService.setSelectedChannel(uid);
   }
 
   log(channel: any) {
-    console.log(channel);
     return channel;
   }
 }
