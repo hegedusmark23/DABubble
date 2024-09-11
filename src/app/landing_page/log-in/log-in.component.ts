@@ -83,7 +83,7 @@ export class LogInComponent implements OnInit{
       this.userInfo.onlineUserUidList = [];
       querySnapshot.forEach((doc) => {
           const userData = doc.data();
-          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 1)){
+          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 1000)){
             this.userInfo.onlineUserUidList.push(userData['uId']);
           };
           
