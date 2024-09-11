@@ -50,6 +50,9 @@ export class SidebarService {
   activeUserProfil: number | undefined;
   activeChannelIndex: number | null = 0;
   threadService = inject(ThreadService);
+  asd = 0;
+  online = false;
+  onlineUserUidList: string[] = [];
 
   constructor(
     private firestore: Firestore,

@@ -78,7 +78,12 @@
           @if(authService.currentUserSignal()?.uId !== this.sidebarService.AllUids[i]){
           <div class="user-list">
             <img class="profil-image" src="{{ this.sidebarService.AllImages[i] }}" />
-            <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+            @if (this.sidebarService.onlineUserUidList.includes(this.sidebarService.AllUids[i])){
+              <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
+            } @else {
+              <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
+            }
+            
             <span class="fs-18 user-name" [ngClass]="{ 'user-active': this.sidebarService.activeUserIndex === i }">{{
               user }}</span>
           </div>

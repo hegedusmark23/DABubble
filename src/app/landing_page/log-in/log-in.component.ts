@@ -1,10 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { RevealPasswordService } from '../../services/reveal-password.service';
+import {
+  Firestore,
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  updateDoc,
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-log-in',
@@ -13,7 +21,7 @@ import { RevealPasswordService } from '../../services/reveal-password.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss','./log-in.component-2.scss'] 
 })
-export class LogInComponent {
+export class LogInComponent implements OnInit{
   authService = inject(AuthService);
   router = inject(Router);
   fb = inject(FormBuilder);
@@ -26,7 +34,13 @@ export class LogInComponent {
     password: ['', [Validators.required]],
   });
 
-  constructor() {}
+  constructor(private firestore : Firestore) {}
+
+  ngOnInit(): void {
+    
+  }
+
+  
   
   /**
    * Initiates Google Sign-In process.
@@ -39,11 +53,92 @@ export class LogInComponent {
         this.router.navigateByUrl('/home');
         this.userInfo.fetchUsers();
         this.userInfo.activeChannelIndex = 0;
+
+        this.userOnline();
+
+        this.userInfo.online = true;
+        let time = new Date().getTime();
+        if(this.userInfo.asd == 0){
+          setInterval(() => {
+            let newTime = new Date().getTime();
+            if(this.userInfo.online){
+              this.userInfo.asd = newTime - time;
+              this.onlineSince();
+              this.fetchUsersOnline();
+            }
+          }, 1000);
+        }
+        
       },
       error: (err) => {
         this.errorMessage = err.message;
       }
     });
+  }
+
+  async fetchUsersOnline(){
+    const usersCollection = collection(this.firestore, 'online');
+    onSnapshot(usersCollection, (querySnapshot) => {
+      
+      this.userInfo.onlineUserUidList = [];
+      querySnapshot.forEach((doc) => {
+          const userData = doc.data();
+          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 1)){
+            this.userInfo.onlineUserUidList.push(userData['uId']);
+          };
+          
+      });
+  }, (error) => {
+      console.error('Fehler beim Abrufen der Benutzerdaten:', error);
+  });
+  }
+
+  async userOffline(){
+    const userRef = doc(
+      collection(this.firestore, 'online'),
+      this.authService.currentUserSignal()?.uId
+    );
+    await setDoc(userRef, this.logOutToJSON())
+  }
+
+  logOutToJSON(){
+    return {
+      online : "no" ,
+      onlineSince : new Date().getTime() ,
+      uId : this.authService.currentUserSignal()?.uId
+    }
+  }
+
+  async onlineSince(){
+    const userRef = doc(
+      collection(this.firestore, 'online'),
+      this.authService.currentUserSignal()?.uId
+    );
+    await setDoc(userRef, this.sinceToJSON())
+  }
+
+  async userOnline(){
+    const userRef = doc(
+      collection(this.firestore, 'online'),
+      this.authService.currentUserSignal()?.uId
+    );
+    await setDoc(userRef, this.toJSON())
+  }
+
+  sinceToJSON(){
+    return {
+      online : "yes" ,
+      onlineSince : new Date().getTime() ,
+      uId : this.authService.currentUserSignal()?.uId
+    }
+  }
+
+  toJSON(){
+    return {
+      online : "yes" ,
+      onlineSince : new Date().getTime() ,
+      uId : this.authService.currentUserSignal()?.uId
+    }
   }
 
   /**
