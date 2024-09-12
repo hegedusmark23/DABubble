@@ -37,14 +37,10 @@ export class LogInComponent implements OnInit{
   constructor(private firestore : Firestore) {}
 
   ngOnInit(): void {
-    //this.onbeforeunload();
+    
   }
 
-  onbeforeunload(){
-    window.onbeforeunload = () => {
-      this.userOffline();
-    };
-  }
+  
   
   /**
    * Initiates Google Sign-In process.
@@ -62,6 +58,16 @@ export class LogInComponent implements OnInit{
         this.fetchUsersOnline();
 
         this.userInfo.online = true;
+        let time = new Date().getTime();
+        if(this.userInfo.asd == 0){
+          setInterval(() => {
+            let newTime = new Date().getTime();
+            if(this.userInfo.online){
+              this.userInfo.asd = newTime - time;
+              this.onlineSince();
+            }
+          }, 1000);
+        }
         
       },
       error: (err) => {
@@ -77,7 +83,7 @@ export class LogInComponent implements OnInit{
       this.userInfo.onlineUserUidList = [];
       querySnapshot.forEach((doc) => {
           const userData = doc.data();
-          if(userData['online'] == 'yes'){    
+          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 2000)){    // 
             this.userInfo.onlineUserUidList.push(userData['uId']);
           };
           
@@ -98,8 +104,17 @@ export class LogInComponent implements OnInit{
   logOutToJSON(){
     return {
       online : "no" ,
+      onlineSince : new Date().getTime() ,
       uId : this.authService.currentUserSignal()?.uId
     }
+  }
+
+  async onlineSince(){
+    const userRef = doc(
+      collection(this.firestore, 'online'),
+      this.authService.currentUserSignal()?.uId
+    );
+    await setDoc(userRef, this.sinceToJSON())
   }
 
   async userOnline(){
@@ -110,9 +125,18 @@ export class LogInComponent implements OnInit{
     await setDoc(userRef, this.toJSON())
   }
 
+  sinceToJSON(){
+    return {
+      online : "yes" ,
+      onlineSince : new Date().getTime() ,
+      uId : this.authService.currentUserSignal()?.uId
+    }
+  }
+
   toJSON(){
     return {
       online : "yes" ,
+      onlineSince : new Date().getTime() ,
       uId : this.authService.currentUserSignal()?.uId
     }
   }
@@ -128,10 +152,6 @@ export class LogInComponent implements OnInit{
         this.router.navigateByUrl('/home');
         this.userInfo.fetchUsers();
         this.userInfo.activeChannelIndex = 0;
-
-        //this.userOnline();
-        //this.fetchUsersOnline();
-        //this.userInfo.online = true;
       },
       error: (err) => {
         console.error('Guest login failed:', err);

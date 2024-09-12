@@ -59,6 +59,7 @@ export class ProfilOptionsPopupComponent {
   toJSON(){
     return {
       online : "no" ,
+      onlineSince : new Date().getTime() ,
       uId : this.authService.currentUserSignal()?.uId
     }
   }
