@@ -37,7 +37,7 @@ export class LogInComponent implements OnInit{
   constructor(private firestore : Firestore) {}
 
   ngOnInit(): void {
-    this.onbeforeunload();
+    //this.onbeforeunload();
   }
 
   onbeforeunload(){
