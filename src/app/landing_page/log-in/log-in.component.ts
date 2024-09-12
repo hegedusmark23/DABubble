@@ -58,16 +58,6 @@ export class LogInComponent implements OnInit{
         this.fetchUsersOnline();
 
         this.userInfo.online = true;
-        let time = new Date().getTime();
-        if(this.userInfo.asd == 0){
-          setInterval(() => {
-            let newTime = new Date().getTime();
-            if(this.userInfo.online){
-              this.userInfo.asd = newTime - time;
-              this.onlineSince();
-            }
-          }, 1000);
-        }
         
       },
       error: (err) => {
@@ -83,8 +73,11 @@ export class LogInComponent implements OnInit{
       this.userInfo.onlineUserUidList = [];
       querySnapshot.forEach((doc) => {
           const userData = doc.data();
-          if(userData['online'] == 'yes'){    // && userData['onlineSince'] > (new Date().getTime() - 1000)
+          if(userData['online'] == 'yes'){    
             this.userInfo.onlineUserUidList.push(userData['uId']);
+            window.onbeforeunload = () => {
+              this.userOffline();
+            };
           };
           
       });
@@ -104,17 +97,8 @@ export class LogInComponent implements OnInit{
   logOutToJSON(){
     return {
       online : "no" ,
-      onlineSince : new Date().getTime() ,
       uId : this.authService.currentUserSignal()?.uId
     }
-  }
-
-  async onlineSince(){
-    const userRef = doc(
-      collection(this.firestore, 'online'),
-      this.authService.currentUserSignal()?.uId
-    );
-    await setDoc(userRef, this.sinceToJSON())
   }
 
   async userOnline(){
@@ -125,18 +109,9 @@ export class LogInComponent implements OnInit{
     await setDoc(userRef, this.toJSON())
   }
 
-  sinceToJSON(){
-    return {
-      online : "yes" ,
-      onlineSince : new Date().getTime() ,
-      uId : this.authService.currentUserSignal()?.uId
-    }
-  }
-
   toJSON(){
     return {
       online : "yes" ,
-      onlineSince : new Date().getTime() ,
       uId : this.authService.currentUserSignal()?.uId
     }
   }
