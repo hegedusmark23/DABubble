@@ -127,6 +127,10 @@ export class LogInComponent implements OnInit{
         this.router.navigateByUrl('/home');
         this.userInfo.fetchUsers();
         this.userInfo.activeChannelIndex = 0;
+
+        this.userOnline();
+        this.fetchUsersOnline();
+        this.userInfo.online = true;
       },
       error: (err) => {
         console.error('Guest login failed:', err);
