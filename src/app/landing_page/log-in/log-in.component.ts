@@ -37,10 +37,10 @@ export class LogInComponent implements OnInit{
   constructor(private firestore : Firestore) {}
 
   ngOnInit(): void {
-    this.asdf();
+    this.onbeforeunload();
   }
 
-  asdf(){
+  onbeforeunload(){
     window.onbeforeunload = () => {
       this.userOffline();
     };
@@ -129,9 +129,9 @@ export class LogInComponent implements OnInit{
         this.userInfo.fetchUsers();
         this.userInfo.activeChannelIndex = 0;
 
-        this.userOnline();
-        this.fetchUsersOnline();
-        this.userInfo.online = true;
+        //this.userOnline();
+        //this.fetchUsersOnline();
+        //this.userInfo.online = true;
       },
       error: (err) => {
         console.error('Guest login failed:', err);
