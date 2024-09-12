@@ -37,10 +37,14 @@ export class LogInComponent implements OnInit{
   constructor(private firestore : Firestore) {}
 
   ngOnInit(): void {
-    
+    this.asdf();
   }
 
-  
+  asdf(){
+    window.onbeforeunload = () => {
+      this.userOffline();
+    };
+  }
   
   /**
    * Initiates Google Sign-In process.
@@ -75,9 +79,6 @@ export class LogInComponent implements OnInit{
           const userData = doc.data();
           if(userData['online'] == 'yes'){    
             this.userInfo.onlineUserUidList.push(userData['uId']);
-            window.onbeforeunload = () => {
-              this.userOffline();
-            };
           };
           
       });
