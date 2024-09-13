@@ -98,6 +98,9 @@
                 </div>
             }
             <button type="submit" class="save" (click)="saveChannel()"><span class="fs-18">Erstellen</span></button>
-        </div>
+        </div> 
+        @if(this.hideOrShowSidebar.addSelectedUsersToChannel){
+            <div class="responsive-white-container"></div>
+        }
     </div>
 </div>
