@@ -52,4 +52,11 @@
     .selected-img {
         transform: translateY(3px);
     }
+
+    .input-hidden {
+        border-radius: 24px;
+        padding-top: 6px !important;
+        max-height: 150px;
+        overflow-y: auto;
+    }
 }
