@@ -95,7 +95,7 @@
   z-index: 1;
 }
 
-.add-user-icon {
+.add-user-icon, .add-user-icon-responsive {
   cursor: pointer;
   background-image: url('../../../../assets/img/header/person_add.png');
   width: 40px;
@@ -107,6 +107,10 @@
   &:hover {
     background-image: url('../../../../assets/img/header/person_add_hover.png');
   }
+}
+
+.add-user-icon-responsive {
+  display: none;
 }
 
 .profil-image {
