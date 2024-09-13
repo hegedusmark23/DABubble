@@ -168,6 +168,13 @@
   width: 100%;
 }
 
+.messageTitleResive {
+  display: flex;
+  flex-direction: row;
+  justify-content: start !important;
+  width: 100%;
+}
+
 .messageInfo {
   width: 100%;
   display: flex;

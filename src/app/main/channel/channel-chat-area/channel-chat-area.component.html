@@ -219,7 +219,14 @@
               }"
             >
               <div class="messageInfo">
-                <div class="messageTitle">
+                <div
+                  [ngClass]="{
+                    messageTitleResive:
+                      message.uid !== authService.currentUserSignal()?.uId,
+                    messageTitle:
+                      message.uid === authService.currentUserSignal()?.uId
+                  }"
+                >
                   <div></div>
                   <div class="messageUserName">
                     <p (click)="openUserProfil(message.uid)" class="userName">
