@@ -47,6 +47,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
 
+  allChannels: any = [];
   allMessagesSortedDate: any = [];
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
@@ -114,6 +115,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       this.currentChannelId = channel;
       this.subUser();
       this.subMessages();
+      this.subChannels();
     });
 
     this.messageLoaded.changes.subscribe((t) => {
@@ -144,10 +146,13 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
+      this.allChannels = [];
       let channel: any;
       list.forEach((element) => {
         channel = this.setNoteChannel(element.data(), element.id);
-        if ((channel.id = this.currentChannelId)) {
+        this.allChannels.push(channel);
+
+        if (channel.id == this.currentChannelId) {
           this.currentChannel = channel;
         }
       });
@@ -161,7 +166,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       description: obj.description || '',
       images: obj.images || '',
       name: obj.name || '',
-      users: obj.users || '',
+      uids: obj.uids || '',
     };
   }
 
@@ -511,9 +516,10 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   getMessage(message: any): SafeHtml {
-    const regex = /₿ЯæŶ∆Ωг(\S+)/g;
-    const modifiedMessage = message.message.replace(
-      regex,
+    const regexUser = /₿ЯæŶ∆Ωг(\S+)/g;
+    const regexChannel = /₣Ж◊ŦΨø℧(\S+)/g;
+    let modifiedMessage = message.message.replace(
+      regexUser,
       (match: any, p1: any) => {
         const spanClass =
           message.uid !== this.authService.currentUserSignal()?.uId
@@ -522,6 +528,19 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         return `<span class="${spanClass}" data-uid="${p1}">@${this.getUsername(
           p1
         )}</span>`;
+      }
+    );
+
+    modifiedMessage = modifiedMessage.replace(
+      regexChannel,
+      (match: any, p1: any) => {
+        const spanClass =
+          message.uid !== this.authService.currentUserSignal()?.uId
+            ? 'tagHighlightChannel'
+            : 'tagHighlightSendChannel';
+        return `<span class="${spanClass}" data-uid="${p1}">#${
+          this.getChannel(p1).name
+        }</span>`;
       }
     );
 
@@ -540,7 +559,20 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       if (uid) {
         this.openUserProfil(uid);
       }
+    } else if (
+      target.classList.contains('tagHighlightChannel') ||
+      target.classList.contains('tagHighlightSendChannel')
+    ) {
+      const uid = target.getAttribute('data-uid');
+      if (uid) {
+        this.openChannel(uid);
+      }
     }
+  }
+
+  openChannel(uid: any) {
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(uid);
   }
 
   openUserProfil(uid: any) {
@@ -556,6 +588,15 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
       if (element.uid === uid) {
+        return element;
+      }
+    }
+  }
+
+  getChannel(id: any) {
+    for (let i = 0; i < this.allChannels.length; i++) {
+      const element = this.allChannels[i];
+      if (element.id === id) {
         return element;
       }
     }
