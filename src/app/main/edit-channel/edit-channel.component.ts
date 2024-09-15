@@ -22,7 +22,7 @@ import { ThreadService } from '../../services/thread.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './edit-channel.component.html',
-  styleUrl: './edit-channel.component.scss',
+  styleUrls: ['./edit-channel.component.scss', './edit-channel-responsive.component.scss']
 })
 export class EditChannelComponent implements OnInit {
   currentChannel: any;
