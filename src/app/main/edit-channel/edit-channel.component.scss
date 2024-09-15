@@ -203,3 +203,9 @@ input {
 .scroll-container {
   gap: 20px;
 }
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

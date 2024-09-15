@@ -65,5 +65,19 @@
     .responsive-userlist-container {
         display: flex;
         margin-bottom: 20px;
-      }
+    }
+
+    .scroll-container {
+        gap: 20px;
+        overflow-y: auto;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .button-container {
+        padding-bottom: 40px;
+    }
 }
