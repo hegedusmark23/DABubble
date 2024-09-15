@@ -204,4 +204,8 @@ export class EditChannelComponent implements OnInit {
       description: this.channelDescription
     };
   }
+
+  openUserProfil(i: number){
+
+  }
 }
