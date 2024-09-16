@@ -1,4 +1,8 @@
 @media(max-width: 1000px){
+    header {
+        justify-content: flex-start;
+    }
+
     .responsive {
         display: none;
     }
@@ -27,5 +31,10 @@
         width: 10px;
         height: 10px;
         transform: translateY(47px) translateX(73px);
+    }
+
+    .responsive-title {
+        transform: translateX(120px);
+        font-size: 24px;
     }
 }
