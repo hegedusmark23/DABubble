@@ -1,7 +1,7 @@
 <div *ngIf="this.selectetChannelData" class="contentContainer" (click)="editChannelService.setEditChannel(false, null)">
   <div class="mainContent" (click)="$event.stopPropagation()">
     <div class="header">
-      <p>
+      <p class="channel-name">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
           <mask id="mask0_70303_6026" style="mask-type: alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
             height="25">
@@ -34,6 +34,7 @@
         <div class="nameHeader-edit">
           <span>Channel-Name</span><button (click)="saveChannelName()"
             class="edit-button"><span>Speichern</span></button>
+            <img src="../../../assets/img/edit-channel/check_circle.png"  class="edit-icon-responsive" (click)="saveChannelName()">
         </div>
         <div class="channel-name-container">
           <input type="text" class="input-field" [(ngModel)]="channelName" id="channelName" name="channelName"
@@ -45,6 +46,7 @@
         <div class="nameHeader">
           <span>Channel-Name</span><button (click)="editChannelName()"
             class="edit-button"><span>Bearbeiten</span></button>
+            <img src="../../../assets/img/edit-channel/edit (1).png" class="edit-icon-responsive" (click)="editChannelName()">
         </div>
         <div class="channel-tag-name">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
@@ -65,6 +67,7 @@
         <div class="nameHeader">
           <span>Beschreibung</span><button (click)="editChannelDescription()"
             class="edit-button"><span>Bearbeiten</span></button>
+            <img src="../../../assets/img/edit-channel/edit (1).png" class="edit-icon-responsive" (click)="editChannelDescription()">
         </div>
         <div>
           {{
@@ -96,6 +99,7 @@
         <div class="nameHeader-edit">
           <span>Beschreibung</span><button (click)="saveChannelDescription()"
             class="edit-button"><span>Speichern</span></button>
+            <img src="../../../assets/img/edit-channel/check_circle.png" class="edit-icon-responsive" (click)="saveChannelDescription()">
         </div>
         <div class="channel-name-container">
           <input type="text" class="input-field" [(ngModel)]="channelDescription" id="channelDescription"

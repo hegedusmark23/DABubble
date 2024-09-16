@@ -75,9 +75,33 @@
         ::-webkit-scrollbar {
             display: none;
         }
+        margin-top: 90px;
     }
 
     .button-container {
         padding-bottom: 40px;
+    }
+
+    .header {
+        box-shadow: 0px 2px 10px 0px #00000014;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 90px;
+    }
+
+    .channel-name {
+        margin-left: 40px;
+    }
+}
+
+@media(max-width: 500px){
+    .edit-icon-responsive {
+        display: flex;
+    }
+
+    .edit-button {
+        display: none;
     }
 }
