@@ -5,11 +5,11 @@
   [ngClass]="containerClasses"
 >
   <div class="noMessagesContainer" *ngIf="allMessagesSortedDate.length < 1">
-    <div>
-      <p class="noMessagesTitle"># {{ this.currentChannel }}</p>
+    <div *ngIf="this.currentChannel">
+      <p class="noMessagesTitle"># {{ this.currentChannel.name }}</p>
       <p>
         Du hast diesen Channel heute erstellt. Das ist der Anfang der Channels
-        <span>#{{ this.currentChannel }}</span>
+        <span>#{{ this.currentChannel.name }}</span>
       </p>
     </div>
   </div>
