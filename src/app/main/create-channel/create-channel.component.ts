@@ -27,7 +27,8 @@ export class CreateChannelComponent {
     emails: [],
     images: [],
     channelCreatorName : '',
-    channelCreatorUid : ''
+    channelCreatorUid : '', 
+    creationsDate : 0
   };
   loading = false;
   activeUserIndex: number | null = null;
@@ -162,6 +163,7 @@ export class CreateChannelComponent {
         this.newChannel.description = '',
         this.newChannel.channelCreatorName = '';
         this.newChannel.channelCreatorUid = '';
+        this.newChannel.creationsDate = 0;
         this.newChannel.users = [];
         this.newChannel.emails = [];
         this.hideOrShowSidebar.selectedUsers = [];
@@ -193,7 +195,8 @@ export class CreateChannelComponent {
         emails: this.hideOrShowSidebar.emailList,
         images: this.hideOrShowSidebar.imageList,
         channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
-        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast'
+        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
+        creationsDate: this.newChannel.creationsDate = new Date().getTime()
       };
     } else {
       return {
@@ -205,7 +208,8 @@ export class CreateChannelComponent {
         emails: this.hideOrShowSidebar.selectedEmails,
         images: this.hideOrShowSidebar.selectedImages,
         channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
-        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast'
+        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
+        creationsDate: this.newChannel.creationsDate = new Date().getTime()
       };
     }
   }

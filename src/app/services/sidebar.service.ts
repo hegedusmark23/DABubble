@@ -19,6 +19,7 @@ export class SidebarService {
   AllChannelsDescriptions: string[] = [];
   AllChannelsCreatorsNames: string[] = [];
   AllChannelsCreatorsUids: string[] = [];
+  AllChannelsCreationsDate: number[] = [];
   AllUsers: string[] = [];
   AllEmails: string[] = [];
   AllImages: string[] = [];
@@ -84,6 +85,7 @@ fetchChannels() {
         this.AllChannelsCreatorsNames = [];
         this.AllChannelsCreatorsUids = [];
         this.GlobalChannelUids = [];
+        this.AllChannelsCreationsDate = [];
 
         querySnapshot.forEach((doc) => {
             const channelData = doc.data();
@@ -96,6 +98,7 @@ fetchChannels() {
             this.AllChannelsCreatorsNames.push(channelData['channelCreatorName']);
             this.AllChannelsCreatorsUids.push(channelData['channelCreatorUid']);
             this.GlobalChannelUids.push(channelData['uids']);
+            this.AllChannelsCreationsDate.push(channelData['creationsDate']);
 
             const uids = channelData['uids'];
             if (Array.isArray(uids)) {
