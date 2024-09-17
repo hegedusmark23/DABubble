@@ -94,12 +94,18 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     ) {
       const div = document.getElementById('input');
 
-      // Entferne alle Textknoten im `div`, aber lass das `p`-Element unverändert
+      // Entferne alle Textknoten und span-Elemente im `div`, aber lass das `p`-Element unverändert
       div!.childNodes.forEach((node) => {
         if (node.nodeType === Node.TEXT_NODE) {
           node.nodeValue = ''; // Textknoten leeren
+        } else if (node.nodeName === 'SPAN') {
+          node.remove(); // Entferne span-Element
         }
       });
+
+      // Entferne den Fokus vom input-div
+      (div as HTMLElement).blur();
+
       this.showPlaceholder = true;
     }
   }
@@ -209,6 +215,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       console.error(err);
     });
 
+    //input leeren
     this.clearInput();
     this.tagUserSelector = false;
     this.tagChannelSelector = false;
