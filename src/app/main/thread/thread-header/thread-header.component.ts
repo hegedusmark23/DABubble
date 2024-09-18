@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ThreadService } from '../../../services/thread.service';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-thread-header',
@@ -10,8 +11,10 @@ import { ThreadService } from '../../../services/thread.service';
 })
 export class ThreadHeaderComponent {
   constructor(private threadService: ThreadService) {}
+  responsiveService = inject(ResponsiveService);
 
   closeThread() {
     this.threadService.closeThread();
+    this.responsiveService.isThreadOpen = false;
   }
 }

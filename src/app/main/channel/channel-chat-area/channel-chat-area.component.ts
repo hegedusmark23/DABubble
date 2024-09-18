@@ -36,6 +36,7 @@ import { AuthService } from '../../../services/auth.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { SidebarService } from '../../../services/sidebar.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -91,6 +92,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   currentChannel: any;
   currentChannelId: any;
   channelInfo = inject(SidebarService);
+  responsiveService = inject(ResponsiveService);
 
   constructor(
     private threadService: ThreadService,
@@ -178,6 +180,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       }, 300);
     } else {
       this.threadService.openThread(thread);
+      this.responsiveService.isThreadOpen = true;
     }
   }
 
