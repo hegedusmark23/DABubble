@@ -10,6 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class ProfilOptionsPopupComponent {
   authService = inject(AuthService)
   hideOrShowPopUp = inject(SidebarService);
   router = inject(Router);
+  responsiveService = inject(ResponsiveService);
 
   constructor(private firestore : Firestore) {}
 
@@ -45,6 +47,10 @@ export class ProfilOptionsPopupComponent {
     this.hideOrShowPopUp.popUpOpen = false;
     this.hideOrShowPopUp.currentChannelNumber = 0;
     this.hideOrShowPopUp.online = false;
+    this.responsiveService.isChannelOpen = false;
+    this.responsiveService.isDirectMessageOpen = false;
+    this.responsiveService.isThreadOpen = false;
+    this.responsiveService.isSidebarOpen = true;
     this.userOffline();
   }
 

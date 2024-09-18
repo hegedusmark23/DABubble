@@ -24,6 +24,7 @@ export class HeaderComponent {
   backToSidebar() {
     this.responsiveService.isChannelOpen = false;
     this.responsiveService.isDirectMessageOpen = false;
+    this.responsiveService.isThreadOpen = false;
       if(window.innerWidth < 1000) {
         this.responsiveService.isSidebarOpen = true;
       }
