@@ -164,7 +164,8 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   setNoteChannel(obj: any, id: string) {
     return {
       id: id,
-      channelCreator: obj.channelCreator || '',
+      channelCreatorUid: obj.channelCreatorUid || '',
+      creationsDate: obj.creationsDate || '',
       description: obj.description || '',
       images: obj.images || '',
       name: obj.name || '',
@@ -445,6 +446,54 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       return false;
     } else {
       return true;
+    }
+  }
+
+  isTodayTimestamp(timestamp: number): boolean {
+    const givenDate = new Date(timestamp);
+    const today = new Date();
+
+    return (
+      givenDate.getDate() === today.getDate() &&
+      givenDate.getMonth() === today.getMonth() &&
+      givenDate.getFullYear() === today.getFullYear()
+    );
+  }
+
+  getDate(timestamp: number) {
+    const givenDate = new Date(timestamp);
+    const today = new Date();
+
+    if (
+      givenDate.getDate() === today.getDate() &&
+      givenDate.getMonth() === today.getMonth() &&
+      givenDate.getFullYear() === today.getFullYear()
+    ) {
+      return 'heute';
+    } else {
+      return 'am ' + this.formatDate(timestamp);
+    }
+  }
+
+  formatDate(timestamp: number): string {
+    const givenDate = new Date(timestamp);
+
+    const day = String(givenDate.getDate()).padStart(2, '0'); // Tag mit führender Null
+    const month = String(givenDate.getMonth() + 1).padStart(2, '0'); // Monat mit führender Null (getMonth ist nullbasiert, daher +1)
+    const year = givenDate.getFullYear(); // Jahr
+
+    return `${day}.${month}.${year}`;
+  }
+
+  getChannelCreator(uid: any) {
+    if (uid == this.authService.currentUserSignal()?.uId) {
+      return 'Du hast diesen Channel';
+    } else {
+      if (this.getUser(uid)) {
+        return this.getUser(uid).name + ' ' + 'hat diesen Channel';
+      } else {
+        return 'undefined';
+      }
     }
   }
 
