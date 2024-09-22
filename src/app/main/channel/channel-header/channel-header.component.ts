@@ -63,20 +63,23 @@ export class ChannelHeaderComponent {
         channel = this.setNoteChannel(element.data(), element.id);
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
-  
-          if (this.channelInfo.AllChannelsImages && this.channelInfo.currentChannelNumber !== undefined) {
-            const images = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber];
-            if (images) {
-              this.userNumber = images.length;
-            } else {
-              this.userNumber = 0;
-            }
-          } else {
-            this.userNumber = 0;
-          }
+          this.setUserNumberBasedOnImages();
         }
       });
     });
+  }
+
+  setUserNumberBasedOnImages(){
+    if (this.channelInfo.AllChannelsImages && this.channelInfo.currentChannelNumber !== undefined) {
+      const images = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber];
+      if (images) {
+        this.userNumber = images.length;
+      } else {
+        this.userNumber = 0;
+      }
+    } else {
+      this.userNumber = 0;
+    }
   }
   
 
