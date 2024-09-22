@@ -14,10 +14,10 @@ import { ThreadService } from '../../services/thread.service';
   templateUrl: './create-channel.component.html',
   styleUrls: ['./create-channel.component.scss', './create-channel-responsive.component.scss']
 })
+
 export class CreateChannelComponent {
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
-
   newChannel = {
     name: '',
     id : '',
@@ -60,7 +60,6 @@ export class CreateChannelComponent {
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
-    
     if (this.searchTerm) {
         this.filteredUserList = [];
         this.filteredImageList = [];

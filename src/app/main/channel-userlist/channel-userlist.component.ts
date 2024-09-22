@@ -11,8 +11,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './channel-userlist.component.html',
   styleUrls: ['./channel-userlist.component.scss', './channel-userlist-responsive.component.scss']
 })
-export class ChannelUserlistComponent {
 
+export class ChannelUserlistComponent {
   channelInfo = inject(SidebarService);
   authService = inject(AuthService);
 
