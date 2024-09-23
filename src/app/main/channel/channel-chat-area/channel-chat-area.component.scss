@@ -345,7 +345,7 @@
 }
 .textareaContainer {
   width: 100%;
-  textarea {
+  .textArea {
     border: none;
     outline: none;
     -webkit-box-shadow: none;
@@ -360,7 +360,6 @@
     padding: 20px;
     height: auto; /* Ermöglicht das automatische Anpassen der Höhe */
     width: 100%; /* Passt sich der Breite des übergeordneten Containers an */
-    white-space: pre-wrap; /* Ermöglicht das Umbruchverhalten ähnlich wie bei span */
     word-break: break-all; /* Ermöglicht den Zeilenumbruch bei langen Wörtern */
     box-sizing: border-box; /* Schließt Padding und Border in die Breite und Höhe mit ein */
   }

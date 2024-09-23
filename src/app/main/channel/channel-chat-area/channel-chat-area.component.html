@@ -27,7 +27,7 @@
               " " +
               message.day +
               " " +
-              getMonthName(message.month)
+              chatAreaService.getMonthName(message.month)
           }}
         </p>
         <span class="spacer"></span>
@@ -235,7 +235,12 @@
                       {{ getUsername(message.uid) }}
                     </p>
                     <p class="smallGray">
-                      {{ getFormattedTime(message.hour, message.minute) }}
+                      {{
+                        chatAreaService.getFormattedTime(
+                          message.hour,
+                          message.minute
+                        )
+                      }}
                     </p>
                   </div>
                 </div>
@@ -399,14 +404,18 @@
         [darkMode]="false"
       ></emoji-mart>
 
-      <div *ngIf="this.openEditMessage == message.id">
+      <div [ngClass]="{ 'd-none': this.openEditMessage !== message.id }">
         <div class="messageEditContainer">
           <div class="textareaContainer">
-            <textarea
+            <div
+              id="inputChatArea"
+              class="textArea"
+              contenteditable="true"
+              type="text"
               #messageTextarea
-              value="{{ this.editedMessage }}"
-              (input)="onMessageInput($event)"
-            ></textarea>
+              [innerHTML]="getMessageEdit(message)"
+            ></div>
+
             <div class="messageEditContainerFooter">
               <div></div>
               <div>
