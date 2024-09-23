@@ -38,7 +38,6 @@ export class UserProfilComponent {
 
   updateSelectedUser() {
     this.channelSelectionService.openDirectMessage();
-
     this.directMessageSelectionService.setSelectedChannel(
       this.hideOrShowSidebar.activeUid
     );
