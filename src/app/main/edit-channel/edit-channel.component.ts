@@ -81,45 +81,42 @@ export class EditChannelComponent implements OnInit {
     return this.channelName.length >= 3;
   }
 
+  navigateToPreviousChannel(){
+    this.openTheNextChannel();
+    this.editChannelService.setEditChannel(false, null);
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    const reverseIndex = this.channelInfo.AllChannelsIds.length - 1 - this.channelInfo.currentChannelNumber;
+    this.channelSelectionService.setSelectedChannel(this.channelInfo.AllChannelsIds[reverseIndex]);
+    this.channelInfo.fetchChannels();
+    this.channelInfo.fetchUsers();
+    this.channelInfo.currentChannelNumber = reverseIndex;
+  }
+
+  async deleteUserFromChannel(channelData: any, userNumber: any, docSnapshot: any){
+    channelData['uids'].splice(userNumber, 1);
+    channelData['emails'].splice(userNumber, 1);
+    channelData['images'].splice(userNumber, 1);
+    channelData['users'].splice(userNumber, 1);
+    const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
+    await updateDoc(channelDocRef, {
+      uids: channelData['uids'],
+      emails: channelData['emails'],
+      images: channelData['images'],
+      users: channelData['users']
+    });
+    this.navigateToPreviousChannel();
+  }
+
   async abandon() {
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
-  
     querySnapshot.forEach(async (docSnapshot) => {
       const channelData = docSnapshot.data();
-  
       if (channelData['id'] === this.selectetChannelData.id) {
         const userNumber = channelData['uids'].indexOf(this.authService.currentUserSignal()?.uId);
-  
         if (userNumber > -1) {
-          channelData['uids'].splice(userNumber, 1);
-          channelData['emails'].splice(userNumber, 1);
-          channelData['images'].splice(userNumber, 1);
-          channelData['users'].splice(userNumber, 1);
-          const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
-          await updateDoc(channelDocRef, {
-            uids: channelData['uids'],
-            emails: channelData['emails'],
-            images: channelData['images'],
-            users: channelData['users']
-          });
-  
-          this.openTheNextChannel();
-  
-          this.editChannelService.setEditChannel(false, null);
-          this.threadService.closeThread();
-          this.channelSelectionService.openChannel();
-  
-          const reverseIndex = this.channelInfo.AllChannelsIds.length - 1 - this.channelInfo.currentChannelNumber;
-  
-          this.channelSelectionService.setSelectedChannel(
-            this.channelInfo.AllChannelsIds[reverseIndex]
-          );
-  
-          this.channelInfo.fetchChannels();
-          this.channelInfo.fetchUsers();
-  
-          this.channelInfo.currentChannelNumber = reverseIndex;
+          this.deleteUserFromChannel(channelData, userNumber, docSnapshot);
         } else {
           alert('du bist kein mitglied');
         }
