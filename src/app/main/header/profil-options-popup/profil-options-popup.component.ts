@@ -40,10 +40,7 @@ export class ProfilOptionsPopupComponent {
     this.hideOrShowPopUp.editProfilOpen = true;
   }
 
-  logOut() {
-    this.authService.logOut().subscribe(() => {
-      this.router.navigate(['/']);
-    });
+  resetViewState(){
     this.hideOrShowPopUp.popUpOpen = false;
     this.hideOrShowPopUp.currentChannelNumber = 0;
     this.hideOrShowPopUp.online = false;
@@ -51,6 +48,13 @@ export class ProfilOptionsPopupComponent {
     this.responsiveService.isDirectMessageOpen = false;
     this.responsiveService.isThreadOpen = false;
     this.responsiveService.isSidebarOpen = true;
+  }
+
+  logOut() {
+    this.authService.logOut().subscribe(() => {
+      this.router.navigate(['/']);
+    });
+    this.resetViewState();
     this.userOffline();
   }
 
