@@ -280,11 +280,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     }, 10);
   }
 
-  getUsername(uid: string): string {
-    const user = this.allUser.find((user: any) => user.uid === uid);
-    return user ? user.name : 'Unbekannt';
-  }
-
   getProfileImg(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
@@ -464,15 +459,15 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     let modifiedMessage = message.message.replace(
       regexUser,
       (match: any, p1: any) => {
-        if (this.getChannel(p1) != undefined) {
+        if (this.getUser(p1) != undefined) {
           const spanClass =
             message.uid !== this.authService.currentUserSignal()?.uId
               ? 'tagHighlight'
               : 'tagHighlightSend';
           return /*html*/ `
-          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
-            p1
-          )}</span>`;
+          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
+            this.getUser(p1).name
+          }</span>`;
         } else {
           return 'undefined';
         }
@@ -506,15 +501,15 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     let modifiedMessage = message.message.replace(
       regexUser,
       (match: any, p1: any) => {
-        if (this.getChannel(p1) != undefined) {
+        if (this.getUser(p1) != undefined) {
           const spanClass =
             message.uid !== this.authService.currentUserSignal()?.uId
               ? 'tagHighlight'
               : 'tagHighlightSend';
           return /*html*/ `
-            <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
-            p1
-          )}</span>`;
+            <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
+            this.getUser(p1).name
+          }</span>`;
         } else {
           return 'undefined';
         }
@@ -585,6 +580,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         return element;
       }
     }
+    return { name: undefined };
   }
 
   getChannel(id: any) {
@@ -607,6 +603,11 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   eventStop(event: any) {
+    event.stoppropagation();
+  }
+
+  test(event: any) {
+    console.log(event);
     event.stoppropagation();
   }
 }

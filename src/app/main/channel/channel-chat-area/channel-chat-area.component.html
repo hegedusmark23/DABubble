@@ -232,7 +232,7 @@
                   <div></div>
                   <div class="messageUserName">
                     <p (click)="openUserProfil(message.uid)" class="userName">
-                      {{ getUsername(message.uid) }}
+                      {{ getUser(message.uid).name }}
                     </p>
                     <p class="smallGray">
                       {{
@@ -319,7 +319,7 @@
                           splitStringBySpace(message[reaction.name]).length <= 3
                         "
                       >
-                        {{ getUsername(user) }}
+                        {{ getUser(user).name }}
                       </span>
 
                       <!-- Füge Komma nur hinzu, wenn es nicht der letzte Name ist -->
@@ -354,7 +354,7 @@
                             3 && i < 2
                         "
                       >
-                        {{ getUsername(user) }},
+                        {{ getUser(user).name }},
                       </span>
                     </span>
                     <a
@@ -404,7 +404,7 @@
         [darkMode]="false"
       ></emoji-mart>
 
-      <div [ngClass]="{ 'd-none': this.openEditMessage !== message.id }">
+      <div *ngIf="this.openEditMessage == message.id">
         <div class="messageEditContainer">
           <div class="textareaContainer">
             <div
@@ -414,6 +414,15 @@
               type="text"
               [innerHTML]="getMessageEdit(message)"
             ></div>
+
+            <div
+              id="inputChatArea"
+              class="textAreaChatArea"
+              contenteditable="true"
+              type="text"
+            >
+              {{ message.message }}
+            </div>
 
             <div class="messageEditContainerFooter">
               <div></div>
