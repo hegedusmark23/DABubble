@@ -14,10 +14,10 @@ import { ThreadService } from '../../services/thread.service';
   templateUrl: './create-channel.component.html',
   styleUrls: ['./create-channel.component.scss', './create-channel-responsive.component.scss']
 })
+
 export class CreateChannelComponent {
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
-
   newChannel = {
     name: '',
     id : '',
@@ -60,40 +60,43 @@ export class CreateChannelComponent {
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
-    
     if (this.searchTerm) {
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-        this.filteredUidList = [];
-        this.filteredEmailList = [];
-
-        this.hideOrShowSidebar.userList.forEach((user, index) => {
-            if (user.toLowerCase().includes(this.searchTerm)) {
-                this.filteredUserList.push(user);
-                this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
-                this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
-                this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
-            }
-        });
+        this.clearFilteredLists();
+        this.filterUserListAndDetails();
     } else {
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-        this.filteredUidList = [];
-        this.filteredEmailList = [];
+        this.clearFilteredLists();
     }
-}
+  }
 
+  filterUserListAndDetails(){
+    this.hideOrShowSidebar.userList.forEach((user, index) => {
+      if (user.toLowerCase().includes(this.searchTerm)) {
+          this.filteredUserList.push(user);
+          this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
+          this.filteredUidList.push(this.hideOrShowSidebar.uidList[index]);
+          this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
+      }
+  });
+  }
 
-  closeDialog() {
-    this.hideOrShowSidebar.createChannelDialogActive = false;
+  clearFilteredLists(){
     this.filteredUserList = [];
     this.filteredImageList = [];
     this.filteredUidList = [];
     this.filteredEmailList = [];
+  }
+
+  clearSelectedLists(){
     this.hideOrShowSidebar.selectedUsers = [];
     this.hideOrShowSidebar.selectedImages = [];
     this.hideOrShowSidebar.selectedUids = [];
     this.hideOrShowSidebar.selectedEmails = [];
+  }
+
+  closeDialog() {
+    this.hideOrShowSidebar.createChannelDialogActive = false;
+    this.clearFilteredLists();
+    this.clearSelectedLists();
     this.searchTerm = '';
     this.newChannel.name = '';
     this.newChannel.description = '';
@@ -115,14 +118,8 @@ export class CreateChannelComponent {
 
   closeDialogAddUser() {
     this.hideOrShowSidebar.addUserToChanelOpen = false;
-    this.filteredUserList = [];
-    this.filteredImageList = [];
-    this.filteredUidList = [];
-    this.filteredEmailList = [];
-    this.hideOrShowSidebar.selectedUsers = [];
-    this.hideOrShowSidebar.selectedImages = [];
-    this.hideOrShowSidebar.selectedUids = [];
-    this.hideOrShowSidebar.selectedEmails = [];
+    this.clearFilteredLists();
+    this.clearSelectedLists();
     this.searchTerm = '';
     this.newChannel.name = '';
     this.newChannel.description = '';
@@ -158,59 +155,75 @@ export class CreateChannelComponent {
       })
       .then(() => {
         this.loading = false;
-        this.newChannel.name = '',
-        this.newChannel.id = '',
-        this.newChannel.description = '',
-        this.newChannel.channelCreatorName = '';
-        this.newChannel.channelCreatorUid = '';
-        this.newChannel.creationsDate = 0;
-        this.newChannel.users = [];
-        this.newChannel.emails = [];
-        this.hideOrShowSidebar.selectedUsers = [];
-        this.hideOrShowSidebar.selectedImages = [];
-        this.hideOrShowSidebar.selectedUids = [];
-        this.hideOrShowSidebar.selectedEmails = [];
-        this.hideOrShowSidebar.userList = [];
-        this.hideOrShowSidebar.imageList = [];
-        this.hideOrShowSidebar.uidList = [];
-        this.hideOrShowSidebar.emailList = [];
-        this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
-        this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
-        this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
-        this.hideOrShowSidebar.emailList = this.hideOrShowSidebar.AllEmails;
+        this.clearNewChannelFields();
+        this.clearSelectedLists();
+        this.resetUserDataLists();
+        this.restoreSidebarLists();
         this.closeDialogAddUser();
         this.openChannel(this.result);
         this.result = '';
       });
   }
 
+  restoreSidebarLists(){
+    this.hideOrShowSidebar.userList = this.hideOrShowSidebar.AllUsers; 
+    this.hideOrShowSidebar.imageList = this.hideOrShowSidebar.AllImages; 
+    this.hideOrShowSidebar.uidList = this.hideOrShowSidebar.AllUids;
+    this.hideOrShowSidebar.emailList = this.hideOrShowSidebar.AllEmails;
+  }
+
+  resetUserDataLists(){
+    this.hideOrShowSidebar.userList = [];
+    this.hideOrShowSidebar.imageList = [];
+    this.hideOrShowSidebar.uidList = [];
+    this.hideOrShowSidebar.emailList = [];
+}
+  clearNewChannelFields(){
+    this.newChannel.name = '',
+    this.newChannel.id = '',
+    this.newChannel.description = '',
+    this.newChannel.channelCreatorName = '';
+    this.newChannel.channelCreatorUid = '';
+    this.newChannel.creationsDate = 0;
+    this.newChannel.users = [];
+    this.newChannel.emails = [];
+  }
+
+  ifAddAllUsersToChannel(){
+    return {
+      name: this.newChannel.name,
+      id: this.result,
+      description: this.newChannel.description,
+      users: this.hideOrShowSidebar.userList,
+      uids: this.hideOrShowSidebar.uidList,
+      emails: this.hideOrShowSidebar.emailList,
+      images: this.hideOrShowSidebar.imageList,
+      channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
+      channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
+      creationsDate: this.newChannel.creationsDate = new Date().getTime()
+    };
+  }
+
+  ifAddSelectedUsersToChannel(){
+    return {
+      name: this.newChannel.name,
+      id: this.result,
+      description: this.newChannel.description,
+      users: this.hideOrShowSidebar.selectedUsers,
+      uids: this.hideOrShowSidebar.selectedUids,
+      emails: this.hideOrShowSidebar.selectedEmails,
+      images: this.hideOrShowSidebar.selectedImages,
+      channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
+      channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
+      creationsDate: this.newChannel.creationsDate = new Date().getTime()
+    };
+  }
+
   toJSON() {
     if (this.hideOrShowSidebar.addAllUsersToChannel) {
-      return {
-        name: this.newChannel.name,
-        id: this.result,
-        description: this.newChannel.description,
-        users: this.hideOrShowSidebar.userList,
-        uids: this.hideOrShowSidebar.uidList,
-        emails: this.hideOrShowSidebar.emailList,
-        images: this.hideOrShowSidebar.imageList,
-        channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
-        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
-        creationsDate: this.newChannel.creationsDate = new Date().getTime()
-      };
+      return this.ifAddAllUsersToChannel();
     } else {
-      return {
-        name: this.newChannel.name,
-        id: this.result,
-        description: this.newChannel.description,
-        users: this.hideOrShowSidebar.selectedUsers,
-        uids: this.hideOrShowSidebar.selectedUids,
-        emails: this.hideOrShowSidebar.selectedEmails,
-        images: this.hideOrShowSidebar.selectedImages,
-        channelCreatorName: this.newChannel.channelCreatorName = this.authService.currentUserSignal()?.name || 'Gast',
-        channelCreatorUid: this.newChannel.channelCreatorUid = this.authService.currentUserSignal()?.uId || 'Gast',
-        creationsDate: this.newChannel.creationsDate = new Date().getTime()
-      };
+      return this.ifAddSelectedUsersToChannel();
     }
   }
 
@@ -231,44 +244,62 @@ export class CreateChannelComponent {
   selectUser(i: number) {
     const indexInMainList = this.hideOrShowSidebar.userList.indexOf(this.filteredUserList[i]);
     if (indexInMainList !== -1) {
-        this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
-        this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
-        this.hideOrShowSidebar.selectedUids.push(this.hideOrShowSidebar.uidList[indexInMainList]);
-        this.hideOrShowSidebar.selectedEmails.push(this.hideOrShowSidebar.emailList[indexInMainList]);
-        this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
-        this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
-        this.hideOrShowSidebar.uidList.splice(indexInMainList, 1);
-        this.hideOrShowSidebar.emailList.splice(indexInMainList, 1);
-        this.filteredUserList.splice(i, 1);
-        this.filteredImageList.splice(i, 1);
-        this.filteredUidList.splice(i, 1);
-        this.filteredEmailList.splice(i, 1);
-        this.filteredUserList = [];
-        this.filteredImageList = [];
-        this.filteredUidList = [];
-        this.filteredEmailList = [];
+        this.addToSelectedLists(i, indexInMainList);
+        this.deleteUserDataFromLists(i, indexInMainList);
+        this.deleteFromFilteredLists(i);
+        this.clearFilteredLists();
         this.searchTerm = '';
     }
-}
+  }
 
-deleteUser(i: number) {
+  addToSelectedLists(i: number, indexInMainList: any){
+    this.hideOrShowSidebar.selectedUsers.push(this.hideOrShowSidebar.userList[indexInMainList]);
+    this.hideOrShowSidebar.selectedImages.push(this.hideOrShowSidebar.imageList[indexInMainList]);
+    this.hideOrShowSidebar.selectedUids.push(this.hideOrShowSidebar.uidList[indexInMainList]);
+    this.hideOrShowSidebar.selectedEmails.push(this.hideOrShowSidebar.emailList[indexInMainList]);
+  }
+
+  deleteUserDataFromLists(i: number, indexInMainList: any){
+    this.hideOrShowSidebar.userList.splice(indexInMainList, 1);
+    this.hideOrShowSidebar.imageList.splice(indexInMainList, 1);
+    this.hideOrShowSidebar.uidList.splice(indexInMainList, 1);
+    this.hideOrShowSidebar.emailList.splice(indexInMainList, 1);
+  }
+
+  deleteFromFilteredLists(i: number){
+    this.filteredUserList.splice(i, 1);
+    this.filteredImageList.splice(i, 1);
+    this.filteredUidList.splice(i, 1);
+    this.filteredEmailList.splice(i, 1);
+  }
+
+  addToUserList(i: number){
     this.hideOrShowSidebar.userList.push(this.hideOrShowSidebar.selectedUsers[i]);
     this.hideOrShowSidebar.imageList.push(this.hideOrShowSidebar.selectedImages[i]);
     this.hideOrShowSidebar.uidList.push(this.hideOrShowSidebar.selectedUids[i]);
     this.hideOrShowSidebar.emailList.push(this.hideOrShowSidebar.selectedEmails[i]);
+  }
+
+  deleteFromUserList(i: number){
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
     this.hideOrShowSidebar.selectedUids.splice(i, 1);
     this.hideOrShowSidebar.selectedEmails.splice(i, 1);
+  }
+
+  copySidebarLists(){
     this.filteredUserList = this.hideOrShowSidebar.userList.slice();
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
     this.filteredUidList = this.hideOrShowSidebar.uidList.slice();
     this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
-    this.filteredUserList = [];
-    this.filteredImageList = [];
-    this.filteredUidList = [];
-    this.filteredEmailList = [];
+  }
+
+  deleteUser(i: number) {
+    this.addToUserList(i);
+    this.deleteFromUserList(i);
+    this.copySidebarLists();
+    this. clearFilteredLists();
     this.searchTerm = '';
-}
+  }
 
 }

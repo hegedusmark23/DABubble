@@ -11,11 +11,9 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./edit-profil.component.scss', './edit-profil-responsive.component.scss']
 })
 export class EditProfilComponent {
-
   hideOrShowPopUp = inject(SidebarService);
   authService = inject(AuthService);
   userOnline = false;
-  userEmail = 'user@irgenwas.com';
 
   closeDialog(){
     this.hideOrShowPopUp.editProfilOpen = false;

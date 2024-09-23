@@ -8,7 +8,9 @@
     <div *ngIf="this.currentChannel">
       <p class="noMessagesTitle"># {{ this.currentChannel.name }}</p>
       <p>
-        Du hast diesen Channel heute erstellt. Das ist der Anfang der Channels
+        {{ getChannelCreator(this.currentChannel.channelCreatorUid) }}
+        {{ getDate(this.currentChannel.creationsDate) }} erstellt. Das ist der
+        Anfang der Channels
         <span>#{{ this.currentChannel.name }}</span>
       </p>
     </div>
@@ -25,7 +27,7 @@
               " " +
               message.day +
               " " +
-              getMonthName(message.month)
+              chatAreaService.getMonthName(message.month)
           }}
         </p>
         <span class="spacer"></span>
@@ -233,7 +235,12 @@
                       {{ getUsername(message.uid) }}
                     </p>
                     <p class="smallGray">
-                      {{ getFormattedTime(message.hour, message.minute) }}
+                      {{
+                        chatAreaService.getFormattedTime(
+                          message.hour,
+                          message.minute
+                        )
+                      }}
                     </p>
                   </div>
                 </div>
@@ -397,14 +404,17 @@
         [darkMode]="false"
       ></emoji-mart>
 
-      <div *ngIf="this.openEditMessage == message.id">
+      <div [ngClass]="{ 'd-none': this.openEditMessage !== message.id }">
         <div class="messageEditContainer">
           <div class="textareaContainer">
-            <textarea
-              #messageTextarea
-              value="{{ this.editedMessage }}"
-              (input)="onMessageInput($event)"
-            ></textarea>
+            <div
+              id="inputChatArea"
+              class="textAreaChatArea"
+              contenteditable="true"
+              type="text"
+              [innerHTML]="getMessageEdit(message)"
+            ></div>
+
             <div class="messageEditContainerFooter">
               <div></div>
               <div>

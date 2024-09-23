@@ -277,6 +277,10 @@ input {
     z-index: 20;
 }
 
+.userList:empty {
+    display: none;
+}
+
 .profil-image {
     height: 48px;
     width: 48px;

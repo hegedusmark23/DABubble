@@ -30,7 +30,6 @@ export class SidebarComponent implements OnInit {
   activetedChannelTitle = true;
   activeUserIndex: number | null = null;
   usersTitleActive = true;
-
   sidebarService = inject(SidebarService);
   authService = inject(AuthService);
   responsiveService = inject(ResponsiveService);
