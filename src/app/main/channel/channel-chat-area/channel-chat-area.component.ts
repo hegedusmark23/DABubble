@@ -464,14 +464,18 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     let modifiedMessage = message.message.replace(
       regexUser,
       (match: any, p1: any) => {
-        const spanClass =
-          message.uid !== this.authService.currentUserSignal()?.uId
-            ? 'tagHighlight'
-            : 'tagHighlightSend';
-        return /*html*/ `
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlight'
+              : 'tagHighlightSend';
+          return /*html*/ `
           <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
-          p1
-        )}</span>`;
+            p1
+          )}</span>`;
+        } else {
+          return 'undefined';
+        }
       }
     );
 
@@ -482,10 +486,14 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
           message.uid !== this.authService.currentUserSignal()?.uId
             ? 'tagHighlightChannel'
             : 'tagHighlightSendChannel';
-        return /*html*/ `
+        if (this.getChannel(p1) != undefined) {
+          return /*html*/ `
           <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
-          this.getChannel(p1).name
-        }</span>`;
+            this.getChannel(p1).name
+          }</span>`;
+        } else {
+          return 'undefined';
+        }
       }
     );
 
@@ -498,28 +506,36 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     let modifiedMessage = message.message.replace(
       regexUser,
       (match: any, p1: any) => {
-        const spanClass =
-          message.uid !== this.authService.currentUserSignal()?.uId
-            ? 'tagHighlight'
-            : 'tagHighlightSend';
-        return /*html*/ `
-          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
-          p1
-        )}</span>`;
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlight'
+              : 'tagHighlightSend';
+          return /*html*/ `
+            <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
+            p1
+          )}</span>`;
+        } else {
+          return 'undefined';
+        }
       }
     );
 
     modifiedMessage = modifiedMessage.replace(
       regexChannel,
       (match: any, p1: any) => {
-        const spanClass =
-          message.uid !== this.authService.currentUserSignal()?.uId
-            ? 'tagHighlightChannel'
-            : 'tagHighlightSendChannel';
-        return /*html*/ `
-          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
-          this.getChannel(p1).name
-        }</span>`;
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlightChannel'
+              : 'tagHighlightSendChannel';
+          return /*html*/ `
+        <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
+            this.getChannel(p1).name
+          }</span>`;
+        } else {
+          return 'undefined';
+        }
       }
     );
     return this.sanitizer.bypassSecurityTrustHtml(modifiedMessage);
@@ -578,6 +594,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         return element;
       }
     }
+    return undefined; // wird zurückgegeben, wenn nichts gefunden wurde
   }
 
   splitStringBySpace(input: string): string[] {
