@@ -156,9 +156,9 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   async saveMessage(event: any) {
     event?.preventDefault();
     this.tagUserSelector = false;
-
     // Finde das 'contenteditable' Div Element
     const messageTextarea = document.querySelector('.textArea') as HTMLElement;
+    console.log(event);
 
     if (messageTextarea) {
       const children = messageTextarea.childNodes;
@@ -196,7 +196,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     if (this.message.message.length < 1 && !this.selectedFile) {
       return;
     }
-
     // Überprüfe, ob eine Datei ausgewählt ist und speichere sie
     if (this.selectedFile) {
       await this.saveFile();
