@@ -152,17 +152,20 @@ export class EditChannelComponent implements OnInit {
     );
     try {
       await updateDoc(channelRef, this.toJSON());
-      console.log('Channel name updated successfully');
-      this.channelName = '';
-      this.editChannelNameOpen = false;
-      this.threadService.closeThread();
-      this.channelSelectionService.openChannel();
-      this.channelSelectionService.setSelectedChannel(
-      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
-      );
+      this.closeChannelEditor();
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }
+  }
+
+  closeChannelEditor(){
+    this.channelName = '';
+    this.editChannelNameOpen = false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+    this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
   }
 
   toJSON() {
@@ -171,6 +174,15 @@ export class EditChannelComponent implements OnInit {
     };
   }
 
+  closeChannelDescriptionEdit(){
+    this.channelDescription = '';
+    this.editChannelDescriptionOpen = false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+    this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
+  }
 
   async saveChannelDescription() {
     if (!this.channelDescription) {
@@ -183,14 +195,7 @@ export class EditChannelComponent implements OnInit {
     );
     try {
       await updateDoc(channelRef, this.toJSONDescription());
-      console.log('Channel name updated successfully');
-      this.channelDescription = '';
-      this.editChannelDescriptionOpen = false;
-      this.threadService.closeThread();
-      this.channelSelectionService.openChannel();
-      this.channelSelectionService.setSelectedChannel(
-      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
-      );
+      this.closeChannelDescriptionEdit();
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }
