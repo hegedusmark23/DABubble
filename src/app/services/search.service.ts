@@ -8,7 +8,12 @@ import { SidebarService } from './sidebar.service';
 })
 export class SearchService {
   hideOrShowSidebar = inject(SidebarService);
+  isSearching: boolean = false;
   constructor(private firestore: Firestore) {}
+
+  hideSearch() {
+    this.isSearching = false;
+  }
 
   /**
    * Searches for channels based on the given search term.

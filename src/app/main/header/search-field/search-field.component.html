@@ -6,7 +6,7 @@
     }
     <img src="../../../../assets/img/header/search.png">
 
-    <div [ngClass]="{'result-container': isSearching, 'closed-result-container': !isSearching}">
+    <div [ngClass]="{'result-container': searchService.isSearching, 'closed-result-container': !searchService.isSearching}">
         @if (channels.length > 0 || users.length > 0 || messages.length > 0;){
 
         @if (channels.length > 0) {
@@ -72,3 +72,4 @@
     </div>
 
 </div>
+

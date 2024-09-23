@@ -20,10 +20,10 @@ export class SearchFieldComponent {
   channels: any[] = [];
   users: any[] = [];
   messages: any[] = [];
-  isSearching: boolean = false;
   searchTerm: string = '';
   channelSelectionService = inject(ChannelSelectionService);
   hideOrShowSidebar = inject(SidebarService);
+  searchService = inject(SearchService);
   authService = inject(AuthService);
   responsiveService = inject(ResponsiveService);
   activeChannelIndex: number | null = null;
@@ -31,7 +31,6 @@ export class SearchFieldComponent {
   placeholderTextResponsive = 'Gehe zu ...';
 
   constructor(
-    private searchService: SearchService,
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef
   ) {}
@@ -57,12 +56,12 @@ export class SearchFieldComponent {
           userImage: userImage,
         };
       });
-      this.isSearching = true;
+      this.searchService.isSearching = true;
     } else {
       this.channels = [];
       this.users = [];
       this.messages = [];
-      this.isSearching = false;
+      this.searchService.isSearching = false;
     }
   }
 
@@ -128,7 +127,7 @@ export class SearchFieldComponent {
     });
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
-      this.isSearching = false;
+      this.searchService.isSearching = false;
     } else {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
@@ -143,7 +142,7 @@ export class SearchFieldComponent {
     const userIndex = this.hideOrShowSidebar.AllUids.findIndex(uid => uid === userId);
     if (userIndex !== -1) {
       this.userActive(userIndex);
-      this.isSearching = false;
+      this.searchService.isSearching = false;
     } else {
       console.log('User not found with ID:', userId);
     }
@@ -162,7 +161,7 @@ export class SearchFieldComponent {
         || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
     if (channelIndex !== -1) {
-      this.isSearching = false;
+      this.searchService.isSearching = false;
       this.channelActive(channelIndex);
       this.scrollToMessage(messageId);
     } else {

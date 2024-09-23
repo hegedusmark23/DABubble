@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ChannelComponent } from '../channel/channel/channel.component';
@@ -17,6 +17,7 @@ import { EditChannelService } from '../../services/edit-channel.service';
 import { NewMessageComponent } from '../new-message/new-message/new-message.component'; // Importiere den EditChannelService
 import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.component';
 import { ReactionListComponent } from '../reaction-list/reaction-list.component';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-home',
@@ -43,7 +44,7 @@ import { ReactionListComponent } from '../reaction-list/reaction-list.component'
 })
 export class HomeComponent implements OnInit {
   selectedReaction: string = ''; // Variable zum Speichern der Reaktion
-
+  searchService = inject(SearchService)
   constructor(
     public channelSelectionService: ChannelSelectionService,
     public editChannelService: EditChannelService // Füge den Service hier hinzu

@@ -18,6 +18,7 @@ export class ResetPasswordComponent {
   router = inject(Router);
   imgSrcArrow: string = '../../../assets/img/landing-page/arrow-back.png';
   emailSent: boolean = false;
+  errorMessage: string = '';
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}')]]
   });
@@ -42,7 +43,13 @@ export class ResetPasswordComponent {
           }, 500);
         })
         .catch(error => {
-          console.error('Error sending password reset email:', error);
+          if (error.code === 'auth/user-not-found') {
+            //console.error('Error sending password reset email:', error);
+            this.errorMessage = 'Die eingegebene E-Mail-Adresse ist nicht registriert.'
+            setInterval(() => {
+              this.errorMessage = '';
+            }, 3000);
+          }
         });
     } else {
       console.log('Form is invalid');
