@@ -33,7 +33,7 @@ export class SearchFieldComponent {
   constructor(
     private sanitizer: DomSanitizer,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) { }
 
   /**
    * Handles the search input and fetches relevant channels, users, and messages based on the search term.
@@ -42,7 +42,13 @@ export class SearchFieldComponent {
    */
   async onSearch(event: Event) {
     this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    if (this.searchTerm) {
+    if (this.searchTerm.length < 3) {
+      this.channels = [];
+      this.users = [];
+      this.messages = [];
+      this.searchService.isSearching = false;
+      return;
+    } if (this.searchTerm) {
       this.channels = await this.searchService.searchChannels(this.searchTerm);
       this.users = await this.searchService.searchUsers(this.searchTerm);
       const rawMessages = await this.searchService.searchAllChannelMessages(this.searchTerm);
@@ -65,36 +71,43 @@ export class SearchFieldComponent {
     }
   }
 
+
   /**
  * Formats the message content, replacing placeholders with user or channel mentions.
  * @param {any} message - The message object.
  * @returns {string} The formatted message with user and channel mentions.
  */
-getMessage(message: any): string {
-  // Regex for both user and channel tags
-  const userRegex = /₿ЯæŶ∆Ωг(\S+)/g;
-  const channelRegex = /₣Ж◊ŦΨø℧(\S+)/g;
-
-  // Replace user tags with the formatted username
-  let modifiedMessage = message.message.replace(
-    userRegex,
-    (match: any, p1: any) => {
-      const username = this.getUsername(p1);
-      return `<b class="tag-highlight">@${username}</b>`;
+  getMessage(message: any): string {
+    // Regex for both user and channel tags
+    const userRegex = /₿ЯæŶ∆Ωг(\S+)/g;
+    const channelRegex = /₣Ж◊ŦΨø℧(\S+)/g;
+    if (!message || !message.message || message.message.length === 0) {
+      console.warn("Message is empty or undefined.");
+      return message?.message || "";  // Return the original message if invalid
     }
-  );
+    let modifiedMessage = message.message;
+    modifiedMessage = modifiedMessage.replace(
+      userRegex,
+      (match: any, p1: any) => {
+        const username = this.getUsername(p1);
+        if (username) {
+          return `<b class="tagHighlight">@${username}</b>`;
+        } return match;
+      }
+    );
+    modifiedMessage = modifiedMessage.replace(
+      channelRegex,
+      (match: any, p1: any) => {
+        const channelName = this.getChannelName(p1);
+        if (channelName) {
+          return `<b class="tagHighlight">#${channelName}</b>`;
+        }
+        return match;  // Return the original match if channel name not found
+      }
+    );
+    return modifiedMessage;
+  }
 
-  // Replace channel tags with the formatted channel name
-  modifiedMessage = modifiedMessage.replace(
-    channelRegex,
-    (match: any, p1: any) => {
-      const channelName = this.getChannelName(p1);
-      return `<b class="tag-highlight">#${channelName}</b>`;
-    }
-  );
-
-  return modifiedMessage;
-}
 
   /**
    * Retrieves the username corresponding to a given user ID.
@@ -111,10 +124,10 @@ getMessage(message: any): string {
  * @param {string} cid - The channel ID.
  * @returns {string} The channel name associated with the given channel ID.
  */
-getChannelName(cid: string): string {
-  const index = this.hideOrShowSidebar.AllChannelsIds.indexOf(cid);
-  return index !== -1 ? this.hideOrShowSidebar.AllChannels[index] : 'Unknown Channel';
-}
+  getChannelName(cid: string): string {
+    const index = this.hideOrShowSidebar.AllChannelsIds.indexOf(cid);
+    return index !== -1 ? this.hideOrShowSidebar.AllChannels[index] : 'Unknown Channel';
+  }
 
   /**
    * Retrieves the user image URL corresponding to a given user ID.
@@ -145,9 +158,9 @@ getChannelName(cid: string): string {
    */
   onChannelClick(channelId: string) {
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((id, index) => {
-      return id === channelId && 
-        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
-        || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+      return id === channelId &&
+        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '')
+          || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
@@ -180,9 +193,9 @@ getChannelName(cid: string): string {
    */
   onMessageClick(channelId: string, messageId: string) {
     const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
-      return channel === channelId && 
-        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '') 
-        || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+      return channel === channelId &&
+        (this.hideOrShowSidebar.GlobalChannelUids[index].includes(this.authService.currentUserSignal()?.uId ?? '')
+          || this.hideOrShowSidebar.AllChannelsIds[index] === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
     });
     if (channelIndex !== -1) {
       this.searchService.isSearching = false;
