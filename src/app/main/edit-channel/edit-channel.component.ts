@@ -124,7 +124,6 @@ export class EditChannelComponent implements OnInit {
     });
   }
   
-
   openTheNextChannel() {
     if (this.channelInfo.currentChannelNumber < this.channelInfo.AllChannelsIds.length - 1) {
       this.channelInfo.currentChannelNumber = this.channelInfo.currentChannelNumber + 1;
@@ -208,6 +207,11 @@ export class EditChannelComponent implements OnInit {
   }
 
   openUserProfil(i: number){
-
+    this.channelInfo.userProfilOpen = true;
+    this.channelInfo.activeUserProfil = i;
+    this.channelInfo.activeUser = this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][i];
+    this.channelInfo.activeEmail = this.channelInfo.AllChannelsEmails[this.channelInfo.currentChannelNumber][i];;
+    this.channelInfo.activeImage = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][i];
+    this.channelInfo.activeUid = this.channelInfo.GlobalChannelUids[this.channelInfo.currentChannelNumber][i];
   }
 }
