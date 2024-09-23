@@ -81,7 +81,7 @@ getMessage(message: any): string {
     userRegex,
     (match: any, p1: any) => {
       const username = this.getUsername(p1);
-      return `<b>@${username}</b>`;
+      return `<b class="tag-highlight">@${username}</b>`;
     }
   );
 
@@ -90,7 +90,7 @@ getMessage(message: any): string {
     channelRegex,
     (match: any, p1: any) => {
       const channelName = this.getChannelName(p1);
-      return `<b>#${channelName}</b>`;
+      return `<b class="tag-highlight">#${channelName}</b>`;
     }
   );
 
