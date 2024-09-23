@@ -36,6 +36,8 @@ import { AuthService } from '../../../services/auth.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { SidebarService } from '../../../services/sidebar.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ResponsiveService } from '../../../services/responsive.service';
+import { ChatAreaService } from '../../../services/chat-area.service';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -47,6 +49,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
 
+  allChannels: any = [];
   allMessagesSortedDate: any = [];
   allMessagesSorted: Message[] = [];
   allMessages: Message[] = [];
@@ -90,11 +93,14 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   currentChannel: any;
   currentChannelId: any;
   channelInfo = inject(SidebarService);
+  responsiveService = inject(ResponsiveService);
+  $event: any;
 
   constructor(
     private threadService: ThreadService,
     private firestore: Firestore,
     public channelSelectionService: ChannelSelectionService,
+    public chatAreaService: ChatAreaService,
     private sanitizer: DomSanitizer,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
@@ -114,6 +120,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       this.currentChannelId = channel;
       this.subUser();
       this.subMessages();
+      this.subChannels();
     });
 
     this.messageLoaded.changes.subscribe((t) => {
@@ -144,25 +151,20 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
+      this.allChannels = [];
       let channel: any;
       list.forEach((element) => {
-        channel = this.setNoteChannel(element.data(), element.id);
-        if ((channel.id = this.currentChannelId)) {
+        channel = this.chatAreaService.setNoteChannel(
+          element.data(),
+          element.id
+        );
+        this.allChannels.push(channel);
+
+        if (channel.id == this.currentChannelId) {
           this.currentChannel = channel;
         }
       });
     });
-  }
-
-  setNoteChannel(obj: any, id: string) {
-    return {
-      id: id,
-      channelCreator: obj.channelCreator || '',
-      description: obj.description || '',
-      images: obj.images || '',
-      name: obj.name || '',
-      users: obj.users || '',
-    };
   }
 
   openThread(thread: any) {
@@ -173,6 +175,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       }, 300);
     } else {
       this.threadService.openThread(thread);
+      this.responsiveService.isThreadOpen = true;
     }
   }
 
@@ -190,7 +193,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       onSnapshot(q, (list) => {
         this.allMessages = [];
         list.forEach((element) => {
-          this.allMessages.push(this.setNoteObject(element.data(), element.id));
+          this.allMessages.push(
+            this.chatAreaService.setNoteObject(element.data(), element.id)
+          );
         });
         this.sortMessages();
         this.dateLoaded();
@@ -203,47 +208,12 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     onSnapshot(q, (list) => {
       this.allUser = [];
       list.forEach((element) => {
-        this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
+        this.allUser.push(
+          this.chatAreaService.setNoteObjectUser(element.data(), element.id)
+        );
       });
       this.setOpenUser();
     });
-  }
-
-  setNoteObjectUser(obj: any, id: string) {
-    return {
-      email: obj.email || '',
-      image: obj.image || '',
-      name: obj.name || '',
-      uid: obj.uid || '',
-    };
-  }
-
-  setNoteObject(obj: any, id: string): Message {
-    return {
-      id: id,
-      uid: obj.uid || '',
-      message: obj.message || '',
-      weekday: obj.weekday || '',
-      year: obj.year || '',
-      month: obj.month || '',
-      day: obj.day || '',
-      hour: obj.hour || '',
-      minute: obj.minute || '',
-      seconds: obj.seconds || '',
-      milliseconds: obj.milliseconds || '',
-      user: obj.user || '',
-      fileUrl: obj.fileUrl || '',
-      fileName: obj.fileName || '',
-      threadCount: obj.threadCount || '',
-      checkMark: obj.checkMark || '',
-      handshake: obj.handshake || '',
-      thumbsUp: obj.thumbsUp || '',
-      thumbsDown: obj.thumbsDown || '',
-      rocket: obj.rocket || '',
-      nerdFace: obj.nerdFace || '',
-      noted: obj.noted || '',
-      shushingFace: obj.shushingFace || '',
-    };
   }
 
   sortMessages(): void {
@@ -304,37 +274,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     this.allMessagesSortedDate = this.allMessagesSorted;
   }
 
-  getMonthName(monthNumber: number): string {
-    const months: string[] = [
-      'Januar',
-      'Februar',
-      'März',
-      'April',
-      'Mai',
-      'Juni',
-      'Juli',
-      'August',
-      'September',
-      'Oktober',
-      'November',
-      'Dezember',
-    ];
-
-    if (monthNumber < 1 || monthNumber > 12) {
-      throw new Error(
-        'Ungültige Monatszahl. Bitte geben Sie eine Zahl zwischen 1 und 12 ein.'
-      );
-    }
-
-    return months[monthNumber - 1];
-  }
-
-  getFormattedTime(hour: any, minute: any): any {
-    const hours = hour.toString().padStart(2, '0');
-    const minutes = minute.toString().padStart(2, '0');
-    return `${hours}:${minutes} Uhr`;
-  }
-
   onChannelChange(channel: string): void {
     setTimeout(() => {
       this.subMessages(); // Ensure messages are fetched on channel change
@@ -364,58 +303,19 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   addReaction(reaction: any, message: any) {
-    this.updateMessageVariable(
-      message.id,
-      this.authService.currentUserSignal()?.uId,
-      reaction
-    );
-  }
-
-  async updateMessageVariable(
-    messageId: any,
-    newValue: any,
-    variableName: any
-  ) {
-    const messageRef = doc(
+    let src = [
       this.firestore,
       'Channels',
       this.currentChannelId,
       'messages',
-      messageId
+      message.id,
+    ]; // src kann so lang sein, wie du es brauchst
+    this.chatAreaService.updateMessageVariable(
+      message.id,
+      this.authService.currentUserSignal()?.uId,
+      reaction,
+      src
     );
-
-    try {
-      // Get the current value of the variable
-      const messageSnapshot = await getDoc(messageRef);
-      if (messageSnapshot.exists()) {
-        const currentData = messageSnapshot.data();
-        let currentValue = currentData[variableName] || '';
-
-        // Convert currentValue to an array of values
-        let valuesArray = currentValue.split(' ').filter((value: any) => value);
-
-        if (valuesArray.includes(newValue)) {
-          // Remove the newValue if it exists
-          valuesArray = valuesArray.filter((value: any) => value !== newValue);
-        } else {
-          // Append the new value with a space if it doesn't exist
-          valuesArray.push(newValue);
-        }
-
-        // Join the array back to a string
-        const updatedValue = valuesArray.join(' ');
-
-        // Update the document with the new value
-        await updateDoc(messageRef, {
-          [variableName]: updatedValue,
-        });
-        console.log('Document successfully updated!');
-      } else {
-        console.log('No such document!');
-      }
-    } catch (err) {
-      console.error('Error updating document: ', err);
-    }
   }
 
   splitWords(input: string) {
@@ -437,6 +337,54 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       return false;
     } else {
       return true;
+    }
+  }
+
+  isTodayTimestamp(timestamp: number): boolean {
+    const givenDate = new Date(timestamp);
+    const today = new Date();
+
+    return (
+      givenDate.getDate() === today.getDate() &&
+      givenDate.getMonth() === today.getMonth() &&
+      givenDate.getFullYear() === today.getFullYear()
+    );
+  }
+
+  getDate(timestamp: number) {
+    const givenDate = new Date(timestamp);
+    const today = new Date();
+
+    if (
+      givenDate.getDate() === today.getDate() &&
+      givenDate.getMonth() === today.getMonth() &&
+      givenDate.getFullYear() === today.getFullYear()
+    ) {
+      return 'heute';
+    } else {
+      return 'am ' + this.formatDate(timestamp);
+    }
+  }
+
+  formatDate(timestamp: number): string {
+    const givenDate = new Date(timestamp);
+
+    const day = String(givenDate.getDate()).padStart(2, '0'); // Tag mit führender Null
+    const month = String(givenDate.getMonth() + 1).padStart(2, '0'); // Monat mit führender Null (getMonth ist nullbasiert, daher +1)
+    const year = givenDate.getFullYear(); // Jahr
+
+    return `${day}.${month}.${year}`;
+  }
+
+  getChannelCreator(uid: any) {
+    if (uid == this.authService.currentUserSignal()?.uId) {
+      return 'Du hast diesen Channel';
+    } else {
+      if (this.getUser(uid)) {
+        return this.getUser(uid).name + ' ' + 'hat diesen Channel';
+      } else {
+        return 'undefined';
+      }
     }
   }
 
@@ -511,20 +459,85 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   getMessage(message: any): SafeHtml {
-    const regex = /₿ЯæŶ∆Ωг(\S+)/g;
-    const modifiedMessage = message.message.replace(
-      regex,
+    const regexUser = /₿ЯæŶ∆Ωг(\S+)/g;
+    const regexChannel = /₣Ж◊ŦΨø℧(\S+)/g;
+    let modifiedMessage = message.message.replace(
+      regexUser,
       (match: any, p1: any) => {
-        const spanClass =
-          message.uid !== this.authService.currentUserSignal()?.uId
-            ? 'tagHighlight'
-            : 'tagHighlightSend';
-        return `<span class="${spanClass}" data-uid="${p1}">@${this.getUsername(
-          p1
-        )}</span>`;
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlight'
+              : 'tagHighlightSend';
+          return /*html*/ `
+          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
+            p1
+          )}</span>`;
+        } else {
+          return 'undefined';
+        }
       }
     );
 
+    modifiedMessage = modifiedMessage.replace(
+      regexChannel,
+      (match: any, p1: any) => {
+        const spanClass =
+          message.uid !== this.authService.currentUserSignal()?.uId
+            ? 'tagHighlightChannel'
+            : 'tagHighlightSendChannel';
+        if (this.getChannel(p1) != undefined) {
+          return /*html*/ `
+          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
+            this.getChannel(p1).name
+          }</span>`;
+        } else {
+          return 'undefined';
+        }
+      }
+    );
+
+    return this.sanitizer.bypassSecurityTrustHtml(modifiedMessage);
+  }
+
+  getMessageEdit(message: any) {
+    const regexUser = /₿ЯæŶ∆Ωг(\S+)/g;
+    const regexChannel = /₣Ж◊ŦΨø℧(\S+)/g;
+    let modifiedMessage = message.message.replace(
+      regexUser,
+      (match: any, p1: any) => {
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlight'
+              : 'tagHighlightSend';
+          return /*html*/ `
+            <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${this.getUsername(
+            p1
+          )}</span>`;
+        } else {
+          return 'undefined';
+        }
+      }
+    );
+
+    modifiedMessage = modifiedMessage.replace(
+      regexChannel,
+      (match: any, p1: any) => {
+        if (this.getChannel(p1) != undefined) {
+          const spanClass =
+            message.uid !== this.authService.currentUserSignal()?.uId
+              ? 'tagHighlightChannel'
+              : 'tagHighlightSendChannel';
+          return /*html*/ `
+        <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
+            this.getChannel(p1).name
+          }</span>`;
+        } else {
+          return 'undefined';
+        }
+      }
+    );
     return this.sanitizer.bypassSecurityTrustHtml(modifiedMessage);
   }
 
@@ -540,7 +553,20 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       if (uid) {
         this.openUserProfil(uid);
       }
+    } else if (
+      target.classList.contains('tagHighlightChannel') ||
+      target.classList.contains('tagHighlightSendChannel')
+    ) {
+      const uid = target.getAttribute('data-uid');
+      if (uid) {
+        this.openChannel(uid);
+      }
     }
+  }
+
+  openChannel(uid: any) {
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(uid);
   }
 
   openUserProfil(uid: any) {
@@ -561,7 +587,26 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     }
   }
 
+  getChannel(id: any) {
+    for (let i = 0; i < this.allChannels.length; i++) {
+      const element = this.allChannels[i];
+      if (element.id === id) {
+        return element;
+      }
+    }
+    return undefined; // wird zurückgegeben, wenn nichts gefunden wurde
+  }
+
   splitStringBySpace(input: string): string[] {
     return input.split(' ');
+  }
+
+  log(channel: any) {
+    console.log(channel);
+    return 'test';
+  }
+
+  eventStop(event: any) {
+    event.stoppropagation();
   }
 }

@@ -24,7 +24,7 @@
   border-radius: 0px 30px 30px 30px;
   background: white;
   top: 115px;
-  left: calc(50vw - 436px);
+  left: calc(50vw - 476px);
 }
 
 .header {
@@ -75,6 +75,7 @@ button {
   border: 1px solid #adb0d9;
   gap: 20px;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .content-edit {
@@ -83,6 +84,7 @@ button {
   justify-content: space-between;
   flex-direction: column;
   gap: 13px;
+  margin-bottom: 20px;
 }
 
 .nameHeader {
@@ -193,3 +195,23 @@ input {
   font-size: 22px !important;
   color: #535af1 !important;
 }
+
+.responsive-userlist-container {
+  display: none;
+}
+
+.scroll-container {
+  gap: 20px;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-icon-responsive {
+  display: none;
+}
+
+

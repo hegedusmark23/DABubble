@@ -1,4 +1,18 @@
+@media(max-width: 1300px){
+    .user-name {
+        display: none;
+    }
+
+    .responsive {
+        transform: translateX(130px);
+    }
+}
+
 @media(max-width: 1000px){
+    header {
+        justify-content: flex-start;
+    }
+
     .responsive {
         display: none;
     }
@@ -9,10 +23,6 @@
 
     .user-account {
         margin-right: 40px;
-    }
-
-    .user-name {
-        display: none;
     }
 
     .bubble-icon {
@@ -27,5 +37,10 @@
         width: 10px;
         height: 10px;
         transform: translateY(47px) translateX(73px);
+    }
+
+    .responsive-title {
+        transform: translateX(120px);
+        font-size: 24px;
     }
 }

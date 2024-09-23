@@ -66,21 +66,35 @@ export class SearchFieldComponent {
   }
 
   /**
-   * Formats the message content, replacing placeholders with user mentions.
-   * @param {any} message - The message object.
-   * @returns {string} The formatted message with user mentions.
-   */
-  getMessage(message: any): string {
-    const regex = /₿ЯæŶ∆Ωг(\S+)/g;
-    const modifiedMessage = message.message.replace(
-      regex,
-      (match: any, p1: any) => {
-        const username = this.getUsername(p1);
-        return `<b>@${username}</b>`;
-      }
-    );
-    return modifiedMessage;
-  }
+ * Formats the message content, replacing placeholders with user or channel mentions.
+ * @param {any} message - The message object.
+ * @returns {string} The formatted message with user and channel mentions.
+ */
+getMessage(message: any): string {
+  // Regex for both user and channel tags
+  const userRegex = /₿ЯæŶ∆Ωг(\S+)/g;
+  const channelRegex = /₣Ж◊ŦΨø℧(\S+)/g;
+
+  // Replace user tags with the formatted username
+  let modifiedMessage = message.message.replace(
+    userRegex,
+    (match: any, p1: any) => {
+      const username = this.getUsername(p1);
+      return `<b class="tag-highlight">@${username}</b>`;
+    }
+  );
+
+  // Replace channel tags with the formatted channel name
+  modifiedMessage = modifiedMessage.replace(
+    channelRegex,
+    (match: any, p1: any) => {
+      const channelName = this.getChannelName(p1);
+      return `<b class="tag-highlight">#${channelName}</b>`;
+    }
+  );
+
+  return modifiedMessage;
+}
 
   /**
    * Retrieves the username corresponding to a given user ID.
@@ -91,6 +105,16 @@ export class SearchFieldComponent {
     const index = this.hideOrShowSidebar.AllUids.indexOf(uid);
     return index !== -1 ? this.hideOrShowSidebar.AllUsers[index] : 'Unknown User';
   }
+
+  /**
+ * Retrieves the channel name corresponding to a given channel ID.
+ * @param {string} cid - The channel ID.
+ * @returns {string} The channel name associated with the given channel ID.
+ */
+getChannelName(cid: string): string {
+  const index = this.hideOrShowSidebar.AllChannelsIds.indexOf(cid);
+  return index !== -1 ? this.hideOrShowSidebar.AllChannels[index] : 'Unknown Channel';
+}
 
   /**
    * Retrieves the user image URL corresponding to a given user ID.

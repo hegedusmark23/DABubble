@@ -3,6 +3,7 @@ header {
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100vw;
 }
 
 img {
@@ -68,10 +69,11 @@ span {
 }
 
 .arrow-left {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
 }
 
 .workspace-logo {
-    margin-left: 40px;
+    margin-left: 25px;
+    transform: scale(0.8);
 }

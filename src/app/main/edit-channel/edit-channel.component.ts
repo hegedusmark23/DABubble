@@ -22,7 +22,7 @@ import { ThreadService } from '../../services/thread.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './edit-channel.component.html',
-  styleUrl: './edit-channel.component.scss',
+  styleUrls: ['./edit-channel.component.scss', './edit-channel-responsive.component.scss']
 })
 export class EditChannelComponent implements OnInit {
   currentChannel: any;
@@ -81,45 +81,42 @@ export class EditChannelComponent implements OnInit {
     return this.channelName.length >= 3;
   }
 
+  navigateToPreviousChannel(){
+    this.openTheNextChannel();
+    this.editChannelService.setEditChannel(false, null);
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    const reverseIndex = this.channelInfo.AllChannelsIds.length - 1 - this.channelInfo.currentChannelNumber;
+    this.channelSelectionService.setSelectedChannel(this.channelInfo.AllChannelsIds[reverseIndex]);
+    this.channelInfo.fetchChannels();
+    this.channelInfo.fetchUsers();
+    this.channelInfo.currentChannelNumber = reverseIndex;
+  }
+
+  async deleteUserFromChannel(channelData: any, userNumber: any, docSnapshot: any){
+    channelData['uids'].splice(userNumber, 1);
+    channelData['emails'].splice(userNumber, 1);
+    channelData['images'].splice(userNumber, 1);
+    channelData['users'].splice(userNumber, 1);
+    const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
+    await updateDoc(channelDocRef, {
+      uids: channelData['uids'],
+      emails: channelData['emails'],
+      images: channelData['images'],
+      users: channelData['users']
+    });
+    this.navigateToPreviousChannel();
+  }
+
   async abandon() {
     const channelsCollection = collection(this.firestore, 'Channels');
     const querySnapshot = await getDocs(channelsCollection);
-  
     querySnapshot.forEach(async (docSnapshot) => {
       const channelData = docSnapshot.data();
-  
       if (channelData['id'] === this.selectetChannelData.id) {
         const userNumber = channelData['uids'].indexOf(this.authService.currentUserSignal()?.uId);
-  
         if (userNumber > -1) {
-          channelData['uids'].splice(userNumber, 1);
-          channelData['emails'].splice(userNumber, 1);
-          channelData['images'].splice(userNumber, 1);
-          channelData['users'].splice(userNumber, 1);
-          const channelDocRef = doc(this.firestore, 'Channels', docSnapshot.id);
-          await updateDoc(channelDocRef, {
-            uids: channelData['uids'],
-            emails: channelData['emails'],
-            images: channelData['images'],
-            users: channelData['users']
-          });
-  
-          this.openTheNextChannel();
-  
-          this.editChannelService.setEditChannel(false, null);
-          this.threadService.closeThread();
-          this.channelSelectionService.openChannel();
-  
-          const reverseIndex = this.channelInfo.AllChannelsIds.length - 1 - this.channelInfo.currentChannelNumber;
-  
-          this.channelSelectionService.setSelectedChannel(
-            this.channelInfo.AllChannelsIds[reverseIndex]
-          );
-  
-          this.channelInfo.fetchChannels();
-          this.channelInfo.fetchUsers();
-  
-          this.channelInfo.currentChannelNumber = reverseIndex;
+          this.deleteUserFromChannel(channelData, userNumber, docSnapshot);
         } else {
           alert('du bist kein mitglied');
         }
@@ -127,7 +124,6 @@ export class EditChannelComponent implements OnInit {
     });
   }
   
-
   openTheNextChannel() {
     if (this.channelInfo.currentChannelNumber < this.channelInfo.AllChannelsIds.length - 1) {
       this.channelInfo.currentChannelNumber = this.channelInfo.currentChannelNumber + 1;
@@ -155,17 +151,20 @@ export class EditChannelComponent implements OnInit {
     );
     try {
       await updateDoc(channelRef, this.toJSON());
-      console.log('Channel name updated successfully');
-      this.channelName = '';
-      this.editChannelNameOpen = false;
-      this.threadService.closeThread();
-      this.channelSelectionService.openChannel();
-      this.channelSelectionService.setSelectedChannel(
-      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
-      );
+      this.closeChannelEditor();
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }
+  }
+
+  closeChannelEditor(){
+    this.channelName = '';
+    this.editChannelNameOpen = false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+    this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
   }
 
   toJSON() {
@@ -174,6 +173,15 @@ export class EditChannelComponent implements OnInit {
     };
   }
 
+  closeChannelDescriptionEdit(){
+    this.channelDescription = '';
+    this.editChannelDescriptionOpen = false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+    this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
+  }
 
   async saveChannelDescription() {
     if (!this.channelDescription) {
@@ -186,14 +194,7 @@ export class EditChannelComponent implements OnInit {
     );
     try {
       await updateDoc(channelRef, this.toJSONDescription());
-      console.log('Channel name updated successfully');
-      this.channelDescription = '';
-      this.editChannelDescriptionOpen = false;
-      this.threadService.closeThread();
-      this.channelSelectionService.openChannel();
-      this.channelSelectionService.setSelectedChannel(
-      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
-      );
+      this.closeChannelDescriptionEdit();
     } catch (err) {
       console.error('Error updating channel name: ', err);
     }
@@ -203,5 +204,14 @@ export class EditChannelComponent implements OnInit {
     return {
       description: this.channelDescription
     };
+  }
+
+  openUserProfil(i: number){
+    this.channelInfo.userProfilOpen = true;
+    this.channelInfo.activeUserProfil = i;
+    this.channelInfo.activeUser = this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][i];
+    this.channelInfo.activeEmail = this.channelInfo.AllChannelsEmails[this.channelInfo.currentChannelNumber][i];;
+    this.channelInfo.activeImage = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][i];
+    this.channelInfo.activeUid = this.channelInfo.GlobalChannelUids[this.channelInfo.currentChannelNumber][i];
   }
 }

@@ -18,7 +18,6 @@ export class AddUserToChannelComponent {
 
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
-
   activeUserIndex: number | null = null;
   filteredUserList: string[] = this.hideOrShowSidebar.userList;
   filteredImageList: string[] = this.hideOrShowSidebar.imageList;
@@ -35,67 +34,65 @@ export class AddUserToChannelComponent {
 
   onSearch(event: any) {
     this.searchTerm = event.target.value.toLowerCase();
-  
     if (this.searchTerm) {
-      this.filteredUserList = [];
-      this.filteredImageList = [];
-      this.filteredUidList = [];
-      this.filteredEmailList = [];
-  
+      this.clearFilteredLists();
       this.hideOrShowSidebar.userList.forEach((user, index) => {
         const uid = this.hideOrShowSidebar.uidList[index];
         const isUidInChannel = this.hideOrShowSidebar.GlobalChannelUids[this.hideOrShowSidebar.currentChannelNumber].includes(uid);
         const isUserAlreadySelected = this.hideOrShowSidebar.selectedUids.includes(uid);
-  
         if (user.toLowerCase().includes(this.searchTerm) && !isUidInChannel && !isUserAlreadySelected) {
-          this.filteredUserList.push(user);
-          this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
-          this.filteredUidList.push(uid);
-          this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
+          this.pushToFilteredLists(user, index, uid);
         }
       });
     } else {
-      this.filteredUserList = [];
-      this.filteredImageList = [];
-      this.filteredUidList = [];
-      this.filteredEmailList = [];
+      this.clearFilteredLists();
     }
+  }
+
+  pushToFilteredLists(user: any, index: any, uid: any){
+    this.filteredUserList.push(user);
+    this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
+    this.filteredUidList.push(uid);
+    this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
+  }
+
+  clearFilteredLists(){
+    this.filteredUserList = [];
+    this.filteredImageList = [];
+    this.filteredUidList = [];
+    this.filteredEmailList = [];
+  }
+
+  deleteFilteredUser(i: number){
+    this.filteredUserList.splice(i, 1);
+    this.filteredImageList.splice(i, 1);
+    this.filteredUidList.splice(i, 1);
+    this.filteredEmailList.splice(i, 1);
+  }
+
+  addToSelectedUsers(i: number, selectedUid: any){
+    this.hideOrShowSidebar.selectedUsers.push(this.filteredUserList[i]);
+    this.hideOrShowSidebar.selectedImages.push(this.filteredImageList[i]);
+    this.hideOrShowSidebar.selectedUids.push(selectedUid);
+    this.hideOrShowSidebar.selectedEmails.push(this.filteredEmailList[i]);
   }
   
   selectUser(i: number) {
     const selectedUid = this.filteredUidList[i];
     if (!this.hideOrShowSidebar.selectedUids.includes(selectedUid)) {
-      this.hideOrShowSidebar.selectedUsers.push(this.filteredUserList[i]);
-      this.hideOrShowSidebar.selectedImages.push(this.filteredImageList[i]);
-      this.hideOrShowSidebar.selectedUids.push(selectedUid);
-      this.hideOrShowSidebar.selectedEmails.push(this.filteredEmailList[i]);
-      this.filteredUserList.splice(i, 1);
-      this.filteredImageList.splice(i, 1);
-      this.filteredUidList.splice(i, 1);
-      this.filteredEmailList.splice(i, 1);
-      this.filteredUserList = [];
-      this.filteredImageList = [];
-      this.filteredUidList = [];
-      this.filteredEmailList = [];
+      this.addToSelectedUsers(i,selectedUid)
+      this.deleteFilteredUser(i);
+      this.clearFilteredLists();
       this.searchTerm = '';
     }
-  
     this.addUserEnabled = this.hideOrShowSidebar.selectedUsers.length > 0;
   }
-  
 
-
-  closeDialog() {
-    this.hideOrShowSidebar.addUserFromHeaderToChannelOpen = false;
-    this.filteredUserList = [];
-    this.filteredImageList = [];
-    this.filteredUidList = [];
-    this.filteredEmailList = [];
+  clearSelectedLists(){
     this.hideOrShowSidebar.selectedUsers = [];
     this.hideOrShowSidebar.selectedImages = [];
     this.hideOrShowSidebar.selectedUids = [];
     this.hideOrShowSidebar.selectedEmails = [];
-    this.searchTerm = '';
   }
 
   notCloseDialog(e: any) {
@@ -104,14 +101,8 @@ export class AddUserToChannelComponent {
 
   closeDialogAddUser() {
     this.hideOrShowSidebar.addUserFromHeaderToChannelOpen = false;
-    this.filteredUserList = [];
-    this.filteredImageList = [];
-    this.filteredUidList = [];
-    this.filteredEmailList = [];
-    this.hideOrShowSidebar.selectedUsers = [];
-    this.hideOrShowSidebar.selectedImages = [];
-    this.hideOrShowSidebar.selectedUids = [];
-    this.hideOrShowSidebar.selectedEmails = [];
+    this.clearFilteredLists();
+    this.clearSelectedLists();
     this.searchTerm = '';
   }
 
@@ -120,40 +111,43 @@ export class AddUserToChannelComponent {
   }
 
   async saveUsers() {
-  
     const channelId = this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber];
     const channelRef = doc(collection(this.firestore, 'Channels'), channelId);
-  
     try {
       const channelDoc = await getDoc(channelRef);
-      if (channelDoc.exists()) {
-        const channelData = channelDoc.data();
-        const updatedUsers = [...(channelData['users'] || []), ...this.hideOrShowSidebar.selectedUsers];
-        const updatedImages = [...(channelData['images'] || []), ...this.hideOrShowSidebar.selectedImages];
-        const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
-        const updatedEmails = [...(channelData['emails'] || []), ...this.hideOrShowSidebar.selectedEmails];
-        await updateDoc(channelRef, {
-          users: updatedUsers,
-          images: updatedImages,
-          uids: updatedUids,
-          emails: updatedEmails
-        });
-        this.hideOrShowSidebar.selectedUsers = [];
-        this.hideOrShowSidebar.selectedImages = [];
-        this.hideOrShowSidebar.selectedUids = [];
-        this.hideOrShowSidebar.selectedEmails = [];
-        this.addUserEnabled = false;
-        this.searchTerm = '';
-        this.closeDialog();
-        this.threadService.closeThread();
-        this.channelSelectionService.openChannel();
-        this.channelSelectionService.setSelectedChannel(
-        this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber]
-        );
-      }
+      this.updateChannelAndResetUser(channelDoc, channelRef);
     } catch (error) {
       console.error('Fehler beim Speichern der Daten:', error);
     }
+  }
+
+  async updateChannelAndResetUser(channelDoc: any, channelRef: any){
+    if (channelDoc.exists()) {
+      const channelData = channelDoc.data();
+      const updatedUsers = [...(channelData['users'] || []), ...this.hideOrShowSidebar.selectedUsers];
+      const updatedImages = [...(channelData['images'] || []), ...this.hideOrShowSidebar.selectedImages];
+      const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
+      const updatedEmails = [...(channelData['emails'] || []), ...this.hideOrShowSidebar.selectedEmails];
+      await updateDoc(channelRef, {
+        users: updatedUsers,
+        images: updatedImages,
+        uids: updatedUids,
+        emails: updatedEmails
+      });
+      this.clearUserAndResetChannel();
+    }
+  }
+
+  clearUserAndResetChannel(){
+    this.clearSelectedLists();
+    this.addUserEnabled = false;
+    this.searchTerm = '';
+    this.closeDialogAddUser();
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+    this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber]
+    );
   }
   
 
@@ -164,19 +158,20 @@ export class AddUserToChannelComponent {
 
   
 deleteUser(i: number) {
-    this.hideOrShowSidebar.selectedUsers.splice(i, 1);
-    this.hideOrShowSidebar.selectedImages.splice(i, 1);
-    this.hideOrShowSidebar.selectedUids.splice(i, 1);
-    this.hideOrShowSidebar.selectedEmails.splice(i, 1);
+    this.removeSelectedUserData(i);
     if(this.hideOrShowSidebar.selectedUsers.length > 0){
       this.addUserEnabled = true;
     }else {
       this.addUserEnabled = false;
     }
     this.searchTerm = '';
-    this.filteredUserList = [];
-    this.filteredImageList = [];
-    this.filteredUidList = [];
-    this.filteredEmailList = [];
+    this.clearFilteredLists();
+  }
+
+  removeSelectedUserData(i: number){
+    this.hideOrShowSidebar.selectedUsers.splice(i, 1);
+    this.hideOrShowSidebar.selectedImages.splice(i, 1);
+    this.hideOrShowSidebar.selectedUids.splice(i, 1);
+    this.hideOrShowSidebar.selectedEmails.splice(i, 1);
   }
 }

@@ -9,10 +9,10 @@ import { AuthService } from '../../services/auth.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './channel-userlist.component.html',
-  styleUrl: './channel-userlist.component.scss'
+  styleUrls: ['./channel-userlist.component.scss', './channel-userlist-responsive.component.scss']
 })
-export class ChannelUserlistComponent {
 
+export class ChannelUserlistComponent {
   channelInfo = inject(SidebarService);
   authService = inject(AuthService);
 

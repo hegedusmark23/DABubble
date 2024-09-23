@@ -10,6 +10,7 @@ export class ResponsiveService {
   isChannelOpen = false;
   isDirectMessageOpen = false;
   responsive = false;
+  isThreadOpen = false;
 
   constructor() { }
 }

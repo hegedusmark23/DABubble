@@ -1,3 +1,9 @@
+@media(max-width: 1300px){
+    .search-field-container {
+        width: calc(100vw - 600px);
+    }
+}
+
 @media(max-width: 1000px){
     .search-field-container {
         position: relative;
