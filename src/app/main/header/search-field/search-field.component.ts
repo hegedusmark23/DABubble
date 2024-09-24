@@ -82,7 +82,6 @@ export class SearchFieldComponent {
     const userRegex = /₿ЯæŶ∆Ωг(\S+)/g;
     const channelRegex = /₣Ж◊ŦΨø℧(\S+)/g;
     if (!message || !message.message || message.message.length === 0) {
-      console.warn("Message is empty or undefined.");
       return message?.message || "";  // Return the original message if invalid
     }
     let modifiedMessage = message.message;

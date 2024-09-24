@@ -19,4 +19,30 @@
         margin-top: 20px;
         border: 1px solid #ADB0D9;
     }
+
+    .result-container{
+        max-width: calc(100vw - 50px);
+        width: calc(100vw - 50px);
+        top: 52px;
+    }
+}
+
+@media(max-width: 620px) {
+    .result-container{
+        min-width: 273px;
+    }
+
+    .result-container{
+        h2{
+            font-size: 17px;
+        }
+
+        span{
+            font-size: 14px;
+        }
+
+        ul{
+            padding-inline-start: 10px;
+        }
+    }
 }
