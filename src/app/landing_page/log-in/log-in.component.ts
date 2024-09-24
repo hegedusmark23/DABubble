@@ -66,7 +66,7 @@ export class LogInComponent implements OnInit{
               this.userInfo.asd = newTime - time;
               this.onlineSince();
             }
-          }, 1000);
+          }, 3000);
         }
         
       },
@@ -83,7 +83,7 @@ export class LogInComponent implements OnInit{
       this.userInfo.onlineUserUidList = [];
       querySnapshot.forEach((doc) => {
           const userData = doc.data();
-          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 2000)){    // 
+          if(userData['online'] == 'yes' && userData['onlineSince'] > (new Date().getTime() - 4000)){    // 
             this.userInfo.onlineUserUidList.push(userData['uId']);
           };
           
