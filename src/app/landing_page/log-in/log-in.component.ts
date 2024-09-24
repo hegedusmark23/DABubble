@@ -152,6 +152,21 @@ export class LogInComponent implements OnInit{
         this.router.navigateByUrl('/home');
         this.userInfo.fetchUsers();
         this.userInfo.activeChannelIndex = 0;
+
+        this.userOnline();
+        this.fetchUsersOnline();
+
+        this.userInfo.online = true;
+        let time = new Date().getTime();
+        if(this.userInfo.asd == 0){
+          setInterval(() => {
+            let newTime = new Date().getTime();
+            if(this.userInfo.online){
+              this.userInfo.asd = newTime - time;
+              this.onlineSince();
+            }
+          }, 3000);
+        }
       },
       error: (err) => {
         console.error('Guest login failed:', err);
@@ -170,6 +185,21 @@ export class LogInComponent implements OnInit{
       this.authService.logIn(rawForm.email, rawForm.password).subscribe({
         next: () => {
           this.router.navigateByUrl('/home');
+          
+          this.userOnline();
+          this.fetchUsersOnline();
+
+          this.userInfo.online = true;
+          let time = new Date().getTime();
+          if(this.userInfo.asd == 0){
+            setInterval(() => {
+              let newTime = new Date().getTime();
+              if(this.userInfo.online){
+                this.userInfo.asd = newTime - time;
+                this.onlineSince();
+              }
+            }, 3000);
+          }
         },
         error: (err) => {
           this.handleError(err.code);
