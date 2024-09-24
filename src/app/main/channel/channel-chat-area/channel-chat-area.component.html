@@ -412,17 +412,8 @@
               class="textAreaChatArea"
               contenteditable="true"
               type="text"
-              [innerHTML]="getMessageEdit(message)"
+              #inputChatArea
             ></div>
-
-            <div
-              id="inputChatArea"
-              class="textAreaChatArea"
-              contenteditable="true"
-              type="text"
-            >
-              {{ message.message }}
-            </div>
 
             <div class="messageEditContainerFooter">
               <div></div>

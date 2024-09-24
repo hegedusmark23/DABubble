@@ -88,8 +88,8 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   @ViewChildren('messageList') messageLoaded!: QueryList<any>;
   @ViewChild('messageTextarea') messageTextarea: any;
+  @ViewChild('inputChatArea') inputChatArea: any;
 
-  @ViewChild('myDiv') myDiv!: ElementRef;
   currentChannel: any;
   currentChannelId: any;
   channelInfo = inject(SidebarService);
@@ -391,6 +391,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     } else {
       this.openEditMessage = message.id;
       this.emojiSelector = false;
+      this.getMessageEdit(message);
     }
   }
 
@@ -506,8 +507,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
             message.uid !== this.authService.currentUserSignal()?.uId
               ? 'tagHighlight'
               : 'tagHighlightSend';
-          return /*html*/ `
-            <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
+          return `<span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
             this.getUser(p1).name
           }</span>`;
         } else {
@@ -524,8 +524,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
             message.uid !== this.authService.currentUserSignal()?.uId
               ? 'tagHighlightChannel'
               : 'tagHighlightSendChannel';
-          return /*html*/ `
-        <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
+          return `<span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
             this.getChannel(p1).name
           }</span>`;
         } else {
@@ -533,7 +532,23 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
         }
       }
     );
-    return this.sanitizer.bypassSecurityTrustHtml(modifiedMessage);
+
+    this.insertHTML(modifiedMessage);
+  }
+
+  insertHTML(htmlContent: any) {
+    console.log('Test');
+    console.log(this.inputChatArea && this.inputChatArea.nativeElement);
+
+    const interval = setInterval(() => {
+      if (this.inputChatArea && this.inputChatArea.nativeElement) {
+        console.log('FALSE');
+        this.inputChatArea.nativeElement.innerHTML = htmlContent;
+
+        // Stoppt das Intervall, nachdem die Bedingung einmal erfüllt wurde
+        clearInterval(interval);
+      }
+    }, 100);
   }
 
   handleClick(event: Event) {
