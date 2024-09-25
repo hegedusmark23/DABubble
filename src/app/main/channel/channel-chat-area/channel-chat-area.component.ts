@@ -423,12 +423,39 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     this.insertEmoji(element['emoji'].native);
   }
 
-  saveEdit(message: any) {
-    this.updateMessage(message.id);
+  saveEdit(event: any, message: any) {
+    let editedMessage = this.inputChatArea.nativeElement.innerHTML;
+    console.log(editedMessage);
+    this.updateMessage(event, message.id, editedMessage);
     this.openEditMessage = '';
   }
 
-  async updateMessage(messageId: any) {
+  async updateMessage(event: any, messageId: string, newMessage: string) {
+    event?.preventDefault();
+
+    // Prüfe, ob die Nachricht leer ist
+    if (newMessage.trim().length < 1) {
+      return;
+    }
+
+    // Nachricht formatieren, falls erforderlich (entsprechend den @- und #-Präfixen)
+    let formattedMessage = '';
+    const children = newMessage.split(' ');
+
+    children.forEach((child) => {
+      if (child.startsWith('@')) {
+        // Format für @-Erwähnungen
+        formattedMessage += `₿ЯæŶ∆Ωг${child.slice(1)} `;
+      } else if (child.startsWith('#')) {
+        // Format für #-Channels
+        formattedMessage += `₣Ж◊ŦΨø℧${child.slice(1)} `;
+      } else {
+        // Standardfall, falls das erste Zeichen weder @ noch # ist
+        formattedMessage += `${child} `;
+      }
+    });
+
+    // Nachricht in der Firestore-Datenbank aktualisieren
     const messageRef = doc(
       this.firestore,
       'Channels',
@@ -436,10 +463,27 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       'messages',
       messageId
     );
+
     await updateDoc(messageRef, {
-      message: this.editedMessage,
+      message: formattedMessage.trim(),
+      updatedAt: new Date(), // Optional: Zeitpunkt der letzten Änderung speichern
+    }).catch((err) => {
+      console.error('Fehler beim Aktualisieren der Nachricht:', err);
     });
   }
+
+  // async updateMessage(messageId: any) {
+  //   const messageRef = doc(
+  //     this.firestore,
+  //     'Channels',
+  //     this.currentChannelId,
+  //     'messages',
+  //     messageId
+  //   );
+  //   await updateDoc(messageRef, {
+  //     message: this.editedMessage,
+  //   });
+  // }
 
   onMessageInput(event: Event) {
     const textarea = event.target as HTMLTextAreaElement;
@@ -466,7 +510,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
               ? 'tagHighlight'
               : 'tagHighlightSend';
           return /*html*/ `
-          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
+          <span class="${spanClass}" data-uid="${p1}" contentEditable="false" data-uid = "${p1}">@${
             this.getUser(p1).name
           }</span>`;
         } else {
@@ -484,7 +528,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
             : 'tagHighlightSendChannel';
         if (this.getChannel(p1) != undefined) {
           return /*html*/ `
-          <span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
+          <span class="${spanClass}" data-uid="${p1}" contentEditable="false" data-uid = "${p1}">#${
             this.getChannel(p1).name
           }</span>`;
         } else {
@@ -537,15 +581,10 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   insertHTML(htmlContent: any) {
-    console.log('Test');
-    console.log(this.inputChatArea && this.inputChatArea.nativeElement);
-
     const interval = setInterval(() => {
       if (this.inputChatArea && this.inputChatArea.nativeElement) {
-        console.log('FALSE');
         this.inputChatArea.nativeElement.innerHTML = htmlContent;
 
-        // Stoppt das Intervall, nachdem die Bedingung einmal erfüllt wurde
         clearInterval(interval);
       }
     }, 100);
