@@ -88,25 +88,24 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   }
 
   clearInput() {
-    if (
-      typeof document !== 'undefined' &&
-      (document.querySelector('.textArea') as HTMLElement)
-    ) {
+    if (typeof document !== 'undefined') {
       const div = document.getElementById('input');
 
-      // Entferne alle Textknoten und span-Elemente im `div`, aber lass das `p`-Element unverändert
-      div!.childNodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          node.nodeValue = ''; // Textknoten leeren
-        } else if (node.nodeName === 'SPAN') {
-          node.remove(); // Entferne span-Element
+      if (div) {
+        const childNodes = Array.from(div.childNodes); // Erstelle eine Kopie der Knoten
+        for (const node of childNodes) {
+          if (node.nodeType === Node.TEXT_NODE) {
+            node.nodeValue = ''; // Textknoten leeren
+          } else if (node.nodeName === 'SPAN') {
+            node.remove(); // Entferne span-Element
+          }
         }
-      });
 
-      // Entferne den Fokus vom input-div
-      (div as HTMLElement).blur();
+        // Entferne den Fokus vom input-div
+        (div as HTMLElement).blur();
 
-      this.showPlaceholder = true;
+        this.showPlaceholder = true;
+      }
     }
   }
 
