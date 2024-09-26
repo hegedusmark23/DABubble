@@ -30,7 +30,7 @@
                 <div class="userList" (click)="notCloseDialog($event)">
                     <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">
                         <img class="profil-image" [src]="filteredImageList[i]">
-                        @if(authService.currentUserSignal()?.uId == filteredUidList[i]){
+                        @if(authService.currentUserSignal()?.uId == filteredUidList[i] || this.hideOrShowSidebar.onlineUserUidList.includes(filteredUidList[i])){
                             <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                           }@else {
                             <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
