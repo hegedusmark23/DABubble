@@ -15,7 +15,8 @@
                     }@else{
                         <span>{{ user }}</span>
                     }
-                    @if(authService.currentUserSignal()?.uId == channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]){
+                    @if(authService.currentUserSignal()?.uId ==
+              channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i] || this.channelInfo.onlineUserUidList.includes(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i])){
                         <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                       }@else {
                         <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />
