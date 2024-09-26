@@ -17,8 +17,7 @@
                 }
             </div>
             <div class="online">
-                @if(this.hideOrShowSidebar.activeUid == authService.currentUserSignal()?.uId ||
-                this.hideOrShowSidebar.activeUser == 'Gast'){
+                @if(this.hideOrShowSidebar.activeUid == authService.currentUserSignal()?.uId || this.hideOrShowSidebar.onlineUserUidList.includes(this.hideOrShowSidebar.activeUid)){
                         <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />
                         <span class="fs-20">Aktiv</span>
                       }@else {
