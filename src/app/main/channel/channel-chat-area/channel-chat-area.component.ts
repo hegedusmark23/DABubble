@@ -131,23 +131,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     });
   }
 
-  hasReaction(message: any, reactionName: string): boolean {
-    return message[reactionName] && message[reactionName].length > 0;
-  }
-
-  hasUserReacted(message: any, reactionName: string): boolean {
-    const userId = this.authService.currentUserSignal()?.uId;
-    return message[reactionName]?.split(' ').includes(userId);
-  }
-
-  getReactionCount(message: any, reactionName: string): number {
-    const reactions = message[reactionName];
-    if (reactions) {
-      return reactions.split(' ').length;
-    }
-    return 0;
-  }
-
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
@@ -311,64 +294,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       reaction,
       src
     );
-  }
-
-  splitWords(input: string) {
-    if (input) {
-      let words = input.trim().split(/\s+/).length;
-      return words;
-    } else {
-      return 0;
-    }
-  }
-
-  isItToday(message: any) {
-    const now = new Date();
-    if (
-      message.year == now.getFullYear() &&
-      message.month == now.getMonth() + 1 &&
-      message.day == now.getDate()
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  isTodayTimestamp(timestamp: number): boolean {
-    const givenDate = new Date(timestamp);
-    const today = new Date();
-
-    return (
-      givenDate.getDate() === today.getDate() &&
-      givenDate.getMonth() === today.getMonth() &&
-      givenDate.getFullYear() === today.getFullYear()
-    );
-  }
-
-  getDate(timestamp: number) {
-    const givenDate = new Date(timestamp);
-    const today = new Date();
-
-    if (
-      givenDate.getDate() === today.getDate() &&
-      givenDate.getMonth() === today.getMonth() &&
-      givenDate.getFullYear() === today.getFullYear()
-    ) {
-      return 'heute';
-    } else {
-      return 'am ' + this.formatDate(timestamp);
-    }
-  }
-
-  formatDate(timestamp: number): string {
-    const givenDate = new Date(timestamp);
-
-    const day = String(givenDate.getDate()).padStart(2, '0'); // Tag mit führender Null
-    const month = String(givenDate.getMonth() + 1).padStart(2, '0'); // Monat mit führender Null (getMonth ist nullbasiert, daher +1)
-    const year = givenDate.getFullYear(); // Jahr
-
-    return `${day}.${month}.${year}`;
   }
 
   getChannelCreator(uid: any) {
@@ -649,19 +574,5 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   splitStringBySpace(input: string): string[] {
     return input.split(' ');
-  }
-
-  log(channel: any) {
-    console.log(channel);
-    return 'test';
-  }
-
-  eventStop(event: any) {
-    event.stoppropagation();
-  }
-
-  test(event: any) {
-    console.log(event);
-    event.stoppropagation();
   }
 }

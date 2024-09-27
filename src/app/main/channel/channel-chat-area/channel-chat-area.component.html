@@ -9,8 +9,8 @@
       <p class="noMessagesTitle"># {{ this.currentChannel.name }}</p>
       <p>
         {{ getChannelCreator(this.currentChannel.channelCreatorUid) }}
-        {{ getDate(this.currentChannel.creationsDate) }} erstellt. Das ist der
-        Anfang der Channels
+        {{ chatAreaService.getDate(this.currentChannel.creationsDate) }}
+        erstellt. Das ist der Anfang der Channels
         <span>#{{ this.currentChannel.name }}</span>
       </p>
     </div>
@@ -18,7 +18,10 @@
 
   <div class="content" #myDiv>
     <div *ngFor="let message of allMessagesSortedDate" #messageList ng>
-      <div *ngIf="message.date && isItToday(message)" class="date">
+      <div
+        *ngIf="message.date && chatAreaService.isItToday(message)"
+        class="date"
+      >
         <span class="spacer"></span>
         <p class="fs-18">
           {{
@@ -33,7 +36,10 @@
         <span class="spacer"></span>
       </div>
 
-      <div *ngIf="message.date && !isItToday(message)" class="date">
+      <div
+        *ngIf="message.date && !chatAreaService.isItToday(message)"
+        class="date"
+      >
         <span class="spacer"></span>
         <p class="fs-18">Heute</p>
         <span class="spacer"></span>
@@ -289,12 +295,17 @@
           >
             <div
               *ngFor="let reaction of reactions"
-              [ngClass]="{ hidden: !hasReaction(message, reaction.name) }"
+              [ngClass]="{
+                hidden: !chatAreaService.hasReaction(message, reaction.name)
+              }"
             >
               <div
                 class="reaction"
                 [ngClass]="{
-                  userReacted: hasUserReacted(message, reaction.name)
+                  userReacted: chatAreaService.hasUserReacted(
+                    message,
+                    reaction.name
+                  )
                 }"
                 (click)="addReaction(reaction.name, message)"
               >
@@ -359,7 +370,9 @@
                     </span>
                     <a
                       class="openAllReactions"
-                      *ngIf="splitWords(message[reaction.name]) > 3"
+                      *ngIf="
+                        chatAreaService.splitWords(message[reaction.name]) > 3
+                      "
                       (click)="
                         channelSelectionService.setselectedReaction(
                           message[reaction.name]
@@ -368,26 +381,48 @@
                       "
                     >
                       <p>
-                        und {{ splitWords(message[reaction.name]) - 2 + " " }}
+                        und
+                        {{
+                          chatAreaService.splitWords(message[reaction.name]) -
+                            2 +
+                            " "
+                        }}
                       </p>
-                      <p *ngIf="splitWords(message[reaction.name]) === 3">
+                      <p
+                        *ngIf="
+                          chatAreaService.splitWords(message[reaction.name]) ===
+                          3
+                        "
+                      >
                         weiter
                       </p>
-                      <p *ngIf="splitWords(message[reaction.name]) > 3">
+                      <p
+                        *ngIf="
+                          chatAreaService.splitWords(message[reaction.name]) > 3
+                        "
+                      >
                         weitere
                       </p>
                     </a>
                   </p>
 
-                  <span *ngIf="splitWords(message[reaction.name]) > 1"
+                  <span
+                    *ngIf="
+                      chatAreaService.splitWords(message[reaction.name]) > 1
+                    "
                     >haben reagiert</span
                   >
-                  <span *ngIf="splitWords(message[reaction.name]) === 1"
+                  <span
+                    *ngIf="
+                      chatAreaService.splitWords(message[reaction.name]) === 1
+                    "
                     >hat reagiert</span
                   >
                 </div>
 
-                <div>{{ splitWords(message[reaction.name]) }}</div>
+                <div>
+                  {{ chatAreaService.splitWords(message[reaction.name]) }}
+                </div>
                 <img [src]="reaction.icon" [alt]="reaction.name" />
               </div>
             </div>
