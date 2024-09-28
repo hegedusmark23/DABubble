@@ -14,9 +14,13 @@ import {
 export class FileUploadeService {
   constructor() {}
 
-  uploadFile(file: File, source: any): Promise<string> {
+  async uploadFile(file: File, source: any): Promise<string> {
     const storage = getStorage();
-    const storageRef = ref(storage, `${source}/${file.name}`);
+
+    // Erstelle einen eindeutigen Namen für die Datei
+    const uniqueFileName = Date.now();
+
+    const storageRef = ref(storage, `${source}/${uniqueFileName}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     return new Promise<string>((resolve, reject) => {
