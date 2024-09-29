@@ -351,34 +351,49 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   saveEdit(event: any, message: any) {
     let editedMessage = this.inputChatArea.nativeElement.innerHTML;
     console.log(editedMessage);
-    this.updateMessage(event, message.id, editedMessage);
+    this.updateMessage(event, message.id);
     this.openEditMessage = '';
   }
 
-  async updateMessage(event: any, messageId: string, newMessage: string) {
+  async updateMessage(event: any, messageId: string) {
     event?.preventDefault();
+    let message = '';
+    const messageTextarea = document.querySelector(
+      '.textAreaChatArea'
+    ) as HTMLElement;
 
-    // Prüfe, ob die Nachricht leer ist
-    if (newMessage.trim().length < 1) {
-      return;
+    if (messageTextarea) {
+      const children = messageTextarea.childNodes;
+      let result = '';
+
+      children.forEach((child) => {
+        if (
+          child.nodeType === Node.ELEMENT_NODE &&
+          (child as HTMLElement).tagName === 'SPAN'
+        ) {
+          // Es ist ein span-Element, extrahiere das data-uid
+          const uid = (child as HTMLElement).getAttribute('data-uid');
+          if (uid) {
+            // Überprüfe das erste Zeichen des data-uid
+            const firstChar = (child as HTMLElement).innerHTML.charAt(0);
+            if (firstChar === '@') {
+              result += `₿ЯæŶ∆Ωг${uid} `;
+            } else if (firstChar === '#') {
+              result += `₣Ж◊ŦΨø℧${uid} `;
+            } else {
+              // Standardfall, falls das erste Zeichen weder @ noch # ist
+              result += `${uid} `;
+            }
+          }
+        } else if (child.nodeType === Node.TEXT_NODE) {
+          // Es ist ein Textknoten, füge den Textinhalt hinzu
+          result += child.textContent;
+        }
+      });
+
+      // Speichere das Ergebnis in der message.message Variable
+      message = result.trim(); // Ergebnis z.B.: "asddasd @zqk0MWq9TcWYUdYtXpTTKsnFro12 sdasad @7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2"
     }
-
-    // Nachricht formatieren, falls erforderlich (entsprechend den @- und #-Präfixen)
-    let formattedMessage = '';
-    const children = newMessage.split(' ');
-
-    children.forEach((child) => {
-      if (child.startsWith('@')) {
-        // Format für @-Erwähnungen
-        formattedMessage += `₿ЯæŶ∆Ωг${child.slice(1)} `;
-      } else if (child.startsWith('#')) {
-        // Format für #-Channels
-        formattedMessage += `₣Ж◊ŦΨø℧${child.slice(1)} `;
-      } else {
-        // Standardfall, falls das erste Zeichen weder @ noch # ist
-        formattedMessage += `${child} `;
-      }
-    });
 
     // Nachricht in der Firestore-Datenbank aktualisieren
     const messageRef = doc(
@@ -390,7 +405,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     );
 
     await updateDoc(messageRef, {
-      message: formattedMessage.trim(),
+      message: message.trim(),
       updatedAt: new Date(), // Optional: Zeitpunkt der letzten Änderung speichern
     }).catch((err) => {
       console.error('Fehler beim Aktualisieren der Nachricht:', err);
@@ -472,10 +487,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       regexUser,
       (match: any, p1: any) => {
         if (this.getUser(p1) != undefined) {
-          const spanClass =
-            message.uid !== this.authService.currentUserSignal()?.uId
-              ? 'tagHighlight'
-              : 'tagHighlightSend';
+          const spanClass = 'tagHighlight';
           return `<span class="${spanClass}" data-uid="${p1}" contentEditable="false">@${
             this.getUser(p1).name
           }</span>`;
@@ -489,10 +501,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       regexChannel,
       (match: any, p1: any) => {
         if (this.getChannel(p1) != undefined) {
-          const spanClass =
-            message.uid !== this.authService.currentUserSignal()?.uId
-              ? 'tagHighlightChannel'
-              : 'tagHighlightSendChannel';
+          const spanClass = 'tagHighlightChannel';
           return `<span class="${spanClass}" data-uid="${p1}" contentEditable="false">#${
             this.getChannel(p1).name
           }</span>`;
