@@ -258,8 +258,9 @@
 
                 <img
                   *ngIf="message.fileUrl.length > 0"
-                  class="picture"
+                  class="picture cursor-pointer"
                   src="{{ message.fileUrl }}"
+                  (click)="setImg(message.fileUrl)"
                 />
                 <div class="answers" *ngIf="message.threadCount > 0">
                   <a

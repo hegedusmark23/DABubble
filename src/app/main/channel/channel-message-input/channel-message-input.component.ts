@@ -157,7 +157,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     this.tagUserSelector = false;
     // Finde das 'contenteditable' Div Element
     const messageTextarea = document.querySelector('.textArea') as HTMLElement;
-    console.log(event);
 
     if (messageTextarea) {
       const children = messageTextarea.childNodes;
@@ -273,7 +272,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   //fügt die restlichen variablen ins model
   addIMG() {
     this.message.fileUrl = this.FileUrl;
-    this.message.fileName = this.selectedFile?.name;
   }
 
   insertEmoji(emoji: any) {

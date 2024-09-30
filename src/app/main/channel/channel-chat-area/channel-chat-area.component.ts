@@ -131,6 +131,10 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     });
   }
 
+  setImg(src: any) {
+    this.channelSelectionService.setSelectedImg(src);
+  }
+
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
@@ -350,7 +354,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   saveEdit(event: any, message: any) {
     let editedMessage = this.inputChatArea.nativeElement.innerHTML;
-    console.log(editedMessage);
     this.updateMessage(event, message.id);
     this.openEditMessage = '';
   }

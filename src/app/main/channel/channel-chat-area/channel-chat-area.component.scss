@@ -232,7 +232,8 @@
 }
 
 .picture {
-  height: 300px;
+  width: 80%;
+  object-fit: contain;
 }
 
 .hoverContent,

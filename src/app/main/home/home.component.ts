@@ -18,6 +18,7 @@ import { NewMessageComponent } from '../new-message/new-message/new-message.comp
 import { ChannelUserlistComponent } from '../channel-userlist/channel-userlist.component';
 import { ReactionListComponent } from '../reaction-list/reaction-list.component';
 import { SearchService } from '../../services/search.service';
+import { OpenImgComponent } from '../open-img/open-img.component';
 
 @Component({
   selector: 'app-home',
@@ -38,13 +39,14 @@ import { SearchService } from '../../services/search.service';
     NewMessageComponent,
     ChannelUserlistComponent,
     ReactionListComponent,
+    OpenImgComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss', './home-responsive.component.scss'],
 })
 export class HomeComponent implements OnInit {
   selectedReaction: string = ''; // Variable zum Speichern der Reaktion
-  searchService = inject(SearchService)
+  searchService = inject(SearchService);
   constructor(
     public channelSelectionService: ChannelSelectionService,
     public editChannelService: EditChannelService // Füge den Service hier hinzu
