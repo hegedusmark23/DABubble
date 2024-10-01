@@ -551,8 +551,18 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   openChannel(uid: any) {
-    this.channelSelectionService.openChannel();
-    this.channelSelectionService.setSelectedChannel(uid);
+    const currentUserId = this.authService.currentUserSignal()?.uId;
+
+    for (let i = 0; i < this.getChannel(uid).uids.length; i++) {
+      const element = this.getChannel(uid).uids[i];
+      if (
+        element.includes(currentUserId) ||
+        uid == 'wXzgNEb34DReQq3fEsAo7VTcXXNA'
+      ) {
+        this.channelSelectionService.openChannel();
+        this.channelSelectionService.setSelectedChannel(uid);
+      }
+    }
   }
 
   openUserProfil(uid: any) {
