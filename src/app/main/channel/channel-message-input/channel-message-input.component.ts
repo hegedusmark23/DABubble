@@ -569,11 +569,8 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     selection!.addRange(range);
 
     this.lastAtPosition = null;
-    if (tagSymbol == '#') {
-      this.tagChannelSelector = true;
-    } else {
-      this.tagUserSelector = true;
-    }
+    this.tagChannelSelector = false;
+    this.tagUserSelector = false;
   }
 
   onKeyDown(event: KeyboardEvent) {
