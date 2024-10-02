@@ -239,7 +239,6 @@ export class SearchFieldComponent {
     this.channelSelectionService.setSelectedChannel(this.hideOrShowSidebar.AllChannelsIds[i]);
     this.hideOrShowSidebar.currentChannelNumber = i;
     this.cdRef.detectChanges();
-    console.log(this.hideOrShowSidebar.activeChannelIndex);
   }
 
   /**
