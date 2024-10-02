@@ -165,6 +165,10 @@ export class SearchFieldComponent {
     if (channelIndex !== -1) {
       this.channelActive(channelIndex);
       this.searchService.isSearching = false;
+      this.responsiveService.isChannelOpen = true;
+      if (window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = false;
+      }
     } else {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
@@ -201,6 +205,10 @@ export class SearchFieldComponent {
       this.searchService.isSearching = false;
       this.channelActive(channelIndex);
       this.scrollToMessage(messageId);
+      this.responsiveService.isChannelOpen = true;
+      if (window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = false;
+      }
     } else {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
