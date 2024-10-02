@@ -8,6 +8,7 @@ import { SidebarService } from '../../../services/sidebar.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { ResponsiveService } from '../../../services/responsive.service';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-search-field',
@@ -230,6 +231,7 @@ export class SearchFieldComponent {
     this.channelSelectionService.setSelectedChannel(this.hideOrShowSidebar.AllChannelsIds[i]);
     this.hideOrShowSidebar.currentChannelNumber = i;
     this.cdRef.detectChanges();
+    console.log(this.hideOrShowSidebar.activeChannelIndex);
   }
 
   /**

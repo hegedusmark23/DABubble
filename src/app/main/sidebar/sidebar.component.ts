@@ -94,6 +94,7 @@ export class SidebarComponent implements OnInit {
         this.responsiveService.isSidebarOpen = false;
       }
       this.sidebarService.activeChannelIndex = i;
+      console.log(this.sidebarService.activeChannelIndex)
     }
   }
 
