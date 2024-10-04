@@ -121,6 +121,9 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       this.subUser();
       this.subMessages();
       this.subChannels();
+      setTimeout(() => {
+        this.scrollToBottom();
+      }, 5);
     });
 
     this.messageLoaded.changes.subscribe((t) => {
@@ -226,14 +229,13 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
     });
   }
 
-  scrollToBottom(): void {
+  scrollToBottom() {
     if (typeof window !== 'undefined') {
       // Browser-spezifischer Code hier
       const container = document.getElementById('messageContainer');
-      if (container) {
-        container.scrollTop = container.scrollHeight;
-      }
+      container!.scrollTop = container!.scrollHeight;
     }
+    return false;
   }
 
   dateLoaded() {
