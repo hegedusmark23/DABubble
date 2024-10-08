@@ -267,11 +267,11 @@
                     class="middlePurple cursor-pointer"
                     (click)="openThread(message)"
                   >
-                    <p *ngIf="message.threadCount < 2">
-                      {{ message.threadCount }} Antwort
+                    <p *ngIf="message.threadCount - 1 < 2">
+                      {{ message.threadCount - 1 }} Antwort
                     </p>
-                    <p *ngIf="message.threadCount > 2">
-                      {{ message.threadCount }} Antworten
+                    <p *ngIf="message.threadCount - 1 > 2">
+                      {{ message.threadCount - 1 }} Antworten
                     </p>
                   </a>
                   <p class="smallGray">Letzte Antwort 14:56</p>

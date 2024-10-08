@@ -153,6 +153,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   }
 
   async saveMessage(event: any) {
+    let messageId = '';
     event?.preventDefault();
     this.tagUserSelector = false;
     // Finde das 'contenteditable' Div Element
@@ -207,6 +208,25 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     // Speichere die Nachricht in der Firestore-Datenbank
     await addDoc(
       collection(this.firestore, 'Channels', this.currentChannelId, 'messages'),
+      this.toJSON()
+    )
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+        messageId = docRef.id; // Speichere die ID der Nachricht
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    await addDoc(
+      collection(
+        this.firestore,
+        'Channels',
+        this.currentChannelId,
+        'messages',
+        messageId,
+        'thread'
+      ),
       this.toJSON()
     ).catch((err) => {
       console.error(err);

@@ -27,6 +27,7 @@ export class ChatAreaService {
       fileUrl: obj.fileUrl || '',
       fileName: obj.fileName || '',
       threadCount: obj.threadCount || '',
+      lastThreadMessage: obj.lastThreadMessage || '',
       checkMark: obj.checkMark || '',
       handshake: obj.handshake || '',
       thumbsUp: obj.thumbsUp || '',

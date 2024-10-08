@@ -4,39 +4,11 @@
   #messageContainer
   [ngClass]="containerClasses"
 >
-  <div class="noMessagesContainer" *ngIf="allMessagesSortedDate.length < 1">
-    <div>
-      <p class="noMessagesTitle"># {{ this.currentChannel }}</p>
-      <p>
-        Du hast diesen Channel heute erstellt. Das ist der Anfang der Channels
-        <span>#{{ this.currentChannel }}</span>
-      </p>
-    </div>
-  </div>
-
   <div class="content" #myDiv>
-    <div *ngFor="let message of allMessagesSortedDate" #messageList ng>
-      <div *ngIf="message.date && isItToday(message)" class="date">
-        <span class="spacer"></span>
-        <p class="fs-18">
-          {{
-            message.weekday +
-              "," +
-              " " +
-              message.day +
-              " " +
-              getMonthName(message.month)
-          }}
-        </p>
-        <span class="spacer"></span>
-      </div>
-
-      <div *ngIf="message.date && !isItToday(message)" class="date">
-        <span class="spacer"></span>
-        <p class="fs-18">Heute</p>
-        <span class="spacer"></span>
-      </div>
-
+    <div
+      *ngFor="let message of allMessagesSortedDate; let i = index"
+      #messageList
+    >
       <!-- message send -->
       <div
         (mouseleave)="closeEmojiSelector()"
@@ -139,20 +111,6 @@
                   <p (click)="addReaction('rocket', message)">
                     <img src="./../../../../assets/reactions/rocket.png" />
                   </p>
-                </div>
-                <div>
-                  <p (click)="addReaction('nerdFace', message)">
-                    <img src="./../../../../assets/reactions/nerd-face.png" />
-                  </p>
-                  <p (click)="addReaction('noted', message)">
-                    <img src="./../../../../assets/reactions/noted.png" />
-                  </p>
-                  <p (click)="addReaction('shushingFace', message)">
-                    <img
-                      src="./../../../../assets/reactions/shushing-face.png"
-                    />
-                  </p>
-
                   <p (click)="closeEmojiSelector()">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -181,6 +139,19 @@
                     </svg>
                   </p>
                 </div>
+                <div>
+                  <p (click)="addReaction('nerdFace', message)">
+                    <img src="./../../../../assets/reactions/nerd-face.png" />
+                  </p>
+                  <p (click)="addReaction('noted', message)">
+                    <img src="./../../../../assets/reactions/noted.png" />
+                  </p>
+                  <p (click)="addReaction('shushingFace', message)">
+                    <img
+                      src="./../../../../assets/reactions/shushing-face.png"
+                    />
+                  </p>
+                </div>
               </div>
             </div>
             <div></div>
@@ -193,14 +164,26 @@
               }"
             >
               <div class="messageInfo">
-                <div class="messageTitle">
+                <div
+                  [ngClass]="{
+                    messageTitleResive:
+                      message.uid !== authService.currentUserSignal()?.uId,
+                    messageTitle:
+                      message.uid === authService.currentUserSignal()?.uId
+                  }"
+                >
                   <div></div>
                   <div class="messageUserName">
                     <p (click)="openUserProfil(message.uid)" class="userName">
-                      {{ getUsername(message.uid) }}
+                      {{ getUser(message.uid).name }}
                     </p>
                     <p class="smallGray">
-                      {{ getFormattedTime(message.hour, message.minute) }}
+                      {{
+                        chatAreaService.getFormattedTime(
+                          message.hour,
+                          message.minute
+                        )
+                      }}
                     </p>
                   </div>
                 </div>
@@ -212,8 +195,9 @@
 
                 <img
                   *ngIf="message.fileUrl.length > 0"
-                  class="picture"
+                  class="picture cursor-pointer"
                   src="{{ message.fileUrl }}"
+                  (click)="setImg(message.fileUrl)"
                 />
                 <div class="answers" *ngIf="message.threadCount > 0">
                   <a
@@ -249,12 +233,17 @@
           >
             <div
               *ngFor="let reaction of reactions"
-              [ngClass]="{ hidden: !hasReaction(message, reaction.name) }"
+              [ngClass]="{
+                hidden: !chatAreaService.hasReaction(message, reaction.name)
+              }"
             >
               <div
                 class="reaction"
                 [ngClass]="{
-                  userReacted: hasUserReacted(message, reaction.name)
+                  userReacted: chatAreaService.hasUserReacted(
+                    message,
+                    reaction.name
+                  )
                 }"
                 (click)="addReaction(reaction.name, message)"
               >
@@ -279,7 +268,7 @@
                           splitStringBySpace(message[reaction.name]).length <= 3
                         "
                       >
-                        {{ getUsername(user) }}
+                        {{ getUser(user).name }}
                       </span>
 
                       <!-- Füge Komma nur hinzu, wenn es nicht der letzte Name ist -->
@@ -314,12 +303,14 @@
                             3 && i < 2
                         "
                       >
-                        {{ getUsername(user) }},
+                        {{ getUser(user).name }},
                       </span>
                     </span>
                     <a
                       class="openAllReactions"
-                      *ngIf="splitWords(message[reaction.name]) > 3"
+                      *ngIf="
+                        chatAreaService.splitWords(message[reaction.name]) > 3
+                      "
                       (click)="
                         channelSelectionService.setselectedReaction(
                           message[reaction.name]
@@ -328,31 +319,67 @@
                       "
                     >
                       <p>
-                        und {{ splitWords(message[reaction.name]) - 2 + " " }}
+                        und
+                        {{
+                          chatAreaService.splitWords(message[reaction.name]) -
+                            2 +
+                            " "
+                        }}
                       </p>
-                      <p *ngIf="splitWords(message[reaction.name]) === 3">
+                      <p
+                        *ngIf="
+                          chatAreaService.splitWords(message[reaction.name]) ===
+                          3
+                        "
+                      >
                         weiter
                       </p>
-                      <p *ngIf="splitWords(message[reaction.name]) > 3">
+                      <p
+                        *ngIf="
+                          chatAreaService.splitWords(message[reaction.name]) > 3
+                        "
+                      >
                         weitere
                       </p>
                     </a>
                   </p>
 
-                  <span *ngIf="splitWords(message[reaction.name]) > 1"
+                  <span
+                    *ngIf="
+                      chatAreaService.splitWords(message[reaction.name]) > 1
+                    "
                     >haben reagiert</span
                   >
-                  <span *ngIf="splitWords(message[reaction.name]) === 1"
+                  <span
+                    *ngIf="
+                      chatAreaService.splitWords(message[reaction.name]) === 1
+                    "
                     >hat reagiert</span
                   >
                 </div>
 
-                <div>{{ splitWords(message[reaction.name]) }}</div>
+                <div>
+                  {{ chatAreaService.splitWords(message[reaction.name]) }}
+                </div>
                 <img [src]="reaction.icon" [alt]="reaction.name" />
               </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div *ngIf="i == 0" class="anweres">
+        <p class="fs-18" *ngIf="allMessagesSortedDate.length == 1">
+          {{ allMessagesSortedDate.length - 1 }} Antworten
+        </p>
+
+        <p class="fs-18" *ngIf="allMessagesSortedDate.length == 2">
+          {{ allMessagesSortedDate.length - 1 }} Antwort
+        </p>
+        <p class="fs-18" *ngIf="allMessagesSortedDate.length > 2">
+          {{ allMessagesSortedDate.length - 1 }} Antworten
+        </p>
+        <span class="spacer"></span>
       </div>
 
       <emoji-mart
@@ -367,18 +394,21 @@
       <div *ngIf="this.openEditMessage == message.id">
         <div class="messageEditContainer">
           <div class="textareaContainer">
-            <textarea
-              #messageTextarea
-              value="{{ this.editedMessage }}"
-              (input)="onMessageInput($event)"
-            ></textarea>
+            <div
+              id="inputChatArea"
+              class="textAreaChatArea"
+              contenteditable="true"
+              type="text"
+              #inputChatArea
+            ></div>
+
             <div class="messageEditContainerFooter">
               <div></div>
               <div>
                 <button class="cancelEdit" (click)="editMessage(message)">
                   Abbrechen
                 </button>
-                <button class="saveEdit" (click)="saveEdit(message)">
+                <button class="saveEdit" (click)="saveEdit($event, message)">
                   Speichern
                 </button>
               </div>

@@ -23,7 +23,7 @@
   flex-direction: column;
 }
 
-.date {
+.anweres {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -34,8 +34,8 @@
     justify-content: center;
     align-items: flex-start;
     gap: 10px;
-    border-radius: 30px;
-    border: 1px solid #adb0d9;
+    border: none;
+    color: #adb0d9;
   }
 }
 .spacer {
@@ -50,7 +50,7 @@
   flex-direction: row-reverse;
   justify-content: flex-start;
   gap: 16px;
-  padding: 10px 40px 10px 40px;
+  padding: 10px 0px 10px 40px;
   span {
     background-color: #eceefe;
     padding: 15px;
@@ -77,7 +77,7 @@
   flex-direction: row;
   justify-content: flex-end;
   gap: 16px;
-  padding: 10px 40px 10px 40px;
+  padding: 10px 40px 10px 0px;
   span {
     background-color: #797ef3;
     padding: 15px;
@@ -100,19 +100,26 @@
 }
 
 .hoverResive {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  flex-direction: column !important;
+  flex-direction: row !important;
   height: 46px;
   padding: 3px 15px 3px 20px;
   gap: 5px;
   border-radius: 25px 25px 0px 25px;
   border: 1px solid #adb0d9;
   background-color: white;
-  margin-right: 20px;
+  margin-right: 15px;
   margin-top: 20px;
 
+  .hoverContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
   p {
     height: 24px;
     width: 24px;
@@ -134,11 +141,16 @@
   border-radius: 25px 25px 0px 25px;
   border: 1px solid #adb0d9;
   background-color: white;
-  margin-left: 20px;
+  margin-left: 15px;
   margin-top: 20px;
-  flex-wrap: wrap;
-  max-width: 100%;
 
+  .hoverContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row !important;
+    gap: 5px;
+  }
   p {
     height: 24px;
     width: 24px;
@@ -153,6 +165,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between !important;
+  width: 100%;
+}
+
+.messageTitleResive {
+  display: flex;
+  flex-direction: row;
+  justify-content: start !important;
   width: 100%;
 }
 
@@ -185,9 +204,6 @@
     .hoverSend {
       display: flex !important;
     }
-    .messageSend {
-      padding: 10px 45px 10px 45px;
-    }
   }
 }
 
@@ -206,14 +222,12 @@
     .messageMessage {
       background-color: white;
     }
-    .messageResive {
-      padding: 10px 45px 10px 45px;
-    }
   }
 }
 
 .picture {
-  height: 300px;
+  width: 80%;
+  object-fit: contain;
 }
 
 .hoverContent,
@@ -229,7 +243,6 @@
   div {
     display: flex;
     flex-direction: row;
-    gap: 10px;
   }
   p {
     cursor: pointer;
@@ -237,8 +250,6 @@
 }
 
 .hoverContent {
-  display: flex;
-  flex-direction: row;
   p {
     cursor: pointer;
   }
@@ -310,8 +321,6 @@
   gap: 10px !important;
   margin: 0 131px;
   position: relative;
-  max-width: 100%;
-  flex-wrap: wrap;
 }
 
 .messagecontentContainer {
@@ -334,13 +343,10 @@
   gap: 10px !important;
   margin: 0 131px;
   position: relative;
-  max-width: 100%;
-  flex-wrap: wrap;
 }
-
 .textareaContainer {
   width: 100%;
-  textarea {
+  .textAreaChatArea {
     border: none;
     outline: none;
     -webkit-box-shadow: none;
@@ -355,7 +361,6 @@
     padding: 20px;
     height: auto; /* Ermöglicht das automatische Anpassen der Höhe */
     width: 100%; /* Passt sich der Breite des übergeordneten Containers an */
-    white-space: pre-wrap; /* Ermöglicht das Umbruchverhalten ähnlich wie bei span */
     word-break: break-all; /* Ermöglicht den Zeilenumbruch bei langen Wörtern */
     box-sizing: border-box; /* Schließt Padding und Border in die Breite und Höhe mit ein */
   }
@@ -365,7 +370,7 @@
   display: flex;
   flex-direction: row;
   gap: 30px;
-  padding: 10px 45px 10px 146px;
+  padding: 10px 40px 10px 0px;
   background-color: #f0f1fe;
 }
 
