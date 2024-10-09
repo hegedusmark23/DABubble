@@ -47,6 +47,7 @@ export class ChannelHeaderComponent {
 
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
+      console.log(channel);
       this.currentChannelId = channel;
       this.subChannels();
     });
@@ -72,7 +73,7 @@ export class ChannelHeaderComponent {
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
           this.setUserNumberBasedOnImages();
-          console.log(this.currentChannel.images);
+          console.log(this.currentChannel.description);
         }
       });
     });
