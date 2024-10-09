@@ -67,11 +67,12 @@ export class EditChannelComponent implements OnInit {
   setNoteChannel(obj: any, id: string) {
     return {
       id: id,
-      channelCreator: obj.channelCreator || '',
+      channelCreatorUid: obj.channelCreatorUid || '',
+      creationsDate: obj.creationsDate || '',
       description: obj.description || '',
       images: obj.images || '',
       name: obj.name || '',
-      users: obj.users || '',
+      uids: obj.uids || '',
     };
   }
 
