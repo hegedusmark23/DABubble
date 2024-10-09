@@ -19,13 +19,17 @@ import {
   setDoc,
   updateDoc,
 } from '@angular/fire/firestore';
+import { ChatAreaService } from '../../../services/chat-area.service';
 
 @Component({
   selector: 'app-channel-header',
   standalone: true,
   imports: [EditChannelComponent, CommonModule],
   templateUrl: './channel-header.component.html',
-  styleUrls: ['./channel-header.component.scss', './channel-header-responsiv.component.scss']
+  styleUrls: [
+    './channel-header.component.scss',
+    './channel-header-responsiv.component.scss',
+  ],
 })
 export class ChannelHeaderComponent {
   currentChannelId: any;
@@ -37,7 +41,8 @@ export class ChannelHeaderComponent {
   constructor(
     private firestore: Firestore,
     public editChannelService: EditChannelService,
-    private channelSelectionService: ChannelSelectionService
+    private channelSelectionService: ChannelSelectionService,
+    public chatAreaService: ChatAreaService
   ) {}
 
   ngOnInit(): void {
@@ -60,18 +65,28 @@ export class ChannelHeaderComponent {
     onSnapshot(q, (list) => {
       let channel: any;
       list.forEach((element) => {
-        channel = this.setNoteChannel(element.data(), element.id);
+        channel = this.chatAreaService.setNoteChannel(
+          element.data(),
+          element.id
+        );
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
           this.setUserNumberBasedOnImages();
+          console.log(this.currentChannel.images);
         }
       });
     });
   }
 
-  setUserNumberBasedOnImages(){
-    if (this.channelInfo.AllChannelsImages && this.channelInfo.currentChannelNumber !== undefined) {
-      const images = this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber];
+  setUserNumberBasedOnImages() {
+    if (
+      this.channelInfo.AllChannelsImages &&
+      this.channelInfo.currentChannelNumber !== undefined
+    ) {
+      const images =
+        this.channelInfo.AllChannelsImages[
+          this.channelInfo.currentChannelNumber
+        ];
       if (images) {
         this.userNumber = images.length;
       } else {
@@ -81,25 +96,12 @@ export class ChannelHeaderComponent {
       this.userNumber = 0;
     }
   }
-  
 
-  setNoteChannel(obj: any, id: string) {
-    return {
-      id: id,
-      channelCreator: obj.channelCreator || '',
-      description: obj.description || '',
-      images: obj.images || '',
-      name: obj.name || '',
-      users: obj.users || '',
-      emails: obj.emails || ''
-    };
-  }
-
-  hover(){
+  hover() {
     this.divHover = true;
   }
 
-  hoverOff(){
-  this.divHover = false;
+  hoverOff() {
+    this.divHover = false;
   }
 }
