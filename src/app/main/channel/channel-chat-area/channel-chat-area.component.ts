@@ -44,7 +44,7 @@ import { ChatAreaService } from '../../../services/chat-area.service';
   standalone: true,
   imports: [CommonModule, PickerComponent],
   templateUrl: './channel-chat-area.component.html',
-  styleUrl: './channel-chat-area.component.scss',
+  styleUrls: ['./channel-chat-area.component.scss','./channel-chat-area.component.responsive.scss'],
 })
 export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);

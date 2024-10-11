@@ -27,7 +27,7 @@ import { SidebarService } from '../../../services/sidebar.service';
   standalone: true,
   imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './channel-message-input.component.html',
-  styleUrl: './channel-message-input.component.scss',
+  styleUrls: ['./channel-message-input.component.scss', './channel-message-input.component.responsive.scss'],
 })
 export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   message = new Message();

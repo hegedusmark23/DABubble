@@ -39,7 +39,7 @@ import { DirectMessage } from '../../../../models/direct-message.class';
   standalone: true,
   imports: [CommonModule, PickerComponent],
   templateUrl: './direct-messages-chat-area.component.html',
-  styleUrl: './direct-messages-chat-area.component.scss',
+  styleUrls: ['./direct-messages-chat-area.component.scss', 'direct-messages-chat-area.component.responsive.scss'],
 })
 export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
