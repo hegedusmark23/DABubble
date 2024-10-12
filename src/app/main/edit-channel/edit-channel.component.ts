@@ -68,6 +68,7 @@ export class EditChannelComponent implements OnInit {
     return {
       id: id,
       channelCreatorUid: obj.channelCreatorUid || '',
+      channelCreatorName: obj.channelCreatorName || '',
       creationsDate: obj.creationsDate || '',
       description: obj.description || '',
       images: obj.images || '',
