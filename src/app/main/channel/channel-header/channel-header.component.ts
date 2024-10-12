@@ -73,7 +73,7 @@ export class ChannelHeaderComponent {
         if (channel.id === this.currentChannelId) {
           this.currentChannel = channel;
           this.setUserNumberBasedOnImages();
-          console.log(this.currentChannel.description);
+          console.log(this.currentChannel.uids);
         }
       });
     });
@@ -89,7 +89,7 @@ export class ChannelHeaderComponent {
           this.channelInfo.currentChannelNumber
         ];
       if (images) {
-        this.userNumber = images.length;
+        this.userNumber = this.currentChannel.images.length;
       } else {
         this.userNumber = 0;
       }
