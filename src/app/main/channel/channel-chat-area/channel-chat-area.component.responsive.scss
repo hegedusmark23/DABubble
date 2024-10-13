@@ -77,15 +77,6 @@
   .messageResive {
     padding: 10px 20px 10px 20px;
   }
-
-  .messageInfo {
-    &:hover {
-      .hoverSendMobile,
-      .hoverResiveMobile {
-        display: flex !important;
-      }
-    }
-  }
 }
 
 @media (min-width: 1000px) {
@@ -105,8 +96,13 @@
     }
   }
 
-  .hoverSendMobile,
-  .hoverResiveMobile {
-    display: none !important;
+  .messageSend,
+  .messageResive {
+    &:hover {
+      .hoverSendMobile,
+      .hoverResiveMobile {
+        display: flex !important;
+      }
+    }
   }
 }

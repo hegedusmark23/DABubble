@@ -230,7 +230,7 @@
 .messageTitleResive {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   width: 100%;
   height: 24px;
 }
@@ -539,6 +539,7 @@ button {
 
 .hoverSendMobile,
 .hoverResiveMobile {
-  display: none;
+  // display: none;
   position: relative;
+  top: -30px;
 }
