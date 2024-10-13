@@ -23,7 +23,7 @@
         'channelUser-background-hover': divHover}"></div>
       <div class ="channelUser-background-top-two" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
     }
-    @if(this.currentChannel.images == 1){
+    @if(this.currentChannel.images.length == 1){
       <div class="channelUser-background-one" [ngClass]="{
         'channelUser-background-hover': divHover}"></div>
       <div class ="channelUser-background-top-one" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>
