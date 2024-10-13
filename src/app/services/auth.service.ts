@@ -169,25 +169,16 @@ export class AuthService {
     const currentUser = this.firebaseAuth.currentUser;
     if (!currentUser) {
       throw new Error('No user is currently signed in.');
-    }
-    try {
-      // Ellenőrizzük, hogy az email változott-e, és nem üres-e
+    } try {
       if (email && currentUser.email !== email) {
         await updateEmail(currentUser, email);
-      }
-      
-      // Ellenőrizzük, hogy a név változott-e, és nem üres-e
-      if (name && currentUser.displayName !== name) {
+      } if (name && currentUser.displayName !== name) {
         await updateProfile(currentUser, { displayName: name });
       }
-  
-      // Frissítjük az adatbázisban az új adatokat (ha van)
       await this.updateUserInDatabase(currentUser.uid, name || currentUser.displayName || '');
-  
-      // Beállítjuk az új adatokat a Signal segítségével
       this.currentUserSignal.set({
-        email: email || currentUser.email || '',  // Ha üres, megtartjuk a régit
-        name: name || currentUser.displayName || '', // Ha üres, megtartjuk a régit
+        email: email || currentUser.email || '',  
+        name: name || currentUser.displayName || '', 
         imgUrl: currentUser.photoURL ?? '',
         uId: currentUser.uid
       });
