@@ -111,7 +111,9 @@ export class AddUserToChannelComponent {
   }
 
   async saveUsers() {
-    const channelId = this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber];
+    const totalChannels = this.hideOrShowSidebar.AllChannelsIds.length;
+    const realChannelIndex = totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
+    const channelId = this.hideOrShowSidebar.AllChannelsIds[realChannelIndex];
     const channelRef = doc(collection(this.firestore, 'Channels'), channelId);
     try {
       const channelDoc = await getDoc(channelRef);
@@ -138,15 +140,17 @@ export class AddUserToChannelComponent {
     }
   }
 
-  clearUserAndResetChannel(){
+  clearUserAndResetChannel() {
     this.clearSelectedLists();
     this.addUserEnabled = false;
     this.searchTerm = '';
     this.closeDialogAddUser();
     this.threadService.closeThread();
     this.channelSelectionService.openChannel();
+    const totalChannels = this.hideOrShowSidebar.AllChannelsIds.length;
+    const realChannelIndex = totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
     this.channelSelectionService.setSelectedChannel(
-    this.hideOrShowSidebar.AllChannelsIds[this.hideOrShowSidebar.currentChannelNumber]
+      this.hideOrShowSidebar.AllChannelsIds[realChannelIndex]
     );
   }
   
