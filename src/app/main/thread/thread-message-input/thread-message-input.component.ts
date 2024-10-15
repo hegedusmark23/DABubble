@@ -17,6 +17,7 @@ import { FileUploadeService } from '../../../services/file-upload.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { AuthService } from '../../../services/auth.service';
 import { SidebarService } from '../../../services/sidebar.service';
+import { ChatAreaService } from '../../../services/chat-area.service';
 
 @Component({
   selector: 'app-thread-message-input',
@@ -27,7 +28,8 @@ import { SidebarService } from '../../../services/sidebar.service';
 })
 export class ThreadMessageInputComponent implements OnInit {
   @Input() threadId: any;
-  //
+  allMessages: Message[] = [];
+
   message = new Message();
   weekday: any;
   year: any;
@@ -67,7 +69,8 @@ export class ThreadMessageInputComponent implements OnInit {
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
-    private fileUploadeService: FileUploadeService
+    private fileUploadeService: FileUploadeService,
+    public chatAreaService: ChatAreaService
   ) {}
 
   //speichert wercher channel gerade ausgewählt ist
@@ -76,12 +79,37 @@ export class ThreadMessageInputComponent implements OnInit {
       this.currentChannelId = channel;
       this.subUser();
       this.subChannels();
+      this.subMessages();
     });
   }
 
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.clearInput();
+    });
+  }
+
+  subMessages() {
+    console.log('test');
+    const q = query(
+      collection(
+        this.firestore,
+        'Channels',
+        this.currentChannelId,
+        'messages',
+        this.threadId,
+        'thread'
+      ),
+      limit(1000)
+    );
+    onSnapshot(q, (list) => {
+      this.allMessages = [];
+      list.forEach((element) => {
+        this.allMessages.push(
+          this.chatAreaService.setNoteObject(element.data(), element.id)
+        );
+      });
+      console.log(this.allMessages);
     });
   }
 
@@ -159,7 +187,6 @@ export class ThreadMessageInputComponent implements OnInit {
       '.ThreadTextArea'
     ) as HTMLElement;
 
-    console.log('Test', messageTextarea);
     if (messageTextarea) {
       const children = messageTextarea.childNodes;
       let result = '';
@@ -224,6 +251,36 @@ export class ThreadMessageInputComponent implements OnInit {
     this.clearInput();
     this.tagUserSelector = false;
     this.tagChannelSelector = false;
+    this.updateMessageVariable();
+  }
+
+  async updateMessageVariable() {
+    let value = this.allMessages.length;
+    console.log(value);
+    const messageRef = doc(
+      this.firestore,
+      'Channels',
+      this.currentChannelId,
+      'messages',
+      this.threadId
+    );
+
+    try {
+      await updateDoc(messageRef, {
+        threadCount: value,
+        lastThreadMessage: this.getCurrentTime(),
+      });
+      console.log('Document successfully updated!');
+    } catch (err) {
+      console.error('Error updating document: ', err);
+    }
+  }
+
+  getCurrentTime() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
@@ -349,18 +406,11 @@ export class ThreadMessageInputComponent implements OnInit {
     onSnapshot(q, (list) => {
       this.allUser = [];
       list.forEach((element) => {
-        this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
+        this.allUser.push(
+          this.chatAreaService.setNoteObjectUser(element.data(), element.id)
+        );
       });
     });
-  }
-
-  setNoteObjectUser(obj: any, id: string) {
-    return {
-      email: obj.email || '',
-      image: obj.image || '',
-      name: obj.name || '',
-      uid: obj.uid || '',
-    };
   }
 
   subChannels() {
@@ -369,7 +419,10 @@ export class ThreadMessageInputComponent implements OnInit {
       this.allChannel = [];
       let channel: any;
       list.forEach((element) => {
-        channel = this.setNoteChannel(element.data(), element.id);
+        channel = this.chatAreaService.setNoteChannel(
+          element.data(),
+          element.id
+        );
         this.allChannel.push(channel);
 
         if (channel.id == this.currentChannelId) {
@@ -378,17 +431,6 @@ export class ThreadMessageInputComponent implements OnInit {
         }
       });
     });
-  }
-
-  setNoteChannel(obj: any, id: string) {
-    return {
-      id: id,
-      channelCreator: obj.channelCreator || '',
-      description: obj.description || '',
-      images: obj.images || '',
-      name: obj.name || '',
-      uids: obj.uids || '',
-    };
   }
 
   getUser(uid: any) {
