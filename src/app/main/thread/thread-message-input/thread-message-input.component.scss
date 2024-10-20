@@ -15,7 +15,7 @@
   -moz-box-shadow: none;
   box-shadow: none;
 
-  resize: none; /*remove the resize handle on the bottom right*/
+  resize: none;
   position: relative;
   width: 100%;
   border-radius: 20px 20px 0 0;
@@ -23,8 +23,13 @@
   border-bottom: 0px;
   background: white;
   padding: 20px;
-  height: 65px;
-  box-sizing: border-box; /* Sicherstellen, dass das Padding und der Border zur Breite beitragen */
+  height: 65px; /* Ersetzt height durch min-height für dynamisches Wachstum */
+  box-sizing: border-box;
+
+  /* Textumbruch für lange Wörter */
+  white-space: pre-wrap; /* Zeilenumbruch, auch ohne Leerzeichen */
+  word-break: break-all; /* Lässt Wörter umbrechen */
+
   p {
     position: absolute;
     pointer-events: none;

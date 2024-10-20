@@ -99,7 +99,7 @@
   }
 }
 
-.hoverResive {
+.hoverResiveMobile {
   display: none;
   justify-content: center;
   align-items: center;
@@ -130,7 +130,7 @@
   }
 }
 
-.hoverSend {
+.hoverSendMobile {
   display: none;
   justify-content: center;
   align-items: center;
@@ -163,16 +163,18 @@
 
 .messageTitle {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse !important;
   justify-content: space-between !important;
   width: 100%;
+  height: 24px;
 }
 
 .messageTitleResive {
   display: flex;
   flex-direction: row;
-  justify-content: start !important;
+  justify-content: space-between;
   width: 100%;
+  height: 24px;
 }
 
 .messageInfo {
@@ -201,7 +203,7 @@
 
   &:hover {
     background-color: #f0f1fe;
-    .hoverSend {
+    .hoverSendMobile {
       display: flex !important;
     }
   }
@@ -215,7 +217,7 @@
   align-items: start;
   padding-bottom: 10px;
   &:hover {
-    .hoverResive {
+    .hoverResiveMobile {
       display: flex !important;
     }
     background-color: #f0f1fe;
@@ -491,4 +493,11 @@ button {
   white-space: nowrap; /* Verhindert den Zeilenumbruch */
   overflow: hidden; /* Versteckt den überfließenden Text */
   text-overflow: ellipsis; /* Fügt '...' hinzu, wenn der Text abgeschnitten wird */
+}
+
+.hoverSendMobile,
+.hoverResiveMobile {
+  display: none !important;
+  position: relative;
+  top: -30px;
 }
