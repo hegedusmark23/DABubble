@@ -17,7 +17,7 @@
   </div>
 
   <div class="content" #myDiv>
-    <div *ngFor="let message of allMessagesSortedDate" #messageList ng>
+    <div *ngFor="let message of allMessagesSortedDate" #messageList>
       <div
         *ngIf="message.date && chatAreaService.isItToday(message)"
         class="date"
@@ -269,12 +269,17 @@
                   [innerHTML]="getMessage(message)"
                 ></span>
 
-                <img
+                <div
                   *ngIf="message.fileUrl.length > 0"
-                  class="picture cursor-pointer"
-                  src="{{ message.fileUrl }}"
-                  (click)="setImg(message.fileUrl)"
-                />
+                  class="pictureContainer"
+                >
+                  <img
+                    class="picture cursor-pointer"
+                    src="{{ message.fileUrl }}"
+                    (click)="setImg(message.fileUrl)"
+                  />
+                </div>
+
                 <div class="answers" *ngIf="message.threadCount > 0">
                   <a
                     class="middlePurple cursor-pointer"
