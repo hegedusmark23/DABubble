@@ -43,7 +43,7 @@ export class ChannelUserlistComponent {
     public channelSelectionService: ChannelSelectionService,
     private firestore: Firestore,
     public chatAreaService: ChatAreaService
-  ) {}
+  ) { }
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
@@ -113,21 +113,13 @@ export class ChannelUserlistComponent {
     this.channelInfo.userProfilOpen = true;
     this.channelInfo.activeUserProfil = i;
     this.channelInfo.activeUser =
-      this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][
-        i
-      ];
+      this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][i];
     this.channelInfo.activeEmail =
-      this.channelInfo.AllChannelsEmails[this.channelInfo.currentChannelNumber][
-        i
-      ];
+      this.channelInfo.AllChannelsEmails[this.channelInfo.currentChannelNumber][i];
     this.channelInfo.activeImage =
-      this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][
-        i
-      ];
+      this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][i];
     this.channelInfo.activeUid =
-      this.channelInfo.GlobalChannelUids[this.channelInfo.currentChannelNumber][
-        i
-      ];
+      this.channelInfo.GlobalChannelUids[this.channelInfo.currentChannelNumber][i];
     this.closeDialog();
   }
 }

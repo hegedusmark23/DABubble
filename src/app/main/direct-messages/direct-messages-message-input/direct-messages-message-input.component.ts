@@ -30,7 +30,7 @@ import { DirectMessageSelectionService } from '../../../services/direct-message-
   standalone: true,
   imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './direct-messages-message-input.component.html',
-  styleUrl: './direct-messages-message-input.component.scss',
+  styleUrls: ['./direct-messages-message-input.component.scss','./direct-messages-message-input.component.responsive.scss']
 })
 export class DirectMessagesMessageInputComponent implements OnInit {
   @Component({

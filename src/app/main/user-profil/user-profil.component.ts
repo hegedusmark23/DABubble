@@ -4,6 +4,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { AuthService } from '../../services/auth.service';
 import { DirectMessageSelectionService } from '../../services/direct-message-selection.service';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { ResponsiveService } from '../../services/responsive.service';
 
 @Component({
   selector: 'app-user-profil',
@@ -15,6 +16,7 @@ import { ChannelSelectionService } from '../../services/channel-selection.servic
 export class UserProfilComponent {
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
+  responsiveService = inject(ResponsiveService);
   userOnline = true;
   userEmail = 'udgfuid gi@uhegi.eoig';
   Gast = 'Gast';
@@ -34,7 +36,11 @@ export class UserProfilComponent {
 
   sendMessage() {
     this.updateSelectedUser();
-  }
+    this.responsiveService.isDirectMessageOpen = true;
+    if (window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = false;
+    }
+}
 
   updateSelectedUser() {
     this.channelSelectionService.openDirectMessage();
