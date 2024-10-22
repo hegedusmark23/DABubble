@@ -5,13 +5,31 @@
   [ngClass]="containerClasses"
 >
   <div class="noMessagesContainer" *ngIf="allMessagesSortedDate.length < 1">
-    <div *ngIf="this.currentChannel">
-      <p class="noMessagesTitle"># {{ this.currentChannel.name }}</p>
-      <p>
-        {{ getChannelCreator(this.currentChannel.channelCreatorUid) }}
-        {{ chatAreaService.getDate(this.currentChannel.creationsDate) }}
-        erstellt. Das ist der Anfang der Channels
-        <span>#{{ this.currentChannel.name }}</span>
+    <div *ngIf="this.currentChannel && messageUser != user" class="noMessages">
+      <div class="noMessagesTitleContainer">
+        <img src="{{ getUser(messageUser).image }}" alt="" />
+        <p class="noMessagesTitle">
+          {{ getUser(messageUser).name }}
+        </p>
+      </div>
+      <p class="noMessageDescription">
+        Diese Unterhaltung findet nur zwischen
+        <span class="cursor-pointer userTag" (click)="openUserProfil(messageUser)"
+          >&#64;{{ getUser(messageUser).name }}</span
+        >
+        und dir statt.
+      </p>
+    </div>
+
+    <div *ngIf="this.currentChannel && messageUser == user" class="noMessages">
+      <div class="noMessagesTitleContainer">
+        <img src="{{ getUser(messageUser).image }}" alt="" />
+        <p class="noMessagesTitle">{{ getUser(messageUser).name }} (Du)</p>
+      </div>
+      <p class="noMessageDescription">
+        <span class="yourRoom">Dieser Raum ist nur für dich da.</span> Mache dir Notizen, liste
+        deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du
+        kannst hier auch gerne Dinge mit dir selbst besprechen.
       </p>
     </div>
   </div>

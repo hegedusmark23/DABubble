@@ -305,14 +305,41 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-  div {
-    padding-left: 45px;
-    padding-right: 45px;
-    span {
-      color: #535af1;
-    }
+}
+
+.noMessages {
+  margin: 0 45px;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.noMessageDescription {
+  color: #686868;
+}
+
+.userTag {
+  color: #535af1;
+}
+
+.yourRoom {
+  font-weight: bold;
+}
+
+.noMessagesTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 25px;
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    flex-shrink: 0;
   }
 }
+
 .noMessagesTitle {
   font-size: 24px;
   font-style: normal;
