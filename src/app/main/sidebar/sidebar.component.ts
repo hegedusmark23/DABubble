@@ -2,12 +2,20 @@ import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   HostListener,
   inject,
   OnInit,
 } from '@angular/core';
 import { SidebarService } from '../../services/sidebar.service';
-import { collection, getDocs, Firestore } from '@angular/fire/firestore';
+import {
+  collection,
+  getDocs,
+  Firestore,
+  setDoc,
+  doc,
+  onSnapshot,
+} from '@angular/fire/firestore';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
 import { AuthService } from '../../services/auth.service';
 import { ThreadService } from '../../services/thread.service';
@@ -25,7 +33,7 @@ import { SearchFieldComponent } from '../header/search-field/search-field.compon
     './sidebar-responsive.component.scss',
   ],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit {
   hoveredChannelTitle = false;
   activetedChannelTitle = true;
   activeUserIndex: number | null = null;
@@ -33,19 +41,110 @@ export class SidebarComponent implements OnInit {
   sidebarService = inject(SidebarService);
   authService = inject(AuthService);
   responsiveService = inject(ResponsiveService);
-
+  checkUserOnlineUser = true;
   ngOnInit(): void {
     this.sidebarService.fetchChannels();
     this.sidebarService.fetchUsers();
     this.checkScreenWidth();
   }
 
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.addEventListener(
+      'mousemove',
+      this.setUserOnlineCheck.bind(this)
+    );
+  }
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
     private threadService: ThreadService,
-    public directMessageSelectionService: DirectMessageSelectionService
+    public directMessageSelectionService: DirectMessageSelectionService,
+    private elementRef: ElementRef
   ) {}
+
+  setUserOnlineCheck() {
+    if (this.checkUserOnlineUser) {
+      this.setUserOnline();
+      this.checkUserOnlineUser = false;
+    }
+  }
+  setUserOnline() {
+    if (this.authService.currentUserSignal()) {
+      this.userOnline();
+      this.fetchUsersOnline();
+
+      this.sidebarService.online = true;
+      let time = new Date().getTime();
+      if (this.sidebarService.asd == 0) {
+        setInterval(() => {
+          let newTime = new Date().getTime();
+          if (this.sidebarService.online) {
+            this.sidebarService.asd = newTime - time;
+            this.onlineSince();
+          }
+        }, 3000);
+      }
+    }
+  }
+
+  async userOnline() {
+    if (this.authService.currentUserSignal()?.uId) {
+      const userRef = doc(
+        collection(this.firestore, 'online'),
+        this.authService.currentUserSignal()?.uId
+      );
+      await setDoc(userRef, this.toJSON());
+    }
+  }
+
+  toJSON() {
+    return {
+      online: 'yes',
+      onlineSince: new Date().getTime(),
+      uId: this.authService.currentUserSignal()?.uId,
+    };
+  }
+
+  async onlineSince() {
+    if (this.authService.currentUserSignal()?.uId) {
+      const userRef = doc(
+        collection(this.firestore, 'online'),
+        this.authService.currentUserSignal()?.uId
+      );
+      await setDoc(userRef, this.sinceToJSON());
+    }
+  }
+
+  sinceToJSON() {
+    return {
+      online: 'yes',
+      onlineSince: new Date().getTime(),
+      uId: this.authService.currentUserSignal()?.uId,
+    };
+  }
+
+  async fetchUsersOnline() {
+    const usersCollection = collection(this.firestore, 'online');
+    onSnapshot(
+      usersCollection,
+      (querySnapshot) => {
+        this.sidebarService.onlineUserUidList = [];
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data();
+          if (
+            userData['online'] == 'yes' &&
+            userData['onlineSince'] > new Date().getTime() - 4000
+          ) {
+            //
+            this.sidebarService.onlineUserUidList.push(userData['uId']);
+          }
+        });
+      },
+      (error) => {
+        console.error('Fehler beim Abrufen der Benutzerdaten:', error);
+      }
+    );
+  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -94,7 +193,6 @@ export class SidebarComponent implements OnInit {
         this.responsiveService.isSidebarOpen = false;
       }
       this.sidebarService.activeChannelIndex = i;
-      console.log(this.sidebarService.activeChannelIndex)
     }
   }
 
