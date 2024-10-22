@@ -1,6 +1,11 @@
 <div class="header">
-  <div>
+  <div *ngIf="messageUser && user == messageUser.uid">
     <img class="profilePicture" src="{{ imageUrl }}" />
     {{ userName }}
+  </div>
+
+  <div *ngIf="messageUser && user != messageUser.uid">
+    <img class="profilePicture" src="{{ imageUrl }}" />
+    {{ userName }} (Du)
   </div>
 </div>

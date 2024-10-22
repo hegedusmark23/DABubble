@@ -37,7 +37,7 @@ import { DirectMessage } from '../../../../models/direct-message.class';
 @Component({
   selector: 'app-direct-messages-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './direct-messages-header.component.html',
   styleUrl: './direct-messages-header.component.scss',
 })
@@ -47,6 +47,7 @@ export class DirectMessagesHeaderComponent implements OnInit {
   messageUser: any;
   imageUrl: any;
   userName: any;
+  user: any;
   constructor(
     private firestore: Firestore,
     public directMessageSelectionService: DirectMessageSelectionService
@@ -54,6 +55,11 @@ export class DirectMessagesHeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.subUser();
+    this.setOpenUser();
+  }
+
+  setOpenUser() {
+    this.user = this.authService.currentUserSignal()?.uId;
   }
 
   subUser() {

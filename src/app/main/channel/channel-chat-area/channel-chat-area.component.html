@@ -7,7 +7,7 @@
   <div class="noMessagesContainer" *ngIf="allMessagesSortedDate.length < 1">
     <div *ngIf="this.currentChannel">
       <p class="noMessagesTitle"># {{ this.currentChannel.name }}</p>
-      <p>
+      <p class="noMessagesDescription">
         {{ getChannelCreator(this.currentChannel.channelCreatorUid) }}
         {{ chatAreaService.getDate(this.currentChannel.creationsDate) }}
         erstellt. Das ist der Anfang der Channels

@@ -317,6 +317,7 @@
 
 .noMessageDescription {
   color: #686868;
+  font-size: 20px;
 }
 
 .userTag {
@@ -332,6 +333,8 @@
   flex-direction: row;
   align-items: end;
   gap: 25px;
+  font-size: 24px;
+
   img {
     width: 100px;
     height: 100px;
