@@ -33,6 +33,7 @@ import { AuthService } from '../../../services/auth.service';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
 import { DirectMessageSelectionService } from '../../../services/direct-message-selection.service';
 import { DirectMessage } from '../../../../models/direct-message.class';
+import { SidebarService } from '../../../services/sidebar.service';
 
 @Component({
   selector: 'app-direct-messages-header',
@@ -43,10 +44,12 @@ import { DirectMessage } from '../../../../models/direct-message.class';
 })
 export class DirectMessagesHeaderComponent implements OnInit {
   authService = inject(AuthService);
+  channelInfo = inject(SidebarService);
   allUser: any = [];
   messageUser: any;
   imageUrl: any;
   userName: any;
+  userUid: any;
   user: any;
   constructor(
     private firestore: Firestore,
@@ -88,6 +91,7 @@ export class DirectMessagesHeaderComponent implements OnInit {
       if (element.uid === this.messageUser) {
         this.imageUrl = element.image;
         this.userName = element.name;
+        this.userUid = element.uid;
       }
     }
   }
