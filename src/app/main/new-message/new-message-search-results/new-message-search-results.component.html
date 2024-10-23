@@ -1,7 +1,7 @@
 <div class="contentContainer" id="messageContainer">
   <div *ngFor="let element of allChannelSorted">
     <div class="channelContainer cursor-pointer">
-      <div class="channel" (click)="setChannel(element.uid, 'user', $event)">
+      <div class="channel" (click)="setChannel(element.id, 'channel', $event)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
