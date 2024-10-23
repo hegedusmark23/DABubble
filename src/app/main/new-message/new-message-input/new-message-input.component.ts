@@ -9,10 +9,12 @@ import { CommonModule } from '@angular/common';
 import {
   addDoc,
   collection,
+  doc,
   Firestore,
   limit,
   onSnapshot,
   query,
+  setDoc,
 } from '@angular/fire/firestore';
 import { Message } from '../../../../models/message.class';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +25,7 @@ import { AuthService } from '../../../services/auth.service';
 import { SidebarService } from '../../../services/sidebar.service';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { NewMessageSelectionService } from '../../../services/new-message-selection.service';
+import { DirectMessageSelectionService } from '../../../services/direct-message-selection.service';
 
 @Component({
   selector: 'app-new-message-input',
@@ -76,7 +79,8 @@ export class NewMessageInputComponent {
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
     private fileUploadeService: FileUploadeService,
-    public newMessageSelectionService: NewMessageSelectionService
+    public newMessageSelectionService: NewMessageSelectionService,
+    public directMessageSelectionService: DirectMessageSelectionService
   ) {}
 
   //speichert wercher channel gerade ausgewählt ist
@@ -106,7 +110,6 @@ export class NewMessageInputComponent {
       this.tagChannelSelector = false;
       this.currentChannel = '';
       this.selecteduid = '';
-      console.log(this.currentChannel);
     });
   }
 
@@ -203,12 +206,18 @@ export class NewMessageInputComponent {
     let messageId = '';
     event?.preventDefault();
     this.tagUserSelector = false;
+    this.tagChannelSelector = false;
+
     // Finde das 'contenteditable' Div Element
     const messageTextarea = document.querySelector(
-      '.messageTextareaNewMessage'
+      '.textAreaNewMessage'
     ) as HTMLElement;
 
+    console.log(messageTextarea);
+
     if (messageTextarea) {
+      console.log(messageTextarea);
+
       const children = messageTextarea.childNodes;
       let result = '';
 
@@ -254,37 +263,119 @@ export class NewMessageInputComponent {
     // Aktualisiere die Zeit
     this.updateDateTime();
 
-    // Speichere die Nachricht in der Firestore-Datenbank
-    await addDoc(
-      collection(this.firestore, 'Channels', this.currentChannelId, 'messages'),
-      this.toJSON()
-    )
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-        messageId = docRef.id; // Speichere die ID der Nachricht
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    await addDoc(
-      collection(
-        this.firestore,
-        'Channels',
-        this.currentChannelId,
-        'messages',
-        messageId,
-        'thread'
-      ),
-      this.toJSON()
-    ).catch((err) => {
-      console.error(err);
-    });
+    this.saveMessageOnline();
 
     //input leeren
     this.clearInput();
     this.tagUserSelector = false;
     this.tagChannelSelector = false;
+  }
+
+  saveMessageOnline() {
+    if (this.selectedChannel == 'user') {
+      this.saveDirectMessage();
+      this.channelSelectionService.openDirectMessage();
+      this.directMessageSelectionService.setSelectedChannel(this.selecteduid);
+    } else if (this.selectedChannel == 'channel') {
+      this.saveChannelMessage();
+      this.channelSelectionService.openChannel();
+      this.channelSelectionService.setSelectedChannel(this.selecteduid);
+    } else {
+      console.log('no channel selected');
+    }
+  }
+
+  //erstannt eine nachricht
+  async saveChannelMessage() {
+    console.log('saveChannelMessage');
+    if (this.selectedFile) {
+      await this.saveFile();
+      this.addIMG();
+      this.deleteFile();
+    }
+
+    this.updateDateTime();
+    await addDoc(
+      collection(this.firestore, 'Channels', this.selecteduid, 'messages'),
+      this.toJSON()
+    ).catch((err) => {
+      console.error(err);
+    });
+    this.message.message = '';
+  }
+
+  //erstannt eine nachricht
+  async saveDirectMessage() {
+    console.log('saveDirectMessage');
+    this.user = this.authService.currentUserSignal()?.uId;
+    if (this.selectedFile) {
+      await this.saveFile();
+      this.addIMGDirectMessage();
+      this.deleteFile();
+    }
+
+    this.updateDateTimeDirectMessage();
+    this.directMessage.communicationType = 'send';
+
+    // Generiere die Dokument-ID
+    const messageRef = doc(
+      collection(this.firestore, 'direcmessages', this.user, this.selecteduid)
+    );
+    const messageId = messageRef.id;
+
+    // Speichere die Nachricht mit der generierten ID für den Sender
+    await setDoc(messageRef, this.directMessageToJson()).catch((err) => {
+      console.error(err);
+    });
+
+    this.directMessage.communicationType = 'resive';
+
+    // Speichere die Nachricht mit der gleichen ID für den Empfänger
+    const recipientRef = doc(
+      this.firestore,
+      'direcmessages',
+      this.selecteduid,
+      this.user,
+      messageId
+    );
+    await setDoc(recipientRef, this.directMessageToJson()).catch((err) => {
+      console.error(err);
+    });
+
+    this.message.message = '';
+    this.directMessage.communicationType = '';
+  }
+
+  //gibt die vorhandenen informationen als JSON zurück
+  directMessageToJson() {
+    return {
+      id: this.directMessage.id,
+      uid: this.directMessage.uid,
+      message: this.directMessage.message,
+      weekday: this.directMessage.weekday,
+      year: this.directMessage.year,
+      month: this.directMessage.month,
+      day: this.directMessage.day,
+      hour: this.directMessage.hour,
+      minute: this.directMessage.minute,
+      seconds: this.directMessage.seconds,
+      milliseconds: this.directMessage.milliseconds,
+      fileUrl: this.directMessage.fileUrl,
+      fileName: this.directMessage.fileName,
+      threadCount: this.directMessage.threadCount,
+      thumbsUp: this.directMessage.thumbsUp,
+      thumbsDown: this.directMessage.thumbsDown,
+      rocket: this.directMessage.rocket,
+      nerdFace: this.directMessage.nerdFace,
+      noted: this.directMessage.noted,
+      shushingFace: this.directMessage.shushingFace,
+      communicationType: this.directMessage.communicationType,
+    };
+  }
+
+  addIMGDirectMessage() {
+    this.directMessage.fileUrl = this.FileUrl;
+    this.directMessage.fileName = this.selectedFile?.name;
   }
 
   //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
@@ -296,6 +387,22 @@ export class NewMessageInputComponent {
       );
       this.FileUrl = imageUrl;
     }
+  }
+
+  updateDateTimeDirectMessage(): void {
+    const now = new Date();
+    this.directMessage.weekday = now.toLocaleDateString('de-DE', {
+      weekday: 'long',
+    });
+    this.directMessage.year = now.getFullYear();
+    this.directMessage.month = now.getMonth() + 1; // Monate sind nullbasiert
+    this.directMessage.day = now.getDate();
+    this.directMessage.hour = now.getHours();
+    this.directMessage.minute = now.getMinutes();
+    this.directMessage.seconds = now.getSeconds();
+    this.directMessage.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
+    this.directMessage.uid = this.authService.currentUserSignal()?.uId;
+    this.directMessage.message = this.message.message;
   }
 
   //gibt die vorhandenen informationen als JSON zurück

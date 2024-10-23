@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NewMessageSelectionService } from '../../../services/new-message-selection.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-new-message-search-results',
@@ -15,12 +16,17 @@ export class NewMessageSearchResultsComponent implements OnInit {
   allUserSorted: any[] = [];
   allChannelSorted: any[] = [];
   selectedElement: any;
-  constructor(public newMessageSelectionService: NewMessageSelectionService) {}
+  currentUserId: any;
+  constructor(
+    public newMessageSelectionService: NewMessageSelectionService,
+    public authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.newMessageSelectionService.getAllUserSorted().subscribe((data) => {
-      this.allUserSorted = data;
-    });
+    (this.currentUserId = this.authService.currentUserSignal()?.uId),
+      this.newMessageSelectionService.getAllUserSorted().subscribe((data) => {
+        this.allUserSorted = data;
+      });
     this.newMessageSelectionService.getAllChannelSorted().subscribe((data) => {
       this.allChannelSorted = data;
     });
