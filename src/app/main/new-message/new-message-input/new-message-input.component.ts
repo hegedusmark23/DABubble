@@ -26,6 +26,7 @@ import { SidebarService } from '../../../services/sidebar.service';
 import { DirectMessage } from '../../../../models/direct-message.class';
 import { NewMessageSelectionService } from '../../../services/new-message-selection.service';
 import { DirectMessageSelectionService } from '../../../services/direct-message-selection.service';
+import { ResponsiveService } from '../../../services/responsive.service';
 
 @Component({
   selector: 'app-new-message-input',
@@ -71,7 +72,7 @@ export class NewMessageInputComponent {
   @ViewChild('messageTextareaNewMessage') messageTextareaNewMessage: any;
   channelInfo = inject(SidebarService);
   sidebarService = inject(SidebarService);
-
+  responsiveService = inject(ResponsiveService);
   selectedChannel: any;
   selecteduid: any;
 
@@ -81,7 +82,7 @@ export class NewMessageInputComponent {
     private fileUploadeService: FileUploadeService,
     public newMessageSelectionService: NewMessageSelectionService,
     public directMessageSelectionService: DirectMessageSelectionService
-  ) {}
+  ) { }
 
   //speichert wercher channel gerade ausgewählt ist
   ngOnInit(): void {
@@ -278,6 +279,10 @@ export class NewMessageInputComponent {
       this.directMessageSelectionService.setSelectedChannel(this.selecteduid);
     } else if (this.selectedChannel == 'channel') {
       this.saveChannelMessage();
+      this.responsiveService.isChannelOpen = true;
+      if (window.innerWidth < 1000) {
+        this.responsiveService.isSidebarOpen = false;
+      }
       this.channelSelectionService.openChannel();
       this.channelSelectionService.setSelectedChannel(this.selecteduid);
     } else {

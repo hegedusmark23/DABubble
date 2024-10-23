@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { NewMessageSelectionService } from '../../../services/new-message-selection.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
@@ -17,6 +16,7 @@ export class NewMessageSearchResultsComponent implements OnInit {
   allChannelSorted: any[] = [];
   selectedElement: any;
   currentUserId: any;
+  
   constructor(
     public newMessageSelectionService: NewMessageSelectionService,
     public authService: AuthService
@@ -35,7 +35,7 @@ export class NewMessageSearchResultsComponent implements OnInit {
   setChannel(uid: any, channel: any, event: any) {
     this.newMessageSelectionService.setselecteduid(uid);
     this.newMessageSelectionService.setselectedChannel(channel);
-
+    
     // Entferne die Klasse 'selectedContent' vom zuvor ausgewählten Element
     if (this.selectedElement) {
       this.selectedElement.classList.remove('selectedContent');
