@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   inject,
   OnInit,
@@ -81,7 +82,8 @@ export class NewMessageInputComponent {
     private channelSelectionService: ChannelSelectionService,
     private fileUploadeService: FileUploadeService,
     public newMessageSelectionService: NewMessageSelectionService,
-    public directMessageSelectionService: DirectMessageSelectionService
+    public directMessageSelectionService: DirectMessageSelectionService,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   //speichert wercher channel gerade ausgewählt ist
@@ -99,20 +101,24 @@ export class NewMessageInputComponent {
         this.setSelectectChannel(data);
       }
     });
+    
   }
 
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.clearInput();
-      this.ChannelSelected = 'noChannelSelected';
-      this.allUids = undefined;
-      this.selectedChannel = undefined;
-      this.tagUserSelector = false;
-      this.tagChannelSelector = false;
-      this.currentChannel = '';
-      this.selecteduid = '';
+      // Csak akkor állítsa alaphelyzetbe, ha nem ugyanaz a csatorna
+      if (channel !== this.selectedChannel) {
+        this.clearInput();
+        this.ChannelSelected = 'noChannelSelected';
+        this.allUids = undefined;
+        this.selectedChannel = undefined;
+        this.tagUserSelector = false;
+        this.tagChannelSelector = false;
+        this.currentChannel = '';
+        this.selecteduid = '';
+      }
     });
-  }
+}
 
   setSelectectChannel(uid: any) {
     let loop = setInterval(() => {
@@ -273,22 +279,34 @@ export class NewMessageInputComponent {
   }
 
   saveMessageOnline() {
-    if (this.selectedChannel == 'user') {
-      this.saveDirectMessage();
-      this.channelSelectionService.openDirectMessage();
-      this.directMessageSelectionService.setSelectedChannel(this.selecteduid);
-    } else if (this.selectedChannel == 'channel') {
-      this.saveChannelMessage();
-      this.responsiveService.isChannelOpen = true;
-      if (window.innerWidth < 1000) {
-        this.responsiveService.isSidebarOpen = false;
-      }
-      this.channelSelectionService.openChannel();
-      this.channelSelectionService.setSelectedChannel(this.selecteduid);
+    console.log(this.selectedChannel); // Ellenőrizd, hogy itt már a megfelelő értéket kapja
+
+    if (this.selectedChannel === 'user') {
+        this.saveDirectMessage();
+        this.channelSelectionService.openDirectMessage();
+        this.directMessageSelectionService.setSelectedChannel(this.selecteduid);
+        this.updateSidebarFocus();
+    } else if (this.selectedChannel === 'channel') {
+        this.saveChannelMessage();
+        this.responsiveService.isChannelOpen = true;
+        if (window.innerWidth < 1000) {
+            this.responsiveService.isSidebarOpen = false;
+        }
+        this.channelSelectionService.openChannel();
+        this.channelSelectionService.setSelectedChannel(this.selecteduid);
+        this.updateSidebarFocus();
     } else {
-      console.log('no channel selected');
+        console.log('no channel selected');
     }
+}
+
+updateSidebarFocus() {
+  if (this.channelSelectionService.selectedChannelIndex !== undefined) {
+      this.sidebarService.activeChannelIndex = this.channelSelectionService.selectedChannelIndex;
+      this.sidebarService.currentChannelNumber = this.channelSelectionService.selectedChannelIndex;
+      this.cdRef.detectChanges();
   }
+}
 
   //erstannt eine nachricht
   async saveChannelMessage() {

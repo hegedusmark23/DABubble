@@ -44,10 +44,7 @@ export class SearchFieldComponent {
   async onSearch(event: Event) {
     this.searchTerm = (event.target as HTMLInputElement).value.trim().toLowerCase();
     if (this.searchTerm.length < 3) {
-      this.channels = [];
-      this.users = [];
-      this.messages = [];
-      this.searchService.isSearching = false;
+      this.clearSearch();
       return;
     } if (this.searchTerm) {
       this.channels = await this.searchService.searchChannels(this.searchTerm);
@@ -65,11 +62,15 @@ export class SearchFieldComponent {
       });
       this.searchService.isSearching = true;
     } else {
-      this.channels = [];
-      this.users = [];
-      this.messages = [];
-      this.searchService.isSearching = false;
+      this.clearSearch();
     }
+  }
+
+  clearSearch() {
+    this.channels = [];
+    this.users = [];
+    this.messages = [];
+    this.searchService.isSearching = false;
   }
 
 
