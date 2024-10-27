@@ -1,5 +1,5 @@
 <div class="contentContainer" id="messageContainer">
-  <h1>Kanale:</h1>
+  <h1 class="fs-32 title-mobile">Kanale:</h1>
   <div *ngFor="let element of allChannelSorted; let i = index">
     <div class="channelContainer cursor-pointer">
       <div
@@ -63,7 +63,7 @@
       </div>
     </div>
   </div>
-  <h1>Benutzer:</h1>
+  <h1 class="fs-32 title-mobile">Benutzer:</h1>
   <div *ngFor="let element of allUserSorted; let i = index">
     <div class="userContainer cursor-pointer">
       <div class="user" (click)="setChannel(element.uid, 'user', i, $event)">

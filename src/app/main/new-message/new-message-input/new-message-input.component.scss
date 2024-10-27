@@ -177,3 +177,11 @@ emoji-mart {
   border-radius: 80px;
   margin-right: 10px;
 }
+
+
+@media (max-width: 500px){
+  .content {
+    padding: 40px 10px 20px 10px;
+    width: calc(100% - 20px);
+}
+}
