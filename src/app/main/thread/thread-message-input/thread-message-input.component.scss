@@ -181,3 +181,9 @@ emoji-mart {
   border-radius: 80px;
   margin-right: 10px;
 }
+
+@media (max-width: 1000px) {
+  .content {
+    border-radius: 0;
+  }
+}

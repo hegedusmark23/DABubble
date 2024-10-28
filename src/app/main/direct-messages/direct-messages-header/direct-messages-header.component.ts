@@ -81,6 +81,7 @@ export class DirectMessagesHeaderComponent implements OnInit {
       .getSelectedChannel()
       .subscribe((value) => {
         this.messageUser = value;
+        console.log(this.messageUser && this.user != this.messageUser.uid);
         this.getProfile();
       });
   }

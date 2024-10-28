@@ -45,7 +45,10 @@ import { ChatAreaService } from '../../../services/chat-area.service';
   standalone: true,
   imports: [CommonModule, PickerComponent],
   templateUrl: './thread-chat-area.component.html',
-  styleUrl: './thread-chat-area.component.scss',
+  styleUrls: [
+    './thread-chat-area.component.scss',
+    './thread-chat-area.component.responsive.scss',
+  ],
 })
 export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
   @Input() threadId: any;

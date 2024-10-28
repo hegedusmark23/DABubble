@@ -46,3 +46,9 @@
     font-weight: 400;
   }
 }
+
+@media (max-width: 1000px) {
+  .header {
+    border-radius: 0;
+  }
+}
