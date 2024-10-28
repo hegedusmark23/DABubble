@@ -90,7 +90,6 @@ export class ThreadMessageInputComponent implements OnInit {
   }
 
   subMessages() {
-    console.log('test');
     const q = query(
       collection(
         this.firestore,
@@ -109,7 +108,6 @@ export class ThreadMessageInputComponent implements OnInit {
           this.chatAreaService.setNoteObject(element.data(), element.id)
         );
       });
-      console.log(this.allMessages);
     });
   }
 
@@ -256,7 +254,6 @@ export class ThreadMessageInputComponent implements OnInit {
 
   async updateMessageVariable() {
     let value = this.allMessages.length;
-    console.log(value);
     const messageRef = doc(
       this.firestore,
       'Channels',
@@ -270,10 +267,7 @@ export class ThreadMessageInputComponent implements OnInit {
         threadCount: value,
         lastThreadMessage: this.getCurrentTime(),
       });
-      console.log('Document successfully updated!');
-    } catch (err) {
-      console.error('Error updating document: ', err);
-    }
+    } catch (err) {}
   }
 
   getCurrentTime() {

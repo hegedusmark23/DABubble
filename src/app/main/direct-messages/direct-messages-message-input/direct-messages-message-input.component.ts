@@ -30,7 +30,10 @@ import { DirectMessageSelectionService } from '../../../services/direct-message-
   standalone: true,
   imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './direct-messages-message-input.component.html',
-  styleUrls: ['./direct-messages-message-input.component.scss','./direct-messages-message-input.component.responsive.scss']
+  styleUrls: [
+    './direct-messages-message-input.component.scss',
+    './direct-messages-message-input.component.responsive.scss',
+  ],
 })
 export class DirectMessagesMessageInputComponent implements OnInit {
   @Component({
@@ -235,9 +238,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     messageId = messageRef.id;
 
     await setDoc(messageRef, this.toJSON())
-      .then(() => {
-        console.log('Nachricht für den Sender gespeichert: ', messageId);
-      })
+      .then(() => {})
       .catch((err) => {
         console.error(err);
       });
@@ -252,9 +253,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     );
 
     await setDoc(recipientRef, this.toJSON())
-      .then(() => {
-        console.log('Nachricht für den Empfänger gespeichert: ', messageId);
-      })
+      .then(() => {})
       .catch((err) => {
         console.error(err);
       });
@@ -523,7 +522,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         this.tagUserSelector = false;
       }
     } else {
-      console.log(`Kein ${tagSymbol}-Zeichen gefunden.`);
     }
   }
 

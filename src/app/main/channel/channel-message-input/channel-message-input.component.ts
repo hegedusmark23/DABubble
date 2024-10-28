@@ -27,7 +27,10 @@ import { SidebarService } from '../../../services/sidebar.service';
   standalone: true,
   imports: [CommonModule, FormsModule, PickerComponent],
   templateUrl: './channel-message-input.component.html',
-  styleUrls: ['./channel-message-input.component.scss', './channel-message-input.component.responsive.scss'],
+  styleUrls: [
+    './channel-message-input.component.scss',
+    './channel-message-input.component.responsive.scss',
+  ],
 })
 export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   message = new Message();
@@ -211,7 +214,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
       this.toJSON()
     )
       .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
         messageId = docRef.id; // Speichere die ID der Nachricht
       })
       .catch((err) => {
@@ -496,7 +498,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         this.tagUserSelector = false;
       }
     } else {
-      console.log(`Kein ${tagSymbol}-Zeichen gefunden.`);
     }
   }
 
