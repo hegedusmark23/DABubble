@@ -1,0 +1,1408 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  ChannelHeaderComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/main/channel/channel-header/channel-header.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-channel-header</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                                <code><a href="../components/EditChannelComponent.html" target="_self" >EditChannelComponent</a></code>
+                            <code>CommonModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./channel-header.component.scss,<br>./channel-header-responsiv.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./channel-header.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#channelInfo" >channelInfo</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#chatAreaService" >chatAreaService</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannel" >currentChannel</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannelId" >currentChannelId</a>
+                            </li>
+                            <li>
+                                <a href="#divHover" >divHover</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editChannelService" >editChannelService</a>
+                            </li>
+                            <li>
+                                <a href="#userNumber" >userNumber</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#hover" >hover</a>
+                            </li>
+                            <li>
+                                <a href="#hoverOff" >hoverOff</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openAddUserToChannel" >openAddUserToChannel</a>
+                            </li>
+                            <li>
+                                <a href="#openUserList" >openUserList</a>
+                            </li>
+                            <li>
+                                <a href="#setUserNumberBasedOnImages" >setUserNumberBasedOnImages</a>
+                            </li>
+                            <li>
+                                <a href="#subChannels" >subChannels</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(firestore: Firestore, editChannelService: <a href="../injectables/EditChannelService.html" target="_self">EditChannelService</a>, channelSelectionService: <a href="../injectables/ChannelSelectionService.html" target="_self">ChannelSelectionService</a>, chatAreaService: <a href="../injectables/ChatAreaService.html" target="_self">ChatAreaService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>Firestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>editChannelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EditChannelService.html" target="_self" >EditChannelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>channelSelectionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChannelSelectionService.html" target="_self" >ChannelSelectionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>chatAreaService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChatAreaService.html" target="_self" >ChatAreaService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hover"></a>
+                    <span class="name">
+                        <span ><b>hover</b></span>
+                        <a href="#hover"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hover()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="154"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:154</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sets the hover state to true.</p>
+<ul>
+<li>Updates <code>divHover</code> to true to indicate that the element is being hovered over.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hoverOff"></a>
+                    <span class="name">
+                        <span ><b>hoverOff</b></span>
+                        <a href="#hoverOff"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hoverOff()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="166"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:166</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resets the hover state to false.</p>
+<ul>
+<li>Updates <code>divHover</code> to false to indicate that the element is no longer being hovered over.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="58"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initializes the component by subscribing to the selected channel changes.</p>
+<ul>
+<li>Retrieves the currently selected channel using <code>channelSelectionService</code>.</li>
+<li>Updates <code>currentChannelId</code> with the selected channel.</li>
+<li>Calls <code>subChannels</code> to perform additional setup or subscriptions related to the channel.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openAddUserToChannel"></a>
+                    <span class="name">
+                        <span ><b>openAddUserToChannel</b></span>
+                        <a href="#openAddUserToChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openAddUserToChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="73"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the dialog to add a user to the current channel.</p>
+<ul>
+<li>Sets <code>addUserFromHeaderToChannelOpen</code> to true to display the user addition dialog.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openUserList"></a>
+                    <span class="name">
+                        <span ><b>openUserList</b></span>
+                        <a href="#openUserList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openUserList()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="83"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the user list in the current channel.</p>
+<p> Sets <code>openUserList</code> to true to display the user list interface.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setUserNumberBasedOnImages"></a>
+                    <span class="name">
+                        <span ><b>setUserNumberBasedOnImages</b></span>
+                        <a href="#setUserNumberBasedOnImages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setUserNumberBasedOnImages()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="127"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the user number based on the images in the current channel.</p>
+<ul>
+<li>Checks if <code>AllChannelsImages</code> exists and if <code>currentChannelNumber</code> is defined.</li>
+<li>Retrieves the images for the current channel based on the channel number.</li>
+<li>Sets <code>userNumber</code> to the length of <code>currentChannel.images</code> if images exist; otherwise, sets it to 0.</li>
+<li>If the conditions are not met, <code>userNumber</code> is also set to 0.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subChannels"></a>
+                    <span class="name">
+                        <span ><b>subChannels</b></span>
+                        <a href="#subChannels"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>subChannels()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="99"
+                                    class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Subscribes to the channels collection in Firestore and updates the current channel.</p>
+<ul>
+<li>Queries the <code>Channels</code> collection with a limit of 1000 documents.</li>
+<li>Listens for changes in the channels collection using <code>onSnapshot</code>.</li>
+<li>Iterates through the channel documents, setting the channel data with <code>setNoteChannel</code>.</li>
+<li>Updates <code>currentChannel</code> if the channel ID matches <code>currentChannelId</code>.</li>
+<li>Calls <code>setUserNumberBasedOnImages</code> to update the user number based on images.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelInfo"></a>
+                    <span class="name">
+                        <span ><b>channelInfo</b></span>
+                        <a href="#channelInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SidebarService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="chatAreaService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>chatAreaService</b></span>
+                        <a href="#chatAreaService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/ChatAreaService.html" target="_self" >ChatAreaService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentChannel"></a>
+                    <span class="name">
+                        <span ><b>currentChannel</b></span>
+                        <a href="#currentChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentChannelId"></a>
+                    <span class="name">
+                        <span ><b>currentChannelId</b></span>
+                        <a href="#currentChannelId"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="divHover"></a>
+                    <span class="name">
+                        <span ><b>divHover</b></span>
+                        <a href="#divHover"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editChannelService</b></span>
+                        <a href="#editChannelService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/EditChannelService.html" target="_self" >EditChannelService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userNumber"></a>
+                    <span class="name">
+                        <span ><b>userNumber</b></span>
+                        <a href="#userNumber"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/main/channel/channel-header/channel-header.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, inject } from &#x27;@angular/core&#x27;;
+import { EditChannelComponent } from &#x27;../../edit-channel/edit-channel.component&#x27;;
+import { EditChannelService } from &#x27;../../../services/edit-channel.service&#x27;;
+import { ChannelSelectionService } from &#x27;../../../services/channel-selection.service&#x27;;
+import { SidebarService } from &#x27;../../../services/sidebar.service&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import {
+  Firestore,
+  addDoc,
+  collection,
+  deleteDoc,
+  deleteField,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+} from &#x27;@angular/fire/firestore&#x27;;
+import { ChatAreaService } from &#x27;../../../services/chat-area.service&#x27;;
+
+@Component({
+  selector: &#x27;app-channel-header&#x27;,
+  standalone: true,
+  imports: [EditChannelComponent, CommonModule],
+  templateUrl: &#x27;./channel-header.component.html&#x27;,
+  styleUrls: [
+    &#x27;./channel-header.component.scss&#x27;,
+    &#x27;./channel-header-responsiv.component.scss&#x27;,
+  ],
+})
+export class ChannelHeaderComponent {
+  currentChannelId: any;
+  currentChannel: any;
+  channelInfo &#x3D; inject(SidebarService);
+  userNumber: number &#x3D; 0;
+  divHover &#x3D; false;
+
+  constructor(
+    private firestore: Firestore,
+    public editChannelService: EditChannelService,
+    private channelSelectionService: ChannelSelectionService,
+    public chatAreaService: ChatAreaService
+  ) { }
+
+  /**
+ * Initializes the component by subscribing to the selected channel changes.
+ *
+ * @void
+ *
+ * @description
+ * - Retrieves the currently selected channel using &#x60;channelSelectionService&#x60;.
+ * - Updates &#x60;currentChannelId&#x60; with the selected channel.
+ * - Calls &#x60;subChannels&#x60; to perform additional setup or subscriptions related to the channel.
+ */
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) &#x3D;&gt; {
+      this.currentChannelId &#x3D; channel;
+      this.subChannels();
+    });
+  }
+
+  /**
+ * Opens the dialog to add a user to the current channel.
+ *
+ * @void
+ *
+ * @description
+ * - Sets &#x60;addUserFromHeaderToChannelOpen&#x60; to true to display the user addition dialog.
+ */
+  openAddUserToChannel() {
+    this.channelInfo.addUserFromHeaderToChannelOpen &#x3D; true;
+  }
+
+  /**
+ * Opens the user list in the current channel.
+ *
+ * @description
+ *  Sets &#x60;openUserList&#x60; to true to display the user list interface.
+ */
+  openUserList() {
+    this.channelInfo.openUserList &#x3D; true;
+  }
+
+  /**
+ * Subscribes to the channels collection in Firestore and updates the current channel.
+ *
+ * @void
+ *
+ * @description
+ * - Queries the &#x60;Channels&#x60; collection with a limit of 1000 documents.
+ * - Listens for changes in the channels collection using &#x60;onSnapshot&#x60;.
+ * - Iterates through the channel documents, setting the channel data with &#x60;setNoteChannel&#x60;.
+ * - Updates &#x60;currentChannel&#x60; if the channel ID matches &#x60;currentChannelId&#x60;.
+ * - Calls &#x60;setUserNumberBasedOnImages&#x60; to update the user number based on images.
+ */
+  subChannels() {
+    const q &#x3D; query(collection(this.firestore, &#x27;Channels&#x27;), limit(1000));
+    onSnapshot(q, (list) &#x3D;&gt; {
+      let channel: any;
+      list.forEach((element) &#x3D;&gt; {
+        channel &#x3D; this.chatAreaService.setNoteChannel(
+          element.data(),
+          element.id
+        );
+        if (channel.id &#x3D;&#x3D;&#x3D; this.currentChannelId) {
+          this.currentChannel &#x3D; channel;
+          this.setUserNumberBasedOnImages();
+        }
+      });
+    });
+  }
+
+  /**
+ * Updates the user number based on the images in the current channel.
+ *
+ * @void
+ *
+ * @description
+ * - Checks if &#x60;AllChannelsImages&#x60; exists and if &#x60;currentChannelNumber&#x60; is defined.
+ * - Retrieves the images for the current channel based on the channel number.
+ * - Sets &#x60;userNumber&#x60; to the length of &#x60;currentChannel.images&#x60; if images exist; otherwise, sets it to 0.
+ * - If the conditions are not met, &#x60;userNumber&#x60; is also set to 0.
+ */
+  setUserNumberBasedOnImages() {
+    if (
+      this.channelInfo.AllChannelsImages &amp;&amp;
+      this.channelInfo.currentChannelNumber !&#x3D;&#x3D; undefined
+    ) {
+      const images &#x3D;
+        this.channelInfo.AllChannelsImages[
+        this.channelInfo.currentChannelNumber
+        ];
+      if (images) {
+        this.userNumber &#x3D; this.currentChannel.images.length;
+      } else {
+        this.userNumber &#x3D; 0;
+      }
+    } else {
+      this.userNumber &#x3D; 0;
+    }
+  }
+
+  /**
+ * Sets the hover state to true.
+ *
+ * @void
+ *
+ * @description
+ * - Updates &#x60;divHover&#x60; to true to indicate that the element is being hovered over.
+ */
+  hover() {
+    this.divHover &#x3D; true;
+  }
+
+  /**
+ * Resets the hover state to false.
+ *
+ * @void
+ *
+ * @description
+ * - Updates &#x60;divHover&#x60; to false to indicate that the element is no longer being hovered over.
+ */
+  hoverOff() {
+    this.divHover &#x3D; false;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div *ngIf&#x3D;&quot;this.currentChannel&quot; class&#x3D;&quot;header&quot;&gt;
+  &lt;div class&#x3D;&quot;channel-name-container&quot; (click)&#x3D;&quot;editChannelService.setEditChannel(true, this.currentChannelId)&quot;&gt;
+    &lt;div class&#x3D;&quot;tag&quot;&gt;&lt;/div&gt;
+    &lt;p  class&#x3D;&quot;channel-name fs-20&quot;&gt;
+      {{ this.currentChannel.name }}
+    &lt;/p&gt;
+    &lt;div class&#x3D;&quot;arrow&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class&#x3D;&quot;header-right&quot;&gt;
+    &lt;div class&#x3D;&quot;channelUserContainer&quot;&gt;
+      &lt;div class&#x3D;&quot;channelUser&quot; *ngFor&#x3D;&quot;let userImage of this.currentChannel.images; let i &#x3D; index&quot;&gt;
+      @if(this.currentChannel.images.length &gt; 0 &amp;&amp; i &gt; this.currentChannel.images.length -4){
+          &lt;img src&#x3D;&quot;{{ userImage }}&quot; class&#x3D;&quot;profil-image&quot; /&gt;
+        }
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;user-number-container&quot;&gt;
+        &lt;span class&#x3D;&quot;fs-18 user-number&quot;[ngClass]&#x3D;&quot;{
+      &#x27;user-number-hover&#x27;: divHover}&quot;&gt;{{ userNumber }}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    @if(this.currentChannel.images.length &#x3D;&#x3D; 2){
+      &lt;div class&#x3D;&quot;channelUser-background-two&quot; [ngClass]&#x3D;&quot;{
+        &#x27;channelUser-background-hover&#x27;: divHover}&quot;&gt;&lt;/div&gt;
+      &lt;div class &#x3D;&quot;channelUser-background-top-two&quot; (mouseover)&#x3D;&quot;hover()&quot; (mouseout)&#x3D;&quot;hoverOff()&quot; (click)&#x3D;&quot;openUserList()&quot;&gt;&lt;/div&gt;
+    }
+    @if(this.currentChannel.images.length &#x3D;&#x3D; 1){
+      &lt;div class&#x3D;&quot;channelUser-background-one&quot; [ngClass]&#x3D;&quot;{
+        &#x27;channelUser-background-hover&#x27;: divHover}&quot;&gt;&lt;/div&gt;
+      &lt;div class &#x3D;&quot;channelUser-background-top-one&quot; (mouseover)&#x3D;&quot;hover()&quot; (mouseout)&#x3D;&quot;hoverOff()&quot; (click)&#x3D;&quot;openUserList()&quot;&gt;&lt;/div&gt;
+    }
+    @if(this.currentChannel.images.length &gt; 2) {
+      &lt;div class&#x3D;&quot;channelUser-background&quot; [ngClass]&#x3D;&quot;{
+        &#x27;channelUser-background-hover&#x27;: divHover}&quot;&gt;&lt;/div&gt;
+      &lt;div class &#x3D;&quot;channelUser-background-top&quot; (mouseover)&#x3D;&quot;hover()&quot; (mouseout)&#x3D;&quot;hoverOff()&quot; (click)&#x3D;&quot;openUserList()&quot;&gt;&lt;/div&gt;
+    }
+    &lt;div (click)&#x3D;&quot;openAddUserToChannel()&quot; class&#x3D;&quot;add-user-icon&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div (click)&#x3D;&quot;openUserList()&quot; class&#x3D;&quot;add-user-icon-responsive&quot;&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./channel-header.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 25px 45px;
+  border-radius: 30px 30px 0 0;
+  background-color: white;
+  filter: drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.08));
+}
+
+.header-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.channelUserContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin-right: 20px;
+  border-radius: 30px;
+}
+
+.channelUser-background {
+  width: 153px;
+  height: 55px;
+  border-radius: 100px;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.channelUser-background-two {
+  width: 120px;
+  height: 55px;
+  border-radius: 100px;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.channelUser-background-one {
+  width: 88px;
+  height: 55px;
+  border-radius: 100px;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.channelUser-background-hover {
+  background-color: #ECEEFE;
+}
+
+.channelUser-background-top {
+  width: 153px;
+  height: 55px;
+  border-radius: 100px;
+  opacity: 0;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.channelUser-background-top-two {
+  width: 120px;
+  height: 55px;
+  border-radius: 100px;
+  opacity: 0;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.channelUser-background-top-one {
+  width: 88px;
+  height: 55px;
+  border-radius: 100px;
+  opacity: 0;
+  position: absolute;
+  right: 95px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.channelUser {
+  z-index: 1;
+}
+
+.add-user-icon, .add-user-icon-responsive {
+  cursor: pointer;
+  background-image: url(&#x27;../../../../assets/img/header/person_add.png&#x27;);
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #ECEEFE;
+  background-repeat: no-repeat;
+  background-position: center center;
+  &amp;:hover {
+    background-image: url(&#x27;../../../../assets/img/header/person_add_hover.png&#x27;);
+  }
+}
+
+.add-user-icon-responsive {
+  display: none;
+}
+
+.profil-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  margin-left: -20px;
+  margin-top: 5px;
+  border: 1px solid white;
+}
+
+.userNumber {
+  font-weight: 600;
+  position: absolute;
+  top: 12px;
+  margin-left: 12px;
+  z-index: -5;
+}
+
+.tag {
+  background-image: url(&#x27;../../../../assets/img/sidebar/tag.png&#x27;);
+  width: 24px;
+  height: 24px;
+}
+
+.arrow {
+  background-image: url(&#x27;../../../../assets/img/header/keyboard_arrow_down.png&#x27;);
+  width: 30px;
+  height: 30px;
+}
+
+.channel-name-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 30px;
+  &amp;:hover {
+    background-color: #ECEEFE;
+    .channel-name {
+      color: #535AF1;
+    }
+    .tag {
+      background-image: url(&#x27;../../../../assets/img/sidebar/tag_hover.png&#x27;);
+    }
+    .arrow {
+      background-image: url(&#x27;../../../../assets/img/header/expand_more.png&#x27;);
+    }
+    cursor: pointer;
+  }
+}
+
+.channel-name {
+  font-weight: 700;
+}
+
+.user-number {
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.user-number-hover {
+  color:#535AF1;
+}
+
+.user-number-container {
+  z-index: 1;
+}
+
+
+</code></pre>
+                <p class="comment">
+                    <code>./channel-header-responsiv.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@media(max-width: 1000px){
+    .header-right {
+        display: none;
+      }
+
+      .add-user-icon-responsive {
+        display: block;
+        transform: scale(0.8);
+      }
+
+      .header {
+        padding: 25px;
+        border-radius: 0;
+      }
+        
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div *ngIf="this.currentChannel" class="header">  <div class="channel-name-container" (click)="editChannelService.setEditChannel(true, this.currentChannelId)">    <div class="tag"></div>    <p  class="channel-name fs-20">      {{ this.currentChannel.name }}    </p>    <div class="arrow"></div>  </div>  <div class="header-right">    <div class="channelUserContainer">      <div class="channelUser" *ngFor="let userImage of this.currentChannel.images; let i = index">      @if(this.currentChannel.images.length > 0 && i > this.currentChannel.images.length -4){          <img src="{{ userImage }}" class="profil-image" />        }      </div>      <div class="user-number-container">        <span class="fs-18 user-number"[ngClass]="{      \'user-number-hover\': divHover}">{{ userNumber }}</span>      </div>    </div>    @if(this.currentChannel.images.length == 2){      <div class="channelUser-background-two" [ngClass]="{        \'channelUser-background-hover\': divHover}"></div>      <div class ="channelUser-background-top-two" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>    }    @if(this.currentChannel.images.length == 1){      <div class="channelUser-background-one" [ngClass]="{        \'channelUser-background-hover\': divHover}"></div>      <div class ="channelUser-background-top-one" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>    }    @if(this.currentChannel.images.length > 2) {      <div class="channelUser-background" [ngClass]="{        \'channelUser-background-hover\': divHover}"></div>      <div class ="channelUser-background-top" (mouseover)="hover()" (mouseout)="hoverOff()" (click)="openUserList()"></div>    }    <div (click)="openAddUserToChannel()" class="add-user-icon">    </div>  </div>  <div (click)="openUserList()" class="add-user-icon-responsive">  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddUserToChannelComponent', 'selector': 'app-add-user-to-channel'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatAreaComponent', 'selector': 'app-channel-chat-area'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'ChannelHeaderComponent', 'selector': 'app-channel-header'},{'name': 'ChannelMessageInputComponent', 'selector': 'app-channel-message-input'},{'name': 'ChannelUserlistComponent', 'selector': 'app-channel-userlist'},{'name': 'CreateChannelComponent', 'selector': 'app-create-channel'},{'name': 'DirectMessagesChatAreaComponent', 'selector': 'app-direct-messages-chat-area'},{'name': 'DirectMessagesComponent', 'selector': 'app-direct-messages'},{'name': 'DirectMessagesHeaderComponent', 'selector': 'app-direct-messages-header'},{'name': 'DirectMessagesMessageInputComponent', 'selector': 'app-direct-messages-message-input'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EditProfilComponent', 'selector': 'app-edit-profil'},{'name': 'EditProfilContactformComponent', 'selector': 'app-edit-profil-contactform'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'ImpressumComponent', 'selector': 'app-impressum'},{'name': 'LogInComponent', 'selector': 'app-log-in'},{'name': 'NewMessageComponent', 'selector': 'app-new-message'},{'name': 'NewMessageHeaderComponent', 'selector': 'app-new-message-header'},{'name': 'NewMessageInputComponent', 'selector': 'app-new-message-input'},{'name': 'NewMessageSearchResultsComponent', 'selector': 'app-new-message-search-results'},{'name': 'OpenImgComponent', 'selector': 'app-open-img'},{'name': 'OpenSidebarComponent', 'selector': 'app-open-sidebar'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ProfilOptionsPopupComponent', 'selector': 'app-profil-options-popup'},{'name': 'ReactionListComponent', 'selector': 'app-reaction-list'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchFieldComponent', 'selector': 'app-search-field'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'ThreadChatAreaComponent', 'selector': 'app-thread-chat-area'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'ThreadHeaderComponent', 'selector': 'app-thread-header'},{'name': 'ThreadMessageInputComponent', 'selector': 'app-thread-message-input'},{'name': 'UserProfilComponent', 'selector': 'app-user-profil'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ChannelHeaderComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ChannelHeaderComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

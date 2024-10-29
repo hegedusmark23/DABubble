@@ -1,0 +1,2391 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  AddUserToChannelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/main/add-user-to-channel/add-user-to-channel.component.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-add-user-to-channel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./add-user-to-channel.component.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./add-user-to-channel.component.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#activeUserIndex" >activeUserIndex</a>
+                            </li>
+                            <li>
+                                <a href="#addUserEnabled" >addUserEnabled</a>
+                            </li>
+                            <li>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#filteredEmailList" >filteredEmailList</a>
+                            </li>
+                            <li>
+                                <a href="#filteredImageList" >filteredImageList</a>
+                            </li>
+                            <li>
+                                <a href="#filteredUidList" >filteredUidList</a>
+                            </li>
+                            <li>
+                                <a href="#filteredUserList" >filteredUserList</a>
+                            </li>
+                            <li>
+                                <a href="#hideOrShowSidebar" >hideOrShowSidebar</a>
+                            </li>
+                            <li>
+                                <a href="#result" >result</a>
+                            </li>
+                            <li>
+                                <a href="#searchTerm" >searchTerm</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#addToSelectedUsers" >addToSelectedUsers</a>
+                            </li>
+                            <li>
+                                <a href="#clearFilteredLists" >clearFilteredLists</a>
+                            </li>
+                            <li>
+                                <a href="#clearSelectedLists" >clearSelectedLists</a>
+                            </li>
+                            <li>
+                                <a href="#clearUserAndResetChannel" >clearUserAndResetChannel</a>
+                            </li>
+                            <li>
+                                <a href="#closeDialogAddUser" >closeDialogAddUser</a>
+                            </li>
+                            <li>
+                                <a href="#deleteFilteredUser" >deleteFilteredUser</a>
+                            </li>
+                            <li>
+                                <a href="#deleteUser" >deleteUser</a>
+                            </li>
+                            <li>
+                                <a href="#notCloseDialog" >notCloseDialog</a>
+                            </li>
+                            <li>
+                                <a href="#notCloseDialogAddUser" >notCloseDialogAddUser</a>
+                            </li>
+                            <li>
+                                <a href="#onSearch" >onSearch</a>
+                            </li>
+                            <li>
+                                <a href="#pushToFilteredLists" >pushToFilteredLists</a>
+                            </li>
+                            <li>
+                                <a href="#removeSelectedUserData" >removeSelectedUserData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#saveUsers" >saveUsers</a>
+                            </li>
+                            <li>
+                                <a href="#selectUser" >selectUser</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#updateChannelAndResetUser" >updateChannelAndResetUser</a>
+                            </li>
+                            <li>
+                                <a href="#userActive" >userActive</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(firestore: Firestore, channelSelectionService: <a href="../injectables/ChannelSelectionService.html" target="_self">ChannelSelectionService</a>, threadService: <a href="../injectables/ThreadService.html" target="_self">ThreadService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:28</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>Firestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>channelSelectionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChannelSelectionService.html" target="_self" >ChannelSelectionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>threadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ThreadService.html" target="_self" >ThreadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addToSelectedUsers"></a>
+                    <span class="name">
+                        <span ><b>addToSelectedUsers</b></span>
+                        <a href="#addToSelectedUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>addToSelectedUsers(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, selectedUid: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="126"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a user and their associated data from the filtered lists to the selected lists.</p>
+<ul>
+<li>Adds the user, image, UID, and email at index <code>i</code> from the filtered lists
+to <code>selectedUsers</code>, <code>selectedImages</code>, <code>selectedUids</code>, and <code>selectedEmails</code>.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user in the filtered lists.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>selectedUid</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The unique identifier of the selected user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearFilteredLists"></a>
+                    <span class="name">
+                        <span ><b>clearFilteredLists</b></span>
+                        <a href="#clearFilteredLists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearFilteredLists()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="93"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:93</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Clears all filtered lists by resetting them to empty arrays.</p>
+<ul>
+<li>Resets <code>filteredUserList</code>, <code>filteredImageList</code>, <code>filteredUidList</code>, and <code>filteredEmailList</code> to empty arrays.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearSelectedLists"></a>
+                    <span class="name">
+                        <span ><b>clearSelectedLists</b></span>
+                        <a href="#clearSelectedLists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearSelectedLists()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="162"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:162</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Clears all selected lists by resetting them to empty arrays.</p>
+<ul>
+<li>Resets <code>selectedUsers</code>, <code>selectedImages</code>, <code>selectedUids</code>, and <code>selectedEmails</code> to empty arrays.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clearUserAndResetChannel"></a>
+                    <span class="name">
+                        <span ><b>clearUserAndResetChannel</b></span>
+                        <a href="#clearUserAndResetChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clearUserAndResetChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="273"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:273</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Resets the user selection and updates the current channel state.</p>
+<ul>
+<li>Clears the selected user lists and resets related states.</li>
+<li>Disables the user addition feature.</li>
+<li>Resets the search term to an empty string.</li>
+<li>Closes the user addition dialog.</li>
+<li>Closes the current thread.</li>
+<li>Opens the channel selection interface.</li>
+<li>Updates the selected channel based on the current channel number.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeDialogAddUser"></a>
+                    <span class="name">
+                        <span ><b>closeDialogAddUser</b></span>
+                        <a href="#closeDialogAddUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeDialogAddUser()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="189"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:189</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes the user addition dialog and resets related states.</p>
+<ul>
+<li>Sets <code>addUserFromHeaderToChannelOpen</code> to false to close the dialog.</li>
+<li>Clears the filtered and selected user lists.</li>
+<li>Resets the search term to an empty string.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFilteredUser"></a>
+                    <span class="name">
+                        <span ><b>deleteFilteredUser</b></span>
+                        <a href="#deleteFilteredUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteFilteredUser(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="109"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:109</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a user and their associated data from all filtered lists at a specified index.</p>
+<ul>
+<li>Removes the user, image, UID, and email at index <code>i</code> from <code>filteredUserList</code>, <code>filteredImageList</code>,
+<code>filteredUidList</code>, and <code>filteredEmailList</code>.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user to be removed from the filtered lists.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUser"></a>
+                    <span class="name">
+                        <span ><b>deleteUser</b></span>
+                        <a href="#deleteUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteUser(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="312"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:312</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a user from the selected users and updates the user selection state.</p>
+<ul>
+<li>Calls <code>removeSelectedUserData</code> to remove the user at the specified index.</li>
+<li>Updates <code>addUserEnabled</code> based on whether there are remaining selected users.</li>
+<li>Resets the search term to an empty string.</li>
+<li>Clears the filtered user lists.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user to be deleted.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notCloseDialog"></a>
+                    <span class="name">
+                        <span ><b>notCloseDialog</b></span>
+                        <a href="#notCloseDialog"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notCloseDialog(e: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="177"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:177</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prevents the dialog from closing by stopping event propagation.</p>
+<ul>
+<li>Calls <code>stopPropagation</code> on the event to prevent it from triggering any parent event handlers.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>e</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The event object to stop from propagating.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="notCloseDialogAddUser"></a>
+                    <span class="name">
+                        <span ><b>notCloseDialogAddUser</b></span>
+                        <a href="#notCloseDialogAddUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>notCloseDialogAddUser(e: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="204"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:204</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Prevents the dialog from closing by stopping event propagation.</p>
+<ul>
+<li>Calls <code>stopPropagation</code> on the event to prevent it from triggering any parent event handlers.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>e</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The event object to stop from propagating.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSearch"></a>
+                    <span class="name">
+                        <span ><b>onSearch</b></span>
+                        <a href="#onSearch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSearch(event: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="50"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Filters the user list based on the search input, updating the filtered list with users
+who match the search term and are not already in the current channel or selected.</p>
+<ul>
+<li>Converts the search term to lowercase for case-insensitive matching.</li>
+<li>Clears existing filters.</li>
+<li>Filters users by checking:<ul>
+<li>The user name includes the search term.</li>
+<li>The user is not in the current channel (<code>GlobalChannelUids</code>).</li>
+<li>The user is not in the selected users list (<code>selectedUids</code>).</li>
+</ul>
+</li>
+<li>If no search term is entered, clears all filters.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The input event triggered by the user&#39;s search action.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pushToFilteredLists"></a>
+                    <span class="name">
+                        <span ><b>pushToFilteredLists</b></span>
+                        <a href="#pushToFilteredLists"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>pushToFilteredLists(user: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, index: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, uid: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="80"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Adds a user and associated data (image, UID, and email) to the filtered lists.</p>
+<ul>
+<li>Pushes the user to <code>filteredUserList</code>.</li>
+<li>Adds the user&#39;s image from <code>imageList</code> to <code>filteredImageList</code>.</li>
+<li>Adds the user&#39;s UID to <code>filteredUidList</code>.</li>
+<li>Adds the user&#39;s email from <code>emailList</code> to <code>filteredEmailList</code>.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>user</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The user to add to the filtered list.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>index</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user in the original lists.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>uid</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The unique identifier of the user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="removeSelectedUserData"></a>
+                    <span class="name">
+                        <span ><b>removeSelectedUserData</b></span>
+                        <a href="#removeSelectedUserData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>removeSelectedUserData(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="332"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:332</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Removes the selected user and their associated data from the selected lists.</p>
+<ul>
+<li>Removes the user, image, UID, and email at the specified index <code>i</code>
+from <code>selectedUsers</code>, <code>selectedImages</code>, <code>selectedUids</code>, and <code>selectedEmails</code>.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user to be removed.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveUsers"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>saveUsers</b></span>
+                        <a href="#saveUsers"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveUsers()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="218"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:218</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Saves the selected users to the current channel in Firestore.</p>
+<ul>
+<li>Calculates the channel ID based on the current channel number.</li>
+<li>Retrieves the channel document from Firestore.</li>
+<li>Calls <code>updateChannelAndResetUser</code> to update the channel with the selected users.</li>
+<li>Logs an error message if there is an issue during the data saving process.</li>
+</ul>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectUser"></a>
+                    <span class="name">
+                        <span ><b>selectUser</b></span>
+                        <a href="#selectUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>selectUser(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Selects a user from the filtered lists and adds them to the selected lists if not already selected.</p>
+<ul>
+<li>Checks if the user’s UID is already in <code>selectedUids</code>.</li>
+<li>If not, calls <code>addToSelectedUsers</code> to add the user to the selected lists.</li>
+<li>Calls <code>deleteFilteredUser</code> to remove the user from the filtered lists.</li>
+<li>Clears all filters and resets the search term.</li>
+<li>Updates <code>addUserEnabled</code> to <code>true</code> if there are selected users.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user in the filtered lists.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="updateChannelAndResetUser"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>updateChannelAndResetUser</b></span>
+                        <a href="#updateChannelAndResetUser"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>updateChannelAndResetUser(channelDoc: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, channelRef: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Updates the channel document with the selected users and resets the user selection.</p>
+<ul>
+<li>Checks if the channel document exists; if so, it retrieves the existing data.</li>
+<li>Merges the current users, images, UIDs, and emails from the channel with the selected users.</li>
+<li>Updates the channel document in Firestore with the new data.</li>
+<li>Calls <code>clearUserAndResetChannel</code> to reset the user selection and channel state after updating.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelDoc</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The document snapshot of the channel retrieved from Firestore.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>channelRef</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>A reference to the channel document in Firestore.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="userActive"></a>
+                    <span class="name">
+                        <span ><b>userActive</b></span>
+                        <a href="#userActive"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>userActive(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="296"
+                                    class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:296</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Sets the active user index and displays it in an alert.</p>
+<ul>
+<li>Updates <code>activeUserIndex</code> with the provided index.</li>
+<li>Displays an alert showing the current active user index.</li>
+</ul>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the active user.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activeUserIndex"></a>
+                    <span class="name">
+                        <span ><b>activeUserIndex</b></span>
+                        <a href="#activeUserIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>number | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:21</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="addUserEnabled"></a>
+                    <span class="name">
+                        <span ><b>addUserEnabled</b></span>
+                        <a href="#addUserEnabled"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:28</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:20</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredEmailList"></a>
+                    <span class="name">
+                        <span ><b>filteredEmailList</b></span>
+                        <a href="#filteredEmailList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.hideOrShowSidebar.emailList</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:25</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredImageList"></a>
+                    <span class="name">
+                        <span ><b>filteredImageList</b></span>
+                        <a href="#filteredImageList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.hideOrShowSidebar.imageList</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:23</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredUidList"></a>
+                    <span class="name">
+                        <span ><b>filteredUidList</b></span>
+                        <a href="#filteredUidList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.hideOrShowSidebar.uidList</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:24</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filteredUserList"></a>
+                    <span class="name">
+                        <span ><b>filteredUserList</b></span>
+                        <a href="#filteredUserList"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>string[]</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>this.hideOrShowSidebar.userList</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:22</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hideOrShowSidebar"></a>
+                    <span class="name">
+                        <span ><b>hideOrShowSidebar</b></span>
+                        <a href="#hideOrShowSidebar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SidebarService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:19</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="result"></a>
+                    <span class="name">
+                        <span ><b>result</b></span>
+                        <a href="#result"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:27</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="searchTerm"></a>
+                    <span class="name">
+                        <span ><b>searchTerm</b></span>
+                        <a href="#searchTerm"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/main/add-user-to-channel/add-user-to-channel.component.ts:26</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, inject } from &#x27;@angular/core&#x27;;
+import { SidebarService } from &#x27;../../services/sidebar.service&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
+import { collection, doc, Firestore, getDoc, setDoc, updateDoc } from &#x27;@angular/fire/firestore&#x27;;
+import { ChannelSelectionService } from &#x27;../../services/channel-selection.service&#x27;;
+import { ThreadService } from &#x27;../../services/thread.service&#x27;;
+
+@Component({
+  selector: &#x27;app-add-user-to-channel&#x27;,
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: &#x27;./add-user-to-channel.component.html&#x27;,
+  styleUrl: &#x27;./add-user-to-channel.component.scss&#x27;
+})
+export class AddUserToChannelComponent {
+
+  hideOrShowSidebar &#x3D; inject(SidebarService);
+  authService &#x3D; inject(AuthService);
+  activeUserIndex: number | null &#x3D; null;
+  filteredUserList: string[] &#x3D; this.hideOrShowSidebar.userList;
+  filteredImageList: string[] &#x3D; this.hideOrShowSidebar.imageList;
+  filteredUidList: string[] &#x3D; this.hideOrShowSidebar.uidList;
+  filteredEmailList: string[] &#x3D; this.hideOrShowSidebar.emailList;
+  searchTerm: string &#x3D; &#x27;&#x27;;
+  result &#x3D; &#x27;&#x27;;
+  addUserEnabled &#x3D; false;
+
+  constructor(private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService,
+  ) { }
+
+  /**
+ * Filters the user list based on the search input, updating the filtered list with users 
+ * who match the search term and are not already in the current channel or selected.
+ *
+ * @param {Event} event - The input event triggered by the user&#x27;s search action.
+ *
+ * @description
+ * - Converts the search term to lowercase for case-insensitive matching.
+ * - Clears existing filters.
+ * - Filters users by checking:
+ *   - The user name includes the search term.
+ *   - The user is not in the current channel (&#x60;GlobalChannelUids&#x60;).
+ *   - The user is not in the selected users list (&#x60;selectedUids&#x60;).
+ * - If no search term is entered, clears all filters.
+ */
+  onSearch(event: any) {
+    this.searchTerm &#x3D; event.target.value.toLowerCase();
+    if (this.searchTerm) {
+      this.clearFilteredLists();
+      this.hideOrShowSidebar.userList.forEach((user, index) &#x3D;&gt; {
+        const uid &#x3D; this.hideOrShowSidebar.uidList[index];
+        const isUidInChannel &#x3D; this.hideOrShowSidebar.GlobalChannelUids[this.hideOrShowSidebar.currentChannelNumber].includes(uid);
+        const isUserAlreadySelected &#x3D; this.hideOrShowSidebar.selectedUids.includes(uid);
+        if (user.toLowerCase().includes(this.searchTerm) &amp;&amp; !isUidInChannel &amp;&amp; !isUserAlreadySelected) {
+          this.pushToFilteredLists(user, index, uid);
+        }
+      });
+    } else {
+      this.clearFilteredLists();
+    }
+  }
+
+  /**
+ * Adds a user and associated data (image, UID, and email) to the filtered lists.
+ *
+ * @param {any} user - The user to add to the filtered list.
+ * @param {any} index - The index of the user in the original lists.
+ * @param {any} uid - The unique identifier of the user.
+ *
+ * @description
+ * - Pushes the user to &#x60;filteredUserList&#x60;.
+ * - Adds the user&#x27;s image from &#x60;imageList&#x60; to &#x60;filteredImageList&#x60;.
+ * - Adds the user&#x27;s UID to &#x60;filteredUidList&#x60;.
+ * - Adds the user&#x27;s email from &#x60;emailList&#x60; to &#x60;filteredEmailList&#x60;.
+ */
+  pushToFilteredLists(user: any, index: any, uid: any) {
+    this.filteredUserList.push(user);
+    this.filteredImageList.push(this.hideOrShowSidebar.imageList[index]);
+    this.filteredUidList.push(uid);
+    this.filteredEmailList.push(this.hideOrShowSidebar.emailList[index]);
+  }
+
+  /**
+ * Clears all filtered lists by resetting them to empty arrays.
+ *
+ * @description
+ * - Resets &#x60;filteredUserList&#x60;, &#x60;filteredImageList&#x60;, &#x60;filteredUidList&#x60;, and &#x60;filteredEmailList&#x60; to empty arrays.
+ */
+  clearFilteredLists() {
+    this.filteredUserList &#x3D; [];
+    this.filteredImageList &#x3D; [];
+    this.filteredUidList &#x3D; [];
+    this.filteredEmailList &#x3D; [];
+  }
+
+  /**
+ * Deletes a user and their associated data from all filtered lists at a specified index.
+ *
+ * @param {number} i - The index of the user to be removed from the filtered lists.
+ *
+ * @description
+ * - Removes the user, image, UID, and email at index &#x60;i&#x60; from &#x60;filteredUserList&#x60;, &#x60;filteredImageList&#x60;, 
+ *   &#x60;filteredUidList&#x60;, and &#x60;filteredEmailList&#x60;.
+ */
+  deleteFilteredUser(i: number) {
+    this.filteredUserList.splice(i, 1);
+    this.filteredImageList.splice(i, 1);
+    this.filteredUidList.splice(i, 1);
+    this.filteredEmailList.splice(i, 1);
+  }
+
+  /**
+ * Adds a user and their associated data from the filtered lists to the selected lists.
+ *
+ * @param {number} i - The index of the user in the filtered lists.
+ * @param {any} selectedUid - The unique identifier of the selected user.
+ *
+ * @description
+ * - Adds the user, image, UID, and email at index &#x60;i&#x60; from the filtered lists 
+ *   to &#x60;selectedUsers&#x60;, &#x60;selectedImages&#x60;, &#x60;selectedUids&#x60;, and &#x60;selectedEmails&#x60;.
+ */
+  addToSelectedUsers(i: number, selectedUid: any) {
+    this.hideOrShowSidebar.selectedUsers.push(this.filteredUserList[i]);
+    this.hideOrShowSidebar.selectedImages.push(this.filteredImageList[i]);
+    this.hideOrShowSidebar.selectedUids.push(selectedUid);
+    this.hideOrShowSidebar.selectedEmails.push(this.filteredEmailList[i]);
+  }
+
+  /**
+ * Selects a user from the filtered lists and adds them to the selected lists if not already selected.
+ *
+ * @param {number} i - The index of the user in the filtered lists.
+ *
+ * @description
+ * - Checks if the user’s UID is already in &#x60;selectedUids&#x60;.
+ * - If not, calls &#x60;addToSelectedUsers&#x60; to add the user to the selected lists.
+ * - Calls &#x60;deleteFilteredUser&#x60; to remove the user from the filtered lists.
+ * - Clears all filters and resets the search term.
+ * - Updates &#x60;addUserEnabled&#x60; to &#x60;true&#x60; if there are selected users.
+ */
+  selectUser(i: number) {
+    const selectedUid &#x3D; this.filteredUidList[i];
+    if (!this.hideOrShowSidebar.selectedUids.includes(selectedUid)) {
+      this.addToSelectedUsers(i, selectedUid)
+      this.deleteFilteredUser(i);
+      this.clearFilteredLists();
+      this.searchTerm &#x3D; &#x27;&#x27;;
+    }
+    this.addUserEnabled &#x3D; this.hideOrShowSidebar.selectedUsers.length &gt; 0;
+  }
+
+  /**
+ * Clears all selected lists by resetting them to empty arrays.
+ *
+ * @description
+ * - Resets &#x60;selectedUsers&#x60;, &#x60;selectedImages&#x60;, &#x60;selectedUids&#x60;, and &#x60;selectedEmails&#x60; to empty arrays.
+ */
+  clearSelectedLists() {
+    this.hideOrShowSidebar.selectedUsers &#x3D; [];
+    this.hideOrShowSidebar.selectedImages &#x3D; [];
+    this.hideOrShowSidebar.selectedUids &#x3D; [];
+    this.hideOrShowSidebar.selectedEmails &#x3D; [];
+  }
+
+  /**
+   * Prevents the dialog from closing by stopping event propagation.
+   *
+   * @param {Event} e - The event object to stop from propagating.
+   *
+   * @description
+   * - Calls &#x60;stopPropagation&#x60; on the event to prevent it from triggering any parent event handlers.
+   */
+  notCloseDialog(e: any) {
+    e.stopPropagation(e);
+  }
+
+  /**
+ * Closes the user addition dialog and resets related states.
+ *
+ * @description
+ * - Sets &#x60;addUserFromHeaderToChannelOpen&#x60; to false to close the dialog.
+ * - Clears the filtered and selected user lists.
+ * - Resets the search term to an empty string.
+ */
+  closeDialogAddUser() {
+    this.hideOrShowSidebar.addUserFromHeaderToChannelOpen &#x3D; false;
+    this.clearFilteredLists();
+    this.clearSelectedLists();
+    this.searchTerm &#x3D; &#x27;&#x27;;
+  }
+
+  /**
+   * Prevents the dialog from closing by stopping event propagation.
+   *
+   * @param {Event} e - The event object to stop from propagating.
+   *
+   * @description
+   * - Calls &#x60;stopPropagation&#x60; on the event to prevent it from triggering any parent event handlers.
+   */
+  notCloseDialogAddUser(e: any) {
+    e.stopPropagation(e);
+  }
+
+  /**
+ * Saves the selected users to the current channel in Firestore.
+ *
+ * @async
+ * @description
+ * - Calculates the channel ID based on the current channel number.
+ * - Retrieves the channel document from Firestore.
+ * - Calls &#x60;updateChannelAndResetUser&#x60; to update the channel with the selected users.
+ * - Logs an error message if there is an issue during the data saving process.
+ */
+  async saveUsers() {
+    const totalChannels &#x3D; this.hideOrShowSidebar.AllChannelsIds.length;
+    const realChannelIndex &#x3D; totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
+    const channelId &#x3D; this.hideOrShowSidebar.AllChannelsIds[realChannelIndex];
+    const channelRef &#x3D; doc(collection(this.firestore, &#x27;Channels&#x27;), channelId);
+    try {
+      const channelDoc &#x3D; await getDoc(channelRef);
+      this.updateChannelAndResetUser(channelDoc, channelRef);
+    } catch (error) {
+      console.error(&#x27;Fehler beim Speichern der Daten:&#x27;, error);
+    }
+  }
+
+  /**
+ * Updates the channel document with the selected users and resets the user selection.
+ *
+ * @async
+ * @param {any} channelDoc - The document snapshot of the channel retrieved from Firestore.
+ * @param {any} channelRef - A reference to the channel document in Firestore.
+ *
+ * @description
+ * - Checks if the channel document exists; if so, it retrieves the existing data.
+ * - Merges the current users, images, UIDs, and emails from the channel with the selected users.
+ * - Updates the channel document in Firestore with the new data.
+ * - Calls &#x60;clearUserAndResetChannel&#x60; to reset the user selection and channel state after updating.
+ */
+  async updateChannelAndResetUser(channelDoc: any, channelRef: any) {
+    if (channelDoc.exists()) {
+      const channelData &#x3D; channelDoc.data();
+      const updatedUsers &#x3D; [...(channelData[&#x27;users&#x27;] || []), ...this.hideOrShowSidebar.selectedUsers];
+      const updatedImages &#x3D; [...(channelData[&#x27;images&#x27;] || []), ...this.hideOrShowSidebar.selectedImages];
+      const updatedUids &#x3D; [...(channelData[&#x27;uids&#x27;] || []), ...this.hideOrShowSidebar.selectedUids];
+      const updatedEmails &#x3D; [...(channelData[&#x27;emails&#x27;] || []), ...this.hideOrShowSidebar.selectedEmails];
+      await updateDoc(channelRef, {
+        users: updatedUsers,
+        images: updatedImages,
+        uids: updatedUids,
+        emails: updatedEmails
+      });
+      this.clearUserAndResetChannel();
+    }
+  }
+
+  /**
+ * Resets the user selection and updates the current channel state.
+ *
+ * @description
+ * - Clears the selected user lists and resets related states.
+ * - Disables the user addition feature.
+ * - Resets the search term to an empty string.
+ * - Closes the user addition dialog.
+ * - Closes the current thread.
+ * - Opens the channel selection interface.
+ * - Updates the selected channel based on the current channel number.
+ */
+  clearUserAndResetChannel() {
+    this.clearSelectedLists();
+    this.addUserEnabled &#x3D; false;
+    this.searchTerm &#x3D; &#x27;&#x27;;
+    this.closeDialogAddUser();
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    const totalChannels &#x3D; this.hideOrShowSidebar.AllChannelsIds.length;
+    const realChannelIndex &#x3D; totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
+    this.channelSelectionService.setSelectedChannel(
+      this.hideOrShowSidebar.AllChannelsIds[realChannelIndex]
+    );
+  }
+
+  /**
+ * Sets the active user index and displays it in an alert.
+ *
+ * @param {number} i - The index of the active user.
+ *
+ * @description
+ * - Updates &#x60;activeUserIndex&#x60; with the provided index.
+ * - Displays an alert showing the current active user index.
+ */
+  userActive(i: number) {
+    this.activeUserIndex &#x3D; i;
+    alert(this.activeUserIndex);
+  }
+
+  /**
+ * Deletes a user from the selected users and updates the user selection state.
+ *
+ * @param {number} i - The index of the user to be deleted.
+ *
+ * @description
+ * - Calls &#x60;removeSelectedUserData&#x60; to remove the user at the specified index.
+ * - Updates &#x60;addUserEnabled&#x60; based on whether there are remaining selected users.
+ * - Resets the search term to an empty string.
+ * - Clears the filtered user lists.
+ */
+  deleteUser(i: number) {
+    this.removeSelectedUserData(i);
+    if (this.hideOrShowSidebar.selectedUsers.length &gt; 0) {
+      this.addUserEnabled &#x3D; true;
+    } else {
+      this.addUserEnabled &#x3D; false;
+    }
+    this.searchTerm &#x3D; &#x27;&#x27;;
+    this.clearFilteredLists();
+  }
+
+  /**
+ * Removes the selected user and their associated data from the selected lists.
+ *
+ * @param {number} i - The index of the user to be removed.
+ *
+ * @description
+ * - Removes the user, image, UID, and email at the specified index &#x60;i&#x60; 
+ *   from &#x60;selectedUsers&#x60;, &#x60;selectedImages&#x60;, &#x60;selectedUids&#x60;, and &#x60;selectedEmails&#x60;.
+ */
+  removeSelectedUserData(i: number) {
+    this.hideOrShowSidebar.selectedUsers.splice(i, 1);
+    this.hideOrShowSidebar.selectedImages.splice(i, 1);
+    this.hideOrShowSidebar.selectedUids.splice(i, 1);
+    this.hideOrShowSidebar.selectedEmails.splice(i, 1);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;add-user-to-channel-container&quot; (click)&#x3D;&quot;closeDialogAddUser()&quot;
+    [ngClass]&#x3D;&quot;{&#x27;display-flex&#x27;: hideOrShowSidebar.addUserFromHeaderToChannelOpen, &#x27;display-none&#x27;: !hideOrShowSidebar.addUserFromHeaderToChannelOpen }&quot;&gt;
+    &lt;div class&#x3D;&quot;add-user-to-channel-dialog&quot; (click)&#x3D;&quot;notCloseDialogAddUser($event)&quot;&gt;
+        &lt;div class&#x3D;&quot;dialog-title-container-addUser&quot;&gt;
+            &lt;span class&#x3D;&quot;fs-24 dialog-title&quot;&gt;Leute hinzufügen&lt;/span&gt;
+            &lt;div class&#x3D;&quot;close-button&quot; (click)&#x3D;&quot;closeDialogAddUser()&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;select-user-group-container&quot;&gt;
+            &lt;div class&#x3D;&quot;select-user-group&quot;&gt;
+                &lt;img class&#x3D;&quot;tag&quot; src&#x3D;&quot;../../../assets/img/sidebar/tag_hover.png&quot;&gt;
+                &lt;span class&#x3D;&quot;channel-name fs-18&quot;&gt;{{ this.hideOrShowSidebar.AllChannels[this.hideOrShowSidebar.AllChannels.length - 1 - this.hideOrShowSidebar.currentChannelNumber] }}&lt;/span&gt;
+
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+                &lt;div class&#x3D;&quot;input-hidden&quot;&gt;
+                    &lt;div *ngFor&#x3D;&quot;let selectedUser of hideOrShowSidebar.selectedUsers; let i &#x3D; index&quot; class&#x3D;&quot;selected-user&quot;&gt;
+                        &lt;div&gt;
+                            &lt;img src&#x3D;&quot;{{hideOrShowSidebar.selectedImages[i]}}&quot; class&#x3D;&quot;selected-img&quot;&gt;
+                        &lt;/div&gt;
+                        &lt;span&gt;{{ selectedUser }}&lt;/span&gt;
+                        &lt;div (click)&#x3D;&quot;deleteUser(i)&quot; class&#x3D;&quot;close-button&quot;&gt;&lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div&gt;
+                        &lt;input type&#x3D;&quot;text&quot; class&#x3D;&quot;input-field-add-user-to-channel&quot; id&#x3D;&quot;name&quot; name&#x3D;&quot;name&quot; placeholder&#x3D;&quot;Name eingeben&quot;
+                        (input)&#x3D;&quot;onSearch($event)&quot; [(ngModel)]&#x3D;&quot;searchTerm&quot;&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;button-container-addUser&quot;&gt;
+                &lt;div class&#x3D;&quot;userList&quot; (click)&#x3D;&quot;notCloseDialog($event)&quot;&gt;
+                    &lt;div *ngFor&#x3D;&quot;let user of filteredUserList; let i &#x3D; index&quot; class&#x3D;&quot;user&quot; (click)&#x3D;&quot;selectUser(i)&quot;&gt;
+                        &lt;img class&#x3D;&quot;profil-image&quot; [src]&#x3D;&quot;filteredImageList[i]&quot;&gt;
+                        @if(authService.currentUserSignal()?.uId &#x3D;&#x3D; filteredUidList[i] || this.hideOrShowSidebar.onlineUserUidList.includes(filteredUidList[i])){
+                            &lt;img class&#x3D;&quot;online-icon&quot; src&#x3D;&quot;../../../assets/img/sidebar/Online.png&quot; /&gt;
+                          }@else {
+                            &lt;img class&#x3D;&quot;online-icon&quot; src&#x3D;&quot;../../../assets/img/sidebar/Offline.png&quot; /&gt;
+                          }
+                        &lt;span&gt;{{ user }}&lt;/span&gt;
+                      &lt;/div&gt;
+                &lt;/div&gt;
+                @if(this.addUserEnabled){
+                    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;save&quot; (click)&#x3D;&quot;saveUsers()&quot;&gt;&lt;span class&#x3D;&quot;fs-18&quot;&gt;Hinzufügen&lt;/span&gt;&lt;/button&gt;
+                }@else{
+                    &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;disabled&quot;&gt;&lt;span class&#x3D;&quot;fs-18&quot;&gt;Hinzufügen&lt;/span&gt;&lt;/button&gt;
+                }
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="add-user-to-channel-container" (click)="closeDialogAddUser()"    [ngClass]="{\'display-flex\': hideOrShowSidebar.addUserFromHeaderToChannelOpen, \'display-none\': !hideOrShowSidebar.addUserFromHeaderToChannelOpen }">    <div class="add-user-to-channel-dialog" (click)="notCloseDialogAddUser($event)">        <div class="dialog-title-container-addUser">            <span class="fs-24 dialog-title">Leute hinzufügen</span>            <div class="close-button" (click)="closeDialogAddUser()"></div>        </div>        <div class="select-user-group-container">            <div class="select-user-group">                <img class="tag" src="../../../assets/img/sidebar/tag_hover.png">                <span class="channel-name fs-18">{{ this.hideOrShowSidebar.AllChannels[this.hideOrShowSidebar.AllChannels.length - 1 - this.hideOrShowSidebar.currentChannelNumber] }}</span>            </div>        </div>        <div>                <div class="input-hidden">                    <div *ngFor="let selectedUser of hideOrShowSidebar.selectedUsers; let i = index" class="selected-user">                        <div>                            <img src="{{hideOrShowSidebar.selectedImages[i]}}" class="selected-img">                        </div>                        <span>{{ selectedUser }}</span>                        <div (click)="deleteUser(i)" class="close-button"></div>                    </div>                    <div>                        <input type="text" class="input-field-add-user-to-channel" id="name" name="name" placeholder="Name eingeben"                        (input)="onSearch($event)" [(ngModel)]="searchTerm">                    </div>                </div>        </div>        <div class="button-container-addUser">                <div class="userList" (click)="notCloseDialog($event)">                    <div *ngFor="let user of filteredUserList; let i = index" class="user" (click)="selectUser(i)">                        <img class="profil-image" [src]="filteredImageList[i]">                        @if(authService.currentUserSignal()?.uId == filteredUidList[i] || this.hideOrShowSidebar.onlineUserUidList.includes(filteredUidList[i])){                            <img class="online-icon" src="../../../assets/img/sidebar/Online.png" />                          }@else {                            <img class="online-icon" src="../../../assets/img/sidebar/Offline.png" />                          }                        <span>{{ user }}</span>                      </div>                </div>                @if(this.addUserEnabled){                    <button type="submit" class="save" (click)="saveUsers()"><span class="fs-18">Hinzufügen</span></button>                }@else{                    <button type="submit" class="disabled"><span class="fs-18">Hinzufügen</span></button>                }        </div>    </div></div></div>'
+    var COMPONENTS = [{'name': 'AddUserToChannelComponent', 'selector': 'app-add-user-to-channel'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatAreaComponent', 'selector': 'app-channel-chat-area'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'ChannelHeaderComponent', 'selector': 'app-channel-header'},{'name': 'ChannelMessageInputComponent', 'selector': 'app-channel-message-input'},{'name': 'ChannelUserlistComponent', 'selector': 'app-channel-userlist'},{'name': 'CreateChannelComponent', 'selector': 'app-create-channel'},{'name': 'DirectMessagesChatAreaComponent', 'selector': 'app-direct-messages-chat-area'},{'name': 'DirectMessagesComponent', 'selector': 'app-direct-messages'},{'name': 'DirectMessagesHeaderComponent', 'selector': 'app-direct-messages-header'},{'name': 'DirectMessagesMessageInputComponent', 'selector': 'app-direct-messages-message-input'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EditProfilComponent', 'selector': 'app-edit-profil'},{'name': 'EditProfilContactformComponent', 'selector': 'app-edit-profil-contactform'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'ImpressumComponent', 'selector': 'app-impressum'},{'name': 'LogInComponent', 'selector': 'app-log-in'},{'name': 'NewMessageComponent', 'selector': 'app-new-message'},{'name': 'NewMessageHeaderComponent', 'selector': 'app-new-message-header'},{'name': 'NewMessageInputComponent', 'selector': 'app-new-message-input'},{'name': 'NewMessageSearchResultsComponent', 'selector': 'app-new-message-search-results'},{'name': 'OpenImgComponent', 'selector': 'app-open-img'},{'name': 'OpenSidebarComponent', 'selector': 'app-open-sidebar'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ProfilOptionsPopupComponent', 'selector': 'app-profil-options-popup'},{'name': 'ReactionListComponent', 'selector': 'app-reaction-list'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchFieldComponent', 'selector': 'app-search-field'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'ThreadChatAreaComponent', 'selector': 'app-thread-chat-area'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'ThreadHeaderComponent', 'selector': 'app-thread-header'},{'name': 'ThreadMessageInputComponent', 'selector': 'app-thread-message-input'},{'name': 'UserProfilComponent', 'selector': 'app-user-profil'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AddUserToChannelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AddUserToChannelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

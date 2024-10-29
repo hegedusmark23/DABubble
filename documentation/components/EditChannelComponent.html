@@ -1,0 +1,2751 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dabubble documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dabubble documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  EditChannelComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/main/edit-channel/edit-channel.component.ts</code>
+</p>
+
+
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                <code>OnInit</code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-edit-channel</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>CommonModule</code>
+                            <code>FormsModule</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./edit-channel.component.scss,<br>./edit-channel-responsive.component.scss</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./edit-channel.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#authService" >authService</a>
+                            </li>
+                            <li>
+                                <a href="#channel" >channel</a>
+                            </li>
+                            <li>
+                                <a href="#channelDescription" >channelDescription</a>
+                            </li>
+                            <li>
+                                <a href="#channelInfo" >channelInfo</a>
+                            </li>
+                            <li>
+                                <a href="#channelName" >channelName</a>
+                            </li>
+                            <li>
+                                <a href="#currentChannel" >currentChannel</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelDescriptionOpen" >editChannelDescriptionOpen</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelNameOpen" >editChannelNameOpen</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#editChannelService" >editChannelService</a>
+                            </li>
+                            <li>
+                                <a href="#selectetChannelData" >selectetChannelData</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#abandon" >abandon</a>
+                            </li>
+                            <li>
+                                <a href="#closeChannelDescriptionEdit" >closeChannelDescriptionEdit</a>
+                            </li>
+                            <li>
+                                <a href="#closeChannelEditor" >closeChannelEditor</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#deleteUserFromChannel" >deleteUserFromChannel</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelDescription" >editChannelDescription</a>
+                            </li>
+                            <li>
+                                <a href="#editChannelName" >editChannelName</a>
+                            </li>
+                            <li>
+                                <a href="#getSelectedChannel" >getSelectedChannel</a>
+                            </li>
+                            <li>
+                                <a href="#isInputValid" >isInputValid</a>
+                            </li>
+                            <li>
+                                <a href="#navigateToPreviousChannel" >navigateToPreviousChannel</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit" >ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#openTheNextChannel" >openTheNextChannel</a>
+                            </li>
+                            <li>
+                                <a href="#openUserProfil" >openUserProfil</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#saveChannelDescription" >saveChannelDescription</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Async</span>
+                                <a href="#saveChannelName" >saveChannelName</a>
+                            </li>
+                            <li>
+                                <a href="#setNoteChannel" >setNoteChannel</a>
+                            </li>
+                            <li>
+                                <a href="#subMessages" >subMessages</a>
+                            </li>
+                            <li>
+                                <a href="#toJSON" >toJSON</a>
+                            </li>
+                            <li>
+                                <a href="#toJSONDescription" >toJSONDescription</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(editChannelService: <a href="../injectables/EditChannelService.html" target="_self">EditChannelService</a>, firestore: Firestore, channelSelectionService: <a href="../injectables/ChannelSelectionService.html" target="_self">ChannelSelectionService</a>, threadService: <a href="../injectables/ThreadService.html" target="_self">ThreadService</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:39</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>editChannelService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/EditChannelService.html" target="_self" >EditChannelService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>firestore</td>
+                                                  
+                                                        <td>
+                                                                    <code>Firestore</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>channelSelectionService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ChannelSelectionService.html" target="_self" >ChannelSelectionService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>threadService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/ThreadService.html" target="_self" >ThreadService</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="abandon"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>abandon</b></span>
+                        <a href="#abandon"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>abandon()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="187"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:187</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Checks if the current user is a member of the selected channel, and if so, removes them from the channel.</p>
+<p>This function retrieves all channel documents from Firestore, and for each document, it checks
+if the channel ID matches the selected channel ID. If a match is found, the function checks if
+the current user is a member of that channel by locating their UID in the channel&#39;s <code>uids</code> array.
+If the user is a member, they are removed from the channel; otherwise, an alert notifies
+that the user is not a member.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeChannelDescriptionEdit"></a>
+                    <span class="name">
+                        <span ><b>closeChannelDescriptionEdit</b></span>
+                        <a href="#closeChannelDescriptionEdit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeChannelDescriptionEdit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="322"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:322</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes the channel description editor and resets the description field.</p>
+<p>This method clears the current channel description and updates the state
+to indicate that the channel description editor is closed. It also
+ensures that the current thread is closed and the correct channel is
+opened in the channel selection service.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="closeChannelEditor"></a>
+                    <span class="name">
+                        <span ><b>closeChannelEditor</b></span>
+                        <a href="#closeChannelEditor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>closeChannelEditor()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="287"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:287</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes the channel editor UI and resets relevant properties.</p>
+<p>This function resets the <code>channelName</code> property to an empty string and sets
+<code>editChannelNameOpen</code> to false, effectively closing the channel editor UI.
+It also invokes the <code>closeThread()</code> method from the <code>threadService</code> to close
+any active threads and reopens the current channel using the
+<code>openChannel()</code> method from the <code>channelSelectionService</code>. Finally, it
+updates the selected channel to reflect the current channel in the channel
+info by calling <code>setSelectedChannel()</code> with the appropriate channel ID.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteUserFromChannel"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>deleteUserFromChannel</b></span>
+                        <a href="#deleteUserFromChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>deleteUserFromChannel(channelData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, userNumber: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, docSnapshot: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="159"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:159</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Deletes a user from the specified channel data and updates the Firestore document.</p>
+<p>This function removes the user data from the provided <code>channelData</code> arrays at the given
+<code>userNumber</code> index, then updates the Firestore document with the modified data.
+After updating, it navigates to the previous channel.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>channelData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The current data of the channel, including user lists.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>userNumber</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user to delete in the channel data arrays.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>docSnapshot</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The Firestore document snapshot containing the channel ID.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelDescription"></a>
+                    <span class="name">
+                        <span ><b>editChannelDescription</b></span>
+                        <a href="#editChannelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editChannelDescription()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="244"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:244</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the channel description editing interface.</p>
+<p>This function sets the <code>editChannelDescriptionOpen</code> property to <code>true</code>, indicating
+that the editing UI for the channel description should be displayed. This is typically
+called when the user wishes to change the description of the channel.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelName"></a>
+                    <span class="name">
+                        <span ><b>editChannelName</b></span>
+                        <a href="#editChannelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editChannelName()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="233"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:233</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the channel name editing interface.</p>
+<p>This function sets the <code>editChannelNameOpen</code> property to <code>true</code>, indicating
+that the editing UI for the channel name should be displayed. This is typically
+called when the user wishes to change the name of the channel.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getSelectedChannel"></a>
+                    <span class="name">
+                        <span ><b>getSelectedChannel</b></span>
+                        <a href="#getSelectedChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getSelectedChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="103"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:103</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Finds and sets the currently selected channel data.</p>
+<p>Iterates through the channel list to locate the channel that matches
+the current channel ID, and assigns it to <code>selectetChannelData</code>.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isInputValid"></a>
+                    <span class="name">
+                        <span ><b>isInputValid</b></span>
+                        <a href="#isInputValid"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isInputValid()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:120</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Validates the channel name input.</p>
+<p>Checks if the <code>channelName</code> has at least 3 characters to ensure
+it meets the minimum length requirement.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                <p><code>true</code> if the input is valid, otherwise <code>false</code>.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="navigateToPreviousChannel"></a>
+                    <span class="name">
+                        <span ><b>navigateToPreviousChannel</b></span>
+                        <a href="#navigateToPreviousChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>navigateToPreviousChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="131"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Navigates to the previous channel in the list.</p>
+<p>This function resets relevant services and sets the selected channel
+to the previous channel in the list by calculating the reverse index
+of the current channel. It then updates channel and user information.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <span ><b>ngOnInit</b></span>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="53"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:53</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Initializes the component by subscribing to the selected channel.
+Logs the selected channel to the console and sets it as the current channel,
+then calls <code>subMessages()</code> to subscribe to messages within the selected channel.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openTheNextChannel"></a>
+                    <span class="name">
+                        <span ><b>openTheNextChannel</b></span>
+                        <a href="#openTheNextChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openTheNextChannel()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="214"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:214</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the next channel in the list by incrementing the current channel index.</p>
+<p>This function checks if the current channel number is less than the total number
+of channels minus one. If it is, the function increments the current channel number
+by one to switch to the next channel. If the current channel number is at the last
+channel, it wraps around and resets the current channel number to zero, thereby
+cycling back to the first channel in the list.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openUserProfil"></a>
+                    <span class="name">
+                        <span ><b>openUserProfil</b></span>
+                        <a href="#openUserProfil"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openUserProfil(i: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="385"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:385</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Opens the user profile for the selected user.</p>
+<p>This method updates the channel information to display the
+profile of a user identified by the index <code>i</code>. It sets the
+profile view to open and stores the relevant user details
+such as active user, email, image, and UID based on the
+current channel number.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>i</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The index of the user in the channels&#39; user list.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveChannelDescription"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>saveChannelDescription</b></span>
+                        <a href="#saveChannelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveChannelDescription()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="340"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:340</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Closes the channel description editor and resets the description field.</p>
+<p>This method clears the current channel description and updates the state
+to indicate that the channel description editor is closed. It also
+ensures that the current thread is closed and the correct channel is
+opened in the channel selection service.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveChannelName"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>saveChannelName</b></span>
+                        <a href="#saveChannelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>saveChannelName()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="259"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:259</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Saves the updated channel name to the Firestore database.</p>
+<p>This asynchronous function first checks if the <code>channelName</code> property is
+not empty. If it is empty, an error message is logged, and the function exits.
+If the channel name is valid, it retrieves a reference to the current channel
+document in the Firestore &#39;Channels&#39; collection and attempts to update it
+with the new channel name (converted to JSON format via the <code>toJSON()</code> method).
+If the update is successful, the channel editor UI is closed; otherwise,
+an error message is logged to the console.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="setNoteChannel"></a>
+                    <span class="name">
+                        <span ><b>setNoteChannel</b></span>
+                        <a href="#setNoteChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>setNoteChannel(obj: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>, id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="84"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:84</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Formats channel data into a structured object.</p>
+</div>
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                                <td>Description</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>obj</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The Firestore data object for the channel.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                            <td>
+                                                    <ul>
+<li>The unique identifier of the channel.</li>
+</ul>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ id: string; channelCreatorUid: any; channelCreatorName: any; creationsDate: any; description: any; images: any; name: any; uids: any; }</code>
+
+                        </div>
+                            <div class="io-description">
+                                <p>An object representing the channel with default values for any missing fields.</p>
+
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="subMessages"></a>
+                    <span class="name">
+                        <span ><b>subMessages</b></span>
+                        <a href="#subMessages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>subMessages()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                        <div class="io-description"><p>Subscribes to the messages within the &quot;Channels&quot; collection in Firestore.
+Queries up to 1000 channels and updates the <code>channel</code> array with channel data.
+After updating, it calls <code>getSelectedChannel()</code> to ensure the current channel is set.</p>
+</div>
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toJSON"></a>
+                    <span class="name">
+                        <span ><b>toJSON</b></span>
+                        <a href="#toJSON"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toJSON()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="308"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:308</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ name: string; }</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toJSONDescription"></a>
+                    <span class="name">
+                        <span ><b>toJSONDescription</b></span>
+                        <a href="#toJSONDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toJSONDescription()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="368"
+                                    class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:368</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>{ description: string; }</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="authService"></a>
+                    <span class="name">
+                        <span ><b>authService</b></span>
+                        <a href="#authService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channel"></a>
+                    <span class="name">
+                        <span ><b>channel</b></span>
+                        <a href="#channel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:32</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelDescription"></a>
+                    <span class="name">
+                        <span ><b>channelDescription</b></span>
+                        <a href="#channelDescription"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelInfo"></a>
+                    <span class="name">
+                        <span ><b>channelInfo</b></span>
+                        <a href="#channelInfo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(SidebarService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="channelName"></a>
+                    <span class="name">
+                        <span ><b>channelName</b></span>
+                        <a href="#channelName"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:36</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentChannel"></a>
+                    <span class="name">
+                        <span ><b>currentChannel</b></span>
+                        <a href="#currentChannel"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="31" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:31</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelDescriptionOpen"></a>
+                    <span class="name">
+                        <span ><b>editChannelDescriptionOpen</b></span>
+                        <a href="#editChannelDescriptionOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelNameOpen"></a>
+                    <span class="name">
+                        <span ><b>editChannelNameOpen</b></span>
+                        <a href="#editChannelNameOpen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editChannelService"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>editChannelService</b></span>
+                        <a href="#editChannelService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../injectables/EditChannelService.html" target="_self" >EditChannelService</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:42</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="selectetChannelData"></a>
+                    <span class="name">
+                        <span ><b>selectetChannelData</b></span>
+                        <a href="#selectetChannelData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/main/edit-channel/edit-channel.component.ts:33</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, inject, OnInit } from &#x27;@angular/core&#x27;;
+import { EditChannelService } from &#x27;../../services/edit-channel.service&#x27;;
+import {
+  Firestore,
+  collection,
+  doc,
+  getDocs,
+  limit,
+  onSnapshot,
+  query,
+  updateDoc,
+} from &#x27;@angular/fire/firestore&#x27;;
+import { CommonModule } from &#x27;@angular/common&#x27;;
+import { SidebarService } from &#x27;../../services/sidebar.service&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import { AuthService } from &#x27;../../services/auth.service&#x27;;
+import { ChannelSelectionService } from &#x27;../../services/channel-selection.service&#x27;;
+import { ThreadService } from &#x27;../../services/thread.service&#x27;;
+
+@Component({
+  selector: &#x27;app-edit-channel&#x27;,
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  templateUrl: &#x27;./edit-channel.component.html&#x27;,
+  styleUrls: [
+    &#x27;./edit-channel.component.scss&#x27;,
+    &#x27;./edit-channel-responsive.component.scss&#x27;,
+  ],
+})
+export class EditChannelComponent implements OnInit {
+  currentChannel: any;
+  channel: any;
+  selectetChannelData: any;
+  editChannelNameOpen &#x3D; false;
+  editChannelDescriptionOpen &#x3D; false;
+  channelName &#x3D; &#x27;&#x27;;
+  channelDescription &#x3D; &#x27;&#x27;;
+  channelInfo &#x3D; inject(SidebarService);
+  authService &#x3D; inject(AuthService);
+
+  constructor(
+    public editChannelService: EditChannelService, // Füge den Service hier hinzu
+    private firestore: Firestore,
+    private channelSelectionService: ChannelSelectionService,
+    private threadService: ThreadService
+  ) {}
+
+  /**
+ * Initializes the component by subscribing to the selected channel.
+ * Logs the selected channel to the console and sets it as the current channel,
+ * then calls &#x60;subMessages()&#x60; to subscribe to messages within the selected channel.
+ */
+  ngOnInit(): void {
+    this.channelSelectionService.getSelectedChannel().subscribe((channel) &#x3D;&gt; {
+      console.log(channel);
+      this.currentChannel &#x3D; channel;
+      this.subMessages();
+    });
+  }
+
+  /**
+ * Subscribes to the messages within the &quot;Channels&quot; collection in Firestore.
+ * Queries up to 1000 channels and updates the &#x60;channel&#x60; array with channel data.
+ * After updating, it calls &#x60;getSelectedChannel()&#x60; to ensure the current channel is set.
+ */
+  subMessages() {
+    const q &#x3D; query(collection(this.firestore, &#x27;Channels&#x27;), limit(1000));
+    onSnapshot(q, (list) &#x3D;&gt; {
+      this.channel &#x3D; [];
+      list.forEach((element) &#x3D;&gt; {
+        this.channel.push(this.setNoteChannel(element.data(), element.id));
+      });
+      this.getSelectedChannel();
+    });
+  }
+
+  /**
+ * Formats channel data into a structured object.
+ * 
+ * @param obj - The Firestore data object for the channel.
+ * @param id - The unique identifier of the channel.
+ * @returns An object representing the channel with default values for any missing fields.
+ */
+  setNoteChannel(obj: any, id: string) {
+    return {
+      id: id,
+      channelCreatorUid: obj.channelCreatorUid || &#x27;&#x27;,
+      channelCreatorName: obj.channelCreatorName || &#x27;&#x27;,
+      creationsDate: obj.creationsDate || &#x27;&#x27;,
+      description: obj.description || &#x27;&#x27;,
+      images: obj.images || &#x27;&#x27;,
+      name: obj.name || &#x27;&#x27;,
+      uids: obj.uids || &#x27;&#x27;,
+    };
+  }
+
+  /**
+ * Finds and sets the currently selected channel data.
+ * 
+ * Iterates through the channel list to locate the channel that matches
+ * the current channel ID, and assigns it to &#x60;selectetChannelData&#x60;.
+ */
+  getSelectedChannel() {
+    for (let i &#x3D; 0; i &lt; this.channel.length; i++) {
+      const element &#x3D; this.channel[i];
+      if (element.id &#x3D;&#x3D; this.currentChannel) {
+        this.selectetChannelData &#x3D; element;
+      }
+    }
+  }
+
+  /**
+ * Validates the channel name input.
+ * 
+ * Checks if the &#x60;channelName&#x60; has at least 3 characters to ensure 
+ * it meets the minimum length requirement.
+ * 
+ * @returns &#x60;true&#x60; if the input is valid, otherwise &#x60;false&#x60;.
+ */
+  isInputValid(): boolean {
+    return this.channelName.length &gt;&#x3D; 3;
+  }
+
+  /**
+ * Navigates to the previous channel in the list.
+ * 
+ * This function resets relevant services and sets the selected channel
+ * to the previous channel in the list by calculating the reverse index
+ * of the current channel. It then updates channel and user information.
+ */
+  navigateToPreviousChannel() {
+    this.openTheNextChannel();
+    this.editChannelService.setEditChannel(false, null);
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    const reverseIndex &#x3D;
+      this.channelInfo.AllChannelsIds.length -
+      1 -
+      this.channelInfo.currentChannelNumber;
+    this.channelSelectionService.setSelectedChannel(
+      this.channelInfo.AllChannelsIds[reverseIndex]
+    );
+    this.channelInfo.fetchChannels();
+    this.channelInfo.fetchUsers();
+    this.channelInfo.currentChannelNumber &#x3D; reverseIndex;
+  }
+
+  /**
+ * Deletes a user from the specified channel data and updates the Firestore document.
+ * 
+ * This function removes the user data from the provided &#x60;channelData&#x60; arrays at the given 
+ * &#x60;userNumber&#x60; index, then updates the Firestore document with the modified data. 
+ * After updating, it navigates to the previous channel.
+ *
+ * @param channelData - The current data of the channel, including user lists.
+ * @param userNumber - The index of the user to delete in the channel data arrays.
+ * @param docSnapshot - The Firestore document snapshot containing the channel ID.
+ */
+  async deleteUserFromChannel(
+    channelData: any,
+    userNumber: any,
+    docSnapshot: any
+  ) {
+    channelData[&#x27;uids&#x27;].splice(userNumber, 1);
+    channelData[&#x27;emails&#x27;].splice(userNumber, 1);
+    channelData[&#x27;images&#x27;].splice(userNumber, 1);
+    channelData[&#x27;users&#x27;].splice(userNumber, 1);
+    const channelDocRef &#x3D; doc(this.firestore, &#x27;Channels&#x27;, docSnapshot.id);
+    await updateDoc(channelDocRef, {
+      uids: channelData[&#x27;uids&#x27;],
+      emails: channelData[&#x27;emails&#x27;],
+      images: channelData[&#x27;images&#x27;],
+      users: channelData[&#x27;users&#x27;],
+    });
+    this.navigateToPreviousChannel();
+  }
+
+  /**
+ * Checks if the current user is a member of the selected channel, and if so, removes them from the channel.
+ * 
+ * This function retrieves all channel documents from Firestore, and for each document, it checks 
+ * if the channel ID matches the selected channel ID. If a match is found, the function checks if 
+ * the current user is a member of that channel by locating their UID in the channel&#x27;s &#x60;uids&#x60; array. 
+ * If the user is a member, they are removed from the channel; otherwise, an alert notifies 
+ * that the user is not a member.
+ */
+  async abandon() {
+    const channelsCollection &#x3D; collection(this.firestore, &#x27;Channels&#x27;);
+    const querySnapshot &#x3D; await getDocs(channelsCollection);
+    querySnapshot.forEach(async (docSnapshot) &#x3D;&gt; {
+      const channelData &#x3D; docSnapshot.data();
+      if (channelData[&#x27;id&#x27;] &#x3D;&#x3D;&#x3D; this.selectetChannelData.id) {
+        const userNumber &#x3D; channelData[&#x27;uids&#x27;].indexOf(
+          this.authService.currentUserSignal()?.uId
+        );
+        if (userNumber &gt; -1) {
+          this.deleteUserFromChannel(channelData, userNumber, docSnapshot);
+        } else {
+          alert(&#x27;du bist kein mitglied&#x27;);
+        }
+      }
+    });
+  }
+
+  /**
+ * Opens the next channel in the list by incrementing the current channel index.
+ * 
+ * This function checks if the current channel number is less than the total number 
+ * of channels minus one. If it is, the function increments the current channel number 
+ * by one to switch to the next channel. If the current channel number is at the last 
+ * channel, it wraps around and resets the current channel number to zero, thereby 
+ * cycling back to the first channel in the list.
+ */
+  openTheNextChannel() {
+    if (
+      this.channelInfo.currentChannelNumber &lt;
+      this.channelInfo.AllChannelsIds.length - 1
+    ) {
+      this.channelInfo.currentChannelNumber &#x3D;
+        this.channelInfo.currentChannelNumber + 1;
+    } else {
+      this.channelInfo.currentChannelNumber &#x3D; 0;
+    }
+  }
+
+  /**
+ * Opens the channel name editing interface.
+ * 
+ * This function sets the &#x60;editChannelNameOpen&#x60; property to &#x60;true&#x60;, indicating 
+ * that the editing UI for the channel name should be displayed. This is typically 
+ * called when the user wishes to change the name of the channel.
+ */
+  editChannelName() {
+    this.editChannelNameOpen &#x3D; true;
+  }
+
+  /**
+ * Opens the channel description editing interface.
+ * 
+ * This function sets the &#x60;editChannelDescriptionOpen&#x60; property to &#x60;true&#x60;, indicating 
+ * that the editing UI for the channel description should be displayed. This is typically 
+ * called when the user wishes to change the description of the channel.
+ */
+  editChannelDescription() {
+    this.editChannelDescriptionOpen &#x3D; true;
+  }
+
+  /**
+ * Saves the updated channel name to the Firestore database.
+ * 
+ * This asynchronous function first checks if the &#x60;channelName&#x60; property is 
+ * not empty. If it is empty, an error message is logged, and the function exits.
+ * If the channel name is valid, it retrieves a reference to the current channel 
+ * document in the Firestore &#x27;Channels&#x27; collection and attempts to update it 
+ * with the new channel name (converted to JSON format via the &#x60;toJSON()&#x60; method).
+ * If the update is successful, the channel editor UI is closed; otherwise, 
+ * an error message is logged to the console.
+ */
+  async saveChannelName() {
+    if (!this.channelName) {
+      console.error(&#x27;Channel name is empty. Please provide a valid name.&#x27;);
+      return;
+    }
+    const channelRef &#x3D; doc(
+      collection(this.firestore, &#x27;Channels&#x27;),
+      this.currentChannel
+    );
+    try {
+      await updateDoc(channelRef, this.toJSON());
+      this.closeChannelEditor();
+    } catch (err) {
+      console.error(&#x27;Error updating channel name: &#x27;, err);
+    }
+  }
+
+  /**
+ * Closes the channel editor UI and resets relevant properties.
+ * 
+ * This function resets the &#x60;channelName&#x60; property to an empty string and sets
+ * &#x60;editChannelNameOpen&#x60; to false, effectively closing the channel editor UI.
+ * It also invokes the &#x60;closeThread()&#x60; method from the &#x60;threadService&#x60; to close 
+ * any active threads and reopens the current channel using the 
+ * &#x60;openChannel()&#x60; method from the &#x60;channelSelectionService&#x60;. Finally, it 
+ * updates the selected channel to reflect the current channel in the channel 
+ * info by calling &#x60;setSelectedChannel()&#x60; with the appropriate channel ID.
+ */
+  closeChannelEditor() {
+    this.channelName &#x3D; &#x27;&#x27;;
+    this.editChannelNameOpen &#x3D; false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
+  }
+
+  /*
+ * Converts the channel data to a JSON format.
+ * 
+ * This method returns an object representing the channel, 
+ * specifically including the &#x60;name&#x60; of the channel. This 
+ * JSON representation can be useful for various operations, 
+ * such as saving the channel data to a database or sending 
+ * it over a network.
+ * 
+ * @returns {Object} An object containing the channel&#x27;s name.
+ */
+  toJSON() {
+    return {
+      name: this.channelName,
+    };
+  }
+
+  /**
+ * Closes the channel description editor and resets the description field.
+ * 
+ * This method clears the current channel description and updates the state 
+ * to indicate that the channel description editor is closed. It also 
+ * ensures that the current thread is closed and the correct channel is 
+ * opened in the channel selection service.
+ */
+  closeChannelDescriptionEdit() {
+    this.channelDescription &#x3D; &#x27;&#x27;;
+    this.editChannelDescriptionOpen &#x3D; false;
+    this.threadService.closeThread();
+    this.channelSelectionService.openChannel();
+    this.channelSelectionService.setSelectedChannel(
+      this.channelInfo.AllChannelsIds[this.channelInfo.currentChannelNumber]
+    );
+  }
+
+  /**
+ * Closes the channel description editor and resets the description field.
+ * 
+ * This method clears the current channel description and updates the state 
+ * to indicate that the channel description editor is closed. It also 
+ * ensures that the current thread is closed and the correct channel is 
+ * opened in the channel selection service.
+ */
+  async saveChannelDescription() {
+    if (!this.channelDescription) {
+      console.error(
+        &#x27;Channel name is empty. Please provide a valid description.&#x27;
+      );
+      return;
+    }
+    const channelRef &#x3D; doc(
+      collection(this.firestore, &#x27;Channels&#x27;),
+      this.currentChannel
+    );
+    try {
+      await updateDoc(channelRef, this.toJSONDescription());
+      this.closeChannelDescriptionEdit();
+    } catch (err) {
+      console.error(&#x27;Error updating channel name: &#x27;, err);
+    }
+  }
+
+  /*
+ * Converts the channel description into a JSON format for storage.
+ * 
+ * This method creates and returns an object containing the current 
+ * channel description. It is typically used when updating the 
+ * channel&#x27;s description in the Firestore database.
+ * 
+ * @returns {Object} An object representing the channel description.
+ */
+  toJSONDescription() {
+    return {
+      description: this.channelDescription,
+    };
+  }
+
+  /**
+ * Opens the user profile for the selected user.
+ * 
+ * This method updates the channel information to display the 
+ * profile of a user identified by the index &#x60;i&#x60;. It sets the 
+ * profile view to open and stores the relevant user details 
+ * such as active user, email, image, and UID based on the 
+ * current channel number.
+ * 
+ * @param {number} i - The index of the user in the channels&#x27; user list.
+ */
+  openUserProfil(i: number) {
+    this.channelInfo.userProfilOpen &#x3D; true;
+    this.channelInfo.activeUserProfil &#x3D; i;
+    this.channelInfo.activeUser &#x3D;
+      this.channelInfo.AllChannelsUsers[this.channelInfo.currentChannelNumber][
+        i
+      ];
+    this.channelInfo.activeEmail &#x3D;
+      this.channelInfo.AllChannelsEmails[this.channelInfo.currentChannelNumber][
+        i
+      ];
+    this.channelInfo.activeImage &#x3D;
+      this.channelInfo.AllChannelsImages[this.channelInfo.currentChannelNumber][
+        i
+      ];
+    this.channelInfo.activeUid &#x3D;
+      this.channelInfo.GlobalChannelUids[this.channelInfo.currentChannelNumber][
+        i
+      ];
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div
+  *ngIf&#x3D;&quot;this.selectetChannelData&quot;
+  class&#x3D;&quot;contentContainer&quot;
+  (click)&#x3D;&quot;editChannelService.setEditChannel(false, null)&quot;
+&gt;
+  &lt;div class&#x3D;&quot;mainContent&quot; (click)&#x3D;&quot;$event.stopPropagation()&quot;&gt;
+    &lt;div class&#x3D;&quot;header&quot;&gt;
+      &lt;p class&#x3D;&quot;channel-name&quot;&gt;
+        &lt;svg
+          xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+          width&#x3D;&quot;24&quot;
+          height&#x3D;&quot;25&quot;
+          viewBox&#x3D;&quot;0 0 24 25&quot;
+          fill&#x3D;&quot;none&quot;
+        &gt;
+          &lt;mask
+            id&#x3D;&quot;mask0_70303_6026&quot;
+            style&#x3D;&quot;mask-type: alpha&quot;
+            maskUnits&#x3D;&quot;userSpaceOnUse&quot;
+            x&#x3D;&quot;0&quot;
+            y&#x3D;&quot;0&quot;
+            width&#x3D;&quot;24&quot;
+            height&#x3D;&quot;25&quot;
+          &gt;
+            &lt;rect y&#x3D;&quot;0.5&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;#D9D9D9&quot; /&gt;
+          &lt;/mask&gt;
+          &lt;g mask&#x3D;&quot;url(#mask0_70303_6026)&quot;&gt;
+            &lt;path
+              d&#x3D;&quot;M7.25001 20.5C6.93334 20.5 6.67501 20.375 6.47501 20.125C6.27501 19.875 6.21668 19.6 6.30001 19.3L7.00001 16.5H4.77501C4.44168 16.5 4.17501 16.371 3.97501 16.113C3.77501 15.8543 3.71668 15.5667 3.80001 15.25C3.85001 15.0167 3.96668 14.8333 4.15001 14.7C4.33334 14.5667 4.54168 14.5 4.77501 14.5H7.50001L8.50001 10.5H5.77501C5.44168 10.5 5.17501 10.371 4.97501 10.113C4.77501 9.85433 4.71668 9.56667 4.80001 9.25C4.85001 9.01667 4.96668 8.83333 5.15001 8.7C5.33334 8.56667 5.54168 8.5 5.77501 8.5H9.00001L9.82501 5.225C9.87501 5.00833 9.98334 4.83333 10.15 4.7C10.3167 4.56667 10.5167 4.5 10.75 4.5C11.0667 4.5 11.325 4.625 11.525 4.875C11.725 5.125 11.7833 5.4 11.7 5.7L11 8.5H15L15.825 5.225C15.875 5.00833 15.9833 4.83333 16.15 4.7C16.3167 4.56667 16.5167 4.5 16.75 4.5C17.0667 4.5 17.325 4.625 17.525 4.875C17.725 5.125 17.7833 5.4 17.7 5.7L17 8.5H19.225C19.5583 8.5 19.825 8.629 20.025 8.887C20.225 9.14567 20.2833 9.43333 20.2 9.75C20.15 9.98333 20.0333 10.1667 19.85 10.3C19.6667 10.4333 19.4583 10.5 19.225 10.5H16.5L15.5 14.5H18.225C18.5583 14.5 18.825 14.629 19.025 14.887C19.225 15.1457 19.2833 15.4333 19.2 15.75C19.15 15.9833 19.0333 16.1667 18.85 16.3C18.6667 16.4333 18.4583 16.5 18.225 16.5H15L14.175 19.775C14.125 19.9917 14.0167 20.1667 13.85 20.3C13.6833 20.4333 13.4833 20.5 13.25 20.5C12.9333 20.5 12.675 20.375 12.475 20.125C12.275 19.875 12.2167 19.6 12.3 19.3L13 16.5H9.00001L8.17501 19.775C8.12501 19.9917 8.01668 20.1667 7.85001 20.3C7.68334 20.4333 7.48334 20.5 7.25001 20.5ZM9.50001 14.5H13.5L14.5 10.5H10.5L9.50001 14.5Z&quot;
+              fill&#x3D;&quot;black&quot;
+            /&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+        {{ this.selectetChannelData.name }}
+      &lt;/p&gt;
+      &lt;p
+        class&#x3D;&quot;cursor-pointer&quot;
+        (click)&#x3D;&quot;editChannelService.setEditChannel(false, null)&quot;
+      &gt;
+        &lt;svg
+          xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+          width&#x3D;&quot;24&quot;
+          height&#x3D;&quot;24&quot;
+          viewBox&#x3D;&quot;0 0 24 24&quot;
+          fill&#x3D;&quot;none&quot;
+        &gt;
+          &lt;mask
+            id&#x3D;&quot;mask0_70303_11039&quot;
+            style&#x3D;&quot;mask-type: alpha&quot;
+            maskUnits&#x3D;&quot;userSpaceOnUse&quot;
+            x&#x3D;&quot;0&quot;
+            y&#x3D;&quot;0&quot;
+            width&#x3D;&quot;24&quot;
+            height&#x3D;&quot;24&quot;
+          &gt;
+            &lt;rect width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;#D9D9D9&quot; /&gt;
+          &lt;/mask&gt;
+          &lt;g mask&#x3D;&quot;url(#mask0_70303_11039)&quot;&gt;
+            &lt;path
+              d&#x3D;&quot;M12 13.4L7.10005 18.3C6.91672 18.4833 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4833 5.70005 18.3C5.51672 18.1167 5.42505 17.8833 5.42505 17.6C5.42505 17.3167 5.51672 17.0833 5.70005 16.9L10.6 12L5.70005 7.09999C5.51672 6.91665 5.42505 6.68332 5.42505 6.39999C5.42505 6.11665 5.51672 5.88332 5.70005 5.69999C5.88338 5.51665 6.11672 5.42499 6.40005 5.42499C6.68338 5.42499 6.91672 5.51665 7.10005 5.69999L12 10.6L16.9 5.69999C17.0834 5.51665 17.3167 5.42499 17.6 5.42499C17.8834 5.42499 18.1167 5.51665 18.3 5.69999C18.4834 5.88332 18.575 6.11665 18.575 6.39999C18.575 6.68332 18.4834 6.91665 18.3 7.09999L13.4 12L18.3 16.9C18.4834 17.0833 18.575 17.3167 18.575 17.6C18.575 17.8833 18.4834 18.1167 18.3 18.3C18.1167 18.4833 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4833 16.9 18.3L12 13.4Z&quot;
+              fill&#x3D;&quot;black&quot;
+            /&gt;
+          &lt;/g&gt;
+        &lt;/svg&gt;
+      &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class&#x3D;&quot;scroll-container&quot;&gt;
+      &lt;div class&#x3D;&quot;content-edit&quot; *ngIf&#x3D;&quot;this.editChannelNameOpen&quot;&gt;
+        &lt;div class&#x3D;&quot;nameHeader-edit&quot;&gt;
+          &lt;span&gt;Channel-Name&lt;/span
+          &gt;&lt;button (click)&#x3D;&quot;saveChannelName()&quot; class&#x3D;&quot;edit-button&quot;&gt;
+            &lt;span&gt;Speichern&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;img
+            src&#x3D;&quot;../../../assets/img/edit-channel/check_circle.png&quot;
+            class&#x3D;&quot;edit-icon-responsive&quot;
+            (click)&#x3D;&quot;saveChannelName()&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;channel-name-container&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;text&quot;
+            class&#x3D;&quot;input-field&quot;
+            [(ngModel)]&#x3D;&quot;channelName&quot;
+            id&#x3D;&quot;channelName&quot;
+            name&#x3D;&quot;channelName&quot;
+            placeholder&#x3D;&quot;{{ this.selectetChannelData.name }}&quot;
+          /&gt;
+          &lt;img src&#x3D;&quot;../../../assets/img/header/tag.png&quot; class&#x3D;&quot;tag-icon&quot; /&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;content&quot; *ngIf&#x3D;&quot;!this.editChannelNameOpen&quot;&gt;
+        &lt;div class&#x3D;&quot;nameHeader&quot;&gt;
+          &lt;span&gt;Channel-Name&lt;/span
+          &gt;&lt;button (click)&#x3D;&quot;editChannelName()&quot; class&#x3D;&quot;edit-button&quot;&gt;
+            &lt;span&gt;Bearbeiten&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;img
+            src&#x3D;&quot;../../../assets/img/edit-channel/edit (1).png&quot;
+            class&#x3D;&quot;edit-icon-responsive&quot;
+            (click)&#x3D;&quot;editChannelName()&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;channel-tag-name&quot;&gt;
+          &lt;svg
+            xmlns&#x3D;&quot;http://www.w3.org/2000/svg&quot;
+            width&#x3D;&quot;24&quot;
+            height&#x3D;&quot;25&quot;
+            viewBox&#x3D;&quot;0 0 24 25&quot;
+            fill&#x3D;&quot;none&quot;
+          &gt;
+            &lt;mask
+              id&#x3D;&quot;mask0_70303_6026&quot;
+              style&#x3D;&quot;mask-type: alpha&quot;
+              maskUnits&#x3D;&quot;userSpaceOnUse&quot;
+              x&#x3D;&quot;0&quot;
+              y&#x3D;&quot;0&quot;
+              width&#x3D;&quot;24&quot;
+              height&#x3D;&quot;25&quot;
+            &gt;
+              &lt;rect y&#x3D;&quot;0.5&quot; width&#x3D;&quot;24&quot; height&#x3D;&quot;24&quot; fill&#x3D;&quot;#D9D9D9&quot; /&gt;
+            &lt;/mask&gt;
+            &lt;g mask&#x3D;&quot;url(#mask0_70303_6026)&quot;&gt;
+              &lt;path
+                d&#x3D;&quot;M7.25001 20.5C6.93334 20.5 6.67501 20.375 6.47501 20.125C6.27501 19.875 6.21668 19.6 6.30001 19.3L7.00001 16.5H4.77501C4.44168 16.5 4.17501 16.371 3.97501 16.113C3.77501 15.8543 3.71668 15.5667 3.80001 15.25C3.85001 15.0167 3.96668 14.8333 4.15001 14.7C4.33334 14.5667 4.54168 14.5 4.77501 14.5H7.50001L8.50001 10.5H5.77501C5.44168 10.5 5.17501 10.371 4.97501 10.113C4.77501 9.85433 4.71668 9.56667 4.80001 9.25C4.85001 9.01667 4.96668 8.83333 5.15001 8.7C5.33334 8.56667 5.54168 8.5 5.77501 8.5H9.00001L9.82501 5.225C9.87501 5.00833 9.98334 4.83333 10.15 4.7C10.3167 4.56667 10.5167 4.5 10.75 4.5C11.0667 4.5 11.325 4.625 11.525 4.875C11.725 5.125 11.7833 5.4 11.7 5.7L11 8.5H15L15.825 5.225C15.875 5.00833 15.9833 4.83333 16.15 4.7C16.3167 4.56667 16.5167 4.5 16.75 4.5C17.0667 4.5 17.325 4.625 17.525 4.875C17.725 5.125 17.7833 5.4 17.7 5.7L17 8.5H19.225C19.5583 8.5 19.825 8.629 20.025 8.887C20.225 9.14567 20.2833 9.43333 20.2 9.75C20.15 9.98333 20.0333 10.1667 19.85 10.3C19.6667 10.4333 19.4583 10.5 19.225 10.5H16.5L15.5 14.5H18.225C18.5583 14.5 18.825 14.629 19.025 14.887C19.225 15.1457 19.2833 15.4333 19.2 15.75C19.15 15.9833 19.0333 16.1667 18.85 16.3C18.6667 16.4333 18.4583 16.5 18.225 16.5H15L14.175 19.775C14.125 19.9917 14.0167 20.1667 13.85 20.3C13.6833 20.4333 13.4833 20.5 13.25 20.5C12.9333 20.5 12.675 20.375 12.475 20.125C12.275 19.875 12.2167 19.6 12.3 19.3L13 16.5H9.00001L8.17501 19.775C8.12501 19.9917 8.01668 20.1667 7.85001 20.3C7.68334 20.4333 7.48334 20.5 7.25001 20.5ZM9.50001 14.5H13.5L14.5 10.5H10.5L9.50001 14.5Z&quot;
+                fill&#x3D;&quot;black&quot;
+              /&gt;
+            &lt;/g&gt;
+          &lt;/svg&gt;
+          &lt;p&gt;{{ this.selectetChannelData.name }}&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;content&quot; *ngIf&#x3D;&quot;!this.editChannelDescriptionOpen&quot;&gt;
+        &lt;div class&#x3D;&quot;nameHeader&quot;&gt;
+          &lt;span&gt;Beschreibung&lt;/span
+          &gt;&lt;button (click)&#x3D;&quot;editChannelDescription()&quot; class&#x3D;&quot;edit-button&quot;&gt;
+            &lt;span&gt;Bearbeiten&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;img
+            src&#x3D;&quot;../../../assets/img/edit-channel/edit (1).png&quot;
+            class&#x3D;&quot;edit-icon-responsive&quot;
+            (click)&#x3D;&quot;editChannelDescription()&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          {{ this.selectetChannelData.description }}
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;spacer&quot;&gt;&lt;/div&gt;
+        &lt;div class&#x3D;&quot;nameHeader&quot;&gt;
+          &lt;span&gt;Erstellt von&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          @if(this.authService.currentUserSignal()?.uId &#x3D;&#x3D;
+          channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){
+          &lt;span class&#x3D;&quot;creator-name&quot;&gt;{{
+            this.authService.currentUserSignal()?.name
+          }}&lt;/span&gt;
+          }@else {
+          &lt;span class&#x3D;&quot;creator-name&quot;&gt;
+            {{ this.selectetChannelData.channelCreatorName }}
+          &lt;/span&gt;
+          }
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;content-edit&quot; *ngIf&#x3D;&quot;this.editChannelDescriptionOpen&quot;&gt;
+        &lt;div class&#x3D;&quot;nameHeader-edit&quot;&gt;
+          &lt;span&gt;Beschreibung&lt;/span
+          &gt;&lt;button (click)&#x3D;&quot;saveChannelDescription()&quot; class&#x3D;&quot;edit-button&quot;&gt;
+            &lt;span&gt;Speichern&lt;/span&gt;
+          &lt;/button&gt;
+          &lt;img
+            src&#x3D;&quot;../../../assets/img/edit-channel/check_circle.png&quot;
+            class&#x3D;&quot;edit-icon-responsive&quot;
+            (click)&#x3D;&quot;saveChannelDescription()&quot;
+          /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;channel-name-container&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;text&quot;
+            class&#x3D;&quot;input-field&quot;
+            [(ngModel)]&#x3D;&quot;channelDescription&quot;
+            id&#x3D;&quot;channelDescription&quot;
+            name&#x3D;&quot;channelDescription&quot;
+            placeholder&#x3D;&quot;Dein Text hier&quot;
+          /&gt;
+          &lt;img src&#x3D;&quot;../../../assets/img/header/tag.png&quot; class&#x3D;&quot;tag-icon&quot; /&gt;
+        &lt;/div&gt;
+        &lt;div class&#x3D;&quot;spacer-edit&quot;&gt;&lt;/div&gt;
+        &lt;div class&#x3D;&quot;nameHeader edit-description&quot;&gt;
+          &lt;span&gt;Erstellt von&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+          @if(this.authService.currentUserSignal()?.uId &#x3D;&#x3D;
+          channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){
+          &lt;span class&#x3D;&quot;creator-name&quot;&gt;{{
+            this.authService.currentUserSignal()?.name
+          }}&lt;/span&gt;
+          }@else {
+          &lt;span class&#x3D;&quot;creator-name&quot;&gt;
+            {{
+              this.channelInfo.AllChannelsCreatorsNames[
+                this.channelInfo.currentChannelNumber
+              ]
+            }}
+          &lt;/span&gt;
+          }
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;responsive-userlist-container&quot;&gt;
+        &lt;div class&#x3D;&quot;userlist&quot;&gt;
+          &lt;div
+            *ngFor&#x3D;&quot;
+              let user of channelInfo.AllChannelsUsers[
+                channelInfo.currentChannelNumber
+              ];
+              let i &#x3D; index
+            &quot;
+          &gt;
+            &lt;div class&#x3D;&quot;user fs-18&quot; (click)&#x3D;&quot;openUserProfil(i)&quot;&gt;
+              &lt;img
+                src&#x3D;&quot;{{
+                  channelInfo.AllChannelsImages[
+                    channelInfo.currentChannelNumber
+                  ][i]
+                }}&quot;
+                class&#x3D;&quot;selected-img&quot;
+              /&gt;
+              @if(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]
+              &#x3D;&#x3D; authService.currentUserSignal()?.uId){
+              &lt;span&gt;{{ authService.currentUserSignal()?.name }}&lt;/span&gt;
+              }@else{
+              &lt;span&gt;{{ user }}&lt;/span&gt;
+              } @if(authService.currentUserSignal()?.uId &#x3D;&#x3D;
+              channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]
+              ||
+              this.channelInfo.onlineUserUidList.includes(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i])){
+              &lt;img
+                class&#x3D;&quot;online-icon&quot;
+                src&#x3D;&quot;../../../assets/img/sidebar/Online.png&quot;
+              /&gt;
+              }@else {
+              &lt;img
+                class&#x3D;&quot;online-icon&quot;
+                src&#x3D;&quot;../../../assets/img/sidebar/Offline.png&quot;
+              /&gt;
+              }
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;button-container&quot;&gt;
+        &lt;button type&#x3D;&quot;submit&quot; class&#x3D;&quot;abandon&quot; (click)&#x3D;&quot;abandon()&quot;&gt;
+          &lt;span class&#x3D;&quot;fs-18 button-text&quot;&gt;Channel verlassen&lt;/span&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./edit-channel.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.contentContainer {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* Der Container bleibt über dem Overlay */
+.mainContent {
+  position: absolute;
+  display: flex;
+  width: 872px;
+  padding: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  background-color: white;
+  box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 30px 30px 30px;
+  background: white;
+  top: 115px;
+  left: calc(50vw - 476px);
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  p {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+button {
+  color: #535af1;
+  font-family: Nunito;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border: none;
+  background-color: unset;
+  cursor: pointer;
+}
+
+.edit-button {
+  span{
+    color: #535af1;
+  }
+  &amp;:hover {
+    span {
+      font-weight: 700 !important;
+    }
+  }
+}
+
+.content {
+  width: 832px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 20px;
+  border: 1px solid #adb0d9;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.content-edit {
+  width: 872px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.nameHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.nameHeader-edit {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-description {
+  margin-top: 14px;
+}
+
+.channel-tag-name {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.spacer {
+  width: 100%;
+  height: 1px;
+  background-color: #adb0d9;
+}
+
+.spacer-edit {
+  width: 100%;
+  height: 1px;
+  background-color: #adb0d9;
+  margin-top: 15px;
+}
+
+span {
+  color: #000;
+  font-family: Nunito;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.abandon {
+  width: 185px;
+  height: 49px;
+  padding: 12px 25px 12px 25px;
+  gap: 10px;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  background-color: #444DF2;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  &amp;:hover {
+    background-color: #797ef3;;
+  }
+}
+
+.button-text {
+  font-weight: 400;
+  color: white;
+  white-space: nowrap;
+}
+
+input {
+  height: 60px;
+  border-radius: 40px;
+  outline: 1px solid rgba(173, 176, 217, 1);
+  border: none;
+  padding: 18px, 20px, 18px, 20px;
+  font-size: 18px;
+  gap: 20px;
+  &amp;:focus {
+      outline: 2px solid #444DF2;
+  }
+}
+
+.channel-name-container {
+  position: relative;
+}
+
+.input-field {
+  width: 100%; 
+  padding: 10px 50px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  &amp;:focus {
+      border-color: none;
+  }
+}
+
+.tag-icon {
+  position: absolute;
+  top: 22px;
+  left: 20px;
+}
+
+.creator-name {
+  font-size: 22px !important;
+  color: #535af1 !important;
+}
+
+.responsive-userlist-container {
+  display: none;
+}
+
+.scroll-container {
+  gap: 20px;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-icon-responsive {
+  display: none;
+}
+
+
+</code></pre>
+                <p class="comment">
+                    <code>./edit-channel-responsive.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">@media(max-width: 1000px){
+   .mainContent {
+    width: calc(100vw - 80px);
+    height: 100vh;
+    border-radius: 0px;
+    top: 0;
+    left: 0;
+    justify-content: flex-start;
+  }
+
+  .responsive-userlist-container{
+    width: calc(100vw - 80px);
+    border-radius: 20px;
+    border: 1px solid #adb0d9;
+  }
+
+  .content {
+    width: calc(100vw - 120px);
+  }
+
+  .content-edit {
+    width: calc(100vw - 80px);
+  }
+
+  .userlist {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    }
+
+    .selected-img {
+        height: 40px;
+        width: 40px;
+        border-radius: 80px;
+        margin-right: 10px;
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-left: 20px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding: 6px 16px 6px 16px;
+        border-radius: 30px;
+        font-weight: 400;
+        cursor: pointer;
+        &amp;:hover {
+            background-color: #ECEEFE;
+        }
+    }
+
+    .online-icon {
+        position: absolute;
+        top : 35px;
+        left: 47px;
+        width: 10px;
+        height: 10px;
+    }
+
+    .responsive-userlist-container {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    .scroll-container {
+        gap: 20px;
+        overflow-y: auto;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        margin-top: 90px;
+    }
+
+    .button-container {
+        padding-bottom: 40px;
+    }
+
+    .header {
+        box-shadow: 0px 2px 10px 0px #00000014;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 90px;
+    }
+
+    .channel-name {
+        margin-left: 40px;
+    }
+
+    .cursor-pointer {
+        margin-right: 40px;
+    }
+}
+
+@media(max-width: 500px){
+    .edit-icon-responsive {
+        display: flex;
+    }
+
+    .edit-button {
+        display: none;
+    }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div  *ngIf="this.selectetChannelData"  class="contentContainer"  (click)="editChannelService.setEditChannel(false, null)">  <div class="mainContent" (click)="$event.stopPropagation()">    <div class="header">      <p class="channel-name">        <svg          xmlns="http://www.w3.org/2000/svg"          width="24"          height="25"          viewBox="0 0 24 25"          fill="none"        >          <mask            id="mask0_70303_6026"            style="mask-type: alpha"            maskUnits="userSpaceOnUse"            x="0"            y="0"            width="24"            height="25"          >            <rect y="0.5" width="24" height="24" fill="#D9D9D9" />          </mask>          <g mask="url(#mask0_70303_6026)">            <path              d="M7.25001 20.5C6.93334 20.5 6.67501 20.375 6.47501 20.125C6.27501 19.875 6.21668 19.6 6.30001 19.3L7.00001 16.5H4.77501C4.44168 16.5 4.17501 16.371 3.97501 16.113C3.77501 15.8543 3.71668 15.5667 3.80001 15.25C3.85001 15.0167 3.96668 14.8333 4.15001 14.7C4.33334 14.5667 4.54168 14.5 4.77501 14.5H7.50001L8.50001 10.5H5.77501C5.44168 10.5 5.17501 10.371 4.97501 10.113C4.77501 9.85433 4.71668 9.56667 4.80001 9.25C4.85001 9.01667 4.96668 8.83333 5.15001 8.7C5.33334 8.56667 5.54168 8.5 5.77501 8.5H9.00001L9.82501 5.225C9.87501 5.00833 9.98334 4.83333 10.15 4.7C10.3167 4.56667 10.5167 4.5 10.75 4.5C11.0667 4.5 11.325 4.625 11.525 4.875C11.725 5.125 11.7833 5.4 11.7 5.7L11 8.5H15L15.825 5.225C15.875 5.00833 15.9833 4.83333 16.15 4.7C16.3167 4.56667 16.5167 4.5 16.75 4.5C17.0667 4.5 17.325 4.625 17.525 4.875C17.725 5.125 17.7833 5.4 17.7 5.7L17 8.5H19.225C19.5583 8.5 19.825 8.629 20.025 8.887C20.225 9.14567 20.2833 9.43333 20.2 9.75C20.15 9.98333 20.0333 10.1667 19.85 10.3C19.6667 10.4333 19.4583 10.5 19.225 10.5H16.5L15.5 14.5H18.225C18.5583 14.5 18.825 14.629 19.025 14.887C19.225 15.1457 19.2833 15.4333 19.2 15.75C19.15 15.9833 19.0333 16.1667 18.85 16.3C18.6667 16.4333 18.4583 16.5 18.225 16.5H15L14.175 19.775C14.125 19.9917 14.0167 20.1667 13.85 20.3C13.6833 20.4333 13.4833 20.5 13.25 20.5C12.9333 20.5 12.675 20.375 12.475 20.125C12.275 19.875 12.2167 19.6 12.3 19.3L13 16.5H9.00001L8.17501 19.775C8.12501 19.9917 8.01668 20.1667 7.85001 20.3C7.68334 20.4333 7.48334 20.5 7.25001 20.5ZM9.50001 14.5H13.5L14.5 10.5H10.5L9.50001 14.5Z"              fill="black"            />          </g>        </svg>        {{ this.selectetChannelData.name }}      </p>      <p        class="cursor-pointer"        (click)="editChannelService.setEditChannel(false, null)"      >        <svg          xmlns="http://www.w3.org/2000/svg"          width="24"          height="24"          viewBox="0 0 24 24"          fill="none"        >          <mask            id="mask0_70303_11039"            style="mask-type: alpha"            maskUnits="userSpaceOnUse"            x="0"            y="0"            width="24"            height="24"          >            <rect width="24" height="24" fill="#D9D9D9" />          </mask>          <g mask="url(#mask0_70303_11039)">            <path              d="M12 13.4L7.10005 18.3C6.91672 18.4833 6.68338 18.575 6.40005 18.575C6.11672 18.575 5.88338 18.4833 5.70005 18.3C5.51672 18.1167 5.42505 17.8833 5.42505 17.6C5.42505 17.3167 5.51672 17.0833 5.70005 16.9L10.6 12L5.70005 7.09999C5.51672 6.91665 5.42505 6.68332 5.42505 6.39999C5.42505 6.11665 5.51672 5.88332 5.70005 5.69999C5.88338 5.51665 6.11672 5.42499 6.40005 5.42499C6.68338 5.42499 6.91672 5.51665 7.10005 5.69999L12 10.6L16.9 5.69999C17.0834 5.51665 17.3167 5.42499 17.6 5.42499C17.8834 5.42499 18.1167 5.51665 18.3 5.69999C18.4834 5.88332 18.575 6.11665 18.575 6.39999C18.575 6.68332 18.4834 6.91665 18.3 7.09999L13.4 12L18.3 16.9C18.4834 17.0833 18.575 17.3167 18.575 17.6C18.575 17.8833 18.4834 18.1167 18.3 18.3C18.1167 18.4833 17.8834 18.575 17.6 18.575C17.3167 18.575 17.0834 18.4833 16.9 18.3L12 13.4Z"              fill="black"            />          </g>        </svg>      </p>    </div>    <div class="scroll-container">      <div class="content-edit" *ngIf="this.editChannelNameOpen">        <div class="nameHeader-edit">          <span>Channel-Name</span          ><button (click)="saveChannelName()" class="edit-button">            <span>Speichern</span>          </button>          <img            src="../../../assets/img/edit-channel/check_circle.png"            class="edit-icon-responsive"            (click)="saveChannelName()"          />        </div>        <div class="channel-name-container">          <input            type="text"            class="input-field"            [(ngModel)]="channelName"            id="channelName"            name="channelName"            placeholder="{{ this.selectetChannelData.name }}"          />          <img src="../../../assets/img/header/tag.png" class="tag-icon" />        </div>      </div>      <div class="content" *ngIf="!this.editChannelNameOpen">        <div class="nameHeader">          <span>Channel-Name</span          ><button (click)="editChannelName()" class="edit-button">            <span>Bearbeiten</span>          </button>          <img            src="../../../assets/img/edit-channel/edit (1).png"            class="edit-icon-responsive"            (click)="editChannelName()"          />        </div>        <div class="channel-tag-name">          <svg            xmlns="http://www.w3.org/2000/svg"            width="24"            height="25"            viewBox="0 0 24 25"            fill="none"          >            <mask              id="mask0_70303_6026"              style="mask-type: alpha"              maskUnits="userSpaceOnUse"              x="0"              y="0"              width="24"              height="25"            >              <rect y="0.5" width="24" height="24" fill="#D9D9D9" />            </mask>            <g mask="url(#mask0_70303_6026)">              <path                d="M7.25001 20.5C6.93334 20.5 6.67501 20.375 6.47501 20.125C6.27501 19.875 6.21668 19.6 6.30001 19.3L7.00001 16.5H4.77501C4.44168 16.5 4.17501 16.371 3.97501 16.113C3.77501 15.8543 3.71668 15.5667 3.80001 15.25C3.85001 15.0167 3.96668 14.8333 4.15001 14.7C4.33334 14.5667 4.54168 14.5 4.77501 14.5H7.50001L8.50001 10.5H5.77501C5.44168 10.5 5.17501 10.371 4.97501 10.113C4.77501 9.85433 4.71668 9.56667 4.80001 9.25C4.85001 9.01667 4.96668 8.83333 5.15001 8.7C5.33334 8.56667 5.54168 8.5 5.77501 8.5H9.00001L9.82501 5.225C9.87501 5.00833 9.98334 4.83333 10.15 4.7C10.3167 4.56667 10.5167 4.5 10.75 4.5C11.0667 4.5 11.325 4.625 11.525 4.875C11.725 5.125 11.7833 5.4 11.7 5.7L11 8.5H15L15.825 5.225C15.875 5.00833 15.9833 4.83333 16.15 4.7C16.3167 4.56667 16.5167 4.5 16.75 4.5C17.0667 4.5 17.325 4.625 17.525 4.875C17.725 5.125 17.7833 5.4 17.7 5.7L17 8.5H19.225C19.5583 8.5 19.825 8.629 20.025 8.887C20.225 9.14567 20.2833 9.43333 20.2 9.75C20.15 9.98333 20.0333 10.1667 19.85 10.3C19.6667 10.4333 19.4583 10.5 19.225 10.5H16.5L15.5 14.5H18.225C18.5583 14.5 18.825 14.629 19.025 14.887C19.225 15.1457 19.2833 15.4333 19.2 15.75C19.15 15.9833 19.0333 16.1667 18.85 16.3C18.6667 16.4333 18.4583 16.5 18.225 16.5H15L14.175 19.775C14.125 19.9917 14.0167 20.1667 13.85 20.3C13.6833 20.4333 13.4833 20.5 13.25 20.5C12.9333 20.5 12.675 20.375 12.475 20.125C12.275 19.875 12.2167 19.6 12.3 19.3L13 16.5H9.00001L8.17501 19.775C8.12501 19.9917 8.01668 20.1667 7.85001 20.3C7.68334 20.4333 7.48334 20.5 7.25001 20.5ZM9.50001 14.5H13.5L14.5 10.5H10.5L9.50001 14.5Z"                fill="black"              />            </g>          </svg>          <p>{{ this.selectetChannelData.name }}</p>        </div>      </div>      <div class="content" *ngIf="!this.editChannelDescriptionOpen">        <div class="nameHeader">          <span>Beschreibung</span          ><button (click)="editChannelDescription()" class="edit-button">            <span>Bearbeiten</span>          </button>          <img            src="../../../assets/img/edit-channel/edit (1).png"            class="edit-icon-responsive"            (click)="editChannelDescription()"          />        </div>        <div>          {{ this.selectetChannelData.description }}        </div>        <div class="spacer"></div>        <div class="nameHeader">          <span>Erstellt von</span>        </div>        <div>          @if(this.authService.currentUserSignal()?.uId ==          channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){          <span class="creator-name">{{            this.authService.currentUserSignal()?.name          }}</span>          }@else {          <span class="creator-name">            {{ this.selectetChannelData.channelCreatorName }}          </span>          }        </div>      </div>      <div class="content-edit" *ngIf="this.editChannelDescriptionOpen">        <div class="nameHeader-edit">          <span>Beschreibung</span          ><button (click)="saveChannelDescription()" class="edit-button">            <span>Speichern</span>          </button>          <img            src="../../../assets/img/edit-channel/check_circle.png"            class="edit-icon-responsive"            (click)="saveChannelDescription()"          />        </div>        <div class="channel-name-container">          <input            type="text"            class="input-field"            [(ngModel)]="channelDescription"            id="channelDescription"            name="channelDescription"            placeholder="Dein Text hier"          />          <img src="../../../assets/img/header/tag.png" class="tag-icon" />        </div>        <div class="spacer-edit"></div>        <div class="nameHeader edit-description">          <span>Erstellt von</span>        </div>        <div>          @if(this.authService.currentUserSignal()?.uId ==          channelInfo.AllChannelsCreatorsUids[channelInfo.currentChannelNumber]){          <span class="creator-name">{{            this.authService.currentUserSignal()?.name          }}</span>          }@else {          <span class="creator-name">            {{              this.channelInfo.AllChannelsCreatorsNames[                this.channelInfo.currentChannelNumber              ]            }}          </span>          }        </div>      </div>      <div class="responsive-userlist-container">        <div class="userlist">          <div            *ngFor="              let user of channelInfo.AllChannelsUsers[                channelInfo.currentChannelNumber              ];              let i = index            "          >            <div class="user fs-18" (click)="openUserProfil(i)">              <img                src="{{                  channelInfo.AllChannelsImages[                    channelInfo.currentChannelNumber                  ][i]                }}"                class="selected-img"              />              @if(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]              == authService.currentUserSignal()?.uId){              <span>{{ authService.currentUserSignal()?.name }}</span>              }@else{              <span>{{ user }}</span>              } @if(authService.currentUserSignal()?.uId ==              channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i]              ||              this.channelInfo.onlineUserUidList.includes(channelInfo.GlobalChannelUids[channelInfo.currentChannelNumber][i])){              <img                class="online-icon"                src="../../../assets/img/sidebar/Online.png"              />              }@else {              <img                class="online-icon"                src="../../../assets/img/sidebar/Offline.png"              />              }            </div>          </div>        </div>      </div>      <div class="button-container">        <button type="submit" class="abandon" (click)="abandon()">          <span class="fs-18 button-text">Channel verlassen</span>        </button>      </div>    </div>  </div></div></div>'
+    var COMPONENTS = [{'name': 'AddUserToChannelComponent', 'selector': 'app-add-user-to-channel'},{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'ChannelChatAreaComponent', 'selector': 'app-channel-chat-area'},{'name': 'ChannelComponent', 'selector': 'app-channel'},{'name': 'ChannelHeaderComponent', 'selector': 'app-channel-header'},{'name': 'ChannelMessageInputComponent', 'selector': 'app-channel-message-input'},{'name': 'ChannelUserlistComponent', 'selector': 'app-channel-userlist'},{'name': 'CreateChannelComponent', 'selector': 'app-create-channel'},{'name': 'DirectMessagesChatAreaComponent', 'selector': 'app-direct-messages-chat-area'},{'name': 'DirectMessagesComponent', 'selector': 'app-direct-messages'},{'name': 'DirectMessagesHeaderComponent', 'selector': 'app-direct-messages-header'},{'name': 'DirectMessagesMessageInputComponent', 'selector': 'app-direct-messages-message-input'},{'name': 'EditChannelComponent', 'selector': 'app-edit-channel'},{'name': 'EditProfilComponent', 'selector': 'app-edit-profil'},{'name': 'EditProfilContactformComponent', 'selector': 'app-edit-profil-contactform'},{'name': 'HeaderComponent', 'selector': 'app-header'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'ImpressumComponent', 'selector': 'app-impressum'},{'name': 'LogInComponent', 'selector': 'app-log-in'},{'name': 'NewMessageComponent', 'selector': 'app-new-message'},{'name': 'NewMessageHeaderComponent', 'selector': 'app-new-message-header'},{'name': 'NewMessageInputComponent', 'selector': 'app-new-message-input'},{'name': 'NewMessageSearchResultsComponent', 'selector': 'app-new-message-search-results'},{'name': 'OpenImgComponent', 'selector': 'app-open-img'},{'name': 'OpenSidebarComponent', 'selector': 'app-open-sidebar'},{'name': 'PasswordResetComponent', 'selector': 'app-password-reset'},{'name': 'PrivacyPolicyComponent', 'selector': 'app-privacy-policy'},{'name': 'ProfilOptionsPopupComponent', 'selector': 'app-profil-options-popup'},{'name': 'ReactionListComponent', 'selector': 'app-reaction-list'},{'name': 'ResetPasswordComponent', 'selector': 'app-reset-password'},{'name': 'SearchFieldComponent', 'selector': 'app-search-field'},{'name': 'SidebarComponent', 'selector': 'app-sidebar'},{'name': 'SignUpComponent', 'selector': 'app-sign-up'},{'name': 'ThreadChatAreaComponent', 'selector': 'app-thread-chat-area'},{'name': 'ThreadComponent', 'selector': 'app-thread'},{'name': 'ThreadHeaderComponent', 'selector': 'app-thread-header'},{'name': 'ThreadMessageInputComponent', 'selector': 'app-thread-message-input'},{'name': 'UserProfilComponent', 'selector': 'app-user-profil'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'EditChannelComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'EditChannelComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
