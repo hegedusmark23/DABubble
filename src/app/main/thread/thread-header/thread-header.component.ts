@@ -46,12 +46,34 @@ export class ThreadHeaderComponent {
     });
   }
 
+  /**
+   * Closes the current thread by invoking the thread service's closeThread method
+   * and updating the responsive service to indicate that the thread is no longer open.
+   *
+   * @method closeThread
+   * @memberof YourClassName
+   * @returns {void} This method does not return a value.
+   */
   closeThread() {
     this.threadService.closeThread();
     this.responsiveService.isThreadOpen = false;
   }
 
-  subChannels() {
+  /**
+   * Subscribes to the 'Channels' collection in Firestore and listens for updates.
+   * Upon receiving a snapshot, it processes each channel document,
+   * updates the allChannels array, and sets the currentChannel
+   * if the channel's ID matches the currentChannelId.
+   *
+   * @method subChannels
+   * @memberof YourClassName
+   * @returns {void} This method does not return a value.
+   *
+   * @example
+   * // To use this method, simply call it on an instance of YourClassName.
+   * instance.subChannels();
+   */
+  subChannels(): void {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
       this.allChannels = [];

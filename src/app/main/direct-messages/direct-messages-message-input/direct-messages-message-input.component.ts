@@ -106,6 +106,10 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the open user based on the selected channel from the direct message selection service.
+   * @returns {void}
+   */
   setOpenUser() {
     this.directMessageSelectionService
       .getSelectedChannel()
@@ -114,21 +118,25 @@ export class DirectMessagesMessageInputComponent implements OnInit {
       });
   }
 
+  /**
+   * Clears the input field by removing all text and span elements, and blurs the input div.
+   * @returns {void}
+   */
   clearInput() {
     if (typeof document !== 'undefined') {
       const div = document.getElementById('input');
 
       if (div) {
-        const childNodes = Array.from(div.childNodes); // Erstelle eine Kopie der Knoten
+        const childNodes = Array.from(div.childNodes); // Create a copy of the nodes
         for (const node of childNodes) {
           if (node.nodeType === Node.TEXT_NODE) {
-            node.nodeValue = ''; // Textknoten leeren
+            node.nodeValue = ''; // Clear text node
           } else if (node.nodeName === 'SPAN') {
-            node.remove(); // Entferne span-Element
+            node.remove(); // Remove span element
           }
         }
 
-        // Entferne den Fokus vom input-div
+        // Remove focus from the input div
         (div as HTMLElement).blur();
 
         this.showPlaceholder = true;
@@ -136,18 +144,30 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Hides the placeholder in the input field.
+   * @returns {void}
+   */
   removePlaceholder() {
     this.showPlaceholder = false;
   }
 
+  /**
+   * Restores the placeholder if the message textarea is empty.
+   * @returns {void}
+   */
   restorePlaceholder() {
     if (this.messageTextarea.nativeElement.innerText.trim() !== '') {
+      // Do nothing if there is text
     } else {
       this.showPlaceholder = true;
     }
   }
 
-  //speichert die bilder in den cache
+  /**
+   * Saves the selected file to the cache and updates the FileUrl.
+   * @returns {Promise<void>}
+   */
   async saveFileToCache() {
     if (this.selectedFile) {
       this.allowMessageSend = true;
@@ -161,7 +181,10 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }
   }
 
-  //löscht die bilder aus den cache
+  /**
+   * Deletes the selected file from the cache and resets related variables.
+   * @returns {void}
+   */
   deleteFile() {
     let name = this.selectedFile!.name;
     this.fileUploadeService.deleteFile(name!, 'messangeCache');
@@ -170,7 +193,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     this.allowMessageSend = false;
   }
 
-  //läd die bilder in den cache wenn sie ausgewählt wurde
+  /**
+   * Handles the file selection event, deletes the previous file if necessary,
+   * and saves the new file to the cache.
+   * @param {Event} event - The file selection event.
+   * @returns {void}
+   */
   onFileSelected(event: any) {
     if (this.FileUrl) {
       this.deleteFile();
@@ -179,6 +207,11 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     this.saveFileToCache();
   }
 
+  /**
+   * Saves the message and related data to Firestore.
+   * @param {Event} event - The event that triggered the save action.
+   * @returns {Promise<void>}
+   */
   async saveMessage(event: any) {
     let messageId = '';
     this.user = this.authService.currentUserSignal()?.uId;
@@ -186,7 +219,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     event?.preventDefault();
     this.tagUserSelector = false;
 
-    // Finde das 'contenteditable' Div Element
+    // Find the 'contenteditable' div element
     const messageTextarea = document.querySelector(
       '.textAreaDirectMessage'
     ) as HTMLElement;
@@ -231,7 +264,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
     this.updateDateTime();
 
-    // Speichere die Nachricht für den Sender
+    // Save the message for the sender
     const messageRef = doc(
       collection(this.firestore, 'direcmessages', this.user, this.openUser)
     );
@@ -243,7 +276,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         console.error(err);
       });
 
-    // Speichere die Nachricht für den Empfänger mit der gleichen ID
+    // Save the message for the recipient with the same ID
     const recipientRef = doc(
       this.firestore,
       'direcmessages',
@@ -258,13 +291,16 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         console.error(err);
       });
 
-    // Leere das Input-Feld
+    // Clear the input field
     this.clearInput();
     this.tagUserSelector = false;
     this.tagChannelSelector = false;
   }
 
-  //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
+  /**
+   * Uploads the selected file to storage and updates the FileUrl.
+   * @returns {Promise<void>}
+   */
   async saveFile() {
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
@@ -275,7 +311,10 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }
   }
 
-  //gibt die vorhandenen informationen als JSON zurück
+  /**
+   * Returns the current message information as a JSON object.
+   * @returns {Object} The message data in JSON format.
+   */
   toJSON() {
     return {
       id: this.message.id,
@@ -301,87 +340,109 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     };
   }
 
-  //erstellt die daten der aktuellen zeit
+  /**
+   * Updates the message object with the current date and time information.
+   * @returns {void}
+   */
   updateDateTime(): void {
     const now = new Date();
     this.message.weekday = now.toLocaleDateString('de-DE', { weekday: 'long' });
     this.message.year = now.getFullYear();
-    this.message.month = now.getMonth() + 1; // Monate sind nullbasiert
+    this.message.month = now.getMonth() + 1; // Months are zero-based
     this.message.day = now.getDate();
     this.message.hour = now.getHours();
     this.message.minute = now.getMinutes();
     this.message.seconds = now.getSeconds();
-    this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
+    this.message.milliseconds = now.getMilliseconds(); // Add milliseconds
     this.message.uid = this.authService.currentUserSignal()?.uId;
   }
 
-  //fügt die restlichen variablen ins model
-  addIMG() {
+  /**
+   * Adds the file URL to the message object.
+   * @returns {void}
+   */
+  addIMG(): void {
     this.message.fileUrl = this.FileUrl;
   }
 
+  /**
+   * Inserts an emoji at the current cursor position in the textarea.
+   *
+   * @param {any} emoji - The emoji to insert. Can be a native emoji object or a string.
+   */
   insertEmoji(emoji: any) {
-    // Holen Sie sich das referenzierte `div`-Element
+    // Get the referenced `div` element
     const textarea = this.messageTextarea.nativeElement;
 
-    // Stellen Sie sicher, dass das `div` den Fokus hat
+    // Ensure the `div` is focused
     textarea.focus();
 
-    // Aktuelle Selektion erhalten
+    // Get current selection
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      console.error('Keine gültige Selektion gefunden.');
+      console.error('No valid selection found.');
       return;
     }
 
-    // Den aktuellen Range (Bereich) erhalten
+    // Get the current range
     const range = selection.getRangeAt(0);
 
-    // Sicherstellen, dass der Range im `textarea` liegt
+    // Ensure the range is within the `textarea`
     const commonAncestor = range.commonAncestorContainer;
     if (!textarea.contains(commonAncestor)) {
-      console.error('Selektion liegt außerhalb des `textarea`.');
+      console.error('Selection is outside the `textarea`.');
       return;
     }
 
-    // Emoji Text extrahieren
+    // Extract emoji text
     const emojiText = emoji.native || emoji.emoji || emoji;
     if (!emojiText) {
-      console.error('Kein gültiger Emoji-Text gefunden.');
+      console.error('No valid emoji text found.');
       return;
     }
 
-    // Emoji als Textnode erstellen
+    // Create a text node for the emoji
     const textNode = document.createTextNode(emojiText);
 
-    // Range auf das Ende des Inhalts setzen
-    range.selectNodeContents(textarea); // Wählt den gesamten Inhalt des `div`
-    range.collapse(false); // Verschiebt den Cursor ans Ende
+    // Move the range to the end of the content
+    range.selectNodeContents(textarea); // Selects all content in the `div`
+    range.collapse(false); // Moves the cursor to the end
 
-    // Textnode am Ende des Inhalts einfügen
+    // Insert the text node at the end of the content
     range.insertNode(textNode);
 
-    // Den Cursor direkt nach dem eingefügten Emoji setzen
+    // Set the cursor directly after the inserted emoji
     range.setStartAfter(textNode);
     range.setEndAfter(textNode);
 
-    // Selektion aktualisieren
+    // Update the selection
     selection.removeAllRanges();
     selection.addRange(range);
 
-    // Scroll position anpassen (optional, falls benötigt)
+    // Adjust scroll position (optional, if needed)
     textarea.scrollTop = textarea.scrollHeight;
   }
 
+  /**
+   * Adds an emoji based on the event triggered.
+   *
+   * @param {any} $event - The event object containing the emoji to add.
+   */
   addEmoji($event: any) {
     let element = $event;
     this.insertEmoji(element['emoji'].native);
   }
 
+  /**
+   * Toggles the emoji selector visibility.
+   */
   openEmojiSelector() {
     this.emojiSelector = !this.emojiSelector;
   }
 
+  /**
+   * Subscribes to user data in Firestore and updates the local user list.
+   */
   subUser() {
     const q = query(collection(this.firestore, 'Users'), limit(1000));
     onSnapshot(q, (list) => {
@@ -392,6 +453,13 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Converts a user object from Firestore into a standardized format.
+   *
+   * @param {any} obj - The user object from Firestore.
+   * @param {string} id - The user ID.
+   * @returns {object} - The formatted user object.
+   */
   setNoteObjectUser(obj: any, id: string) {
     return {
       email: obj.email || '',
@@ -401,6 +469,9 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     };
   }
 
+  /**
+   * Subscribes to channel data in Firestore and updates the local channel list.
+   */
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
@@ -418,6 +489,13 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Converts a channel object from Firestore into a standardized format.
+   *
+   * @param {any} obj - The channel object from Firestore.
+   * @param {string} id - The channel ID.
+   * @returns {object} - The formatted channel object.
+   */
   setNoteChannel(obj: any, id: string) {
     return {
       id: id,
@@ -429,6 +507,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     };
   }
 
+  /**
+   * Retrieves a user object by UID from the local user list.
+   *
+   * @param {any} uid - The UID of the user to retrieve.
+   * @returns {object | undefined} - The user object or undefined if not found.
+   */
   getUser(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
@@ -438,27 +522,50 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Clears the last tagged user from the input.
+   */
   clearTagUser() {
     this.clearTag('@');
   }
 
+  /**
+   * Adds a user tag to the input.
+   *
+   * @param {string} userName - The name of the user to tag.
+   * @param {any} uid - The UID of the user to tag.
+   */
   addTagUser(userName: string, uid: any) {
     this.addTag('@', userName, uid, this.openUserProfil);
   }
 
+  /**
+   * Clears the last tagged channel from the input.
+   */
   clearTagChannel() {
     this.clearTag('#');
   }
 
+  /**
+   * Adds a channel tag to the input.
+   *
+   * @param {string} channelName - The name of the channel to tag.
+   * @param {any} uid - The UID of the channel to tag.
+   */
   addTagChannel(channelName: string, uid: any) {
     this.addTag('#', channelName, uid, this.openChannel);
   }
 
+  /**
+   * Clears the last tag of a specified type from the input.
+   *
+   * @param {string} tagSymbol - The tag symbol to clear ('@' or '#').
+   */
   clearTag(tagSymbol: string) {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
+      console.error('The input element was not found.');
       return;
     }
 
@@ -525,6 +632,14 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Adds a tag at the last known position in the input.
+   *
+   * @param {string} tagSymbol - The tag symbol to use ('@' or '#').
+   * @param {string} tag - The name of the tag to add.
+   * @param {any} uid - The UID associated with the tag.
+   * @param {function} openFunction - A function to call when the tag is clicked.
+   */
   addTag(
     tagSymbol: string,
     tag: string,
@@ -535,7 +650,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
     if (!inputElement || this.lastAtPosition === null) {
       console.error(
-        'Das Eingabeelement wurde nicht gefunden oder die Position des Symbols ist unbekannt.'
+        'The input element was not found or the position of the symbol is unknown.'
       );
       return;
     }
@@ -618,6 +733,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     this.tagUserSelector = false;
   }
 
+  /**
+   * Handles the keydown event for the input element.
+   * This function processes mentions (@) and channels (#) based on cursor position.
+   *
+   * @param {KeyboardEvent} event - The keyboard event triggered on key down.
+   */
   onKeyDown(event: KeyboardEvent) {
     const inputElement = event.target as HTMLElement;
 
@@ -625,7 +746,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
       const selection = window.getSelection();
       const range = selection?.getRangeAt(0);
 
-      // Berechne die tatsächliche Cursor-Position über den gesamten Textinhalt
+      // Calculate the actual cursor position across the entire text content
       let cursorPosition = 0;
       const iterator = document.createNodeIterator(
         inputElement,
@@ -644,23 +765,24 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         }
       }
 
-      // Debugging: Originaler Text im Input-Element
+      // Debugging: Original text in the input element
       const originalText = inputElement.textContent || '';
 
-      if (originalText.length > 0) {
-        this.allowMessageSend = true;
-      } else {
-        this.allowMessageSend = false;
-      }
+      this.allowMessageSend = originalText.length > 0;
 
-      // Text ohne Spans
+      // Text without spans
       const text = this.getTextWithoutSpans(inputElement) || '';
 
-      // Finde das letzte @- oder #-Zeichen vor dem Cursor
+      // Find the last @ or # character before the cursor
       let atIndex = text.lastIndexOf('@', cursorPosition - 1);
       let hashIndex = text.lastIndexOf('#', cursorPosition - 1);
 
-      // Funktion zum Verarbeiten von Erwähnungen (@) und Kanälen (#)
+      /**
+       * Processes mentions (@) or channels (#) based on the index and type.
+       *
+       * @param {number} index - The index of the mention or channel.
+       * @param {'user' | 'channel'} type - The type of tag to process.
+       */
       const processTag = (index: number, type: 'user' | 'channel') => {
         let textAfterTag = text.substring(index + 1, cursorPosition);
         const spaceIndex = textAfterTag.search(/\s/);
@@ -676,7 +798,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
             this.userSearch = searchTerm;
             this.tagUserSelector = true;
             this.tagChannelSelector = false;
-            // Suche nach passenden Benutzern
+            // Search for matching users
             this.allUids = [];
             for (let i = 0; i < this.currentChannel.uids.length; i++) {
               const element = this.currentChannel.uids[i];
@@ -689,7 +811,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
             this.channelSearch = searchTerm;
             this.tagChannelSelector = true;
             this.tagUserSelector = false;
-            // Suche nach passenden Kanälen
+            // Search for matching channels
             this.allChannelArray = [];
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
@@ -708,7 +830,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
         }
       };
 
-      // Prüfe, ob der Cursor in einem @- oder #-Bereich ist
+      // Check if the cursor is in a @ or # area
       if (atIndex !== -1 && (hashIndex === -1 || atIndex > hashIndex)) {
         processTag(atIndex, 'user');
       } else if (hashIndex !== -1) {
@@ -720,6 +842,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     }, 0);
   }
 
+  /**
+   * Gets the text content of an element, excluding any <span> elements.
+   *
+   * @param {HTMLElement} element - The element from which to extract text.
+   * @returns {string} The text content without spans.
+   */
   getTextWithoutSpans(element: HTMLElement): string {
     let text = '';
     element.childNodes.forEach((node) => {
@@ -735,44 +863,48 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     return text;
   }
 
+  /**
+   * Opens the tag user selector when the "@" symbol is used.
+   * If "@" is the last character, it removes it; otherwise, it adds it.
+   */
   openTag() {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
+      console.error('The input element was not found.');
       return;
     }
 
-    // Überprüfen, ob das letzte Zeichen ein @ ist
+    // Check if the last character is an @
     const lastChild =
       inputElement.childNodes[inputElement.childNodes.length - 1];
     if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
       if (lastChild.textContent!.endsWith('@')) {
-        // @-Zeichen entfernen
+        // Remove @ character
         lastChild.textContent = lastChild.textContent!.slice(0, -1);
 
-        // Optional: Wenn kein Text mehr vorhanden ist, den leeren Textknoten entfernen
+        // Optionally remove the empty text node
         if (lastChild.textContent === '') {
           inputElement.removeChild(lastChild);
         }
 
-        // Tag User Selector deaktivieren
+        // Disable tag user selector
         this.tagUserSelector = false;
       } else {
-        // @-Zeichen hinzufügen
+        // Add @ character
         lastChild.textContent += '@';
         this.tagUserSelector = true;
-        this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
+        this.triggerAtKeyDown(inputElement); // Execute onKeyDown for @
       }
     } else {
-      // Neues @-Zeichen hinzufügen, wenn kein letzter Textknoten existiert
+      // Add a new @ symbol if there is no last text node
       const atSymbol = document.createTextNode('@');
       inputElement.appendChild(atSymbol);
       this.tagUserSelector = true;
-      this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
+      this.triggerAtKeyDown(inputElement); // Execute onKeyDown for @
     }
 
-    // Cursor nach dem @-Zeichen setzen, wenn hinzugefügt
+    // Set cursor position after the @ symbol if added
     if (this.tagUserSelector) {
       const range = document.createRange();
       const selection = window.getSelection();
@@ -785,26 +917,36 @@ export class DirectMessagesMessageInputComponent implements OnInit {
       selection!.removeAllRanges();
       selection!.addRange(range);
 
-      // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
+      // Optionally store the position of the @ symbol for addTagUser function
       this.lastAtPosition = inputElement.innerText.length;
     }
   }
 
+  /**
+   * Triggers a keydown event for the "@" symbol.
+   *
+   * @param {HTMLElement} inputElement - The input element to dispatch the event on.
+   */
   triggerAtKeyDown(inputElement: HTMLElement) {
-    // Erstelle ein keydown-Event für das @-Zeichen
+    // Create a keydown event for the @ symbol
     const event = new KeyboardEvent('keydown', {
       key: '@',
-      code: 'Digit2', // Standardmäßig das @-Zeichen auf QWERTZ-Tastaturen
-      keyCode: 50, // KeyCode für 2/@
-      charCode: 64, // charCode für @
-      bubbles: true, // Event kann nach oben "blubbern"
-      cancelable: true, // Event kann abgebrochen werden
+      code: 'Digit2', // Default for @ symbol on QWERTZ keyboards
+      keyCode: 50, // KeyCode for 2/@
+      charCode: 64, // charCode for @
+      bubbles: true, // Event can bubble up
+      cancelable: true, // Event can be canceled
     });
 
-    // Manuell die onKeyDown Funktion auslösen
+    // Manually trigger the onKeyDown function
     inputElement.dispatchEvent(event);
   }
 
+  /**
+   * Opens the user profile based on the user ID.
+   *
+   * @param {any} uid - The user ID of the profile to open.
+   */
   openUserProfil(uid: any) {
     this.channelInfo.userProfilOpen = true;
     this.channelInfo.activeUserProfil = 0;
@@ -814,12 +956,23 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     this.channelInfo.activeUid = uid;
   }
 
+  /**
+   * Opens a channel based on the user ID.
+   *
+   * @param {any} uid - The user ID of the channel to open.
+   */
   openChannel(uid: any) {
     this.channelSelectionService.openChannel();
     this.channelSelectionService.setSelectedChannel(uid);
   }
 
-  log(channel: any) {
+  /**
+   * Logs the provided channel.
+   *
+   * @param {any} channel - The channel to log.
+   * @returns {any} The logged channel.
+   */
+  log(channel: any): any {
     return channel;
   }
 }

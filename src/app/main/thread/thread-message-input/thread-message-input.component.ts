@@ -89,6 +89,10 @@ export class ThreadMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Subscribes to messages in the current thread and updates `allMessages` with the latest messages.
+   * @returns {void}
+   */
   subMessages() {
     const q = query(
       collection(
@@ -111,21 +115,25 @@ export class ThreadMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Clears the input area by removing all text and spans, and blurs the input div.
+   * @returns {void}
+   */
   clearInput() {
     if (typeof document !== 'undefined') {
       const div = document.getElementById('ThreadInput');
 
       if (div) {
-        const childNodes = Array.from(div.childNodes); // Erstelle eine Kopie der Knoten
+        const childNodes = Array.from(div.childNodes); // Create a copy of the nodes
         for (const node of childNodes) {
           if (node.nodeType === Node.TEXT_NODE) {
-            node.nodeValue = ''; // Textknoten leeren
+            node.nodeValue = ''; // Clear text nodes
           } else if (node.nodeName === 'SPAN') {
-            node.remove(); // Entferne span-Element
+            node.remove(); // Remove span elements
           }
         }
 
-        // Entferne den Fokus vom input-div
+        // Remove focus from the input div
         (div as HTMLElement).blur();
 
         this.showPlaceholder = true;
@@ -133,18 +141,31 @@ export class ThreadMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Hides the placeholder in the input area.
+   * @returns {void}
+   */
   removePlaceholder() {
     this.showPlaceholder = false;
   }
 
+  /**
+   * Restores the placeholder if the message textarea is empty.
+   * @returns {void}
+   */
   restorePlaceholder() {
     if (this.messageTextarea.nativeElement.innerText.trim() !== '') {
+      // Do nothing if textarea is not empty
     } else {
       this.showPlaceholder = true;
     }
   }
 
-  //speichert die bilder in den cache
+  /**
+   * Saves the selected file to the cache.
+   * @async
+   * @returns {Promise<void>}
+   */
   async saveFileToCache() {
     if (this.selectedFile) {
       this.allowMessageSend = true;
@@ -158,7 +179,10 @@ export class ThreadMessageInputComponent implements OnInit {
     }
   }
 
-  //löscht die bilder aus den cache
+  /**
+   * Deletes the selected file from the cache.
+   * @returns {void}
+   */
   deleteFile() {
     let name = this.selectedFile!.name;
     this.fileUploadeService.deleteFile(name!, 'messangeCache');
@@ -167,7 +191,11 @@ export class ThreadMessageInputComponent implements OnInit {
     this.allowMessageSend = false;
   }
 
-  //läd die bilder in den cache wenn sie ausgewählt wurde
+  /**
+   * Handles the file selection and saves it to the cache.
+   * @param {Event} event - The file selection event.
+   * @returns {void}
+   */
   onFileSelected(event: any) {
     if (this.FileUrl) {
       this.deleteFile();
@@ -176,11 +204,17 @@ export class ThreadMessageInputComponent implements OnInit {
     this.saveFileToCache();
   }
 
+  /**
+   * Saves the message to the Firestore database and handles file uploads.
+   * @async
+   * @param {Event} event - The form submission event.
+   * @returns {Promise<void>}
+   */
   async saveMessage(event: any) {
     let messageId = '';
     event?.preventDefault();
     this.tagUserSelector = false;
-    // Finde das 'contenteditable' Div Element
+    // Find the 'contenteditable' div element
     const messageTextarea = document.querySelector(
       '.ThreadTextArea'
     ) as HTMLElement;
@@ -194,41 +228,41 @@ export class ThreadMessageInputComponent implements OnInit {
           child.nodeType === Node.ELEMENT_NODE &&
           (child as HTMLElement).tagName === 'SPAN'
         ) {
-          // Es ist ein span-Element, extrahiere das data-uid
+          // It's a span element, extract the data-uid
           const uid = (child as HTMLElement).getAttribute('data-uid');
           if (uid) {
-            // Überprüfe das erste Zeichen des data-uid
+            // Check the first character of data-uid
             const firstChar = (child as HTMLElement).innerHTML.charAt(0);
             if (firstChar === '@') {
               result += `₿ЯæŶ∆Ωг${uid} `;
             } else if (firstChar === '#') {
               result += `₣Ж◊ŦΨø℧${uid} `;
             } else {
-              // Standardfall, falls das erste Zeichen weder @ noch # ist
+              // Default case if first character is neither @ nor #
               result += `${uid} `;
             }
           }
         } else if (child.nodeType === Node.TEXT_NODE) {
-          // Es ist ein Textknoten, füge den Textinhalt hinzu
+          // It's a text node, add the text content
           result += child.textContent;
         }
       });
 
-      // Speichere das Ergebnis in der message.message Variable
-      this.message.message = result.trim(); // Ergebnis z.B.: "asddasd @zqk0MWq9TcWYUdYtXpTTKsnFro12 sdasad @7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2"
+      // Save the result in the message.message variable
+      this.message.message = result.trim(); // Result example: "asddasd @zqk0MWq9TcWYUdYtXpTTKsnFro12 sdasad @7gMhlfm1xsVsPe7Hq7kdIPzLMQJ2"
     }
 
     if (this.message.message.length < 1 && !this.selectedFile) {
       return;
     }
-    // Überprüfe, ob eine Datei ausgewählt ist und speichere sie
+    // Check if a file is selected and save it
     if (this.selectedFile) {
       await this.saveFile();
       this.addIMG();
       this.deleteFile();
     }
 
-    // Aktualisiere die Zeit
+    // Update the timestamp
     this.updateDateTime();
 
     await addDoc(
@@ -245,13 +279,18 @@ export class ThreadMessageInputComponent implements OnInit {
       console.error(err);
     });
 
-    //input leeren
+    // Clear the input
     this.clearInput();
     this.tagUserSelector = false;
     this.tagChannelSelector = false;
     this.updateMessageVariable();
   }
 
+  /**
+   * Updates the message variable by updating the thread count and the last thread message time in Firestore.
+   * @async
+   * @returns {Promise<void>}
+   */
   async updateMessageVariable() {
     let value = this.allMessages.length;
     const messageRef = doc(
@@ -267,9 +306,15 @@ export class ThreadMessageInputComponent implements OnInit {
         threadCount: value,
         lastThreadMessage: this.getCurrentTime(),
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   }
 
+  /**
+   * Gets the current time formatted as "HH:MM".
+   * @returns {string} The current time in "HH:MM" format.
+   */
   getCurrentTime() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -277,7 +322,11 @@ export class ThreadMessageInputComponent implements OnInit {
     return `${hours}:${minutes}`;
   }
 
-  //wenn ein bild ausgewählt ist wird diese ins storage hochgeladen und dessen url in der variable FileUrl gespeichert
+  /**
+   * Uploads the selected file to storage and stores its URL in the `FileUrl` variable.
+   * @async
+   * @returns {Promise<void>}
+   */
   async saveFile() {
     if (this.selectedFile) {
       const imageUrl = await this.fileUploadeService.uploadFile(
@@ -288,7 +337,10 @@ export class ThreadMessageInputComponent implements OnInit {
     }
   }
 
-  //gibt die vorhandenen informationen als JSON zurück
+  /**
+   * Returns the existing information as a JSON object.
+   * @returns {Object} The message information in JSON format.
+   */
   toJSON() {
     return {
       id: this.message.id,
@@ -314,87 +366,108 @@ export class ThreadMessageInputComponent implements OnInit {
     };
   }
 
-  //erstellt die daten der aktuellen zeit
+  /**
+   * Updates the current date and time information in the message object.
+   * @returns {void}
+   */
   updateDateTime(): void {
     const now = new Date();
     this.message.weekday = now.toLocaleDateString('de-DE', { weekday: 'long' });
     this.message.year = now.getFullYear();
-    this.message.month = now.getMonth() + 1; // Monate sind nullbasiert
+    this.message.month = now.getMonth() + 1; // Months are zero-based
     this.message.day = now.getDate();
     this.message.hour = now.getHours();
     this.message.minute = now.getMinutes();
     this.message.seconds = now.getSeconds();
-    this.message.milliseconds = now.getMilliseconds(); // Millisekunden hinzufügen
+    this.message.milliseconds = now.getMilliseconds(); // Add milliseconds
     this.message.uid = this.authService.currentUserSignal()?.uId;
   }
 
-  //fügt die restlichen variablen ins model
+  /**
+   * Adds the remaining variables to the message model.
+   * @returns {void}
+   */
   addIMG() {
     this.message.fileUrl = this.FileUrl;
   }
 
+  /**
+   * Inserts an emoji into the message textarea at the current cursor position.
+   * @param {Object} emoji - The emoji object containing emoji text.
+   * @returns {void}
+   */
   insertEmoji(emoji: any) {
-    // Holen Sie sich das referenzierte `div`-Element
+    // Get the referenced `div` element
     const textarea = this.messageTextarea.nativeElement;
 
-    // Stellen Sie sicher, dass das `div` den Fokus hat
+    // Ensure the `div` is focused
     textarea.focus();
 
-    // Aktuelle Selektion erhalten
+    // Get the current selection
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      console.error('Keine gültige Selektion gefunden.');
+      console.error('No valid selection found.');
       return;
     }
 
-    // Den aktuellen Range (Bereich) erhalten
+    // Get the current range
     const range = selection.getRangeAt(0);
 
-    // Sicherstellen, dass der Range im `textarea` liegt
+    // Ensure the range is within the `textarea`
     const commonAncestor = range.commonAncestorContainer;
     if (!textarea.contains(commonAncestor)) {
-      console.error('Selektion liegt außerhalb des `textarea`.');
+      console.error('Selection is outside the `textarea`.');
       return;
     }
 
-    // Emoji Text extrahieren
+    // Extract emoji text
     const emojiText = emoji.native || emoji.emoji || emoji;
     if (!emojiText) {
-      console.error('Kein gültiger Emoji-Text gefunden.');
+      console.error('No valid emoji text found.');
       return;
     }
 
-    // Emoji als Textnode erstellen
+    // Create a text node for the emoji
     const textNode = document.createTextNode(emojiText);
 
-    // Range auf das Ende des Inhalts setzen
-    range.selectNodeContents(textarea); // Wählt den gesamten Inhalt des `div`
-    range.collapse(false); // Verschiebt den Cursor ans Ende
+    // Set the range to the end of the contents
+    range.selectNodeContents(textarea); // Select the entire content of the `div`
+    range.collapse(false); // Move the cursor to the end
 
-    // Textnode am Ende des Inhalts einfügen
+    // Insert the text node at the end of the content
     range.insertNode(textNode);
 
-    // Den Cursor direkt nach dem eingefügten Emoji setzen
+    // Move the cursor directly after the inserted emoji
     range.setStartAfter(textNode);
     range.setEndAfter(textNode);
 
-    // Selektion aktualisieren
+    // Update the selection
     selection.removeAllRanges();
     selection.addRange(range);
 
-    // Scroll position anpassen (optional, falls benötigt)
+    // Adjust scroll position (optional, if needed)
     textarea.scrollTop = textarea.scrollHeight;
   }
 
+  /**
+   * Adds an emoji to the input based on the event triggered.
+   * @param {any} $event - The event object containing the emoji data.
+   */
   addEmoji($event: any) {
     let element = $event;
     this.insertEmoji(element['emoji'].native);
   }
 
+  /**
+   * Toggles the visibility of the emoji selector.
+   */
   openEmojiSelector() {
     this.emojiSelector = !this.emojiSelector;
   }
 
+  /**
+   * Subscribes to the 'Users' collection in Firestore and populates allUser with user data.
+   */
   subUser() {
     const q = query(collection(this.firestore, 'Users'), limit(1000));
     onSnapshot(q, (list) => {
@@ -407,6 +480,10 @@ export class ThreadMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Subscribes to the 'Channels' collection in Firestore and populates allChannel with channel data.
+   * Updates the current channel if it matches the currentChannelId.
+   */
   subChannels() {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
@@ -427,6 +504,11 @@ export class ThreadMessageInputComponent implements OnInit {
     });
   }
 
+  /**
+   * Retrieves a user object by its unique identifier (uid).
+   * @param {any} uid - The unique identifier of the user.
+   * @returns {any} The user object if found; otherwise, undefined.
+   */
   getUser(uid: any) {
     for (let i = 0; i < this.allUser.length; i++) {
       const element = this.allUser[i];
@@ -436,22 +518,42 @@ export class ThreadMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Clears the last tagged user symbol (@) from the input.
+   */
   clearTagUser() {
     this.clearTag('@');
   }
 
+  /**
+   * Adds a tagged user to the input field.
+   * @param {string} userName - The name of the user to tag.
+   * @param {any} uid - The unique identifier of the user to tag.
+   */
   addTagUser(userName: string, uid: any) {
     this.addTag('@', userName, uid, this.openUserProfil);
   }
 
+  /**
+   * Clears the last tagged channel symbol (#) from the input.
+   */
   clearTagChannel() {
     this.clearTag('#');
   }
 
+  /**
+   * Adds a tagged channel to the input field.
+   * @param {string} channelName - The name of the channel to tag.
+   * @param {any} uid - The unique identifier of the channel to tag.
+   */
   addTagChannel(channelName: string, uid: any) {
     this.addTag('#', channelName, uid, this.openChannel);
   }
 
+  /**
+   * Clears the last tag symbol from the input.
+   * @param {string} tagSymbol - The symbol to clear (either '@' or '#').
+   */
   clearTag(tagSymbol: string) {
     const inputElement = document.getElementById('ThreadInput') as HTMLElement;
 
@@ -524,6 +626,13 @@ export class ThreadMessageInputComponent implements OnInit {
     }
   }
 
+  /**
+   * Adds a tagged element to the input based on the tag symbol.
+   * @param {string} tagSymbol - The symbol for tagging (either '@' or '#').
+   * @param {string} tag - The name of the tag to add.
+   * @param {any} uid - The unique identifier of the tagged user or channel.
+   * @param {(uid: any) => void} openFunction - The function to call when the tagged element is clicked.
+   */
   addTag(
     tagSymbol: string,
     tag: string,
@@ -617,6 +726,10 @@ export class ThreadMessageInputComponent implements OnInit {
     this.tagUserSelector = false;
   }
 
+  /**
+   * Handles key down events in the input field and manages tagging functionality.
+   * @param {KeyboardEvent} event - The keyboard event triggered.
+   */
   onKeyDown(event: KeyboardEvent) {
     const inputElement = event.target as HTMLElement;
 
@@ -624,7 +737,7 @@ export class ThreadMessageInputComponent implements OnInit {
       const selection = window.getSelection();
       const range = selection?.getRangeAt(0);
 
-      // Berechne die tatsächliche Cursor-Position über den gesamten Textinhalt
+      // Calculate actual cursor position across the text content
       let cursorPosition = 0;
       const iterator = document.createNodeIterator(
         inputElement,
@@ -643,7 +756,7 @@ export class ThreadMessageInputComponent implements OnInit {
         }
       }
 
-      // Debugging: Originaler Text im Input-Element
+      // Debugging: Original text in input element
       const originalText = inputElement.textContent || '';
 
       if (originalText.length > 0) {
@@ -652,14 +765,14 @@ export class ThreadMessageInputComponent implements OnInit {
         this.allowMessageSend = false;
       }
 
-      // Text ohne Spans
+      // Text without spans
       const text = this.getTextWithoutSpans(inputElement) || '';
 
-      // Finde das letzte @- oder #-Zeichen vor dem Cursor
+      // Find the last @ or # symbol before the cursor
       let atIndex = text.lastIndexOf('@', cursorPosition - 1);
       let hashIndex = text.lastIndexOf('#', cursorPosition - 1);
 
-      // Funktion zum Verarbeiten von Erwähnungen (@) und Kanälen (#)
+      // Function to process mentions (@) and channels (#)
       const processTag = (index: number, type: 'user' | 'channel') => {
         let textAfterTag = text.substring(index + 1, cursorPosition);
         const spaceIndex = textAfterTag.search(/\s/);
@@ -675,7 +788,7 @@ export class ThreadMessageInputComponent implements OnInit {
             this.userSearch = searchTerm;
             this.tagUserSelector = true;
             this.tagChannelSelector = false;
-            // Suche nach passenden Benutzern
+            // Search for matching users
             this.allUids = [];
             for (let i = 0; i < this.currentChannel.uids.length; i++) {
               const element = this.currentChannel.uids[i];
@@ -688,7 +801,7 @@ export class ThreadMessageInputComponent implements OnInit {
             this.channelSearch = searchTerm;
             this.tagChannelSelector = true;
             this.tagUserSelector = false;
-            // Suche nach passenden Kanälen
+            // Search for matching channels
             this.allChannelArray = [];
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
@@ -707,7 +820,7 @@ export class ThreadMessageInputComponent implements OnInit {
         }
       };
 
-      // Prüfe, ob der Cursor in einem @- oder #-Bereich ist
+      // Check if the cursor is in a @ or # area
       if (atIndex !== -1 && (hashIndex === -1 || atIndex > hashIndex)) {
         processTag(atIndex, 'user');
       } else if (hashIndex !== -1) {
@@ -719,6 +832,12 @@ export class ThreadMessageInputComponent implements OnInit {
     }, 0);
   }
 
+  /**
+   * Retrieves the text content of a given HTML element without including any text from <span> elements.
+   *
+   * @param {HTMLElement} element - The HTML element from which to extract text.
+   * @returns {string} - The concatenated text content of the element excluding <span> elements.
+   */
   getTextWithoutSpans(element: HTMLElement): string {
     let text = '';
     element.childNodes.forEach((node) => {
@@ -734,6 +853,13 @@ export class ThreadMessageInputComponent implements OnInit {
     return text;
   }
 
+  /**
+   * Toggles the opening of a user tag in an input field based on the presence of an '@' symbol.
+   * If the last character is '@', it removes it and disables the user selector.
+   * If it is not, it adds an '@' symbol and activates the user selector.
+   *
+   * @returns {void}
+   */
   openTag() {
     const inputElement = document.getElementById('ThreadInput') as HTMLElement;
 
@@ -742,36 +868,36 @@ export class ThreadMessageInputComponent implements OnInit {
       return;
     }
 
-    // Überprüfen, ob das letzte Zeichen ein @ ist
+    // Check if the last character is an '@' symbol
     const lastChild =
       inputElement.childNodes[inputElement.childNodes.length - 1];
     if (lastChild && lastChild.nodeType === Node.TEXT_NODE) {
       if (lastChild.textContent!.endsWith('@')) {
-        // @-Zeichen entfernen
+        // Remove '@' symbol
         lastChild.textContent = lastChild.textContent!.slice(0, -1);
 
-        // Optional: Wenn kein Text mehr vorhanden ist, den leeren Textknoten entfernen
+        // Optionally remove empty text node
         if (lastChild.textContent === '') {
           inputElement.removeChild(lastChild);
         }
 
-        // Tag User Selector deaktivieren
+        // Disable user tag selector
         this.tagUserSelector = false;
       } else {
-        // @-Zeichen hinzufügen
+        // Add '@' symbol
         lastChild.textContent += '@';
         this.tagUserSelector = true;
-        this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
+        this.triggerAtKeyDown(inputElement); // Trigger onKeyDown for '@'
       }
     } else {
-      // Neues @-Zeichen hinzufügen, wenn kein letzter Textknoten existiert
+      // Add new '@' symbol if no last text node exists
       const atSymbol = document.createTextNode('@');
       inputElement.appendChild(atSymbol);
       this.tagUserSelector = true;
-      this.triggerAtKeyDown(inputElement); // onKeyDown für @ ausführen
+      this.triggerAtKeyDown(inputElement); // Trigger onKeyDown for '@'
     }
 
-    // Cursor nach dem @-Zeichen setzen, wenn hinzugefügt
+    // Set cursor position after the '@' symbol if added
     if (this.tagUserSelector) {
       const range = document.createRange();
       const selection = window.getSelection();
@@ -784,26 +910,38 @@ export class ThreadMessageInputComponent implements OnInit {
       selection!.removeAllRanges();
       selection!.addRange(range);
 
-      // Optional: Die Position des @-Zeichens für die Funktion addTagUser speichern
+      // Optionally save the position of the '@' symbol for addTagUser function
       this.lastAtPosition = inputElement.innerText.length;
     }
   }
 
+  /**
+   * Triggers a keydown event for the '@' symbol within the input element.
+   *
+   * @param {HTMLElement} inputElement - The HTML element to dispatch the keydown event on.
+   * @returns {void}
+   */
   triggerAtKeyDown(inputElement: HTMLElement) {
-    // Erstelle ein keydown-Event für das @-Zeichen
+    // Create a keydown event for the '@' symbol
     const event = new KeyboardEvent('keydown', {
       key: '@',
-      code: 'Digit2', // Standardmäßig das @-Zeichen auf QWERTZ-Tastaturen
-      keyCode: 50, // KeyCode für 2/@
-      charCode: 64, // charCode für @
-      bubbles: true, // Event kann nach oben "blubbern"
-      cancelable: true, // Event kann abgebrochen werden
+      code: 'Digit2', // Default '@' symbol on QWERTZ keyboards
+      keyCode: 50, // KeyCode for 2/@
+      charCode: 64, // charCode for '@'
+      bubbles: true, // Event can bubble up
+      cancelable: true, // Event can be canceled
     });
 
-    // Manuell die onKeyDown Funktion auslösen
+    // Manually trigger the onKeyDown function
     inputElement.dispatchEvent(event);
   }
 
+  /**
+   * Opens the user profile for the specified user ID.
+   *
+   * @param {any} uid - The user ID of the profile to open.
+   * @returns {void}
+   */
   openUserProfil(uid: any) {
     this.channelInfo.userProfilOpen = true;
     this.channelInfo.activeUserProfil = 0;
@@ -813,11 +951,23 @@ export class ThreadMessageInputComponent implements OnInit {
     this.channelInfo.activeUid = uid;
   }
 
+  /**
+   * Opens a channel for the specified user ID.
+   *
+   * @param {any} uid - The user ID of the channel to open.
+   * @returns {void}
+   */
   openChannel(uid: any) {
     this.channelSelectionService.openChannel();
     this.channelSelectionService.setSelectedChannel(uid);
   }
 
+  /**
+   * Logs the provided channel information.
+   *
+   * @param {any} channel - The channel to log.
+   * @returns {any} - The logged channel information.
+   */
   log(channel: any) {
     return channel;
   }
