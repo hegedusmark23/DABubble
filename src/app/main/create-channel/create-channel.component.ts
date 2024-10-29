@@ -296,7 +296,8 @@ export class CreateChannelComponent {
  * - If an error occurs, it logs the error to the console.
  */
   async saveChannel() {
-    this.loading = true;
+    if (this.hideOrShowSidebar.selectedUsers.length > 0 || this.hideOrShowSidebar.addAllUsersToChannel){
+      this.loading = true;
     const channelRef = doc(
       collection(this.firestore, 'Channels'),
       this.generateId()
@@ -315,6 +316,9 @@ export class CreateChannelComponent {
         this.openChannel(this.result);
         this.result = '';
       });
+    }else{
+      alert('Bitte mindestens 1 Mitglieder auswählen!');
+    }
   }
 
   /*
