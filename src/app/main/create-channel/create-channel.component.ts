@@ -657,6 +657,16 @@ export class CreateChannelComponent {
     this.hideOrShowSidebar.emailList.push(this.hideOrShowSidebar.selectedEmails[i]);
   }
 
+  /**
+ * Deletes a user from the selected user lists.
+ *
+ * @param {number} i - The index of the user in the selected users list to delete.
+ *
+ * @description
+ * This function removes the user's data at index `i` from all selected lists, 
+ * including `selectedUsers`, `selectedImages`, `selectedUids`, and `selectedEmails`. 
+ * It is typically called when a user is deselected from the selected list.
+ */
   deleteFromUserList(i: number) {
     this.hideOrShowSidebar.selectedUsers.splice(i, 1);
     this.hideOrShowSidebar.selectedImages.splice(i, 1);
@@ -664,6 +674,14 @@ export class CreateChannelComponent {
     this.hideOrShowSidebar.selectedEmails.splice(i, 1);
   }
 
+  /**
+ * Copies the main sidebar lists to the filtered lists.
+ *
+ * @description
+ * This function clones all main lists (`userList`, `imageList`, `uidList`, `emailList`) 
+ * from `hideOrShowSidebar` into their respective filtered lists. This ensures the filtered 
+ * lists reflect the main list data, useful when resetting or initializing views.
+ */
   copySidebarLists() {
     this.filteredUserList = this.hideOrShowSidebar.userList.slice();
     this.filteredImageList = this.hideOrShowSidebar.imageList.slice();
@@ -671,6 +689,18 @@ export class CreateChannelComponent {
     this.filteredEmailList = this.hideOrShowSidebar.emailList.slice();
   }
 
+  /**
+ * Reintegrates a selected user back into the main user list and resets view filters.
+ *
+ * @param {number} i - The index of the user in the selected list to reintegrate.
+ *
+ * @description
+ * This function performs the following actions:
+ * 1. Adds the selected user data back to the main user lists via `addToUserList`.
+ * 2. Removes the user data from the selected lists with `deleteFromUserList`.
+ * 3. Updates the filtered lists to match the main lists with `copySidebarLists`.
+ * 4. Clears any search filters by resetting `clearFilteredLists` and the `searchTerm`.
+ */
   deleteUser(i: number) {
     this.addToUserList(i);
     this.deleteFromUserList(i);
