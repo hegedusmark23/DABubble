@@ -52,7 +52,6 @@ export class EditChannelComponent implements OnInit {
  */
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      console.log(channel);
       this.currentChannel = channel;
       this.subMessages();
     });

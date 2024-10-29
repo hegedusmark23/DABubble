@@ -67,7 +67,6 @@ export class EditProfilContactformComponent {
       return;
     } try {
       await this.authService.updateUserData(email, name);
-      console.log(this.authService.currentUserSignal());
       this.successMessage = 'Profil erfolgreich aktualisiert.';
       this.closePopup();
     } catch (error) {

@@ -61,7 +61,6 @@ export class CreateChannelComponent {
     } else {
       this.nameIsTaken = false;
     }
-    console.log(this.nameIsTaken);
   }
 
   /**
