@@ -42,18 +42,27 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   authService = inject(AuthService);
   responsiveService = inject(ResponsiveService);
   checkUserOnlineUser = true;
+
+  /**
+ * Initializes the component by fetching channels and users,
+ * and checks the screen width.
+ */
   ngOnInit(): void {
     this.sidebarService.fetchChannels();
     this.sidebarService.fetchUsers();
     this.checkScreenWidth();
   }
 
+  /**
+ * Adds an event listener for mouse movements after the component view has been initialized.
+ */
   ngAfterViewInit(): void {
     this.elementRef.nativeElement.addEventListener(
       'mousemove',
       this.setUserOnlineCheck.bind(this)
     );
   }
+
   constructor(
     private firestore: Firestore,
     private channelSelectionService: ChannelSelectionService,
@@ -62,12 +71,19 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     private elementRef: ElementRef
   ) {}
 
+  /**
+ * Checks if the user should be marked as online and sets the online status.
+ */
   setUserOnlineCheck() {
     if (this.checkUserOnlineUser) {
       this.setUserOnline();
       this.checkUserOnlineUser = false;
     }
   }
+
+  /**
+ * Marks the user as online and fetches the list of online users.
+ */
   setUserOnline() {
     if (this.authService.currentUserSignal()) {
       this.userOnline();
@@ -87,6 +103,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+ * Updates the current user’s online status in the Firestore database.
+ */
   async userOnline() {
     if (this.authService.currentUserSignal()?.uId) {
       const userRef = doc(
@@ -97,6 +116,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+ * Converts the user online data to JSON format.
+ * 
+ * @returns {Object} User online data in JSON format.
+ */
   toJSON() {
     return {
       online: 'yes',
@@ -105,6 +129,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     };
   }
 
+  /**
+ * Updates the timestamp for when the user went online.
+ */
   async onlineSince() {
     if (this.authService.currentUserSignal()?.uId) {
       const userRef = doc(
@@ -115,6 +142,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+ * Converts the user online status since timestamp to JSON format.
+ * 
+ * @returns {Object} User online status since data in JSON format.
+ */
   sinceToJSON() {
     return {
       online: 'yes',
@@ -123,6 +155,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     };
   }
 
+  /**
+ * Fetches the list of users currently online from the Firestore database.
+ */
   async fetchUsersOnline() {
     const usersCollection = collection(this.firestore, 'online');
     onSnapshot(
@@ -146,11 +181,19 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     );
   }
 
+  /**
+ * Listens for window resize events to adjust the UI accordingly.
+ * 
+ * @param {Event} event - The resize event.
+ */
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.checkScreenWidth();
   }
 
+  /**
+ * Checks the current width of the window and sets the responsive state.
+ */
   private checkScreenWidth(): void {
     if (typeof window !== 'undefined') {
       const width = window.innerWidth;
@@ -162,22 +205,39 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+ * Marks the channel title as hovered.
+ */
   hoverChannelTitle() {
     this.hoveredChannelTitle = true;
   }
 
+  /**
+ * Resets the hover state of the channel title.
+ */
   hoverEndChannelTitle() {
     this.hoveredChannelTitle = false;
   }
 
+  /**
+ * Toggles the active state of the channel title.
+ */
   activeteChannelTitle() {
     this.activetedChannelTitle = !this.activetedChannelTitle;
   }
 
+  /**
+ * Opens the dialog to create a new channel.
+ */
   addChannel() {
     this.sidebarService.createChannelDialogActive = true;
   }
 
+  /**
+ * Activates a channel based on the provided index.
+ * 
+ * @param {number} i - The index of the channel to activate.
+ */
   channelActive(i: number) {
     const reverseIndex = this.sidebarService.AllChannels.length - 1 - i;
     if (
@@ -196,6 +256,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+ * Activates a user for direct messaging.
+ * 
+ * @param {number} i - The index of the user to activate.
+ */
   userActive(i: number) {
     this.sidebarService.activeUserIndex = i;
     this.channelSelectionService.openDirectMessage();
@@ -209,14 +274,23 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+ * Triggers an alert for adding a new message.
+ */
   addMessage() {
     alert('Add new message');
   }
 
+  /**
+ * Toggles the visibility of the users list.
+ */
   openUsersList() {
     this.usersTitleActive = !this.usersTitleActive;
   }
 
+  /**
+ * Opens the dialog for sending a new message.
+ */
   addNewMessage() {
     this.channelSelectionService.openNewMessage();
     this.responsiveService.isDirectMessageOpen = true;
