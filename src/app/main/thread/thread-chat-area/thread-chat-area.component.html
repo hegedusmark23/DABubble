@@ -49,7 +49,14 @@
                       message.uid === authService.currentUserSignal()?.uId
                   }"
                 >
-                  <div class="messageUserName">
+                  <div
+                    [ngClass]="{
+                      messageUserNameResive:
+                        message.uid !== authService.currentUserSignal()?.uId,
+                      messageUserName:
+                        message.uid === authService.currentUserSignal()?.uId
+                    }"
+                  >
                     <p (click)="openUserProfil(message.uid)" class="userName">
                       {{ getUser(message.uid).name }}
                     </p>

@@ -79,6 +79,7 @@
   justify-content: flex-end;
   gap: 16px;
   padding: 10px 40px 10px 0px;
+  width: 100%;
   span {
     background-color: #797ef3;
     padding: 15px;
@@ -193,6 +194,12 @@
 }
 
 .messageUserName {
+  display: flex;
+  align-items: end;
+  flex-direction: row-reverse !important;
+}
+
+.messageUserNameResive {
   display: flex;
   align-items: end;
 }
@@ -339,6 +346,7 @@
 .messagecontentContainerSend {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 .reactionContainerSend {
@@ -498,7 +506,12 @@ button {
   text-overflow: ellipsis; /* Fügt '...' hinzu, wenn der Text abgeschnitten wird */
 }
 
-.hoverSendMobile,
+.hoverSendMobile {
+  display: none !important;
+  position: absolute;
+  top: -30px;
+  left: 0;
+}
 .hoverResiveMobile {
   display: none !important;
   position: absolute;
