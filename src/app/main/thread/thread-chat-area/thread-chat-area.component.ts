@@ -84,6 +84,10 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
     { name: 'rocket', icon: './../../../../assets/reactions/rocket.png' },
     { name: 'nerdFace', icon: './../../../../assets/reactions/nerd-face.png' },
     {
+      name: 'noted',
+      icon: './../../../../assets/reactions/noted.png',
+    },
+    {
       name: 'shushingFace',
       icon: './../../../../assets/reactions/shushing-face.png',
     },
