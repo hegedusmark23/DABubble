@@ -478,6 +478,7 @@ export class ThreadMessageInputComponent implements OnInit {
         );
       });
     });
+    this.user = this.authService.currentUserSignal()?.uId;
   }
 
   /**
@@ -806,7 +807,7 @@ export class ThreadMessageInputComponent implements OnInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              
+
               if (
                 channelName.includes(this.channelSearch) &&
                 channel.uids.includes(this.user)

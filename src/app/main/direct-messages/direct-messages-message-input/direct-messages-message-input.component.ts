@@ -112,6 +112,8 @@ export class DirectMessagesMessageInputComponent implements OnInit {
    * @returns {void}
    */
   setOpenUser() {
+    this.user = this.authService.currentUserSignal()?.uId;
+
     this.directMessageSelectionService
       .getSelectedChannel()
       .subscribe((value) => {

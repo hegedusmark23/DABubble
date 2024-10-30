@@ -80,8 +80,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
    * Initializes the component and subscribes to the selected channel updates.
    */
   ngOnInit(): void {
-    this.currentUserId = this.authService.currentUserSignal()?.uId;
-
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
       this.subUser();
@@ -428,6 +426,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
     });
+    this.currentUserId = this.authService.currentUserSignal()?.uId;
   }
 
   /**
