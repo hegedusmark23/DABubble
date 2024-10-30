@@ -111,7 +111,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * Sets the current user ID from the authentication service.
    * @returns {void}
    */
-  setOpenUser() {
+  setOpenUser(): void {
     this.user = this.authService.currentUserSignal()?.uId;
   }
 
@@ -155,7 +155,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * @param {any} src - The source URL or data for the image.
    * @returns {void}
    */
-  setImg(src: any) {
+  setImg(src: any): void {
     this.channelSelectionService.setSelectedImg(src);
   }
 
@@ -163,7 +163,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * Subscribes to the channels collection in Firestore and updates the list of all channels.
    * @returns {void}
    */
-  subChannels() {
+  subChannels(): void {
     const q = query(collection(this.firestore, 'Channels'), limit(1000));
     onSnapshot(q, (list) => {
       this.allChannels = [];
@@ -187,7 +187,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * @param {any} thread - The thread to be opened.
    * @returns {void}
    */
-  openThread(thread: any) {
+  openThread(thread: any): void {
     if (this.threadService.isThreadOpen()) {
       this.threadService.closeThread();
       setTimeout(() => {
@@ -233,7 +233,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * Sets the current user.
    * @returns {void}
    */
-  subUser() {
+  subUser(): void {
     const q = query(collection(this.firestore, 'Users'), limit(1000));
     onSnapshot(q, (list) => {
       this.allUser = [];
@@ -290,7 +290,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * Loads and formats the dates of the sorted messages for display.
    * @returns {void}
    */
-  dateLoaded() {
+  dateLoaded(): void {
     this.allMessagesSortedDate = [];
     this.allDates = [];
 
@@ -518,7 +518,6 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: Store the last modified timestamp
     }).catch((err) => {
-      console.error('Error updating message:', err);
     });
   }
 

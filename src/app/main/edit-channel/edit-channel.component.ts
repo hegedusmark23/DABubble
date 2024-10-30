@@ -132,16 +132,17 @@ export class EditChannelComponent implements OnInit {
     this.editChannelService.setEditChannel(false, null);
     this.threadService.closeThread();
     this.channelSelectionService.openChannel();
-    const reverseIndex =
-      this.channelInfo.AllChannelsIds.length -
-      1 -
-      this.channelInfo.currentChannelNumber;
-    this.channelSelectionService.setSelectedChannel(
-      this.channelInfo.AllChannelsIds[reverseIndex]
-    );
-    this.channelInfo.fetchChannels();
-    this.channelInfo.fetchUsers();
-    this.channelInfo.currentChannelNumber = reverseIndex;
+    this.channelSelectionService.setSelectedChannel('wXzgNEb34DReQq3fEsAo7VTcXXNA');
+    // const reverseIndex =
+    //   this.channelInfo.AllChannelsIds.length -
+    //   1 -
+    //   this.channelInfo.currentChannelNumber;
+    // this.channelSelectionService.setSelectedChannel(
+    //   this.channelInfo.AllChannelsIds[reverseIndex]
+    // );
+    // this.channelInfo.fetchChannels();
+    // this.channelInfo.fetchUsers();
+    // this.channelInfo.currentChannelNumber = reverseIndex;
   }
 
   /**
