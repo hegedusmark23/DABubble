@@ -51,6 +51,7 @@
   justify-content: flex-start;
   gap: 16px;
   padding: 10px 0px 10px 40px;
+  width: 100%;
   span {
     background-color: #eceefe;
     padding: 15px;
@@ -165,6 +166,7 @@
   display: flex;
   flex-direction: row-reverse !important;
   justify-content: space-between !important;
+  position: relative;
   width: 100%;
   height: 24px;
 }
@@ -173,6 +175,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
   width: 100%;
   height: 24px;
 }
@@ -498,8 +501,9 @@ button {
 .hoverSendMobile,
 .hoverResiveMobile {
   display: none !important;
-  position: relative;
+  position: absolute;
   top: -30px;
+  right: 0;
 }
 
 .messageSend,
