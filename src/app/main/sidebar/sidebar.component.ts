@@ -253,6 +253,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.responsiveService.isSidebarOpen = false;
       }
       this.sidebarService.activeChannelIndex = i;
+      //console.log(this.sidebarService.activeChannelIndex);
     }
   }
 

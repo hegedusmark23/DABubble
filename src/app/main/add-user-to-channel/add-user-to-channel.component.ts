@@ -15,7 +15,6 @@ import { ThreadService } from '../../services/thread.service';
   styleUrl: './add-user-to-channel.component.scss'
 })
 export class AddUserToChannelComponent {
-
   hideOrShowSidebar = inject(SidebarService);
   authService = inject(AuthService);
   activeUserIndex: number | null = null;
@@ -205,6 +204,10 @@ export class AddUserToChannelComponent {
     e.stopPropagation(e);
   }
 
+  get realChannelIndex() {
+    return this.hideOrShowSidebar.AllChannelsIds.length - 1 - this.hideOrShowSidebar.activeChannelIndex;
+  }
+
   /**
  * Saves the selected users to the current channel in Firestore.
  *
@@ -216,13 +219,11 @@ export class AddUserToChannelComponent {
  * - Logs an error message if there is an issue during the data saving process.
  */
   async saveUsers() {
-    const totalChannels = this.hideOrShowSidebar.AllChannelsIds.length;
-    const realChannelIndex = totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
-    const channelId = this.hideOrShowSidebar.AllChannelsIds[realChannelIndex];
+    const channelId = this.hideOrShowSidebar.AllChannelsIds[this.realChannelIndex];
     const channelRef = doc(collection(this.firestore, 'Channels'), channelId);
     try {
       const channelDoc = await getDoc(channelRef);
-      this.updateChannelAndResetUser(channelDoc, channelRef);
+      await this.updateChannelAndResetUser(channelDoc, channelRef); 
     } catch (error) {
       console.error('Fehler beim Speichern der Daten:', error);
     }
@@ -248,15 +249,17 @@ export class AddUserToChannelComponent {
       const updatedImages = [...(channelData['images'] || []), ...this.hideOrShowSidebar.selectedImages];
       const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
       const updatedEmails = [...(channelData['emails'] || []), ...this.hideOrShowSidebar.selectedEmails];
+  
       await updateDoc(channelRef, {
         users: updatedUsers,
         images: updatedImages,
         uids: updatedUids,
         emails: updatedEmails
       });
-      this.clearUserAndResetChannel();
+      this.clearUserAndResetChannel(); 
     }
   }
+  
 
   /**
  * Resets the user selection and updates the current channel state.
@@ -276,12 +279,7 @@ export class AddUserToChannelComponent {
     this.searchTerm = '';
     this.closeDialogAddUser();
     this.threadService.closeThread();
-    this.channelSelectionService.openChannel();
-    const totalChannels = this.hideOrShowSidebar.AllChannelsIds.length;
-    const realChannelIndex = totalChannels - 1 - this.hideOrShowSidebar.currentChannelNumber;
-    this.channelSelectionService.setSelectedChannel(
-      this.hideOrShowSidebar.AllChannelsIds[realChannelIndex]
-    );
+    this.channelSelectionService.setSelectedChannel(this.hideOrShowSidebar.AllChannelsIds[this.realChannelIndex]);
   }
 
   /**

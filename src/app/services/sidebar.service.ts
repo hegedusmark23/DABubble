@@ -49,7 +49,7 @@ export class SidebarService {
   currentChannelNumber: number = 0;
   activeUserIndex: number | undefined;
   activeUserProfil: number | undefined;
-  activeChannelIndex: number | null = 0;
+  activeChannelIndex: number | null | any = 0;
   threadService = inject(ThreadService);
   asd = 0;
   online = false;

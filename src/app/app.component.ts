@@ -32,10 +32,9 @@ export class AppComponent implements OnInit {
           uId: user.uid
         });
       } else {
-        console.log('No user data, setting currentUserSignal to null');
+        //console.log('No user data, setting currentUserSignal to null');
         this.authService.currentUserSignal.set(null);
       }
-      console.log('Current user signal:', this.authService.currentUserSignal());
     });
 }
   

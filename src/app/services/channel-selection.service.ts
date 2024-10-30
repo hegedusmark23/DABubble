@@ -8,8 +8,10 @@ export class ChannelSelectionService {
   private selectedChannel = new BehaviorSubject<string>('');
   private selectedReaction = new BehaviorSubject<string>('');
   private selectedImg = new BehaviorSubject<any>('');
+  activeChannelId: string | null = null; 
   ChannelOpenVariable: any = 'channel';
   selectedChannelIndex: any;
+  private temporaryUpdate = false; 
   constructor() {}
 
   // Getter for selectedChannel as an Observable
@@ -46,7 +48,9 @@ export class ChannelSelectionService {
   }
 
   setSelectedChannel(channel: string): void {
-    this.selectedChannel.next(channel);
+    if (!this.temporaryUpdate) {  
+      this.selectedChannel.next(channel);
+    }
   }
 
   setSelectedImg(src: any): void {
