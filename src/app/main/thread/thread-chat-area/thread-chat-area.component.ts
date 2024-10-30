@@ -120,6 +120,8 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authService.currentUserSignal()?.uId;
+
     if (isPlatformBrowser(this.platformId)) {
       document.addEventListener('click', this.handleClick.bind(this));
     }

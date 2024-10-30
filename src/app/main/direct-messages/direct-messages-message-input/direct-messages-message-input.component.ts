@@ -92,6 +92,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
   //speichert wercher channel gerade ausgewählt ist
   ngOnInit(): void {
+    this.user = this.authService.currentUserSignal()?.uId;
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
       this.subUser();
@@ -214,7 +215,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
    */
   async saveMessage(event: any) {
     let messageId = '';
-    this.user = this.authService.currentUserSignal()?.uId;
 
     event?.preventDefault();
     this.tagUserSelector = false;
@@ -816,7 +816,10 @@ export class DirectMessagesMessageInputComponent implements OnInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              if (channelName.includes(this.channelSearch)) {
+              if (
+                channelName.includes(this.channelSearch) &&
+                channel.uids.includes(this.user)
+              ) {
                 this.allChannelArray.push(channel);
               }
             }

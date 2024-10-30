@@ -806,7 +806,11 @@ export class ThreadMessageInputComponent implements OnInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              if (channelName.includes(this.channelSearch)) {
+              
+              if (
+                channelName.includes(this.channelSearch) &&
+                channel.uids.includes(this.user)
+              ) {
                 this.allChannelArray.push(channel);
               }
             }

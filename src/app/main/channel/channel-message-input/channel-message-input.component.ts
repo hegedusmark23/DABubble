@@ -63,6 +63,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   tagedChannel: any = [];
   lastAtPosition: number | null = null;
   showPlaceholder: boolean = true;
+  currentUserId: any;
 
   allowMessageSend: boolean = false;
   @ViewChild('messageTextarea') messageTextarea: any;
@@ -79,6 +80,8 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
    * Initializes the component and subscribes to the selected channel updates.
    */
   ngOnInit(): void {
+    this.currentUserId = this.authService.currentUserSignal()?.uId;
+
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
       this.subUser();
@@ -787,7 +790,10 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              if (channelName.includes(this.channelSearch)) {
+              if (
+                channelName.includes(this.channelSearch) &&
+                channel.uids.includes(this.currentUserId)
+              ) {
                 this.allChannelArray.push(channel);
               }
             }
