@@ -250,13 +250,17 @@ export class AddUserToChannelComponent {
       const updatedUids = [...(channelData['uids'] || []), ...this.hideOrShowSidebar.selectedUids];
       const updatedEmails = [...(channelData['emails'] || []), ...this.hideOrShowSidebar.selectedEmails];
   
+      // Ideiglenes blokk aktiválása
+      this.channelSelectionService.blockUpdatesTemporarily();
+  
       await updateDoc(channelRef, {
         users: updatedUsers,
         images: updatedImages,
         uids: updatedUids,
         emails: updatedEmails
       });
-      this.clearUserAndResetChannel(); 
+  
+      this.clearUserAndResetChannel();
     }
   }
   

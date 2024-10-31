@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
           imgUrl: user.photoURL,
           uId: user.uid
         });
+       
       } else {
         //console.log('No user data, setting currentUserSignal to null');
         this.authService.currentUserSignal.set(null);
