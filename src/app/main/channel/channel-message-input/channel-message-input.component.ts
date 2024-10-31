@@ -80,13 +80,14 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
    * Initializes the component and subscribes to the selected channel updates.
    */
   ngOnInit(): void {
+    this.setFokus();
+
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       if (channel != this.currentChannelId) {
         this.currentChannelId = channel;
         this.subUser();
         this.subChannels();
         this.clearInput();
-        this.setFokus();
       }
     });
   }
