@@ -447,15 +447,64 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Saves the edited message when the user confirms their changes.
-   * @param {any} event - The event triggered by saving the edit.
-   * @param {any} message - The message object being edited.
-   * @returns {void}
+   * Saves the edited message.
+   * @param {any} event - The event triggering the save.
+   * @param {any} message - The message being edited.
    */
   saveEdit(event: any, message: any) {
-    let editedMessage = this.inputChatArea.nativeElement.innerHTML;
-    this.updateMessage(event, message.id);
-    this.openEditMessage = '';
+    let editedMessage = this.inputChatArea.nativeElement;
+
+    if (
+      (editedMessage.innerHTML.length > 0 &&
+        editedMessage.textContent.length > 0) ||
+      message.fileUrl.length > 0
+    ) {
+      this.updateMessage(event, message.id);
+      this.openEditMessage = '';
+    } else {
+      console.log('nachricht leer');
+      this.deleteMessage(message);
+    }
+  }
+
+  async deleteMessage(message: any) {
+    try {
+      console.log(this.currentChannelId, message.id);
+      const messageRef = doc(
+        this.firestore,
+        'Channels',
+        this.currentChannelId,
+        'messages',
+        this.threadId,
+        'thread',
+        message.id
+      );
+      await deleteDoc(messageRef);
+      console.log('Message deleted successfully');
+    } catch (error) {
+      console.error('Error deleting message: ', error);
+    }
+  }
+
+  onInputChange(message: any) {
+    this.returnEditMessageLengh(message);
+  }
+
+  returnEditMessageLengh(message: any) {
+    if (this.inputChatArea) {
+      const editedMessage = this.inputChatArea.nativeElement;
+      if (
+        (editedMessage.innerHTML.length > 0 &&
+          editedMessage.textContent.length > 0) ||
+        message.fileUrl.length > 0
+      ) {
+        return 'speichern';
+      } else {
+        return 'Nachricht löschen';
+      }
+    } else {
+      return 'Nachricht löschen';
+    }
   }
 
   /**

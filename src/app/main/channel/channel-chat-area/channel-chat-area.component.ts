@@ -458,9 +458,57 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * @param {any} message - The message being edited.
    */
   saveEdit(event: any, message: any) {
-    let editedMessage = this.inputChatArea.nativeElement.innerHTML;
-    this.updateMessage(event, message.id);
-    this.openEditMessage = '';
+    let editedMessage = this.inputChatArea.nativeElement;
+
+    if (
+      (editedMessage.innerHTML.length > 0 &&
+        editedMessage.textContent.length > 0) ||
+      message.fileUrl.length > 0
+    ) {
+      this.updateMessage(event, message.id);
+      this.openEditMessage = '';
+    } else {
+      console.log('nachricht leer');
+      this.deleteMessage(message);
+    }
+  }
+
+  async deleteMessage(message: any) {
+    try {
+      console.log(this.currentChannelId, message.id);
+      const messageRef = doc(
+        this.firestore,
+        'Channels',
+        this.currentChannelId,
+        'messages',
+        message.id
+      );
+      await deleteDoc(messageRef);
+      console.log('Message deleted successfully');
+    } catch (error) {
+      console.error('Error deleting message: ', error);
+    }
+  }
+
+  onInputChange(message: any) {
+    this.returnEditMessageLengh(message);
+  }
+
+  returnEditMessageLengh(message: any) {
+    if (this.inputChatArea) {
+      const editedMessage = this.inputChatArea.nativeElement;
+      if (
+        (editedMessage.innerHTML.length > 0 &&
+          editedMessage.textContent.length > 0) ||
+        message.fileUrl.length > 0
+      ) {
+        return 'speichern';
+      } else {
+        return 'Nachricht löschen';
+      }
+    } else {
+      return 'Nachricht löschen';
+    }
   }
 
   /**
@@ -469,7 +517,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
    * @param {string} messageId - The ID of the message to update.
    * @returns {Promise<void>} - A promise that resolves when the update is complete.
    */
-  async updateMessage(event: any, messageId: string) {
+  async updateMessage(event: any, messageId: string): Promise<void> {
     event?.preventDefault();
     let message = '';
     const messageTextarea = document.querySelector(

@@ -476,6 +476,7 @@
               contenteditable="true"
               type="text"
               #inputChatArea
+              (input)="onInputChange(message)"
             ></div>
 
             <div class="messageEditContainerFooter">
@@ -485,7 +486,7 @@
                   Abbrechen
                 </button>
                 <button class="saveEdit" (click)="saveEdit($event, message)">
-                  Speichern
+                  {{ returnEditMessageLengh(message) }}
                 </button>
               </div>
             </div>
