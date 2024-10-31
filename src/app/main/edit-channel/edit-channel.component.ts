@@ -196,7 +196,7 @@ export class EditChannelComponent implements OnInit {
         if (userNumber > -1) {
           this.deleteUserFromChannel(channelData, userNumber, docSnapshot);
         } else {
-          alert('du bist kein mitglied');
+          
         }
       }
     });
