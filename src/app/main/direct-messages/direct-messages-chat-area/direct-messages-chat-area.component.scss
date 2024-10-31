@@ -57,7 +57,7 @@
     padding: 15px;
     border-radius: 0px 30px 30px 30px;
     width: fit-content;
-    word-break: break-all;
+    word-break: break-word;
   }
   .profilePicture {
     width: 70px;
@@ -86,7 +86,7 @@
     border-radius: 30px 0px 30px 30px;
     color: white;
     width: fit-content;
-    word-break: break-all;
+    word-break: break-word;
   }
 
   .profilePicture {
@@ -223,6 +223,7 @@
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between !important;
+  position: relative;
   width: 100%;
   height: 24px;
 }
@@ -231,6 +232,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
   width: 100%;
   height: 24px;
 }
@@ -243,7 +245,21 @@
   gap: 8px;
 }
 
+.messageUserNameResive {
+  display: flex;
+  align-items: end;
+  flex-direction: row;
+  gap: 16px;
+}
+
 .messageUserName {
+  display: flex;
+  align-items: end;
+  flex-direction: row-reverse;
+  gap: 16px;
+}
+
+.messageUserResive {
   display: flex;
   align-items: end;
   gap: 16px;
@@ -437,7 +453,7 @@
     padding: 20px;
     height: auto; /* Ermöglicht das automatische Anpassen der Höhe */
     width: 100%; /* Passt sich der Breite des übergeordneten Containers an */
-    word-break: break-all; /* Ermöglicht den Zeilenumbruch bei langen Wörtern */
+    word-break: break-word; /* Ermöglicht den Zeilenumbruch bei langen Wörtern */
     box-sizing: border-box; /* Schließt Padding und Border in die Breite und Höhe mit ein */
   }
 }
@@ -569,11 +585,18 @@ button {
   text-overflow: ellipsis; /* Fügt '...' hinzu, wenn der Text abgeschnitten wird */
 }
 
-.hoverSendMobile,
+.hoverSendMobile {
+  display: none;
+  position: absolute;
+  top: -30px;
+  left: 0;
+}
+
 .hoverResiveMobile {
   display: none;
-  position: relative;
+  position: absolute;
   top: -30px;
+  right: 0;
 }
 
 .messageSend,

@@ -269,11 +269,13 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
    */
   scrollToBottom() {
     if (typeof window !== 'undefined') {
-      // Browser-specific code here
-      const container = document.getElementById('ThreadMessageContainer');
-      container!.scrollTop = container!.scrollHeight;
+      const container = document.getElementById('messageContainer');
+      if (container) {
+        setTimeout(() => {
+          container!.scrollTop = container!.scrollHeight;
+        }, 500);
+      }
     }
-    return false;
   }
 
   /**
@@ -447,15 +449,60 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Saves the edited message when the user confirms their changes.
-   * @param {any} event - The event triggered by saving the edit.
-   * @param {any} message - The message object being edited.
-   * @returns {void}
+   * Saves the edited message.
+   * @param {any} event - The event triggering the save.
+   * @param {any} message - The message being edited.
    */
   saveEdit(event: any, message: any) {
-    let editedMessage = this.inputChatArea.nativeElement.innerHTML;
-    this.updateMessage(event, message.id);
-    this.openEditMessage = '';
+    let editedMessage = this.inputChatArea.nativeElement;
+
+    if (
+      (editedMessage.innerHTML.length > 0 &&
+        editedMessage.textContent.length > 0) ||
+      message.fileUrl.length > 0
+    ) {
+      this.updateMessage(event, message.id);
+      this.openEditMessage = '';
+    } else {
+      this.deleteMessage(message);
+    }
+  }
+
+  async deleteMessage(message: any) {
+    try {
+      const messageRef = doc(
+        this.firestore,
+        'Channels',
+        this.currentChannelId,
+        'messages',
+        this.threadId,
+        'thread',
+        message.id
+      );
+      await deleteDoc(messageRef);
+    } catch (error) {
+    }
+  }
+
+  onInputChange(message: any) {
+    this.returnEditMessageLengh(message);
+  }
+
+  returnEditMessageLengh(message: any) {
+    if (this.inputChatArea) {
+      const editedMessage = this.inputChatArea.nativeElement;
+      if (
+        (editedMessage.innerHTML.length > 0 &&
+          editedMessage.textContent.length > 0) ||
+        message.fileUrl.length > 0
+      ) {
+        return 'speichern';
+      } else {
+        return 'Nachricht löschen';
+      }
+    } else {
+      return 'Nachricht löschen';
+    }
   }
 
   /**
@@ -519,7 +566,6 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: store the time of the last change
     }).catch((err) => {
-      console.error('Error updating the message:', err);
     });
   }
 

@@ -57,7 +57,7 @@
     padding: 15px;
     border-radius: 0px 30px 30px 30px;
     width: fit-content;
-    word-break: break-all;
+    word-break: break-word;
   }
   .profilePicture {
     width: 70px;
@@ -86,7 +86,7 @@
     border-radius: 30px 0px 30px 30px;
     color: white;
     width: fit-content;
-    word-break: break-all;
+    word-break: break-word;
   }
 
   .profilePicture {
@@ -374,7 +374,7 @@
     padding: 20px;
     height: auto; /* Ermöglicht das automatische Anpassen der Höhe */
     width: 100%; /* Passt sich der Breite des übergeordneten Containers an */
-    word-break: break-all; /* Ermöglicht den Zeilenumbruch bei langen Wörtern */
+    word-break: break-word;
     box-sizing: border-box; /* Schließt Padding und Border in die Breite und Höhe mit ein */
   }
 }

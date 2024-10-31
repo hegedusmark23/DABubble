@@ -62,9 +62,10 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   tagedUser: any = [];
   tagedChannel: any = [];
   lastAtPosition: number | null = null;
-  showPlaceholder: boolean = true;
-
+  showPlaceholder: boolean = false;
+  currentUserId: any;
   allowMessageSend: boolean = false;
+
   @ViewChild('messageTextarea') messageTextarea: any;
   channelInfo = inject(SidebarService);
   sidebarService = inject(SidebarService);
@@ -79,20 +80,28 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
    * Initializes the component and subscribes to the selected channel updates.
    */
   ngOnInit(): void {
+    this.setFokus();
+
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannelId = channel;
-      this.subUser();
-      this.subChannels();
+      if (channel != this.currentChannelId) {
+        this.currentChannelId = channel;
+        this.subUser();
+        this.subChannels();
+        this.clearInput();
+      }
     });
   }
 
   /**
-   * After the view has been initialized, clears the input when the selected channel changes.
+   * After the view has been initialized, clears the input when the selected channel changes
    */
-  ngAfterViewInit(): void {
-    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.clearInput();
-    });
+  ngAfterViewInit(): void {}
+
+  setFokus() {
+    console.log('set fokus');
+    setTimeout(() => {
+      this.messageTextarea.nativeElement.focus();
+    }, 100);
   }
 
   /**
@@ -425,6 +434,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         this.allUser.push(this.setNoteObjectUser(element.data(), element.id));
       });
     });
+    this.currentUserId = this.authService.currentUserSignal()?.uId;
   }
 
   /**
@@ -787,7 +797,11 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              if (channelName.includes(this.channelSearch)) {
+              if (
+                (channelName.includes(this.channelSearch) &&
+                  channel.uids.includes(this.currentUserId)) ||
+                channel.id == 'wXzgNEb34DReQq3fEsAo7VTcXXNA'
+              ) {
                 this.allChannelArray.push(channel);
               }
             }

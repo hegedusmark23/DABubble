@@ -85,7 +85,14 @@
                       message.uid === authService.currentUserSignal()?.uId
                   }"
                 >
-                  <div class="messageUserName">
+                  <div
+                    [ngClass]="{
+                      messageUserNameResive:
+                        message.uid !== authService.currentUserSignal()?.uId,
+                      messageUserName:
+                        message.uid === authService.currentUserSignal()?.uId
+                    }"
+                  >
                     <p (click)="openUserProfil(message.uid)" class="userName">
                       {{ getUser(message.uid).name }}
                     </p>
@@ -288,7 +295,7 @@
                     <p *ngIf="message.threadCount - 1 < 2">
                       {{ message.threadCount - 1 }} Antwort
                     </p>
-                    <p *ngIf="message.threadCount - 1 > 2">
+                    <p *ngIf="message.threadCount - 1 > 1">
                       {{ message.threadCount - 1 }} Antworten
                     </p>
                   </a>
@@ -469,6 +476,7 @@
               contenteditable="true"
               type="text"
               #inputChatArea
+              (input)="onInputChange(message)"
             ></div>
 
             <div class="messageEditContainerFooter">
@@ -478,7 +486,7 @@
                   Abbrechen
                 </button>
                 <button class="saveEdit" (click)="saveEdit($event, message)">
-                  Speichern
+                  {{ returnEditMessageLengh(message) }}
                 </button>
               </div>
             </div>

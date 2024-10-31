@@ -76,7 +76,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
   tagedUser: any = [];
   tagedChannel: any = [];
   lastAtPosition: number | null = null;
-  showPlaceholder: boolean = true;
+  showPlaceholder: boolean = false;
 
   allowMessageSend: boolean = false;
   @ViewChild('textAreaDirectMessage') messageTextarea: any;
@@ -92,6 +92,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
   //speichert wercher channel gerade ausgewählt ist
   ngOnInit(): void {
+    this.user = this.authService.currentUserSignal()?.uId;
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.currentChannelId = channel;
       this.subUser();
@@ -103,7 +104,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.clearInput();
+      this.setFokus();
     });
+  }
+
+  setFokus() {
+    this.messageTextarea.nativeElement.focus();
   }
 
   /**
@@ -111,6 +117,8 @@ export class DirectMessagesMessageInputComponent implements OnInit {
    * @returns {void}
    */
   setOpenUser() {
+    this.user = this.authService.currentUserSignal()?.uId;
+
     this.directMessageSelectionService
       .getSelectedChannel()
       .subscribe((value) => {
@@ -177,7 +185,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
       );
       this.FileUrl = imageUrl;
     } else {
-      console.error('No file selected');
     }
   }
 
@@ -214,7 +221,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
    */
   async saveMessage(event: any) {
     let messageId = '';
-    this.user = this.authService.currentUserSignal()?.uId;
 
     event?.preventDefault();
     this.tagUserSelector = false;
@@ -272,9 +278,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
     await setDoc(messageRef, this.toJSON())
       .then(() => {})
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => {});
 
     // Save the message for the recipient with the same ID
     const recipientRef = doc(
@@ -287,9 +291,7 @@ export class DirectMessagesMessageInputComponent implements OnInit {
 
     await setDoc(recipientRef, this.toJSON())
       .then(() => {})
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => {});
 
     // Clear the input field
     this.clearInput();
@@ -380,7 +382,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     // Get current selection
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      console.error('No valid selection found.');
       return;
     }
 
@@ -390,14 +391,12 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     // Ensure the range is within the `textarea`
     const commonAncestor = range.commonAncestorContainer;
     if (!textarea.contains(commonAncestor)) {
-      console.error('Selection is outside the `textarea`.');
       return;
     }
 
     // Extract emoji text
     const emojiText = emoji.native || emoji.emoji || emoji;
     if (!emojiText) {
-      console.error('No valid emoji text found.');
       return;
     }
 
@@ -565,7 +564,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement) {
-      console.error('The input element was not found.');
       return;
     }
 
@@ -649,9 +647,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement || this.lastAtPosition === null) {
-      console.error(
-        'The input element was not found or the position of the symbol is unknown.'
-      );
       return;
     }
 
@@ -816,7 +811,11 @@ export class DirectMessagesMessageInputComponent implements OnInit {
             for (let i = 0; i < this.allChannel.length; i++) {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
-              if (channelName.includes(this.channelSearch)) {
+              if (
+                (channelName.includes(this.channelSearch) &&
+                  channel.uids.includes(this.user)) ||
+                channel.id == 'wXzgNEb34DReQq3fEsAo7VTcXXNA'
+              ) {
                 this.allChannelArray.push(channel);
               }
             }
@@ -871,7 +870,6 @@ export class DirectMessagesMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('input') as HTMLElement;
 
     if (!inputElement) {
-      console.error('The input element was not found.');
       return;
     }
 

@@ -287,14 +287,16 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
 
   /**
    * Scrolls the message container to the bottom.
-   * @returns {boolean} - Returns false to prevent default event handling.
    */
   scrollToBottom() {
     if (typeof window !== 'undefined') {
       const container = document.getElementById('messageContainer');
-      container!.scrollTop = container!.scrollHeight;
+      if (container) {
+        setTimeout(() => {
+          container!.scrollTop = container!.scrollHeight;
+        }, 1000);
+      }
     }
-    return false;
   }
 
   /**
@@ -462,15 +464,66 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
   }
 
   /**
-   * Saves the edited message and updates it in the Firestore database.
-   *
-   * @param {any} event - The event object from the input action.
-   * @param {any} message - The message object to be updated.
+   * Saves the edited message.
+   * @param {any} event - The event triggering the save.
+   * @param {any} message - The message being edited.
    */
   saveEdit(event: any, message: any) {
-    let editedMessage = this.inputChatArea.nativeElement.innerHTML;
-    this.updateMessage(event, message.id);
-    this.openEditMessage = '';
+    let editedMessage = this.inputChatArea.nativeElement;
+
+    if (
+      (editedMessage.innerHTML.length > 0 &&
+        editedMessage.textContent.length > 0) ||
+      message.fileUrl.length > 0
+    ) {
+      this.updateMessage(event, message.id);
+      this.openEditMessage = '';
+    } else {
+      this.deleteMessage(message);
+    }
+  }
+
+  async deleteMessage(message: any) {
+    try {
+      const messageRef = doc(
+        this.firestore,
+        'direcmessages',
+        this.messageUser,
+        this.user,
+        message.id
+      );
+      await deleteDoc(messageRef);
+      const messageRef2 = doc(
+        this.firestore,
+        'direcmessages',
+        this.user,
+        this.messageUser,
+        message.id
+      );
+      await deleteDoc(messageRef2);
+    } catch (error) {
+    }
+  }
+
+  onInputChange(message: any) {
+    this.returnEditMessageLengh(message);
+  }
+
+  returnEditMessageLengh(message: any) {
+    if (this.inputChatArea) {
+      const editedMessage = this.inputChatArea.nativeElement;
+      if (
+        (editedMessage.innerHTML.length > 0 &&
+          editedMessage.textContent.length > 0) ||
+        message.fileUrl.length > 0
+      ) {
+        return 'speichern';
+      } else {
+        return 'Nachricht löschen';
+      }
+    } else {
+      return 'Nachricht löschen';
+    }
   }
 
   /**
@@ -533,7 +586,21 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: store the last modified time
     }).catch((err) => {
-      console.error('Error updating message:', err);
+    });
+
+    // Update the message in the Firestore database
+    const messageRef2 = doc(
+      this.firestore,
+      'direcmessages',
+      this.messageUser,
+      this.user,
+      messageId
+    );
+
+    await updateDoc(messageRef2, {
+      message: message.trim(),
+      updatedAt: new Date(), // Optional: store the last modified time
+    }).catch((err) => {
     });
   }
 

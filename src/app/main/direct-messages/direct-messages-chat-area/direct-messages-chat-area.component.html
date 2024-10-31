@@ -14,7 +14,9 @@
       </div>
       <p class="noMessageDescription">
         Diese Unterhaltung findet nur zwischen
-        <span class="cursor-pointer userTag" (click)="openUserProfil(messageUser)"
+        <span
+          class="cursor-pointer userTag"
+          (click)="openUserProfil(messageUser)"
           >&#64;{{ getUser(messageUser).name }}</span
         >
         und dir statt.
@@ -27,9 +29,10 @@
         <p class="noMessagesTitle">{{ getUser(messageUser).name }} (Du)</p>
       </div>
       <p class="noMessageDescription">
-        <span class="yourRoom">Dieser Raum ist nur für dich da.</span> Mache dir Notizen, liste
-        deine To-dos auf oder bewahre Links und Dateien griffbereit auf. Du
-        kannst hier auch gerne Dinge mit dir selbst besprechen.
+        <span class="yourRoom">Dieser Raum ist nur für dich da.</span> Mache dir
+        Notizen, liste deine To-dos auf oder bewahre Links und Dateien
+        griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst
+        besprechen.
       </p>
     </div>
   </div>
@@ -103,7 +106,14 @@
                       message.uid === authService.currentUserSignal()?.uId
                   }"
                 >
-                  <div class="messageUserName">
+                  <div
+                    [ngClass]="{
+                      messageUserNameResive:
+                        message.uid !== authService.currentUserSignal()?.uId,
+                      messageUserName:
+                        message.uid === authService.currentUserSignal()?.uId
+                    }"
+                  >
                     <p (click)="openUserProfil(message.uid)" class="userName">
                       {{ getUser(message.uid).name }}
                     </p>
@@ -439,6 +449,7 @@
               contenteditable="true"
               type="text"
               #inputChatArea
+              (input)="onInputChange(message)"
             ></div>
 
             <div class="messageEditContainerFooter">
@@ -448,7 +459,7 @@
                   Abbrechen
                 </button>
                 <button class="saveEdit" (click)="saveEdit($event, message)">
-                  Speichern
+                  {{ returnEditMessageLengh(message) }}
                 </button>
               </div>
             </div>
