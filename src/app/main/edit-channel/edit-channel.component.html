@@ -33,7 +33,7 @@
       <div class="content-edit" *ngIf="this.editChannelNameOpen">
         <div class="nameHeader-edit">
           <span>Channel-Name</span>
-          @if(this.channelName.length > 0){
+          @if(this.originalChannelData.name.length > 0){
             <button (click)="saveChannelName()" class="edit-button">
               <span>Speichern</span>
             </button>
@@ -42,7 +42,7 @@
           }
         </div>
         <div class="channel-name-container">
-          <input type="text" class="input-field" [(ngModel)]="channelName" id="channelName" name="channelName" />
+          <input type="text" class="input-field" [(ngModel)]="this.originalChannelData.name" id="channelName" name="channelName" />
           <img src="../../../assets/img/header/tag.png" class="tag-icon" />
         </div>
       </div>
@@ -100,7 +100,7 @@
       <div class="content-edit" *ngIf="this.editChannelDescriptionOpen">
         <div class="nameHeader-edit">
           <span>Beschreibung</span>
-          @if(this.channelDescription.length > 0){
+          @if(this.originalChannelData.description.length > 0){
             <button (click)="saveChannelDescription()" class="edit-button">
               <span>Speichern</span>
             </button>
@@ -109,7 +109,7 @@
           }
         </div>
         <div class="channel-name-container">
-          <input type="text" class="input-field" [(ngModel)]="channelDescription" id="channelDescription"
+          <input type="text" class="input-field" [(ngModel)]="this.originalChannelData.description" id="channelDescription"
             name="channelDescription" />
           <img src="../../../assets/img/header/tag.png" class="tag-icon" />
         </div>

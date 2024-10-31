@@ -31,6 +31,7 @@ export class EditChannelComponent implements OnInit {
   currentChannel: any;
   channel: any;
   selectetChannelData: any;
+  originalChannelData: any;
   editChannelNameOpen = false;
   editChannelDescriptionOpen = false;
   channelName = '';
@@ -104,6 +105,7 @@ export class EditChannelComponent implements OnInit {
       const element = this.channel[i];
       if (element.id == this.currentChannel) {
         this.selectetChannelData = element;
+        this.originalChannelData = element;
       }
     }
   }
@@ -257,7 +259,7 @@ export class EditChannelComponent implements OnInit {
  * an error message is logged to the console.
  */
   async saveChannelName() {
-    if (!this.channelName) {
+    if (!this.originalChannelData.name) {
       console.error('Channel name is empty. Please provide a valid name.');
       return;
     }
@@ -307,7 +309,7 @@ export class EditChannelComponent implements OnInit {
  */
   toJSON() {
     return {
-      name: this.channelName,
+      name: this.originalChannelData.name,
     };
   }
 
@@ -338,7 +340,7 @@ export class EditChannelComponent implements OnInit {
  * opened in the channel selection service.
  */
   async saveChannelDescription() {
-    if (!this.channelDescription) {
+    if (!this.originalChannelData.description) {
       console.error(
         'Channel name is empty. Please provide a valid description.'
       );
@@ -367,7 +369,7 @@ export class EditChannelComponent implements OnInit {
  */
   toJSONDescription() {
     return {
-      description: this.channelDescription,
+      description: this.originalChannelData.description,
     };
   }
 
