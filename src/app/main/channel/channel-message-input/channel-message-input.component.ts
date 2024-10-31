@@ -81,25 +81,26 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
    */
   ngOnInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.currentChannelId = channel;
-      this.subUser();
-      this.subChannels();
+      if (channel != this.currentChannelId) {
+        this.currentChannelId = channel;
+        this.subUser();
+        this.subChannels();
+        this.clearInput();
+        this.setFokus();
+      }
     });
   }
 
   /**
-   * After the view has been initialized, clears the input when the selected channel changes.
+   * After the view has been initialized, clears the input when the selected channel changes
    */
-  ngAfterViewInit(): void {
-    this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
-      this.clearInput();
-      this.setFokus();
-    });
-  }
+  ngAfterViewInit(): void {}
 
   setFokus() {
     console.log('set fokus');
-    this.messageTextarea.nativeElement.focus();
+    setTimeout(() => {
+      this.messageTextarea.nativeElement.focus();
+    }, 100);
   }
 
   /**

@@ -294,7 +294,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       if (container) {
         setTimeout(() => {
           container!.scrollTop = container!.scrollHeight;
-        }, 500);
+        }, 1000);
       }
     }
   }
