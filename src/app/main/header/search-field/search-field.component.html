@@ -53,9 +53,9 @@
         @if (messages.length > 0) {
         <h2>Nachrichten:</h2>
         <ul>
-            <li *ngFor="let message of messages" (click)="onMessageClick(message.channelId, message.id)">
+            <li *ngFor="let message of messages; track item; let i=index" (click)="onMessageClick(message.channelId, message.id)">
+                @if(this.hideOrShowSidebar.GlobalChannelUids[i].includes(this.authService.currentUserSignal()?.uId ?? '')) {
                 <div class="result-user-container">
-
                     <div style="display: flex; align-items: center; gap: 5px;">
                         <img [src]="message.userImage" alt="{{message.username}}" class="search-result-avatar">
                         <span style="white-space: nowrap;"><b>{{ message.username }}:</b></span>
@@ -65,6 +65,7 @@
                         <span [innerHTML]="highlight(message.message)"></span>
                     </div>
                 </div>
+            }
             </li>
         </ul>
         }

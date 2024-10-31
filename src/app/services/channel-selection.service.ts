@@ -48,7 +48,7 @@ export class ChannelSelectionService {
   }
 
   setSelectedChannel(channel: string): void {
-    if (!this.blockChannelUpdates) { // Csak akkor frissít, ha nincs blokk
+    if (!this.blockChannelUpdates) { 
       this.selectedChannel.next(channel);
     }
   }
@@ -57,9 +57,9 @@ export class ChannelSelectionService {
     this.blockChannelUpdates = true;
     setTimeout(() => {
       this.blockChannelUpdates = false;
-    }, 200); // 200 ms-os blokk időtartam, állítható szükség szerint
+    }, 200); 
   }
-  
+
   setSelectedImg(src: any): void {
     this.selectedImg.next(src);
   }
