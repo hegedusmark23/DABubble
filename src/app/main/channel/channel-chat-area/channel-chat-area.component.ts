@@ -38,6 +38,7 @@ import { SidebarService } from '../../../services/sidebar.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResponsiveService } from '../../../services/responsive.service';
 import { ChatAreaService } from '../../../services/chat-area.service';
+import { SearchService } from '../../../services/search.service';
 
 @Component({
   selector: 'app-channel-chat-area',
@@ -51,6 +52,7 @@ import { ChatAreaService } from '../../../services/chat-area.service';
 })
 export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
   authService = inject(AuthService);
+  searchService = inject(SearchService);
 
   allChannels: any = [];
   allMessagesSortedDate: any = [];
@@ -142,14 +144,17 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       this.subMessages();
       this.subChannels();
       setTimeout(() => {
-        this.scrollToBottom();
+        if (!this.searchService.searching) {
+          this.scrollToBottom();
+        }
+        this.searchService.searching = false;
       }, 10);
     });
 
     this.messageLoaded.changes.subscribe((t) => {
       if (this.scrolled) {
         this.scrolled = false;
-        this.scrollToBottom();
+        // this.scrollToBottom();
       }
     });
   }
