@@ -206,6 +206,7 @@ export class SearchFieldComponent {
       this.searchService.isSearching = false;
       this.channelActive(channelIndex);
       this.scrollToMessage(messageId);
+      this.searchService.searching = true;
       this.responsiveService.isChannelOpen = true;
       if (window.innerWidth < 1000) {
         this.responsiveService.isSidebarOpen = false;
@@ -214,6 +215,11 @@ export class SearchFieldComponent {
       console.error('Kanal nicht gefunden oder Benutzer ist kein Mitglied:', channelId);
     }
   }
+
+  /*isUserMemberOfChannel(channelId: string): boolean {
+    const currentUserId = this.authService.currentUserSignal()?.uId ?? '';
+    return this.hideOrShowSidebar.GlobalChannelUids[channelId]?.includes(currentUserId) ?? false;
+  }*/
 
   /**
    * Scrolls smoothly to the specified message in the view.
