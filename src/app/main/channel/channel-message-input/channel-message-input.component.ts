@@ -62,10 +62,10 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   tagedUser: any = [];
   tagedChannel: any = [];
   lastAtPosition: number | null = null;
-  showPlaceholder: boolean = true;
+  showPlaceholder: boolean = false;
   currentUserId: any;
-
   allowMessageSend: boolean = false;
+
   @ViewChild('messageTextarea') messageTextarea: any;
   channelInfo = inject(SidebarService);
   sidebarService = inject(SidebarService);
@@ -93,7 +93,13 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.clearInput();
+      this.setFokus();
     });
+  }
+
+  setFokus() {
+    console.log('set fokus');
+    this.messageTextarea.nativeElement.focus();
   }
 
   /**
@@ -790,8 +796,9 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
               const channel = this.allChannel[i];
               const channelName = channel.name.toLowerCase();
               if (
-                channelName.includes(this.channelSearch) &&
-                channel.uids.includes(this.currentUserId)
+                (channelName.includes(this.channelSearch) &&
+                  channel.uids.includes(this.currentUserId)) ||
+                channel.id == 'wXzgNEb34DReQq3fEsAo7VTcXXNA'
               ) {
                 this.allChannelArray.push(channel);
               }

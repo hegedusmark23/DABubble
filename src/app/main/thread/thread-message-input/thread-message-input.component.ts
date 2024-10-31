@@ -59,7 +59,7 @@ export class ThreadMessageInputComponent implements OnInit {
   tagedUser: any = [];
   tagedChannel: any = [];
   lastAtPosition: number | null = null;
-  showPlaceholder: boolean = true;
+  showPlaceholder: boolean = false;
 
   allowMessageSend: boolean = false;
   @ViewChild('ThreadTextArea') messageTextarea: any;
@@ -86,7 +86,12 @@ export class ThreadMessageInputComponent implements OnInit {
   ngAfterViewInit(): void {
     this.channelSelectionService.getSelectedChannel().subscribe((channel) => {
       this.clearInput();
+      this.setFokus();
     });
+  }
+
+  setFokus() {
+    this.messageTextarea.nativeElement.focus();
   }
 
   /**
@@ -809,8 +814,9 @@ export class ThreadMessageInputComponent implements OnInit {
               const channelName = channel.name.toLowerCase();
 
               if (
-                channelName.includes(this.channelSearch) &&
-                channel.uids.includes(this.user)
+                (channelName.includes(this.channelSearch) &&
+                  channel.uids.includes(this.user)) ||
+                channel.id == 'wXzgNEb34DReQq3fEsAo7VTcXXNA'
               ) {
                 this.allChannelArray.push(channel);
               }

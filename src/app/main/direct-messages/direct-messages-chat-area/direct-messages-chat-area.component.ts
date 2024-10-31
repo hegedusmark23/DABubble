@@ -287,14 +287,16 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
 
   /**
    * Scrolls the message container to the bottom.
-   * @returns {boolean} - Returns false to prevent default event handling.
    */
   scrollToBottom() {
     if (typeof window !== 'undefined') {
       const container = document.getElementById('messageContainer');
-      container!.scrollTop = container!.scrollHeight;
+      if (container) {
+        setTimeout(() => {
+          container!.scrollTop = container!.scrollHeight;
+        }, 500);
+      }
     }
-    return false;
   }
 
   /**
@@ -477,14 +479,12 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       this.updateMessage(event, message.id);
       this.openEditMessage = '';
     } else {
-      console.log('nachricht leer');
       this.deleteMessage(message);
     }
   }
 
   async deleteMessage(message: any) {
     try {
-      console.log(this.currentChannelId, message.id);
       const messageRef = doc(
         this.firestore,
         'direcmessages',
@@ -501,9 +501,7 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
         message.id
       );
       await deleteDoc(messageRef2);
-      console.log('Message deleted successfully');
     } catch (error) {
-      console.error('Error deleting message: ', error);
     }
   }
 
@@ -588,7 +586,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: store the last modified time
     }).catch((err) => {
-      console.error('Error updating message:', err);
     });
 
     // Update the message in the Firestore database
@@ -604,7 +601,6 @@ export class DirectMessagesChatAreaComponent implements AfterViewInit, OnInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: store the last modified time
     }).catch((err) => {
-      console.error('Error updating message:', err);
     });
   }
 

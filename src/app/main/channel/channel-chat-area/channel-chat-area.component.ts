@@ -143,7 +143,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       this.subChannels();
       setTimeout(() => {
         this.scrollToBottom();
-      }, 5);
+      }, 10);
     });
 
     this.messageLoaded.changes.subscribe((t) => {
@@ -279,15 +279,16 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
 
   /**
    * Scrolls the messages container to the bottom to show the latest messages.
-   * @returns {boolean} - Returns false.
    */
   scrollToBottom() {
     if (typeof window !== 'undefined') {
-      // Browser-specific code here
       const container = document.getElementById('messageContainer');
-      container!.scrollTop = container!.scrollHeight;
+      if (container) {
+        setTimeout(() => {
+          container!.scrollTop = container!.scrollHeight;
+        }, 500);
+      }
     }
-    return false;
   }
 
   /**

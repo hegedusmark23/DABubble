@@ -269,11 +269,13 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
    */
   scrollToBottom() {
     if (typeof window !== 'undefined') {
-      // Browser-specific code here
-      const container = document.getElementById('ThreadMessageContainer');
-      container!.scrollTop = container!.scrollHeight;
+      const container = document.getElementById('messageContainer');
+      if (container) {
+        setTimeout(() => {
+          container!.scrollTop = container!.scrollHeight;
+        }, 500);
+      }
     }
-    return false;
   }
 
   /**
@@ -462,14 +464,12 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       this.updateMessage(event, message.id);
       this.openEditMessage = '';
     } else {
-      console.log('nachricht leer');
       this.deleteMessage(message);
     }
   }
 
   async deleteMessage(message: any) {
     try {
-      console.log(this.currentChannelId, message.id);
       const messageRef = doc(
         this.firestore,
         'Channels',
@@ -480,9 +480,7 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
         message.id
       );
       await deleteDoc(messageRef);
-      console.log('Message deleted successfully');
     } catch (error) {
-      console.error('Error deleting message: ', error);
     }
   }
 
@@ -568,7 +566,6 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
       message: message.trim(),
       updatedAt: new Date(), // Optional: store the time of the last change
     }).catch((err) => {
-      console.error('Error updating the message:', err);
     });
   }
 
