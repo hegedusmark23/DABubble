@@ -54,7 +54,7 @@
         <h2>Nachrichten:</h2>
         <ul>
             <li *ngFor="let message of messages; let i=index" (click)="onMessageClick(message.channelId, message.id)">
-                @if(
+                @if(this.isUserMemberOfChannel(message.channelId) ||
                 message.channelId === 'wXzgNEb34DReQq3fEsAo7VTcXXNA') {
                 <div class="result-user-container">
                     <div style="display: flex; align-items: center; gap: 5px;">

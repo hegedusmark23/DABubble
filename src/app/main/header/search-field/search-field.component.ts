@@ -60,6 +60,7 @@ export class SearchFieldComponent {
           userImage: userImage,
         };
       });
+      console.log(this.hideOrShowSidebar.GlobalChannelUids);
       this.searchService.isSearching = true;
     } else {
       this.clearSearch();
@@ -206,7 +207,7 @@ export class SearchFieldComponent {
       this.searchService.isSearching = false;
       this.channelActive(channelIndex);
       this.scrollToMessage(messageId);
-      this.searchService.searching = true;
+      this.searchService.searching = true
       this.responsiveService.isChannelOpen = true;
       if (window.innerWidth < 1000) {
         this.responsiveService.isSidebarOpen = false;
@@ -216,10 +217,21 @@ export class SearchFieldComponent {
     }
   }
 
-  /*isUserMemberOfChannel(channelId: string): boolean {
-    const currentUserId = this.authService.currentUserSignal()?.uId ?? '';
-    return this.hideOrShowSidebar.GlobalChannelUids[channelId]?.includes(currentUserId) ?? false;
-  }*/
+/**
+ * Checks if the current user is a member of the specified channel by ID.
+ * @param channelId - The ID of the channel to check.
+ * @returns {boolean} True if the user is a member, false otherwise.
+ */
+isUserMemberOfChannel(channelId: string): boolean {
+  const currentUserId = this.authService.currentUserSignal()?.uId ?? '';
+  const channelIndex = this.hideOrShowSidebar.AllChannelsIds.findIndex((channel, index) => {
+    return channel === channelId &&
+      (this.hideOrShowSidebar.GlobalChannelUids[index].includes(currentUserId) || 
+       channel === 'wXzgNEb34DReQq3fEsAo7VTcXXNA');
+  });
+
+  return channelIndex !== -1;
+}
 
   /**
    * Scrolls smoothly to the specified message in the view.
