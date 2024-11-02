@@ -86,7 +86,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         this.subUser();
         this.subChannels();
         this.clearInput();
-        // this.setFokus();
+         this.setFokus();
       }
     });
   }
