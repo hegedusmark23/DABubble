@@ -86,7 +86,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         this.subUser();
         this.subChannels();
         this.clearInput();
-         this.setFokus();
+        this.setFokus();
       }
     });
   }
@@ -184,7 +184,16 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
     if (this.FileUrl) {
       this.deleteFile();
     }
-    this.selectedFile = event.target.files[0];
+    const originalFile = event.target.files[0];
+    const newFile = new File(
+      [originalFile],
+      `${Date.now()}.${originalFile.type.split('/')[1]}`,
+      {
+        type: originalFile.type,
+      }
+    );
+
+    this.selectedFile = newFile;
     this.saveFileToCache();
   }
 
@@ -291,6 +300,7 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
         'messangeImages'
       );
       this.FileUrl = imageUrl;
+      console.log(imageUrl);
     }
   }
 
