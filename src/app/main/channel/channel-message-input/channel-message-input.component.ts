@@ -97,7 +97,6 @@ export class ChannelMessageInputComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   setFokus() {
-    console.log('set fokus');
     setTimeout(() => {
       this.messageTextarea.nativeElement.focus();
     }, 100);
