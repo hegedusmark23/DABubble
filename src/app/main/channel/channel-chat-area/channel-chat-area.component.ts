@@ -491,6 +491,7 @@ export class ChannelChatAreaComponent implements AfterViewInit, OnInit {
       );
       await deleteDoc(messageRef);
       console.log('Message deleted successfully');
+      this.threadService.closeThread();
     } catch (error) {
       console.error('Error deleting message: ', error);
     }
