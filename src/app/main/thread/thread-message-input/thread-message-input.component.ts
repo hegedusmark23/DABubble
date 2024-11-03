@@ -180,7 +180,6 @@ export class ThreadMessageInputComponent implements OnInit {
       );
       this.FileUrl = imageUrl;
     } else {
-      console.error('No file selected');
     }
   }
 
@@ -289,9 +288,7 @@ export class ThreadMessageInputComponent implements OnInit {
         'thread'
       ),
       this.toJSON()
-    ).catch((err) => {
-      console.error(err);
-    });
+    ).catch((err) => {});
 
     // Clear the input
     this.clearInput();
@@ -320,9 +317,7 @@ export class ThreadMessageInputComponent implements OnInit {
         threadCount: value,
         lastThreadMessage: this.getCurrentTime(),
       });
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   }
 
   /**
@@ -420,7 +415,6 @@ export class ThreadMessageInputComponent implements OnInit {
     // Get the current selection
     const selection = window.getSelection();
     if (!selection || selection.rangeCount === 0) {
-      console.error('No valid selection found.');
       return;
     }
 
@@ -430,14 +424,12 @@ export class ThreadMessageInputComponent implements OnInit {
     // Ensure the range is within the `textarea`
     const commonAncestor = range.commonAncestorContainer;
     if (!textarea.contains(commonAncestor)) {
-      console.error('Selection is outside the `textarea`.');
       return;
     }
 
     // Extract emoji text
     const emojiText = emoji.native || emoji.emoji || emoji;
     if (!emojiText) {
-      console.error('No valid emoji text found.');
       return;
     }
 
@@ -573,7 +565,6 @@ export class ThreadMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('ThreadInput') as HTMLElement;
 
     if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
       return;
     }
 
@@ -637,7 +628,6 @@ export class ThreadMessageInputComponent implements OnInit {
         this.tagUserSelector = false;
       }
     } else {
-      console.log(`Kein ${tagSymbol}-Zeichen gefunden.`);
     }
   }
 
@@ -657,9 +647,6 @@ export class ThreadMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('ThreadInput') as HTMLElement;
 
     if (!inputElement || this.lastAtPosition === null) {
-      console.error(
-        'Das Eingabeelement wurde nicht gefunden oder die Position des Symbols ist unbekannt.'
-      );
       return;
     }
 
@@ -884,7 +871,6 @@ export class ThreadMessageInputComponent implements OnInit {
     const inputElement = document.getElementById('ThreadInput') as HTMLElement;
 
     if (!inputElement) {
-      console.error('Das Eingabeelement wurde nicht gefunden.');
       return;
     }
 

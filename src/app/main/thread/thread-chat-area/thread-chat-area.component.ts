@@ -509,14 +509,12 @@ export class ThreadChatAreaComponent implements OnInit, AfterViewInit {
           this.allMessagesSortedDate.length - 1
         ].minute.toString();
 
-      console.log(date);
 
       await updateDoc(messageRef, {
         threadCount: value,
         lastThreadMessage: date,
       });
     } catch (err) {
-      console.error(err);
     }
   }
 

@@ -14,7 +14,6 @@ import {
 export class FileUploadeService {
   constructor() {}
 
-
   uploadFile(file: File, source: any): Promise<string> {
     const storage = getStorage();
     const storageRef = ref(storage, `${source}/${file.name}`);
@@ -41,11 +40,7 @@ export class FileUploadeService {
     const fileRef = ref(storage, `${source}/${fileUrl}`);
 
     deleteObject(fileRef)
-      .then(() => {
-        console.log('File deleted successfully');
-      })
-      .catch((error) => {
-        console.error('Error deleting file:', error);
-      });
+      .then(() => {})
+      .catch((error) => {});
   }
 }
