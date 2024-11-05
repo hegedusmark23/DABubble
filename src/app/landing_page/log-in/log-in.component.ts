@@ -39,7 +39,7 @@ export class LogInComponent implements OnInit{
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.animationDone = true;
+      // this.animationDone = true;
     }, 4000);
     
   }
