@@ -13,6 +13,9 @@
     align-items: center;
     gap: 20px;
 }
+.zindex999{
+    z-index: 999;
+}
 
 .logo {
     position: absolute;
@@ -190,6 +193,8 @@
 }
 
 .animated-logo {
+    display: flex;
+    align-items: center;
     height: auto;
     width: auto;
     animation: logoAnimation;
@@ -197,10 +202,25 @@
     animation-timing-function: ease-out;
     animation-duration: 500ms;
     animation-fill-mode: forwards;
-    height: auto;
     max-width: 100%;
+    z-index: -1;
 }
 
+.reveal {
+    color: #0000;
+    font-weight: 700;
+    font-size: 70px;
+    background: 
+      linear-gradient(white 0 0) no-repeat;
+    background-size: 0% 100%; /* we start at 0% 100% */
+    -webkit-background-clip: text;
+            background-clip: text;
+    animation: t .5s .5s both;
+  }
+  
+  @keyframes t{
+    to {background-size: 100% 100%} /* we animate to 100% 100%*/
+  }
 .logo-wrapper {
     z-index: 999;
     position: absolute;
@@ -243,14 +263,8 @@
         opacity: 1;
     }
 
-    50% {
-        content: url("../../../assets/img/landing-page/animation-step2.png");
-        transform: translateX(-5%)
-    }
-
     100% {
-        content: url("../../../assets/img/landing-page/animation-step3.png");
-        transform: translateX(0);
+        transform: translateX(-20%)
     }
 }
 
