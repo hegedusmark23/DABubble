@@ -1,17 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ChannelSelectionService } from '../../services/channel-selection.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-open-img',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule], // Füge HttpClientModule hier hinzu
   templateUrl: './open-img.component.html',
-  styleUrl: './open-img.component.scss',
+  styleUrls: ['./open-img.component.scss'],
 })
 export class OpenImgComponent implements OnInit {
   src = '';
-  constructor(public channelSelectionService: ChannelSelectionService) {}
+  constructor(
+    public channelSelectionService: ChannelSelectionService,
+    private http: HttpClient
+  ) {}
 
   imgWidth: any;
   imgHeight: any;
@@ -25,21 +29,10 @@ export class OpenImgComponent implements OnInit {
     });
   }
 
-  /**
-   * Stops the propagation of the specified event, preventing it from bubbling up to parent elements.
-   *
-   * @param {any} event - The event object to stop propagation for.
-   * @returns {void}
-   */
   stopEvent(event: any): void {
     event.stopPropagation();
   }
 
-  /**
-   * Determines whether the provided image source has a greater width or height based on its aspect ratio.
-   *
-   * @param {string} src - The source URL of the image.
-   */
   getImageDimensionBasedOnAspect(src: string) {
     const img = new Image();
     img.src = src;
@@ -66,12 +59,16 @@ export class OpenImgComponent implements OnInit {
   }
 
   downloadImg(src: string) {
-    const link = document.createElement('a');
-    link.href = src;
-    link.target = '_blank'; // Öffnet in einem neuen Tab
+    this.http.get(src, { responseType: 'blob' }).subscribe((blob) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const fileName = src.split('?')[0].split('/').pop() || 'download.jpg';
+      a.download = fileName;
+      a.click();
+
+      window.URL.revokeObjectURL(url);
+    });
   }
 }
